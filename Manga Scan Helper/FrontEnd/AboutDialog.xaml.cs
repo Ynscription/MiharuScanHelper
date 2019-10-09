@@ -59,7 +59,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 		private void Rectangle_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
 			if (counter >= 3){
 				counter = 0;
-				ImageDisplay id = new ImageDisplay (@".\asdResources\Graphics\CnC_EE.png");
+				ImageDisplay id = new ImageDisplay (@".\Resources\Graphics\CnC_EE.png");
 				id.Owner = this;
 				id.ShowDialog();
 			} else
