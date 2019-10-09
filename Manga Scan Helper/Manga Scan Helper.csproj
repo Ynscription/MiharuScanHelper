@@ -165,7 +165,7 @@
     <None Include="Resources\Licenses\Ookii.Dialogs  LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\Licenses\Scan Helper License">
+    <None Include="Resources\Licenses\Scan Helper LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Licenses\Selenium LICENSE">

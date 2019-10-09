@@ -11,7 +11,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			InitializeComponent();
 		}
 
-		private readonly static string ScanHelperLicenseFile = @".\Resources\Licenses\Scan Helper License";
+		private readonly static string ScanHelperLicenseFile = @".\Resources\Licenses\Scan Helper LICENSE";
 
 		private readonly static string NewtosoftLicenseFile = @".\Resources\Licenses\Newtonsoft.Json LICENSE.md";
 		private readonly static string OokiiLicenseFile = @".\Resources\Licenses\Ookii.Dialogs  LICENSE";
