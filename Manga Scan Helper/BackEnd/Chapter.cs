@@ -35,7 +35,7 @@ namespace Manga_Scan_Helper.BackEnd
 			if (files.Length == 0)
 				files = d.GetFiles("*.png", SearchOption.TopDirectoryOnly);
 			if (files.Length == 0)
-				throw new Exception("No images were found on folder " + folderSrc + Environment.NewLine + Environment.NewLine + "Only jpg, jpeg or png files suported.");
+				throw new Exception("No images were found in folder " + folderSrc + Environment.NewLine + Environment.NewLine + "Only jpg, jpeg or png files supported.");
 			
 
 			FileInfo[] sortedFiles = files.OrderBy(x => x.Name).ToArray();
