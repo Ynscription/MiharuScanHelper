@@ -45,6 +45,11 @@ namespace Manga_Scan_Helper.BackEnd
 		public static event EventHandler TranslationStart;
 		public static event EventHandler TranslationEnd;
 
+		public static bool isAlive {
+			get;
+			private set;
+		}
+
 		private static void internalInnit () {
 			FirefoxDriverService ffds = FirefoxDriverService.CreateDefaultService();
 			ffds.HideCommandPromptWindow = true; 
@@ -53,7 +58,7 @@ namespace Manga_Scan_Helper.BackEnd
 			ffo.SetPreference("Headless", true); 
 			ffo.AddArgument("-headless");
 			_driver = new FirefoxDriver(ffds, ffo);
-						
+			isAlive = true;						
 		}
 
 		public static void BeginInnit() {
@@ -61,10 +66,13 @@ namespace Manga_Scan_Helper.BackEnd
 		}
 
 		public static void CleanUp() {
-			while (_driver == null); //driver should never be null... hopefully
+			while (isAlive && _driver == null);
 			
+			if (!isAlive)
+				return;
 			_driver?.Close();
 			_driver?.Quit();
+			isAlive = false;
 		}
 
 		public static readonly string _translateURL = "https://translate.google.com/#ja/en/";

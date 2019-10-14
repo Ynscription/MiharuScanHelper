@@ -65,6 +65,8 @@ namespace Manga_Scan_Helper.BackEnd {
 		}
 
 		private Bitmap CropImage (Rect rect) {
+			if (rect.Width == 0 || rect.Height == 0)
+				return null;
 			Bitmap cropped = new Bitmap((int) rect.Width, (int) rect.Height);
 			Graphics g = Graphics.FromImage(cropped);
 			g.DrawImage(Source, new Rectangle(0, 0, (int) rect.Width, (int) rect.Height),

@@ -3,6 +3,7 @@ using Manga_Scan_Helper.FrontEnd;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -59,7 +60,10 @@ namespace Manga_Scan_Helper {
 			Thread translatorInnit = new Thread (ts);
 			translatorInnit.Start();
 			Dispatcher.UnhandledException += UnhandledException;
-			
+			AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+			TaskScheduler.UnobservedTaskException += UnhandledException;
+
+
 		}
 
 
@@ -672,13 +676,21 @@ namespace Manga_Scan_Helper {
 										_pageRectangles [_currentPage].DragRect.Value.Width,
 										_pageRectangles [_currentPage].DragRect.Value.Height);
 				_pageRectangles [_currentPage].DragRect = null;
+
+				if (rect .Width == 0 || rect.Height == 0) {
+					Mouse.SetCursor(Cursors.Arrow);
+					_pageRectangles [_currentPage].InvalidateVisual();
+					return;
+				}
 				Text txt = _loadedChapter.Pages[_currentPage].AddTextEntry(rect);
 				txt.TextChanged += OnItemChange;
+				_pageRectangles [_currentPage].InvalidateVisual();
 
 				TextEntry te = new TextEntry(txt, this);
 				TextEntriesStackPanel.Children.Add(te);
 				te.ForceTranslation();
 				Mouse.SetCursor(Cursors.Arrow);
+
 
 			}
 		}
@@ -740,8 +752,16 @@ namespace Manga_Scan_Helper {
 			Translator.CleanUp();
 		}
 
+		public void UnhandledException (object sender, UnhandledExceptionEventArgs args) {
+			//Gotta cleanup the translator in the event of an unexpected exception ツ
+			Translator.CleanUp();
+		}
 
-
+		public void UnhandledException (object sender, UnobservedTaskExceptionEventArgs args) {
+			//Gotta cleanup the translator in the event of an unexpected exception ツ
+			Translator.CleanUp();
+		}
+		
 
 
 		#endregion
