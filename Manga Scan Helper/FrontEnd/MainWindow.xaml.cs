@@ -21,6 +21,7 @@ namespace Manga_Scan_Helper {
 		private int _previousPage = 0;
 
 		private bool _saved = false;
+		private bool _openChapterOnLoad = false;
 
 		private string _currSavedFile = null;
 		private string _currSavedScript = null;
@@ -63,7 +64,17 @@ namespace Manga_Scan_Helper {
 			AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 			TaskScheduler.UnobservedTaskException += UnhandledException;
 
+			string [] args = Environment.GetCommandLineArgs();
 
+
+			System.IO.Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
+			if (args.Length > 1 && System.IO.File.Exists(args[1])) {
+				_currSavedFile = args[1];
+				_openChapterOnLoad = true;
+			}
+
+			
+			
 		}
 
 
@@ -91,6 +102,37 @@ namespace Manga_Scan_Helper {
 		private void MainWindow1_KeyDown (object sender, KeyEventArgs e) {
 			if (e.Key == Key.S && e.KeyboardDevice.Modifiers == ModifierKeys.Control && !Saved && _loadedChapter != null)
 				SaveChapterMenuItem_Click(sender, e);
+		}
+
+		private void OpenChapter (string file) {
+			try {
+				Mouse.SetCursor(Cursors.Wait);
+				_loadedChapter = Chapter.Load(file);
+				if (_loadedChapter == null)
+					throw new Exception("Failed to open chapter from file: " + file);
+				LoadChapter();
+				foreach (Page p in _loadedChapter.Pages) {
+					p.PageChanged += OnItemChange;
+					foreach (Text t in p.TextEntries)
+						t.TextChanged += OnItemChange;
+				}
+				_currSavedFile = file;
+				Saved = true;
+				Mouse.SetCursor(Cursors.Arrow);
+			}
+			catch (Exception ex) {
+				Mouse.SetCursor(Cursors.Arrow);
+				_loadedChapter = null;
+				TaskDialog dialog = new TaskDialog();
+				dialog.WindowTitle = "Error";
+				dialog.MainIcon = TaskDialogIcon.Error;
+				dialog.MainInstruction = "Loading error.";
+				dialog.Content = ex.Message;
+				TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+				dialog.Buttons.Add(okButton);
+				TaskDialogButton button = dialog.ShowDialog(this);
+
+			}
 		}
 
 		private void LoadChapter () {
@@ -174,34 +216,7 @@ namespace Manga_Scan_Helper {
 			fileDialog.Title = "Open Chapter";
 			bool? res = fileDialog.ShowDialog(this);
 			if (res ?? false) {
-				try {
-					Mouse.SetCursor(Cursors.Wait);
-					_loadedChapter = Chapter.Load(fileDialog.FileName);
-					if (_loadedChapter == null)
-						throw new Exception("Failed to open chapter from file: " + fileDialog.FileName);
-					LoadChapter();
-					foreach (Page p in _loadedChapter.Pages) {
-						p.PageChanged += OnItemChange;
-						foreach (Text t in p.TextEntries)
-							t.TextChanged += OnItemChange;
-					}
-					_currSavedFile = fileDialog.FileName;
-					Saved = true;					
-					Mouse.SetCursor(Cursors.Arrow);
-				}
-				catch (Exception ex) {
-					Mouse.SetCursor(Cursors.Arrow);
-					_loadedChapter = null;
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "Loading error.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
-
-				}
+				OpenChapter(fileDialog.FileName);
 			}
 		}
 
@@ -761,11 +776,15 @@ namespace Manga_Scan_Helper {
 			//Gotta cleanup the translator in the event of an unexpected exception ツ
 			Translator.CleanUp();
 		}
-		
+
+
 
 
 		#endregion
 
-
+		private void Image_Loaded (object sender, RoutedEventArgs e) {
+			if (_openChapterOnLoad)
+				OpenChapter(_currSavedFile);
+		}
 	}
 }
