@@ -37,7 +37,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 		public string ParsedText {
 			get => _textEntry.ParsedText;
 			set {
-				_textEntry.ParsedText = value.Trim();
+				_textEntry.ParsedText = value;
 				ParsedTextBox.Text = _textEntry.ParsedText;
 				string refinedText = _textEntry.ParsedText.Replace(@"
 ", " ");
