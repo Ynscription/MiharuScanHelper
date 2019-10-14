@@ -11,7 +11,7 @@
 		<Image x:Name="PreviewIMG" Margin="48,10,0,10" Width="157" HorizontalAlignment="Left" />
 		<Label x:Name="label2" Content="Parsed Text" HorizontalAlignment="Left" Height="28" Margin="210,40,0,0" VerticalAlignment="Top" Width="73"/>
 
-		<TextBox x:Name="ParsedTextBox" Margin="215,60,10,219" TextWrapping="Wrap" FontSize="22" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="Black"/>
+		<TextBox x:Name="ParsedTextBox" Margin="215,60,10,219" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="Black"/>
 
 		<CheckBox x:Name="VerticalCheckBox" Content="Vertical" HorizontalAlignment="Left" Margin="215,15,0,0" VerticalAlignment="Top" IsChecked="True" Checked="VerticalCheckBox_Checked" Unchecked="VerticalCheckBox_Unchecked" Width="62"/>
 		<Label x:Name="JishoLinkLabel" Content="https://whatever.com" Height="26" Margin="335,9,10,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="JishoLinkLabel_MouseLeftButtonUp"/>
@@ -28,7 +28,7 @@
 		</Button>
 		<Label x:Name="label" Content="Google" HorizontalAlignment="Left" Margin="212,126,0,0" VerticalAlignment="Top" Width="55"/>
 		<Grid Margin="215,147,29,100">
-			<TextBlock x:Name="GoogleTranslationLabel" Foreground="Black" TextWrapping="Wrap"/>
+			<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Text="asd" Margin="4,0,4,4" FontSize="16" IsReadOnly="True"/>
 			<Border BorderThickness="1" BorderBrush="Black" />			
 		</Grid>
 		
