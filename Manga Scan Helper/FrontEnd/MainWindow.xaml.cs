@@ -57,9 +57,9 @@ namespace Manga_Scan_Helper {
 		public MainWindow () {
 			InitializeComponent();
 			ChangePage();
-			ThreadStart ts = new ThreadStart (Translator.BeginInnit);
+			/*ThreadStart ts = new ThreadStart (Translator.BeginInnit);
 			Thread translatorInnit = new Thread (ts);
-			translatorInnit.Start();
+			translatorInnit.Start();*/
 			Dispatcher.UnhandledException += UnhandledException;
 			AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 			TaskScheduler.UnobservedTaskException += UnhandledException;
@@ -571,7 +571,7 @@ namespace Manga_Scan_Helper {
 			NextPageButton.IsEnabled = _currentPage < totalPages - 1;
 			CurrPageLabel.Content = "Page " + (_currentPage +1);
 			_previousPage = _currentPage;
-			Translator.Cancel();
+			//Translator.Cancel();
 		}
 
 		
@@ -758,23 +758,27 @@ namespace Manga_Scan_Helper {
 					return;
 				}
 			}
-			Translator.CleanUp();
+			//Translator.CleanUp();
 
 		}
+
 
 		public void UnhandledException (object sender, DispatcherUnhandledExceptionEventArgs e) {
 			//Gotta cleanup the translator in the event of an unexpected exception ツ
-			Translator.CleanUp();
+			//Translator.CleanUp();
+			Logger.CrashLog(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
 		}
 
-		public void UnhandledException (object sender, UnhandledExceptionEventArgs args) {
+		public void UnhandledException (object sender, UnhandledExceptionEventArgs e) {
 			//Gotta cleanup the translator in the event of an unexpected exception ツ
-			Translator.CleanUp();
+			//Translator.CleanUp();
+			
 		}
 
-		public void UnhandledException (object sender, UnobservedTaskExceptionEventArgs args) {
+		public void UnhandledException (object sender, UnobservedTaskExceptionEventArgs e) {
 			//Gotta cleanup the translator in the event of an unexpected exception ツ
-			Translator.CleanUp();
+			//Translator.CleanUp();
+			Logger.CrashLog(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
 		}
 
 

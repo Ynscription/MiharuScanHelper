@@ -16,7 +16,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 	/// <summary>
 	/// Interaction logic for TextEntry.xaml
 	/// </summary>
-	public partial class TextEntry : UserControl {
+	public partial class TextEntry : UserControl, TranslationConsumer{
 		[DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool DeleteObject ([In] IntPtr hObject);
@@ -25,7 +25,6 @@ namespace Manga_Scan_Helper.FrontEnd {
 		
 		private MainWindow _parent;
 		private Text _textEntry;
-		private bool _awaitingTranslation = false;
 
 		private void InitializeParsedTextBox () {
 			ParsedTextBox.Text = _textEntry.ParsedText;
@@ -57,9 +56,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			//BingTranslationLabel.Content = textEntry.BingTranslatedText;
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
-			Translator.TranslationCancel += OnTranslateCanceled;
-			Translator.TranslationStart += OnTranslationStarted;
-			Translator.TranslationEnd += OnTranslationEnded;
+			
 			
 		}
 
@@ -113,15 +110,36 @@ namespace Manga_Scan_Helper.FrontEnd {
 		}
 
 		private void Translate (string text) {
-			Translator.Cancel();
-			
-			Translator.TranslationResponse += OnTranslateResponse;
-			_awaitingTranslation = true;
-			
-			Translator.Translate(text);
+			RefreshTranslateButton.IsEnabled = false;
+			VerticalCheckBox.IsEnabled = false;
+			HTTPTranslator.GoogleTranslate(this, text);
 		}
 
-		public void OnTranslateResponse (object sender, EventArgs args) {
+		public void TranslationCallback (string translation, TranslationType type) {
+			try {
+				Dispatcher.Invoke(() => {
+					if (type == TranslationType.Google) {
+						GoogleTranslationLabel.Text = translation;
+						_textEntry.GoogleTranslatedText = translation;
+					}
+					RefreshTranslateButton.IsEnabled = true;
+					VerticalCheckBox.IsEnabled = true;
+				});
+			}
+			catch (TaskCanceledException) { }
+		}
+
+		public void TranslationFailed (Exception e) {
+			try {
+				Dispatcher.Invoke(() => {
+					RefreshTranslateButton.IsEnabled = true;
+					VerticalCheckBox.IsEnabled = true;
+				});
+			}
+			catch (TaskCanceledException) { }
+		}
+
+		/*public void OnTranslateResponse (object sender, EventArgs args) {
 			try {
 				Dispatcher.Invoke(() =>
 				{
@@ -175,7 +193,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 				Translator.TranslationResponse -= OnTranslateResponse;
 				_awaitingTranslation = false;
 			}
-		}
+		}*/
 
 
 

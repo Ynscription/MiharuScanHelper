@@ -16,20 +16,14 @@
 		<Label x:Name="label1" Content="Scan Helper uses the following software as libraries" Margin="20,91,4,0" VerticalAlignment="Top"/>
 		<Label x:Name="label2" Content="· Newtonsoft.Json" HorizontalAlignment="Left" Margin="31,110,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
 		<Label x:Name="label3" Content="· Ookii.Dialogs" HorizontalAlignment="Left" Margin="31,128,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
-		<Label x:Name="label4" Content="· Selenium" HorizontalAlignment="Left" Margin="31,146,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
 		<Label x:Name="label5" Content="The following software is distributed and used externally by Scan Helper" Margin="20,172,4,0" VerticalAlignment="Top"/>
 		<Label x:Name="label6" Content="· Tesseract OCR " HorizontalAlignment="Left" Margin="31,190,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
-		<Label x:Name="label7" Content="· Gecko Driver" HorizontalAlignment="Left" Margin="31,208,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
 		<Label x:Name="label8" Content="under this" HorizontalAlignment="Left" Margin="137,110,0,0" VerticalAlignment="Top"/>
 		<Label x:Name="label8_Copy" Content="under this" HorizontalAlignment="Left" Margin="118,128,0,0" VerticalAlignment="Top"/>
-		<Label x:Name="label8_Copy1" Content="under this" HorizontalAlignment="Left" Margin="94,146,0,0" VerticalAlignment="Top"/>
 		<Label x:Name="label8_Copy2" Content="under this" HorizontalAlignment="Left" Margin="122,190,0,0" VerticalAlignment="Top"/>
-		<Label x:Name="label8_Copy3" Content="under this" HorizontalAlignment="Left" Margin="115,208,0,0" VerticalAlignment="Top"/>
 		<Label x:Name="NewtonsoftLicense" Content="license" HorizontalAlignment="Left" Margin="195,110,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="NewtonsoftLicense_MouseLeftButtonUp"/>
 		<Label x:Name="OokiiLicense" Content="license" HorizontalAlignment="Left" Margin="176,128,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="OokiiLicense_MouseLeftButtonUp"/>
-		<Label x:Name="SeleniumLicense" Content="license" HorizontalAlignment="Left" Margin="152,146,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="SeleniumLicense_MouseLeftButtonUp"/>
 		<Label x:Name="TesseractLicense" Content="license" HorizontalAlignment="Left" Margin="180,190,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="TesseractLicense_MouseLeftButtonUp"/>
-		<Label x:Name="GeckoLicense" Content="license" HorizontalAlignment="Left" Margin="173,208,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="GeckoLicense_MouseLeftButtonUp"/>
 		<Button x:Name="button" Content="Ok" Margin="0,0,10,10" Click="Button_Click" Width="65" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 		<Separator Margin="0,247,0,0" Height="5" VerticalAlignment="Top" />
 		<Label x:Name="label_Copy" Content="Why use 美 as the icon?" HorizontalAlignment="Left" Margin="10,266,0,0" VerticalAlignment="Top" Width="244" Height="33" FontSize="16" FontWeight="Bold"/>
