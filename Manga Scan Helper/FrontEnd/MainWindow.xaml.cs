@@ -138,7 +138,7 @@ namespace Manga_Scan_Helper {
 		private void LoadChapter () {
 			
 			_pageRectangles = new RectangleAdorner [_loadedChapter.Pages.Count];
-
+			
 			_currentPage = 0;
 			ChangePage();
 
@@ -542,8 +542,10 @@ namespace Manga_Scan_Helper {
 				PreviewIMGScroll.ScrollToTop();
 				PreviewIMGScroll.ScrollToRightEnd();
 				
-				if (_pageRectangles[_currentPage] == null)
+				if (_pageRectangles[_currentPage] == null) {
 					_pageRectangles[_currentPage] = new RectangleAdorner(PreviewIMG, _loadedChapter.Pages[_currentPage].TextEntries);
+					_pageRectangles [_currentPage].IsHitTestVisible = false;
+				}
 
 				AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
 				if (_pageRectangles [_previousPage] != null)
