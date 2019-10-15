@@ -61,12 +61,12 @@ namespace Manga_Scan_Helper.BackEnd
 				
 				
 				int i = 1;
-				string leading = "'chapter-img' src='";
+				string find = "data-src=";
 				while (!readStream.EndOfStream) {
 					string input = readStream.ReadLine();
 
-					if (input.Contains("chapter-img")) {
-						string imgurl = input.Substring(input.IndexOf(leading) + leading.Length);
+					if (input.Contains(find)) {
+						string imgurl = input.Substring(input.IndexOf(find) + find.Length + 1);
 						imgurl = imgurl.Substring(0, imgurl.IndexOf(".jpg") + 4);
 						DownloadImage(imgurl, i++);						
 					}
