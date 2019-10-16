@@ -45,10 +45,16 @@ namespace Manga_Scan_Helper.BackEnd {
 					res = readStream.ReadToEnd();
 					
 					receiveStream.Close();
-					
-					res = res.Substring(res.IndexOf("\"") + 1);
-					res = res.Substring(0, res.IndexOf("\""));
-					consumer.TranslationCallback(res, TranslationType.Google);
+
+					int firstString = res.IndexOf("\"") + 1;
+					if (res.IndexOf("null") <= firstString) {
+						consumer.TranslationFailed(new Exception("Google translation failed"));
+					}
+					else {
+						res = res.Substring(firstString);
+						res = res.Substring(0, res.IndexOf("\""));
+						consumer.TranslationCallback(res, TranslationType.Google);
+					}
 				}
 				else {
 					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine 
