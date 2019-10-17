@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
              mc:Ignorable="d" 
-             Height="352" Foreground="{x:Null}">
+             Height="352" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1">
 
 	<Grid>
 		<Image x:Name="PreviewIMG" Margin="48,10,0,10" Width="157" HorizontalAlignment="Left" />
@@ -27,11 +27,17 @@
 			</StackPanel>
 		</Button>
 		<Label x:Name="label" Content="Google" HorizontalAlignment="Left" Margin="212,126,0,0" VerticalAlignment="Top" Width="55"/>
-		<Grid Margin="215,147,29,100">
-			<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Text="asd" Margin="4,0,4,4" FontSize="16" IsReadOnly="True"/>
+		<Grid Margin="215,147,29,158">
+			<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True"/>
 			<Border BorderThickness="1" BorderBrush="Black" />			
 		</Grid>
-		
+
+		<Label x:Name="label10" Content="Bing" HorizontalAlignment="Left" Margin="212,188,0,0" VerticalAlignment="Top" Width="55"/>
+		<Grid Margin="215,209,29,96">
+			<TextBox x:Name="BingTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True"/>
+			<Border BorderThickness="1" BorderBrush="Black" />
+		</Grid>
+
 
 
 		<!--
@@ -54,6 +60,6 @@
 			</StackPanel>
 		</Button>
 
-
+		<Border BorderThickness="1" BorderBrush="#FF535353" />
 	</Grid>
 </UserControl>

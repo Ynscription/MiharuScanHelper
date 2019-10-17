@@ -10,7 +10,7 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
-		<Label x:Name="label" Content="URL" HorizontalAlignment="Left" Margin="4,10,0,0" VerticalAlignment="Top"/>
+		<Label x:Name="label" Content="URL (Only lhscan.net is supported at the moment)" HorizontalAlignment="Left" Margin="4,10,0,0" VerticalAlignment="Top"/>
 		<Label x:Name="label1" Content="Destination Folder" HorizontalAlignment="Left" Margin="4,102,0,0" VerticalAlignment="Top"/>
 		<TextBox x:Name="URLTextBox" Height="19" Margin="10,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 		<TextBox x:Name="FolderTextBox" Height="19" Margin="10,133,58,0" TextWrapping="Wrap" VerticalAlignment="Top"/>

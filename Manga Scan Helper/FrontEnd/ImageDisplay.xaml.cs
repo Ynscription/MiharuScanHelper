@@ -24,7 +24,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			imgSrc.UriSource = new Uri (src, UriKind.Relative);
 			imgSrc.CacheOption = BitmapCacheOption.OnLoad;
 			imgSrc.EndInit();
-			Width = imgSrc.Width + 6;
+			Width = imgSrc.Width + 5;
 			Height = imgSrc.Height + 29;
 			DisplayImage.Source = imgSrc;
 		}

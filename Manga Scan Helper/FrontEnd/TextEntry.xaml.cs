@@ -53,7 +53,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			_textEntry = textEntry;
 			InitializeParsedTextBox();
 			GoogleTranslationLabel.Text = textEntry.GoogleTranslatedText;
-			//BingTranslationLabel.Content = textEntry.BingTranslatedText;
+			BingTranslationLabel.Text = textEntry.BingTranslatedText;
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
 			
@@ -109,10 +109,16 @@ namespace Manga_Scan_Helper.FrontEnd {
 			
 		}
 
+		private bool _awaitingGoogle = false;
+		private bool _awaitingBing = false;
 		private void Translate (string text) {
 			RefreshTranslateButton.IsEnabled = false;
 			VerticalCheckBox.IsEnabled = false;
+			_awaitingGoogle = true;
 			HTTPTranslator.GoogleTranslate(this, text);
+			_awaitingBing = true;
+			HTTPTranslator.BingTranslate(this, text);			
+
 		}
 
 		public void TranslationCallback (string translation, TranslationType type) {
@@ -121,79 +127,41 @@ namespace Manga_Scan_Helper.FrontEnd {
 					if (type == TranslationType.Google) {
 						GoogleTranslationLabel.Text = translation;
 						_textEntry.GoogleTranslatedText = translation;
+						_awaitingGoogle = false;
 					}
-					RefreshTranslateButton.IsEnabled = true;
-					VerticalCheckBox.IsEnabled = true;
+					else if (type == TranslationType.Bing) {
+						BingTranslationLabel.Text = translation;
+						_textEntry.BingTranslatedText = translation;
+						_awaitingBing = false;
+					}
+					if (!_awaitingGoogle && !_awaitingBing) {
+						RefreshTranslateButton.IsEnabled = true;
+						VerticalCheckBox.IsEnabled = true;
+					}
 				});
 			}
 			catch (TaskCanceledException) { }
 		}
 
-		public void TranslationFailed (Exception e) {
+		public void TranslationFailed (Exception e, TranslationType type) {
 			try {
 				Dispatcher.Invoke(() => {
-					RefreshTranslateButton.IsEnabled = true;
-					VerticalCheckBox.IsEnabled = true;
+					if (type == TranslationType.Google)
+						_awaitingGoogle = false;
+
+					else if (type == TranslationType.Bing)
+						_awaitingBing = false;
+					
+					if (!_awaitingGoogle && !_awaitingBing) {
+						RefreshTranslateButton.IsEnabled = true;
+						VerticalCheckBox.IsEnabled = true;
+					}
 				});
 			}
 			catch (TaskCanceledException) { }
 		}
 
-		/*public void OnTranslateResponse (object sender, EventArgs args) {
-			try {
-				Dispatcher.Invoke(() =>
-				{
-					GoogleTranslationLabel.Text = ((TranslatorEventArgs) args).GoogleTranslatedText;
-					_textEntry.GoogleTranslatedText = ((TranslatorEventArgs) args).GoogleTranslatedText;
-					//BingTranslationLabel.Content = ((TranslatorEventArgs) args).BingTranslatedText;
-					_textEntry.BingTranslatedText = ((TranslatorEventArgs) args).BingTranslatedText;
-					RefreshTranslateButton.IsEnabled = true;
-					VerticalCheckBox.IsEnabled = true;
-				});
-			}catch (TaskCanceledException) { }
-
-			Translator.TranslationResponse -= OnTranslateResponse;
-			_awaitingTranslation = false;
-		}
-
-		public void OnTranslateCanceled (object sender, EventArgs args) {
-			try {
-				Dispatcher.Invoke(() => {
-					RefreshTranslateButton.IsEnabled = true;
-					VerticalCheckBox.IsEnabled = true;
-				});
-			}
-			catch (TaskCanceledException) { }
-			if (_awaitingTranslation) {
-				Translator.TranslationResponse -= OnTranslateResponse;
-				_awaitingTranslation = false;
-			}
-		}
-
-		public void OnTranslationStarted (object sender, EventArgs args) {
-			try {
-				Dispatcher.Invoke(() => {
-					RefreshTranslateButton.IsEnabled = false;
-					VerticalCheckBox.IsEnabled = false;
-				});
-			}
-			catch (TaskCanceledException) { }
-			
-		}
-
-		public void OnTranslationEnded (object sender, EventArgs args) {
-			try {
-				Dispatcher.Invoke(() => {
-					RefreshTranslateButton.IsEnabled = true;
-					VerticalCheckBox.IsEnabled = true;
-				});
-			}
-			catch (TaskCanceledException) { }
-			if (_awaitingTranslation) {
-				Translator.TranslationResponse -= OnTranslateResponse;
-				_awaitingTranslation = false;
-			}
-		}*/
+		
 
 
 

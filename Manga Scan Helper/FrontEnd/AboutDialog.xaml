@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
         mc:Ignorable="d"
-        Title=" " Height="450.667" Width="435" ResizeMode="NoResize">
+        Title="About Miharu Scan Helper" Height="462" Width="485.001" ResizeMode="NoResize">
 	<Grid>
 		<Label x:Name="label" Content="Licenses" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="74" Height="33" FontSize="16" FontWeight="Bold"/>
 
-		<Label x:Name="label7_Copy" Content="Scan Helper" HorizontalAlignment="Left" Margin="20,43,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
-		<Label x:Name="label8_Copy4" Content="is licensed under this" HorizontalAlignment="Left" Margin="92,43,0,0" VerticalAlignment="Top"/>
-		<Label x:Name="ScanHelperLicense" Content="license" HorizontalAlignment="Left" Margin="208,43,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="ScanHelperLicense_MouseLeftButtonUp"/>
+		<Label x:Name="label7_Copy" Content="Miharu Scan Helper" HorizontalAlignment="Left" Margin="20,43,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
+		<Label x:Name="label8_Copy4" Content="is licensed under this" HorizontalAlignment="Left" Margin="137,43,0,0" VerticalAlignment="Top"/>
+		<Label x:Name="ScanHelperLicense" Content="license" HorizontalAlignment="Left" Margin="253,43,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="ScanHelperLicense_MouseLeftButtonUp"/>
 
-		<Label x:Name="label1" Content="Scan Helper uses the following software as libraries" Margin="20,91,4,0" VerticalAlignment="Top"/>
+		<Label x:Name="label1" Content="Miharu Scan Helper uses the following software as libraries" Margin="20,91,4,0" VerticalAlignment="Top"/>
 		<Label x:Name="label2" Content="· Newtonsoft.Json" HorizontalAlignment="Left" Margin="31,110,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
 		<Label x:Name="label3" Content="· Ookii.Dialogs" HorizontalAlignment="Left" Margin="31,128,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
-		<Label x:Name="label5" Content="The following software is distributed and used externally by Scan Helper" Margin="20,172,4,0" VerticalAlignment="Top"/>
+		<Label x:Name="label5" Content="The following software is distributed and used externally by Miharu Scan Helper" Margin="20,172,10,0" VerticalAlignment="Top"/>
 		<Label x:Name="label6" Content="· Tesseract OCR " HorizontalAlignment="Left" Margin="31,190,0,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Foreground="Black"/>
 		<Label x:Name="label8" Content="under this" HorizontalAlignment="Left" Margin="137,110,0,0" VerticalAlignment="Top"/>
 		<Label x:Name="label8_Copy" Content="under this" HorizontalAlignment="Left" Margin="118,128,0,0" VerticalAlignment="Top"/>
@@ -26,9 +26,9 @@
 		<Label x:Name="TesseractLicense" Content="license" HorizontalAlignment="Left" Margin="180,190,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="TesseractLicense_MouseLeftButtonUp"/>
 		<Button x:Name="button" Content="Ok" Margin="0,0,10,10" Click="Button_Click" Width="65" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 		<Separator Margin="0,247,0,0" Height="5" VerticalAlignment="Top" />
-		<Label x:Name="label_Copy" Content="Why use 美 as the icon?" HorizontalAlignment="Left" Margin="10,266,0,0" VerticalAlignment="Top" Width="244" Height="33" FontSize="16" FontWeight="Bold"/>
-		<TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="66" Margin="31,304,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="377"><Run Text="I started work "/><Run Text="o"/><Run Text="n this project with the intention of being able to read the manga Candy &amp; Cigarettes. The name of one of the main characters"/><Run Text=" in that manga"/><Run Text=" is 美晴"/><Run Text=" (Miharu) and that was the first set of characters ever transcripted "/><Run Text="using"/><Run Text=" this program"/><Run Text=" during development"/><Run Text="."/></TextBlock>
-		<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="17" Margin="176,336,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="73" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp"/>
+		<Label x:Name="label_Copy" Content="Why the name Miharu?" HorizontalAlignment="Left" Margin="10,266,0,0" VerticalAlignment="Top" Width="244" Height="33" FontSize="16" FontWeight="Bold"/>
+		<TextBlock x:Name="textBlock" Height="83" Margin="31,304,10,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="I started work "/><Run Text="o"/><Run Text="n this project with the intention of being able to read the manga Candy &amp; Cigarettes. "/><LineBreak/><Run Text="The name of one of the main characters"/><Run Text=" in that manga"/><Run Text=" is 美晴"/><Run Text=" (Miharu) and that was the first set of characters ever transcripted "/><Run Text="using"/><Run Text=" this program"/><Run Text=" during development"/><Run Text="."/><LineBreak/><Run Text="The"/><Run Text=" icon was chosen from her name as well."/></TextBlock>
+		<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="17" Margin="332,336,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="74" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp"/>
 
 
 	</Grid>

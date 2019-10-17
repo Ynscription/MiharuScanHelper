@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Scan Helper" Height="720" Width="1280" IsTabStop="False" KeyDown="MainWindow1_KeyDown" Closing="MainWindow1_Closing">
+        Title="Miharu Scan Helper" Height="720" Width="1280" IsTabStop="False" KeyDown="MainWindow1_KeyDown" Closing="MainWindow1_Closing">
 
 
 	<DockPanel>

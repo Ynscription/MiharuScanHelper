@@ -43,10 +43,10 @@ namespace Manga_Scan_Helper {
 						title += "untitled";
 					if (!_saved)
 						title += "*";
-					title += " - Scan Helper";
+					title += " - Miharu Scan Helper";
 				}
 				else
-					title += "Scan Helper";
+					title += "Miharu Scan Helper";
 				Title = title;
 			}
 		}

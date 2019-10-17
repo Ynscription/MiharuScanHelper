@@ -45,7 +45,8 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -151,9 +152,6 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Resources\Data\VNQuotes.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Licenses\Newtonsoft.Json LICENSE.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -468,6 +466,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\Data\" />
     <Folder Include="Resources\Redist\Tesseract-OCR\tessdata\script\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

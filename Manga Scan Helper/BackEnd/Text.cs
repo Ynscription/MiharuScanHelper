@@ -50,7 +50,7 @@ namespace Manga_Scan_Helper.BackEnd
 			}
 		}
 
-		private string _googleTranslatedText;
+		private string _googleTranslatedText = null;
 		public string GoogleTranslatedText {
 			get => _googleTranslatedText;
 			set {
@@ -59,7 +59,7 @@ namespace Manga_Scan_Helper.BackEnd
 			}
 		}
 
-		private string _bingTranslatedText;
+		private string _bingTranslatedText = null;
 		public string BingTranslatedText {
 			get => _bingTranslatedText;
 			set {
