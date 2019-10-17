@@ -19,7 +19,7 @@ namespace Manga_Scan_Helper.BackEnd {
 	public static class HTTPTranslator {
 		private const string _googleTranslateURL = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=ja&tl=en&dt=t&q=";
 		private const string _bingTranslateURL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=ja&to=en";
-		private const string _A = "<Your Azure key here>";
+		private const string _A = "<Your Azure Cognitive Services key here>";
 		
 
 		public static void GoogleTranslate (TranslationConsumer consumer, string source) {

@@ -106,6 +106,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BackEnd\Chapter.cs" />
+    <Compile Include="BackEnd\CrashHandler.cs" />
     <Compile Include="BackEnd\HTTPTranslator.cs" />
     <Compile Include="BackEnd\Logger.cs" />
     <Compile Include="BackEnd\Ripper.cs" />
