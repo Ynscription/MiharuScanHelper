@@ -68,13 +68,33 @@ namespace Manga_Scan_Helper {
 
 
 			System.IO.Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
-			if (args.Length > 1 && System.IO.File.Exists(args[1])) {
-				_currSavedFile = args[1];
+			if (CrashHandler.LastSessionCrashed) {
+				TaskDialog dialog = new TaskDialog();
+				dialog.WindowTitle = "Warning";
+				dialog.MainIcon = TaskDialogIcon.Warning;
+				dialog.MainInstruction = "It seems like a file can be recovered from last session.";
+				dialog.Content = "Would you like to attempt to recover the file?";
+				TaskDialogButton saveButton = new TaskDialogButton(ButtonType.Yes);
+				saveButton.Text = "Yes";
+				dialog.Buttons.Add(saveButton);
+				TaskDialogButton noSaveButton = new TaskDialogButton(ButtonType.No);
+				noSaveButton.Text = "No";
+				dialog.Buttons.Add(noSaveButton);
+				TaskDialogButton button = dialog.ShowDialog(this);
+				string temp = CrashHandler.RecoverLastSessionFile();
+				if (button.ButtonType == ButtonType.Yes) {
+					_currSavedFile = temp;
+					_openChapterOnLoad = true;
+				}
+			}
+			else if (args.Length > 1 && System.IO.File.Exists(args [1])) {
+				_currSavedFile = args [1];
 				_openChapterOnLoad = true;
 			}
 
-			
-			
+
+
+
 		}
 
 
@@ -764,33 +784,32 @@ namespace Manga_Scan_Helper {
 
 		}
 
+		private void OnImageLoaded (object sender, RoutedEventArgs e) {
+			if (_openChapterOnLoad)
+				OpenChapter(_currSavedFile);
+		}
 
+		
 		public void UnhandledException (object sender, DispatcherUnhandledExceptionEventArgs e) {
-			//Gotta cleanup the translator in the event of an unexpected exception ツ
-			//Translator.CleanUp();
-			Logger.CrashLog(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
+			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);			
 		}
 
 		public void UnhandledException (object sender, UnhandledExceptionEventArgs e) {
-			//Gotta cleanup the translator in the event of an unexpected exception ツ
-			//Translator.CleanUp();
-			
+			try {
+				CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, (Exception)e.ExceptionObject);
+			}catch { }
+
 		}
 
 		public void UnhandledException (object sender, UnobservedTaskExceptionEventArgs e) {
-			//Gotta cleanup the translator in the event of an unexpected exception ツ
-			//Translator.CleanUp();
-			Logger.CrashLog(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
+			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);
 		}
 
-
+		
 
 
 		#endregion
 
-		private void Image_Loaded (object sender, RoutedEventArgs e) {
-			if (_openChapterOnLoad)
-				OpenChapter(_currSavedFile);
-		}
+
 	}
 }
