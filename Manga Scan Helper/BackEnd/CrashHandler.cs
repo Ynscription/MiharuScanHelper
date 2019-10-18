@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Manga_Scan_Helper.BackEnd
 {
-    class CrashHandler
+    static class CrashHandler
     {
 		private const string EMERGENCY_FILE = @"\.crash";
 		private static bool _emergencyHandled = false;

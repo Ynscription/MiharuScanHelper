@@ -8,45 +8,52 @@ using System.Text.RegularExpressions;
 
 namespace Manga_Scan_Helper.BackEnd
 {
-    public class Ripper
+    public static class Ripper
     {
-		private string _url;
-		public string _destinationFolder = null;
-		//private static Regex PageRegex = new Regex(@"<img class='chapter-img' src='(.*).jpg", RegexOptions.Compiled);
 
+		public class RipperException : Exception{
 
-		public Ripper (string url) {
+			public RipperException () : base() {
+
+			}
+
+			public RipperException (string message) : base(message) {
+
+			}
+
+			public RipperException (string message, Exception innerException) : base (message, innerException) {
+
+			}
+		}
+		
+		public static string Rip (string url, string path) {
 			Uri uriResult = null;
 			if (!url.Contains("lhscan.net"))
-				throw new Exception("The URL belongs to a non supported site. Only lhscan.net pages supported (for now).");
+				throw new RipperException("The URL belongs to a non supported site. Only lhscan.net pages supported (for now).");
+
 			bool result = Uri.TryCreate(url, UriKind.Absolute, out uriResult)
 						&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
 			if (!result)
-				throw new Exception("URL could not be recognized as a valid URL scheme.");
-			_url = url;
-
-		}
+				throw new RipperException("URL could not be recognized as a valid URL scheme.");
+			
 
 
-		public void SetDestinationFolder (string path) {
+			string destinationFolder = null;
 			if (Directory.Exists(path)) {
-				if (!(path[path.Length-1] == '\\' || path [path.Length - 1] == '/'))
+				if (!(path [path.Length - 1] == '\\' || path [path.Length - 1] == '/'))
 					path += "\\";
-				_destinationFolder = path;
+				destinationFolder = path;
 			}
 			else
-				throw new Exception ("Could not find or acces the directory " + path);
-		}
+				throw new RipperException("Could not find or acces the directory " + path);
 
 
-		public string Rip () {
-			HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_url);
+			HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
 			HttpWebResponse response = null;
 			try {
 				response = (HttpWebResponse) request.GetResponse();
 			}catch (Exception e){
-				Exception ex = new Exception("There was a HTTP response error.", e);
-				throw ex;
+				throw new RipperException("There was a HTTP response error.", e);
 			}
 			if (response.StatusCode == HttpStatusCode.OK) {
 				Stream receiveStream = response.GetResponseStream();
@@ -68,7 +75,7 @@ namespace Manga_Scan_Helper.BackEnd
 					if (input.Contains(find)) {
 						string imgurl = input.Substring(input.IndexOf(find) + find.Length + 1);
 						imgurl = imgurl.Substring(0, imgurl.IndexOf(".jpg") + 4);
-						DownloadImage(imgurl, i++);						
+						DownloadImage(imgurl, i++, destinationFolder);						
 					}
 				}
 
@@ -80,15 +87,16 @@ namespace Manga_Scan_Helper.BackEnd
 
 			}
 			else
-				throw new Exception ("HTTP response returned with status code " + response.StatusCode + ": " + response.StatusDescription);
+				throw new RipperException("HTTP response returned with status code " + response.StatusCode + ": " + response.StatusDescription);
 
 
-			return _destinationFolder;
+			return destinationFolder;
 		}
 
-		private void DownloadImage (string url, int index) {
-			WebClient client = new WebClient();
-			client.DownloadFile(new Uri(url), _destinationFolder + index.ToString("D3") + ".jpg");				
+		private static void DownloadImage (string url, int index, string destinationFolder) {
+			using (WebClient client = new WebClient()) {
+				client.DownloadFile(new Uri(url), destinationFolder + index.ToString("D3") + ".jpg");				
+			}
 			
 		}
 

@@ -23,7 +23,11 @@ namespace Manga_Scan_Helper.FrontEnd {
 			get; private set;
 		}
 
-		public Ripper Result {
+		public string URL {
+			get; private set;
+		}
+
+		public string DestinationPath {
 			get; private set;
 		}
 
@@ -47,8 +51,8 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 		private void RipButton_Click (object sender, RoutedEventArgs e) {
 			try {
-				Result = new Ripper(URLTextBox.Text);
-				Result.SetDestinationFolder(FolderTextBox.Text);
+				URL = URLTextBox.Text;
+				DestinationPath = FolderTextBox.Text;
 				Success = true;
 				Close();
 			}

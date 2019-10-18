@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using static Manga_Scan_Helper.BackEnd.Ripper;
 
 namespace Manga_Scan_Helper {
 	/// <summary>
@@ -511,14 +512,26 @@ namespace Manga_Scan_Helper {
 			ripDialog.Owner = this;
 			ripDialog.ShowDialog();
 			if (ripDialog.Success) {
-				string dest = ripDialog.Result.Rip();
 				try {
 					Mouse.SetCursor(Cursors.Wait);
+					string dest = Ripper.Rip(ripDialog.URL, ripDialog.DestinationPath);
 					_loadedChapter = new Chapter(dest);
 					LoadChapter();
 					foreach (Page p in _loadedChapter.Pages)
 						p.PageChanged += OnItemChange;
 					Mouse.SetCursor(Cursors.Arrow);
+				}
+				catch (RipperException ex) {
+					Mouse.SetCursor(Cursors.Arrow);
+					_loadedChapter = null;
+					TaskDialog dialog = new TaskDialog();
+					dialog.WindowTitle = "Error";
+					dialog.MainIcon = TaskDialogIcon.Error;
+					dialog.MainInstruction = "There was an error while ripping.";
+					dialog.Content = ex.Message;
+					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+					dialog.Buttons.Add(okButton);
+					TaskDialogButton button = dialog.ShowDialog(this);
 				}
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);

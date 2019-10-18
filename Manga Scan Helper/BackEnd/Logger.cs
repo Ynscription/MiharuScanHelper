@@ -2,7 +2,7 @@
 using System.IO;
 
 namespace Manga_Scan_Helper.BackEnd {
-	public class Logger {
+	public static class Logger {
 
 		private static string _currCrashLog = null;
 		private static string _currLog = null;
