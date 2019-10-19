@@ -13,12 +13,14 @@ namespace Manga_Scan_Helper.BackEnd {
 	
 	public enum TranslationType {
 		Google,
-		Bing
+		Bing,
+		Yandex
 	}
 
 	public static class HTTPTranslator {
 		private const string _googleTranslateURL = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=ja&tl=en&dt=t&q=";
 		private const string _bingTranslateURL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=ja&to=en";
+		private const string _yandexTranslateURL = "https://translate.yandex.com/?lang=ja-en&text=";
 		private const string _A = "<Your Azure Cognitive Services key here>";
 		
 
@@ -33,7 +35,11 @@ namespace Manga_Scan_Helper.BackEnd {
 		}
 
 		public static void BingTranslate (TranslationConsumer consumer, string source) {
-			Task.Run(() => internalBingTranslateAsync(consumer, source));
+			Task.Run(() => internalBingTranslate(consumer, source));
+		}
+
+		public static void YandexTranslate (TranslationConsumer consumer, string source) {
+			Task.Run(() => internalYandexTranslate(consumer, source));
 		}
 
 		private static async Task internalGoogleTranslate (TranslationConsumer consumer, string src) {
@@ -81,7 +87,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			}
 		}
 
-		private static async Task internalBingTranslateAsync (TranslationConsumer consumer, string src) {
+		private static async Task internalBingTranslate (TranslationConsumer consumer, string src) {
 			object [] body = new object [] { new { Text = src} };
 			string requestBody = JsonConvert.SerializeObject(body);
 
@@ -117,6 +123,44 @@ namespace Manga_Scan_Helper.BackEnd {
 				consumer.TranslationFailed(e, TranslationType.Bing);
 			}
 
+		}
+
+
+		private static async Task internalYandexTranslate (TranslationConsumer consumer, string src) {
+			string res = "";
+			HttpWebResponse response = null;
+			Stream receiveStream = null;
+
+			try {
+				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL + Uri.EscapeUriString(src));
+				response = (HttpWebResponse) await request.GetResponseAsync();
+				if (response.StatusCode == HttpStatusCode.OK) {
+					receiveStream = response.GetResponseStream();
+					StreamReader readStream = null;
+
+					if (response.CharacterSet == null)
+						readStream = new StreamReader(receiveStream);
+					else
+						readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+
+					res = await readStream.ReadToEndAsync();
+
+					receiveStream.Close();
+
+					
+				}
+				else {
+					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine
+															 + response.StatusDescription), TranslationType.Google);
+				}
+				response.Close();
+			}
+			catch (Exception e) {
+
+				receiveStream?.Close();
+				response?.Close();
+				consumer.TranslationFailed(e, TranslationType.Google);
+			}
 		}
 	}
 }

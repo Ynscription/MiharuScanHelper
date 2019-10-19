@@ -569,9 +569,10 @@ namespace Manga_Scan_Helper {
 				imgSrc.BeginInit();
 				imgSrc.UriSource = new Uri(_loadedChapter.Pages[_currentPage].Path, UriKind.Relative);
 				imgSrc.CacheOption = BitmapCacheOption.OnLoad;
+				
 				imgSrc.EndInit();
-				PreviewIMG.Source = imgSrc;
 
+				PreviewIMG.Source = imgSrc;
 				PreviewIMGScroll.ScrollToTop();
 				PreviewIMGScroll.ScrollToRightEnd();
 				

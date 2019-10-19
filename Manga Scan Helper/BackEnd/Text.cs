@@ -68,6 +68,15 @@ namespace Manga_Scan_Helper.BackEnd
 			}
 		}
 
+		private string _onoTranslatedText = null;
+		public string OnoTranslatedText {
+			get => _onoTranslatedText;
+			set {
+				_onoTranslatedText = value;
+				TextChanged?.Invoke(this, new EventArgs());
+			}
+		}
+
 		private string _translatedText;
 		public string TranslatedText {
 			get => _translatedText;
@@ -96,6 +105,20 @@ namespace Manga_Scan_Helper.BackEnd
 			BingTranslatedText = bingTranslatedText;
 			TranslatedText = translatedText;
 
+		}
+
+		[JsonConstructor]
+		public Text (Rect rectangle, bool vertical, bool parseInvalidated,
+					string parsedText, string googleTranslatedText, string bingTranslatedText,
+					string onoTranslatedText, string translatedText) {
+			Rectangle = rectangle;
+			Vertical = vertical;
+			_parseInvalidated = parseInvalidated;
+			ParsedText = parsedText;
+			GoogleTranslatedText = googleTranslatedText;
+			BingTranslatedText = bingTranslatedText;
+			OnoTranslatedText = onoTranslatedText;
+			TranslatedText = translatedText;			
 		}
 
 		private string ParseText () {

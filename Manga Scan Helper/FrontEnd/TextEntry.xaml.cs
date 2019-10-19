@@ -54,6 +54,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			InitializeParsedTextBox();
 			GoogleTranslationLabel.Text = textEntry.GoogleTranslatedText;
 			BingTranslationLabel.Text = textEntry.BingTranslatedText;
+			//OnoTranslationText.Text = textEntry.OnoTranslatedText;
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
 			
@@ -117,8 +118,9 @@ namespace Manga_Scan_Helper.FrontEnd {
 			_awaitingGoogle = true;
 			HTTPTranslator.GoogleTranslate(this, text);
 			_awaitingBing = true;
-			HTTPTranslator.BingTranslate(this, text);			
-
+			HTTPTranslator.BingTranslate(this, text);
+			_textEntry.OnoTranslatedText = SFXDictionary.Translate(text);
+			
 		}
 
 		public void TranslationCallback (string translation, TranslationType type) {
