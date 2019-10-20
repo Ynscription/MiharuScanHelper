@@ -2,11 +2,12 @@
 using Manga_Scan_Helper.FrontEnd;
 using Ookii.Dialogs.Wpf;
 using System;
-using System.Threading;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using static Manga_Scan_Helper.BackEnd.Ripper;
@@ -28,6 +29,9 @@ namespace Manga_Scan_Helper {
 		private string _currSavedScript = null;
 		private string _currSavedJPScript = null;
 		private string _currSavedCompleteScript = null;
+
+		private double _dpiX;
+		private double _dpiY;
 
 		private bool Saved {
 			get => _saved;
@@ -57,6 +61,11 @@ namespace Manga_Scan_Helper {
 
 		public MainWindow () {
 			InitializeComponent();
+			
+			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+			_dpiX = g.DpiX;
+			_dpiY = g.DpiY;
+
 			ChangePage();
 			/*ThreadStart ts = new ThreadStart (Translator.BeginInnit);
 			Thread translatorInnit = new Thread (ts);
@@ -563,16 +572,33 @@ namespace Manga_Scan_Helper {
 		#region PagePanel
 		private string _previousCurrPageTBText;
 
+		private BitmapSource ChangeImageDPI (BitmapImage src) {
+			int width = src.PixelWidth;
+			int height = src.PixelHeight;
+			PixelFormat pxFormat = src.Format;
+
+			int stride = width * 4; // 4 bytes per pixel
+			byte [] pixelData = new byte [stride * height];
+			src.CopyPixels(pixelData, stride, 0);
+
+			BitmapSource result = BitmapSource.Create(width, height, _dpiX, _dpiY, pxFormat, null, pixelData, stride);
+
+			return result;
+		}
+
 		private void ChangePage () {
 			if (CurrPageTextBox.IsEnabled = (_loadedChapter != null)) {
 				BitmapImage imgSrc = new BitmapImage();
 				imgSrc.BeginInit();
 				imgSrc.UriSource = new Uri(_loadedChapter.Pages[_currentPage].Path, UriKind.Relative);
-				imgSrc.CacheOption = BitmapCacheOption.OnLoad;
-				
+				imgSrc.CacheOption = BitmapCacheOption.OnLoad;				
 				imgSrc.EndInit();
+								
+				if (imgSrc.DpiX != _dpiX || imgSrc.DpiY != _dpiY)
+					PreviewIMG.Source = ChangeImageDPI(imgSrc);
+				else
+					PreviewIMG.Source = imgSrc;
 
-				PreviewIMG.Source = imgSrc;
 				PreviewIMGScroll.ScrollToTop();
 				PreviewIMGScroll.ScrollToRightEnd();
 				
@@ -694,7 +720,7 @@ namespace Manga_Scan_Helper {
 			}
 		}
 
-		private Point _startingPoint;
+		private System.Windows.Point _startingPoint;
 		private RectangleAdorner [] _pageRectangles = null;
 		bool _previousMouseState = false;
 
@@ -798,7 +824,10 @@ namespace Manga_Scan_Helper {
 
 		}
 
+		
+
 		private void OnImageLoaded (object sender, RoutedEventArgs e) {
+			
 			if (_openChapterOnLoad)
 				OpenChapter(_currSavedFile);
 		}

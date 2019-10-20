@@ -23,7 +23,7 @@
 		<Button x:Name="RefreshParseButton" Content="Refresh" HorizontalAlignment="Right" Margin="0,42,9,0" VerticalAlignment="Top" Width="63" FontSize="10" Click="RefreshParseButton_Click"/>
 		<Button x:Name="RefreshTranslateButton" HorizontalAlignment="Right" Margin="0,186,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="RefreshTranslateButton_Click" Height="24">
 			<StackPanel>
-				<Image Source="/Manga Scan Helper;component/Resources/Refresh.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
 			</StackPanel>
 		</Button>
 		<Label x:Name="label" Content="Google" HorizontalAlignment="Left" Margin="212,126,0,0" VerticalAlignment="Top" Width="55"/>
@@ -46,17 +46,17 @@
 		-->
 		<Button x:Name="MoveUpButton" HorizontalAlignment="Left" Margin="5,35,0,180" Width="38" Click="MoveUpButton_Click">
 			<StackPanel>
-				<Image Source="/Manga Scan Helper;component/Resources/ArrowUp.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowUp.png"  />
 			</StackPanel>
 		</Button>
 		<Button x:Name="MoveDownButton" HorizontalAlignment="Left" Margin="5,180,0,35" Width="38" Click="MoveDownButton_Click">
 			<StackPanel>
-				<Image Source="/Manga Scan Helper;component/Resources/ArrowDown.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowDown.png"  />
 			</StackPanel>
 		</Button>
 		<Button x:Name="DeleteButton" HorizontalAlignment="Right" Margin="0,321,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24">
 			<StackPanel>
-				<Image Source="/Manga Scan Helper;component/Resources/Delete.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Delete.png"  />
 			</StackPanel>
 		</Button>
 

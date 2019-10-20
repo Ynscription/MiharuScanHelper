@@ -58,13 +58,13 @@
 				</Grid.ColumnDefinitions>
 				<Button x:Name="NextPageButton" FontSize="14" IsEnabled="False" Click="NextPageButton_Click" MinWidth="75" MaxWidth="75" VerticalAlignment="Top" Margin="33,0,0,0" HorizontalAlignment="Left" Width="75" Grid.Column="1" TabIndex="4">
 					<StackPanel>
-						<Image Source="/Manga Scan Helper;component/Resources/ArrowRight.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="OnImageLoaded"  />
+						<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="OnImageLoaded" Source="/Miharu Scan Helper;component/Resources/ArrowRight.png"  />
 					</StackPanel>
 				</Button>
 				<TextBox x:Name="CurrPageTextBox" Margin="0" Height="23" VerticalAlignment="Top" FontSize="14" MaxLines="5" TextAlignment="Center" IsEnabled="False" MinWidth="56" MaxWidth="56" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="56" AllowDrop="False" AcceptsReturn="True" GotMouseCapture="CurrPageTextBox_GotMouseCapture" TabIndex="3" PreviewKeyUp="CurrPageTextBox_PreviewKeyUp" PreviewKeyDown="CurrPageTextBox_PreviewKeyDown"/>
 				<Button x:Name="PrevPageButton" FontSize="14" IsEnabled="False" Click="PrevPageButton_Click" MinWidth="75" MaxWidth="75" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Margin="0,0,33,0" TabIndex="2">
 					<StackPanel>
-						<Image Source="/Manga Scan Helper;component/Resources/ArrowLeft.png" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+						<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowLeft.png"  />
 					</StackPanel>
 				</Button>
 			</Grid>
