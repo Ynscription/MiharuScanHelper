@@ -199,6 +199,15 @@ namespace Manga_Scan_Helper {
 		}
 
 		private void NewChapterMenuItem_Click (object sender, RoutedEventArgs e) {
+			if (_loadedChapter != null && !Saved) {
+				ButtonType warnRes = WarnNotSaved();
+				if (warnRes == ButtonType.Yes)
+					SaveChapterMenuItem_Click(sender, e);
+				else if (warnRes == ButtonType.Cancel)
+					return;
+			}
+
+
 			VistaFolderBrowserDialog folderDialog = new VistaFolderBrowserDialog();
 			bool? res = folderDialog.ShowDialog(this);
 			if (res ?? false) {
