@@ -168,12 +168,12 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 
 		private void VerticalCheckBox_Checked (object sender, RoutedEventArgs e) {
-			if (_textEntry != null)
+			if (_textEntry != null && !_textEntry.Vertical)
 				_textEntry.Vertical = true;
 		}
 
 		private void VerticalCheckBox_Unchecked (object sender, RoutedEventArgs e) {
-			if (_textEntry != null)
+			if (_textEntry != null && _textEntry.Vertical)
 				_textEntry.Vertical = false;
 		}
 
