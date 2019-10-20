@@ -93,20 +93,7 @@ namespace Manga_Scan_Helper.BackEnd
 			Vertical = src.Height >= src.Width;
 		}
 
-		[JsonConstructor]
-		public Text (Rect rectangle, bool vertical, bool parseInvalidated, 
-					string parsedText, string googleTranslatedText, string bingTranslatedText, 
-					string translatedText) {
-			Rectangle = rectangle;
-			Vertical = vertical;
-			_parseInvalidated = parseInvalidated;
-			ParsedText = parsedText;
-			GoogleTranslatedText = googleTranslatedText;
-			BingTranslatedText = bingTranslatedText;
-			TranslatedText = translatedText;
-
-		}
-
+		
 		[JsonConstructor]
 		public Text (Rect rectangle, bool vertical, bool parseInvalidated,
 					string parsedText, string googleTranslatedText, string bingTranslatedText,
