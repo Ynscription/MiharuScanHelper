@@ -137,10 +137,11 @@ namespace Manga_Scan_Helper {
 		private void OpenChapter (string file) {
 			try {
 				Mouse.SetCursor(Cursors.Wait);
-				_loadedChapter = Chapter.Load(file);
+				int page = 0;
+				_loadedChapter = Chapter.Load(file, out page);
 				if (_loadedChapter == null)
 					throw new Exception("Failed to open chapter from file: " + file);
-				LoadChapter();
+				LoadChapter(page);
 				foreach (Page p in _loadedChapter.Pages) {
 					p.PageChanged += OnItemChange;
 					foreach (Text t in p.TextEntries)
@@ -153,6 +154,7 @@ namespace Manga_Scan_Helper {
 			catch (Exception ex) {
 				Mouse.SetCursor(Cursors.Arrow);
 				_loadedChapter = null;
+				_currentPage = 0;
 				TaskDialog dialog = new TaskDialog();
 				dialog.WindowTitle = "Error";
 				dialog.MainIcon = TaskDialogIcon.Error;
@@ -165,11 +167,16 @@ namespace Manga_Scan_Helper {
 			}
 		}
 
-		private void LoadChapter () {
-			
+		private void LoadChapter (int page = 0) {
+
+			AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
+			if (_pageRectangles? [_previousPage] != null)
+				adornerLayer.Remove(_pageRectangles [_previousPage]);
+			_pageRectangles? [_currentPage].InvalidateVisual();
+
 			_pageRectangles = new RectangleAdorner [_loadedChapter.Pages.Count];
-			
-			_currentPage = 0;
+
+			_currentPage = page;
 			ChangePage();
 
 			_currSavedFile = null;
@@ -293,7 +300,7 @@ namespace Manga_Scan_Helper {
 			if (_currSavedFile != null) {
 				try {
 					Mouse.SetCursor(Cursors.Wait);
-					_loadedChapter.Save(_currSavedFile);
+					_loadedChapter.Save(_currSavedFile, _currentPage);
 					Saved = true;
 					Mouse.SetCursor(Cursors.Arrow);
 				}
@@ -326,7 +333,7 @@ namespace Manga_Scan_Helper {
 			if (res ?? false) {
 				try {
 					Mouse.SetCursor(Cursors.Wait);
-					_loadedChapter.Save(fileDialog.FileName);
+					_loadedChapter.Save(fileDialog.FileName, _currentPage);
 					_currSavedFile = fileDialog.FileName;
 					Saved = true;					
 					Mouse.SetCursor(Cursors.Arrow);

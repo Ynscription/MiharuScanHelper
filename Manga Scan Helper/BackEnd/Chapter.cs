@@ -52,10 +52,11 @@ namespace Manga_Scan_Helper.BackEnd
 			Pages = pages;
 		}
 
-		public void Save (string destPath) {
+		public void Save (string destPath, int currentPage = 0) {
 			StreamWriter writer = null;
 			try {
-				writer = new StreamWriter(destPath, false, Encoding.UTF8);				
+				writer = new StreamWriter(destPath, false, Encoding.UTF8);	
+				writer.WriteLine(currentPage);
 				writer.Write(JsonConvert.SerializeObject(this, Formatting.Indented));
 				/*writer.WriteLine(Path);
 				writer.WriteLine(TotalPages);
@@ -70,12 +71,14 @@ namespace Manga_Scan_Helper.BackEnd
 			
 		}
 
-		public static Chapter Load (string src) {
+		public static Chapter Load (string src, out int page) {
 			Chapter res = null;
 			StreamReader reader = null;
+			page = 0;
 			try {
 				reader = new StreamReader(src);
-				
+				if (reader.Peek() != '{')
+					page = int.Parse(reader.ReadLine());
 				res = JsonConvert.DeserializeObject<Chapter>(reader.ReadToEnd());
 				foreach (Page p in res.Pages)
 					p.Load();
