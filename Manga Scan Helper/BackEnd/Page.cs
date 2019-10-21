@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows;
 
 namespace Manga_Scan_Helper.BackEnd {
@@ -11,6 +12,16 @@ namespace Manga_Scan_Helper.BackEnd {
 	class Page
     {
 
+		private volatile bool _ready = false;
+		public bool Ready {
+			get => _ready;
+			private set => _ready = value;
+		}
+
+		public AutoResetEvent WaitHandle {
+			get;
+			private set;
+		}
 
 		public event EventHandler PageChanged;
 
@@ -30,15 +41,16 @@ namespace Manga_Scan_Helper.BackEnd {
 		
 
 		public Page (string src) {
-			Source = new Bitmap(src);
 			Path = src;
 			TextEntries = new List<Text>();
+			WaitHandle = new AutoResetEvent(false);
 		}
 
 		[JsonConstructor]
 		public Page (string path, List<Text> textEntries) {
 			Path = path;
 			TextEntries = textEntries;
+			WaitHandle = new AutoResetEvent(false);
 		}
 
 		
@@ -67,6 +79,7 @@ namespace Manga_Scan_Helper.BackEnd {
 		private Bitmap CropImage (Rect rect) {
 			if (rect.Width == 0 || rect.Height == 0)
 				return null;
+
 			Bitmap cropped = new Bitmap((int) rect.Width, (int) rect.Height);
 			Graphics g = Graphics.FromImage(cropped);
 			g.DrawImage(Source, new Rectangle(0, 0, (int) rect.Width, (int) rect.Height),
@@ -79,7 +92,8 @@ namespace Manga_Scan_Helper.BackEnd {
 			Source = new Bitmap(Path);
 			foreach (Text t in TextEntries)
 				t.Load(CropImage(t.Rectangle));
-
+			Ready = true;
+			WaitHandle.Set();
 		}
 
 		public void ExportScript (StreamWriter writer) {

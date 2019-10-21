@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd
 {
@@ -43,8 +45,12 @@ namespace Manga_Scan_Helper.BackEnd
 				Page p = new Page (file.FullName);
 				Pages.Add(p);
 			}
-			
+
+			Pages[0].Load();
+			Task.Run(() => LoadPagesAsync(this, 0));
 		}
+
+		
 
 		[JsonConstructor]
 		private Chapter (string path, List<Page> pages) {
@@ -80,8 +86,10 @@ namespace Manga_Scan_Helper.BackEnd
 				if (reader.Peek() != '{')
 					page = int.Parse(reader.ReadLine());
 				res = JsonConvert.DeserializeObject<Chapter>(reader.ReadToEnd());
-				foreach (Page p in res.Pages)
-					p.Load();
+				res.Pages[page].Load();
+
+				int loadPage = page;
+				Task.Run(() => LoadPagesAsync(res, loadPage));
 				
 				reader.Close();
 			}
@@ -92,6 +100,17 @@ namespace Manga_Scan_Helper.BackEnd
 
 			return res;
 			
+		}
+
+		private static void LoadPagesAsync (Chapter res, int page) {
+			int lower = page -1;
+			int higher = page +1;
+			while (lower >= 0 || higher < res.TotalPages) {
+				if (lower >= 0)
+					res.Pages[lower--].Load();
+				if (higher < res.TotalPages)
+					res.Pages[higher++].Load();
+			}
 		}
 
 		public void ExportScript (string destPath) {

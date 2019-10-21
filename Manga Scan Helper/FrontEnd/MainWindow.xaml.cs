@@ -604,6 +604,7 @@ namespace Manga_Scan_Helper {
 
 		private void ChangePage () {
 			if (CurrPageTextBox.IsEnabled = (_loadedChapter != null)) {
+				
 				BitmapImage imgSrc = new BitmapImage();
 				imgSrc.BeginInit();
 				imgSrc.UriSource = new Uri(_loadedChapter.Pages[_currentPage].Path, UriKind.Relative);
@@ -630,6 +631,12 @@ namespace Manga_Scan_Helper {
 				_pageRectangles [_currentPage].InvalidateVisual();
 
 				//_imageProcessing = new ImageProcessing (_loadedChapter.Pages[_currentPage].Path, rects);
+				
+				if (!_loadedChapter.Pages [_currentPage].Ready) {
+					Mouse.SetCursor(Cursors.Wait);
+					_loadedChapter.Pages [_currentPage].WaitHandle.WaitOne();
+					Mouse.SetCursor(Cursors.Arrow);
+				}
 
 				TextEntriesStackPanel.Children.Clear();
 				for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count; i++) {
@@ -675,6 +682,7 @@ namespace Manga_Scan_Helper {
 				e.Handled = true;
 			}
 		}
+
 		private void CurrPageTextBox_PreviewKeyUp (object sender, KeyEventArgs e) {
 			if (_previousCurrPageTBText != CurrPageTextBox.Text && (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return)) {
 				ParseCurrPageTextBox();
