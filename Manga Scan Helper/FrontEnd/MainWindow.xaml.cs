@@ -122,9 +122,6 @@ Would you like to locate the Tesseract exectutable manually?";
 		public MainWindow () {
 			InitializeComponent();
 
-			CheckForTesseract();
-			Logger.SessionLog("[Tesseract path in use]:" + (string)Settings.Default["TesseractPath"] + Environment.NewLine);
-
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 			_dpiX = g.DpiX;
 			_dpiY = g.DpiY;
@@ -139,6 +136,8 @@ Would you like to locate the Tesseract exectutable manually?";
 
 
 			System.IO.Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
+			CheckForTesseract();
+			Logger.SessionLog("[Tesseract path in use]:" + (string) Settings.Default ["TesseractPath"] + Environment.NewLine);
 			if (CrashHandler.LastSessionCrashed) {
 				TaskDialog dialog = new TaskDialog();
 				dialog.WindowTitle = "Warning";
