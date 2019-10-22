@@ -123,7 +123,8 @@ Would you like to locate the Tesseract exectutable manually?";
 			InitializeComponent();
 
 			CheckForTesseract();
-			
+			Logger.SessionLog("[Tesseract path in use]:" + (string)Settings.Default["TesseractPath"] + Environment.NewLine);
+
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 			_dpiX = g.DpiX;
 			_dpiY = g.DpiY;
