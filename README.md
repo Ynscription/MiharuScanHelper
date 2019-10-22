@@ -8,9 +8,10 @@ The [binaries](https://github.com/Ynscription/ScanHelper/releases) of Miharu are
 
 ## Getting the Source Code Running
 
-[Tesseract OCR](https://github.com/tesseract-ocr/tesseract#installing-tesseract) must be installed.
+[Tesseract OCR](https://github.com/tesseract-ocr/tesseract#installing-tesseract) must be in your system.
 
-> If it's not on the PATH, Miharu will ask for the Tesseract install directory on the first run.
+> The default directory checked for Tesseract is `.\Manga Scan Helper\Resources\Redist\Tesseract-OCR`
+> If it's not there or in the PATH, Miharu will ask for the Tesseract install directory on the first run.
 
 
 It is recommended to use Tesseract 4 and substitute the original trained data with these:
