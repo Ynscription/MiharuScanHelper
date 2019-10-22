@@ -72,14 +72,14 @@ namespace Manga_Scan_Helper {
 		}
 
 		private void CheckForTesseract() {
-			if (ExistsInPath("tesseract.exe")) {
-				if ((string)Settings.Default ["TesseractPath"] == "tesseract.exe")
-					return;
-				Settings.Default ["TesseractPath"] = "tesseract.exe";
-				Settings.Default.Save();
-				return;
-			}
 			if (!File.Exists((string)Settings.Default["TesseractPath"])) {
+				if (ExistsInPath("tesseract.exe")) {
+					if ((string) Settings.Default ["TesseractPath"] == "tesseract.exe")
+						return;
+					Settings.Default ["TesseractPath"] = "tesseract.exe";
+					Settings.Default.Save();
+					return;
+				}
 				TaskDialog dialog = new TaskDialog();
 				dialog.WindowTitle = "Warning Tesseract Not Found";
 				dialog.MainIcon = TaskDialogIcon.Warning;
