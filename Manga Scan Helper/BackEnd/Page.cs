@@ -18,7 +18,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			private set => _ready = value;
 		}
 
-		public AutoResetEvent WaitHandle {
+		public EventWaitHandle PageWaitHandle {
 			get;
 			private set;
 		}
@@ -43,14 +43,14 @@ namespace Manga_Scan_Helper.BackEnd {
 		public Page (string src) {
 			Path = src;
 			TextEntries = new List<Text>();
-			WaitHandle = new AutoResetEvent(false);
+			PageWaitHandle = new AutoResetEvent(false);
 		}
 
 		[JsonConstructor]
 		public Page (string path, List<Text> textEntries) {
 			Path = path;
 			TextEntries = textEntries;
-			WaitHandle = new AutoResetEvent(false);
+			PageWaitHandle = new AutoResetEvent(false);
 		}
 
 		
@@ -93,7 +93,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			foreach (Text t in TextEntries)
 				t.Load(CropImage(t.Rectangle));
 			Ready = true;
-			WaitHandle.Set();
+			PageWaitHandle.Set();
 		}
 
 		public void ExportScript (StreamWriter writer) {

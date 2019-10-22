@@ -695,7 +695,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				
 				if (!_loadedChapter.Pages [_currentPage].Ready) {
 					Mouse.SetCursor(Cursors.Wait);
-					_loadedChapter.Pages [_currentPage].WaitHandle.WaitOne();
+					_loadedChapter.Pages [_currentPage].PageWaitHandle.WaitOne();
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 
