@@ -11,8 +11,9 @@ namespace Manga_Scan_Helper.BackEnd {
 	[JsonObject(MemberSerialization.OptOut)]
 	class Page
     {
-
+		[JsonIgnoreAttribute]
 		private volatile bool _ready = false;
+		[JsonIgnoreAttribute]
 		public bool Ready {
 			get => _ready;
 			private set => _ready = value;

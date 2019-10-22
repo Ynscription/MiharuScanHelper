@@ -23,7 +23,7 @@ namespace Manga_Scan_Helper.BackEnd {
 		private const string _yandexTranslateURL = "https://translate.yandex.com/?lang=ja-en&text=";
 		//Your Azure Cognitive Services key here
 		private const string _A = "";
-		
+
 
 		public static void GoogleTranslate (TranslationConsumer consumer, string source) {
 			/*
