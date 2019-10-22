@@ -1,8 +1,10 @@
 ﻿using Manga_Scan_Helper.BackEnd;
 using Manga_Scan_Helper.FrontEnd;
+using Manga_Scan_Helper.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
@@ -56,20 +58,78 @@ namespace Manga_Scan_Helper {
 			}
 		}
 
+		private bool ExistsInPath (string fileName) {
+			bool res = false;
 
-		
+			string path = Environment.GetEnvironmentVariable("PATH");
+			string [] values = path.Split(Path.PathSeparator);
+			for (int i = 0; i < values.Length && !res; i++) {
+				var fullPath = Path.Combine(values[i], fileName);
+				res = File.Exists(fullPath);
+			}
+
+			return res;
+		}
+
+		private void CheckForTesseract() {
+			if (ExistsInPath("tesseract.exe")) {
+				if ((string)Settings.Default ["TesseractPath"] == "tesseract.exe")
+					return;
+				Settings.Default ["TesseractPath"] = "tesseract.exe";
+				Settings.Default.Save();
+				return;
+			}
+			if (!File.Exists((string)Settings.Default["TesseractPath"])) {
+				TaskDialog dialog = new TaskDialog();
+				dialog.WindowTitle = "Warning Tesseract Not Found";
+				dialog.MainIcon = TaskDialogIcon.Warning;
+				dialog.MainInstruction = "Tesseract executable could not be located.";
+				dialog.Content = @"Miharu requires Tesseract to function. 
+Would you like to locate the Tesseract exectutable manually?";
+
+				TaskDialogButton okButton = new TaskDialogButton(ButtonType.Yes);
+				dialog.Buttons.Add(okButton);
+				TaskDialogButton cancelButton = new TaskDialogButton(ButtonType.No);
+				dialog.Buttons.Add(cancelButton);
+				TaskDialogButton button = dialog.ShowDialog(this);
+				if (button.ButtonType == ButtonType.No) {
+					Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+					Application.Current.Shutdown(0);
+					return;
+				}
+
+				VistaOpenFileDialog fileDialog = new VistaOpenFileDialog();
+				fileDialog.AddExtension = true;
+				fileDialog.CheckFileExists = true;
+				fileDialog.CheckPathExists = true;
+				fileDialog.DefaultExt = ".exe";
+				fileDialog.Filter = "Tesseract (tesseract.exe)|tesseract.exe";
+				fileDialog.Multiselect = false;
+				fileDialog.Title = "Select Tesseract Executable";
+				bool? res = fileDialog.ShowDialog(this);
+				if (res ?? false) {
+					Settings.Default ["TesseractPath"] = fileDialog.FileName;
+					Settings.Default.Save();
+				}
+				else {
+					Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+					Application.Current.Shutdown(0);
+					return;
+				}
+			}
+		}
 
 		public MainWindow () {
 			InitializeComponent();
+
+			CheckForTesseract();
 			
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 			_dpiX = g.DpiX;
 			_dpiY = g.DpiY;
 
 			ChangePage();
-			/*ThreadStart ts = new ThreadStart (Translator.BeginInnit);
-			Thread translatorInnit = new Thread (ts);
-			translatorInnit.Start();*/
+			
 			Dispatcher.UnhandledException += UnhandledException;
 			AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 			TaskScheduler.UnobservedTaskException += UnhandledException;

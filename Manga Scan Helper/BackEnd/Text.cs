@@ -1,4 +1,5 @@
 ﻿
+using Manga_Scan_Helper.Properties;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
@@ -115,7 +116,7 @@ namespace Manga_Scan_Helper.BackEnd
 			Source.Save(TEMP_IMG, ImageFormat.Png);
 			
 			Process pProcess = new System.Diagnostics.Process();
-			pProcess.StartInfo.FileName = @".\Resources\Redist\Tesseract-OCR\tesseract.exe";
+			pProcess.StartInfo.FileName = (string)Settings.Default["TesseractPath"];
 			string vert = Vertical ? "jpn_vert" : "jpn";
 			pProcess.StartInfo.Arguments = TEMP_IMG + " tmp -l " + vert; //argument
 			pProcess.StartInfo.UseShellExecute = false;

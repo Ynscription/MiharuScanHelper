@@ -177,96 +177,36 @@
     <None Include="Resources\Redist\Tesseract-OCR\doc\COPYING">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\ambigs.train">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\api_config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\bigram">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\box.train">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\box.train.stderr">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\digits">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\hocr">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\inter">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\kannada">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\linebox">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\logfile">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\lstm.train">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\lstmdebug">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\makebox">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\quiet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\rebox">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\strokewidth">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\tsv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\unlv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\jpn.traineddata">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\jpn_vert.traineddata">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Resource Include="Resources\Redist\Tesseract-OCR\tessdata\pdf.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\batch">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\batch.nochop">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\matdemo">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\msdemo">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\nobatch">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\segdemo">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\ambigs.train" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\api_config" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\bigram" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\box.train" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\box.train.stderr" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\digits" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\hocr" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\inter" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\kannada" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\linebox" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\logfile" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\lstm.train" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\lstmdebug" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\makebox" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\pdf" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\quiet" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\rebox" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\strokewidth" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\tsv" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\txt" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\configs\unlv" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\jpn.traineddata" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\jpn_vert.traineddata" />
+    <Resource Include="Resources\Redist\Tesseract-OCR\tessdata\pdf.ttf" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\batch" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\batch.nochop" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\matdemo" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\msdemo" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\nobatch" />
+    <None Include="Resources\Redist\Tesseract-OCR\tessdata\tessconfigs\segdemo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -302,36 +242,16 @@
     <Content Include="Resources\Graphics\CnC_EE.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\ambiguous_words.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\classifier_tester.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\cntraining.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\combine_lang_model.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\combine_tessdata.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\dawg2wordlist.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\iconv.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\icudt57.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\icui18n57.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\icuuc57.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\Redist\Tesseract-OCR\ambiguous_words.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\classifier_tester.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\cntraining.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\combine_lang_model.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\combine_tessdata.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\dawg2wordlist.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\iconv.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\icudt57.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\icui18n57.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\icuuc57.dll" />
     <Content Include="Resources\Redist\Tesseract-OCR\java\piccolo2d-core-3.0.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -341,132 +261,48 @@
     <Content Include="Resources\Redist\Tesseract-OCR\java\ScrollView.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libbz2-1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libcairo-2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libexpat-1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libffi-6.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libfontconfig-1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libfreetype-6.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libgcc_s_seh-1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libgif-7.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libglib-2.0-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libgobject-2.0-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libgomp-1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libharfbuzz-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libintl-8.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libjbig-2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libjpeg-8.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\liblept-5.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\liblzma-5.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libopenjp2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libpango-1.0-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libpangocairo-1.0-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libpangoft2-1.0-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libpangowin32-1.0-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libpcre-1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libpixman-1-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libpng16-16.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libstdc++-6.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libtesseract-4.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libtiff-5.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libwebp-7.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\libwinpthread-1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\lstmeval.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\lstmtraining.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\merge_unicharsets.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\mftraining.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\set_unicharset_properties.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\shapeclustering.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\tesseract-uninstall.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\tesseract.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\text2image.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\unicharset_extractor.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\wordlist2dawg.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Redist\Tesseract-OCR\zlib1.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\Redist\Tesseract-OCR\libbz2-1.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libcairo-2.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libexpat-1.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libffi-6.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libfontconfig-1.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libfreetype-6.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libgcc_s_seh-1.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libgif-7.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libglib-2.0-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libgobject-2.0-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libgomp-1.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libharfbuzz-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libintl-8.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libjbig-2.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libjpeg-8.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\liblept-5.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\liblzma-5.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libopenjp2.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libpango-1.0-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libpangocairo-1.0-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libpangoft2-1.0-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libpangowin32-1.0-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libpcre-1.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libpixman-1-0.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libpng16-16.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libstdc++-6.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libtesseract-4.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libtiff-5.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libwebp-7.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\libwinpthread-1.dll" />
+    <Content Include="Resources\Redist\Tesseract-OCR\lstmeval.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\lstmtraining.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\merge_unicharsets.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\mftraining.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\set_unicharset_properties.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\shapeclustering.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\tesseract-uninstall.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\tesseract.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\text2image.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\unicharset_extractor.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\wordlist2dawg.exe" />
+    <Content Include="Resources\Redist\Tesseract-OCR\zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Redist\Tesseract-OCR\tessdata\script\" />
