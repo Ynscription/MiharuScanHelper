@@ -37,9 +37,7 @@
 		</Button>
 		<Grid Margin="215,49,29,219">
 			<Border BorderThickness="1" BorderBrush="Black">
-				<ScrollViewer x:Name="ParsedScroll" VerticalScrollBarVisibility="Auto" >
-					<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="24" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0"/>
-				</ScrollViewer>
+				<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="24" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
 			</Border>
 		</Grid>
 
@@ -47,17 +45,13 @@
 
 		<Label x:Name="label" Content="Google" HorizontalAlignment="Left" Margin="212,126,0,0" VerticalAlignment="Top" Width="55"/>
 		<Grid Margin="215,147,29,158">
-			<ScrollViewer VerticalScrollBarVisibility="Auto">
-				<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}"/>
-			</ScrollViewer>
+			<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto"/>
 			<Border BorderThickness="1" BorderBrush="Black" />
 		</Grid>
 
 		<Label x:Name="label10" Content="Bing" HorizontalAlignment="Left" Margin="212,188,0,0" VerticalAlignment="Top" Width="55"/>
 		<Grid Margin="215,209,29,96">
-			<ScrollViewer VerticalScrollBarVisibility="Auto">
-				<TextBox x:Name="BingTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}"/>
-			</ScrollViewer>
+			<TextBox x:Name="BingTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto"/>
 			<Border BorderThickness="1" BorderBrush="Black" />
 		</Grid>
 
@@ -71,9 +65,7 @@
 
 		<Label x:Name="label2_Copy" Content="Translation" HorizontalAlignment="Left" Height="28" Margin="210,252,0,0" VerticalAlignment="Top" Width="84"/>
 		<Grid Margin="215,272,29,7">
-			<ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
-				<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0"/>
-			</ScrollViewer>
+			<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
 			<Border BorderThickness="1" BorderBrush="Black" />
 		</Grid>
 		

@@ -49,7 +49,6 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 		public TextEntry (Text textEntry, MainWindow parent) :base(){
 			InitializeComponent();
-			ParsedScroll.CanContentScroll = true;
 			_textEntry = textEntry;
 			_parent = parent;
 			
