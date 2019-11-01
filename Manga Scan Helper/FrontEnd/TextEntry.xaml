@@ -8,42 +8,6 @@
              Height="352" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1">
 
 	<Grid>
-		<Image x:Name="PreviewIMG" Margin="48,10,0,10" Width="157" HorizontalAlignment="Left" />
-		<Label x:Name="label2" Content="Parsed Text" HorizontalAlignment="Left" Height="28" Margin="210,40,0,0" VerticalAlignment="Top" Width="73"/>
-
-		<TextBox x:Name="ParsedTextBox" Margin="215,60,10,219" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="Black"/>
-
-		<CheckBox x:Name="VerticalCheckBox" Content="Vertical" HorizontalAlignment="Left" Margin="215,15,0,0" VerticalAlignment="Top" IsChecked="True" Checked="VerticalCheckBox_Checked" Unchecked="VerticalCheckBox_Unchecked" Width="62"/>
-		<Label x:Name="JishoLinkLabel" Content="https://whatever.com" Height="26" Margin="335,9,10,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="JishoLinkLabel_MouseLeftButtonUp"/>
-		<Label x:Name="label1" Content="Jisho:" HorizontalAlignment="Left" Height="26" Margin="304,9,0,0" VerticalAlignment="Top" Width="47"/>
-		<Label x:Name="label2_Copy" Content="Translation" HorizontalAlignment="Left" Height="28" Margin="210,252,0,0" VerticalAlignment="Top" Width="84"/>
-
-		<TextBox x:Name="TranslatedTextBox" Margin="215,272,29,7" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="Black"/>
-
-		<Button x:Name="RefreshParseButton" Content="Refresh" HorizontalAlignment="Right" Margin="0,42,9,0" VerticalAlignment="Top" Width="63" FontSize="10" Click="RefreshParseButton_Click"/>
-		<Button x:Name="RefreshTranslateButton" HorizontalAlignment="Right" Margin="0,186,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="RefreshTranslateButton_Click" Height="24">
-			<StackPanel>
-				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
-			</StackPanel>
-		</Button>
-		<Label x:Name="label" Content="Google" HorizontalAlignment="Left" Margin="212,126,0,0" VerticalAlignment="Top" Width="55"/>
-		<Grid Margin="215,147,29,158">
-			<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True"/>
-			<Border BorderThickness="1" BorderBrush="Black" />			
-		</Grid>
-
-		<Label x:Name="label10" Content="Bing" HorizontalAlignment="Left" Margin="212,188,0,0" VerticalAlignment="Top" Width="55"/>
-		<Grid Margin="215,209,29,96">
-			<TextBox x:Name="BingTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True"/>
-			<Border BorderThickness="1" BorderBrush="Black" />
-		</Grid>
-
-
-
-		<!--
-		<Label x:Name="BingTranslationLabel" Content="" Margin="215,206,29,103" BorderBrush="Black" BorderThickness="1"/>		
-		<Label x:Name="label_Copy" Content="Bing" HorizontalAlignment="Left" Margin="212,185,0,0" VerticalAlignment="Top" Width="46"/>
-		-->
 		<Button x:Name="MoveUpButton" HorizontalAlignment="Left" Margin="5,35,0,180" Width="38" Click="MoveUpButton_Click">
 			<StackPanel>
 				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowUp.png"  />
@@ -54,6 +18,68 @@
 				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowDown.png"  />
 			</StackPanel>
 		</Button>
+		
+		<Image x:Name="PreviewIMG" Margin="48,10,0,10" Width="157" HorizontalAlignment="Left" />
+
+		<CheckBox x:Name="VerticalCheckBox" Content="Vertical" HorizontalAlignment="Left" Margin="215,15,0,0" VerticalAlignment="Top" IsChecked="True" Checked="VerticalCheckBox_Checked" Unchecked="VerticalCheckBox_Unchecked" Width="62"/>
+		
+		<Label x:Name="JishoLinkLabel" Content="https://whatever.com" Height="26" Margin="335,9,10,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="JishoLinkLabel_MouseLeftButtonUp"/>
+		<Label x:Name="label1" Content="Jisho:" HorizontalAlignment="Left" Height="26" Margin="304,9,0,0" VerticalAlignment="Top" Width="47"/>
+		
+		
+		
+		
+		<Label x:Name="label2" Content="Parsed Text" HorizontalAlignment="Left" Height="28" Margin="210,29,0,0" VerticalAlignment="Top" Width="73"/>
+		<Button x:Name="RefreshParseButton" HorizontalAlignment="Right" Margin="0,79,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="RefreshParseButton_Click" Height="24">
+			<StackPanel>
+				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
+			</StackPanel>
+		</Button>
+		<Grid Margin="215,49,29,219">
+			<Border BorderThickness="1" BorderBrush="Black">
+				<ScrollViewer x:Name="ParsedScroll" VerticalScrollBarVisibility="Auto" >
+					<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="24" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" BorderThickness="0"/>
+				</ScrollViewer>
+			</Border>
+		</Grid>
+
+		
+
+		<Label x:Name="label" Content="Google" HorizontalAlignment="Left" Margin="212,126,0,0" VerticalAlignment="Top" Width="55"/>
+		<Grid Margin="215,147,29,158">
+			<ScrollViewer VerticalScrollBarVisibility="Auto">
+				<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" SelectionBrush="{x:Null}" BorderBrush="{x:Null}"/>
+			</ScrollViewer>
+			<Border BorderThickness="1" BorderBrush="Black" />
+		</Grid>
+
+		<Label x:Name="label10" Content="Bing" HorizontalAlignment="Left" Margin="212,188,0,0" VerticalAlignment="Top" Width="55"/>
+		<Grid Margin="215,209,29,96">
+			<ScrollViewer VerticalScrollBarVisibility="Auto">
+				<TextBox x:Name="BingTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>
+			</ScrollViewer>
+			<Border BorderThickness="1" BorderBrush="Black" />
+		</Grid>
+
+		<Button x:Name="RefreshTranslateButton" HorizontalAlignment="Right" Margin="0,186,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="RefreshTranslateButton_Click" Height="24">
+			<StackPanel>
+				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
+			</StackPanel>
+		</Button>
+
+
+
+		<Label x:Name="label2_Copy" Content="Translation" HorizontalAlignment="Left" Height="28" Margin="210,252,0,0" VerticalAlignment="Top" Width="84"/>
+		<Grid Margin="215,272,29,7">
+			<ScrollViewer VerticalScrollBarVisibility="Auto">
+				<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" BorderThickness="0"/>
+			</ScrollViewer>
+			<Border BorderThickness="1" BorderBrush="Black" />
+		</Grid>
+		
+
+		
+		
 		<Button x:Name="DeleteButton" HorizontalAlignment="Right" Margin="0,321,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24">
 			<StackPanel>
 				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Delete.png"  />
@@ -61,5 +87,6 @@
 		</Button>
 
 		<Border BorderThickness="1" BorderBrush="#FF535353" />
+
 	</Grid>
 </UserControl>

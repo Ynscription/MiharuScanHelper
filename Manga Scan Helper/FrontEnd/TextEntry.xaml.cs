@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -48,9 +49,11 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 		public TextEntry (Text textEntry, MainWindow parent) :base(){
 			InitializeComponent();
-			_parent = parent;
-			ShowImageFromBitmap(textEntry.Source);
+			ParsedScroll.CanContentScroll = true;
 			_textEntry = textEntry;
+			_parent = parent;
+			
+			ShowImageFromBitmap(textEntry.Source);
 			InitializeParsedTextBox();
 			GoogleTranslationLabel.Text = textEntry.GoogleTranslatedText;
 			BingTranslationLabel.Text = textEntry.BingTranslatedText;
@@ -58,7 +61,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
 			
-			
+
 		}
 
 		private void RefreshParseButton_Click (object sender, RoutedEventArgs e) {
