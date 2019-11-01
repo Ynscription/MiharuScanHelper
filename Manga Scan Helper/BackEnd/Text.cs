@@ -130,6 +130,7 @@ namespace Manga_Scan_Helper.BackEnd
 			try {
 				StreamReader reader = new StreamReader (TEMP_TXT);
 				output = reader.ReadToEnd();
+				output = output.TrimEnd();
 				reader.Close();
 			}catch (IOException) {}
 
