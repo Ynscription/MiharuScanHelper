@@ -261,4 +261,4 @@ __pycache__/
 *.pyc
 
 # Ignore binaries to redist
-**/Manga*Scan*Helper/Resources/Redist/
+**/Miharu*Scan*Helper/Resources/Redist/
