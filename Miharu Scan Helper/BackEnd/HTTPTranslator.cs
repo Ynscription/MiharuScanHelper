@@ -49,7 +49,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			Stream receiveStream = null;
 			
 			try {
-				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL + Uri.EscapeUriString(src));
+				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL + Uri.EscapeDataString(src));//Uri.EscapeUriString(src));
 				response = (HttpWebResponse) await request.GetResponseAsync();
 				if (response.StatusCode == HttpStatusCode.OK) {
 					receiveStream = response.GetResponseStream();
@@ -133,7 +133,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			Stream receiveStream = null;
 
 			try {
-				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL + Uri.EscapeUriString(src));
+				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL + Uri.EscapeDataString(src));
 				response = (HttpWebResponse) await request.GetResponseAsync();
 				if (response.StatusCode == HttpStatusCode.OK) {
 					receiveStream = response.GetResponseStream();

@@ -27,10 +27,17 @@ namespace Manga_Scan_Helper.FrontEnd {
 		private MainWindow _parent;
 		private Text _textEntry;
 
+		private string SanitizeString (string input) {
+			string sanitized = input.Replace(Environment.NewLine, " ");
+			sanitized = sanitized.Replace("\n", " ");
+
+			return sanitized;
+		}
+
 		private void InitializeParsedTextBox () {
 			ParsedTextBox.Text = _textEntry.ParsedText;
-			string refinedText = _textEntry.ParsedText.Replace(Environment.NewLine, " ");
-			JishoLinkLabel.Content = "https://jisho.org/search/" + refinedText;
+			string refinedText = SanitizeString(_textEntry.ParsedText);
+			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
 			//Translate(refinedText);
 		}
 		public string ParsedText {
@@ -38,8 +45,8 @@ namespace Manga_Scan_Helper.FrontEnd {
 			set {
 				_textEntry.ParsedText = value;
 				ParsedTextBox.Text = _textEntry.ParsedText;
-				string refinedText = _textEntry.ParsedText.Replace(Environment.NewLine, " ");
-				JishoLinkLabel.Content = "https://jisho.org/search/" + refinedText;
+				string refinedText = SanitizeString(_textEntry.ParsedText);
+				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
 				//Translate(refinedText);
 				
 			}
@@ -65,13 +72,13 @@ namespace Manga_Scan_Helper.FrontEnd {
 			Mouse.SetCursor(Cursors.Wait);
 			_textEntry.Invalidate();
 			ParsedTextBox.Text = _textEntry.ParsedText;
-			string refinedText = _textEntry.ParsedText.Replace(Environment.NewLine, " ");
-			JishoLinkLabel.Content = "https://jisho.org/search/" + refinedText;
+			string refinedText = SanitizeString(_textEntry.ParsedText);
+			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
 			Mouse.SetCursor(Cursors.Arrow);
 		}
 
 		private void RefreshTranslateButton_Click (object sender, RoutedEventArgs e) {
-			string refinedText = ParsedText.Replace(Environment.NewLine, " ");
+			string refinedText = SanitizeString(ParsedText);
 
 			Translate(refinedText);			
 		}
@@ -103,7 +110,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 		public void ForceTranslation () {
 
-			string refinedText = ParsedText.Replace(Environment.NewLine, " ");
+			string refinedText = SanitizeString(ParsedText);
 			Translate(refinedText);
 			
 		}
