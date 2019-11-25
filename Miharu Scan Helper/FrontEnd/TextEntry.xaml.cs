@@ -29,8 +29,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 		private void InitializeParsedTextBox () {
 			ParsedTextBox.Text = _textEntry.ParsedText;
-			string refinedText = _textEntry.ParsedText.Replace(@"
-", " ");
+			string refinedText = _textEntry.ParsedText.Replace(Environment.NewLine, " ");
 			JishoLinkLabel.Content = "https://jisho.org/search/" + refinedText;
 			//Translate(refinedText);
 		}
@@ -39,8 +38,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			set {
 				_textEntry.ParsedText = value;
 				ParsedTextBox.Text = _textEntry.ParsedText;
-				string refinedText = _textEntry.ParsedText.Replace(@"
-", " ");
+				string refinedText = _textEntry.ParsedText.Replace(Environment.NewLine, " ");
 				JishoLinkLabel.Content = "https://jisho.org/search/" + refinedText;
 				//Translate(refinedText);
 				
@@ -67,15 +65,14 @@ namespace Manga_Scan_Helper.FrontEnd {
 			Mouse.SetCursor(Cursors.Wait);
 			_textEntry.Invalidate();
 			ParsedTextBox.Text = _textEntry.ParsedText;
-			string refinedText = _textEntry.ParsedText.Replace(@"
-", " ");
+			string refinedText = _textEntry.ParsedText.Replace(Environment.NewLine, " ");
 			JishoLinkLabel.Content = "https://jisho.org/search/" + refinedText;
 			Mouse.SetCursor(Cursors.Arrow);
 		}
 
 		private void RefreshTranslateButton_Click (object sender, RoutedEventArgs e) {
-			string refinedText = ParsedText.Replace(@"
-", " ");
+			string refinedText = ParsedText.Replace(Environment.NewLine, " ");
+
 			Translate(refinedText);			
 		}
 
@@ -105,9 +102,8 @@ namespace Manga_Scan_Helper.FrontEnd {
 		}
 
 		public void ForceTranslation () {
-			
-			string refinedText = ParsedText.Replace(@"
-", " ");
+
+			string refinedText = ParsedText.Replace(Environment.NewLine, " ");
 			Translate(refinedText);
 			
 		}
