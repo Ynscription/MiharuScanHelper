@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd
 {
+
     class Chapter
     {
 
@@ -26,7 +27,6 @@ namespace Manga_Scan_Helper.BackEnd
 		}
 
 		public Chapter (string folderSrc) {
-			Path = folderSrc;
 			Pages = new List<Page>();
 
 			DirectoryInfo d = new DirectoryInfo(folderSrc);
@@ -39,18 +39,42 @@ namespace Manga_Scan_Helper.BackEnd
 			if (files.Length == 0)
 				throw new Exception("No images were found in folder " + folderSrc + Environment.NewLine + Environment.NewLine + "Only jpg, jpeg or png files supported.");
 			
-
-			FileInfo[] sortedFiles = files.OrderBy(x => x.Name).ToArray();
+			
+			FileInfo[] sortedFiles = null;
+			try {
+				sortedFiles = files.OrderBy(x => Int32.Parse(x.Name.Substring(0, x.Name.IndexOf('.')))).ToArray();
+			}
+			catch (FormatException e) {
+				sortedFiles = files.OrderBy(x=> x.Name).ToArray();
+			}
 			foreach (FileInfo file in sortedFiles) {
 				Page p = new Page (file.FullName);
+				Pages.Add(p);
+			}
+			
+
+			Pages[0].Load();
+			Task.Run(() => LoadPagesAsync(this, 0));
+		}
+
+		public Chapter (string [] filesSrc) {
+			Pages = new List<Page>();
+
+			try {
+				filesSrc.OrderBy(x => Int32.Parse(x.Substring(x.LastIndexOf("\\"), x.IndexOf('.'))));
+			}
+			catch (FormatException e) {
+				filesSrc.OrderBy(x=> x.Substring(x.LastIndexOf("\\")));
+			}
+
+			foreach (string file in filesSrc) {
+				Page p = new Page (file);
 				Pages.Add(p);
 			}
 
 			Pages[0].Load();
 			Task.Run(() => LoadPagesAsync(this, 0));
 		}
-
-		
 
 		[JsonConstructor]
 		private Chapter (string path, List<Page> pages) {

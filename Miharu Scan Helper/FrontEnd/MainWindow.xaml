@@ -10,7 +10,10 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File" TabIndex="0">
-				<MenuItem x:Name="NewChapterMenuItem" Header="New Chapter" Click="NewChapterMenuItem_Click"/>
+				<MenuItem Header="New Chapter...">
+					<MenuItem x:Name="NewChapterFolderMenuItem" Header="From Folder" IsEnabled="True" Click="NewChapterFolderMenuItem_Click"/>
+					<MenuItem x:Name="NewChapterFilesMenuItem" Header="Select Files" IsEnabled="True" Click="NewChapterFilesMenuItem_Click"/>
+				</MenuItem>						  
 				<MenuItem x:Name="OpenChapterMenuItem" Header="Open Chapter" IsEnabled="True" Click="OpenChapterMenuItem_Click"/>
 				<MenuItem x:Name="CloseChapterMenuItem" Header="Close Chapter" IsEnabled="False" Click="CloseChapterMenuItem_Click"/>
 				<Separator />

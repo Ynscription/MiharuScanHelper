@@ -265,7 +265,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			return button.ButtonType;
 		}
 
-		private void NewChapterMenuItem_Click (object sender, RoutedEventArgs e) {
+		private void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				ButtonType warnRes = WarnNotSaved();
 				if (warnRes == ButtonType.Yes)
@@ -301,6 +301,50 @@ Would you like to locate the Tesseract exectutable manually?";
 				}
 			}
 			
+		}
+
+		private void NewChapterFilesMenuItem_Click (object sender, RoutedEventArgs e) {
+			if (_loadedChapter != null && !Saved) {
+				ButtonType warnRes = WarnNotSaved();
+				if (warnRes == ButtonType.Yes)
+					SaveChapterMenuItem_Click(sender, e);
+				else if (warnRes == ButtonType.Cancel)
+					return;
+			}
+
+			VistaOpenFileDialog filesDialog = new VistaOpenFileDialog();
+			filesDialog.Multiselect = true;
+			filesDialog.Title = "Select Images";
+			filesDialog.AddExtension = true;
+			filesDialog.CheckFileExists = true;
+			filesDialog.CheckPathExists = true;
+			filesDialog.DefaultExt = ".scan";
+			filesDialog.Filter = "Images (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png";
+			bool? res = filesDialog.ShowDialog(this);
+			if (res ?? false) {
+				try {
+					Mouse.SetCursor(Cursors.Wait);
+					_loadedChapter = new Chapter(filesDialog.FileNames);
+					LoadChapter();
+					foreach (Page p in _loadedChapter.Pages)
+						p.PageChanged += OnItemChange;
+					Mouse.SetCursor(Cursors.Arrow);
+				}
+				catch (Exception ex) {
+					Mouse.SetCursor(Cursors.Arrow);
+					_loadedChapter = null;
+					TaskDialog dialog = new TaskDialog();
+					dialog.WindowTitle = "Error";
+					dialog.MainIcon = TaskDialogIcon.Error;
+					dialog.MainInstruction = "No images found.";
+					dialog.Content = ex.Message;
+					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+					dialog.Buttons.Add(okButton);
+					TaskDialogButton button = dialog.ShowDialog(this);
+				
+				}
+			}
+
 		}
 
 		private void OpenChapterMenuItem_Click (object sender, RoutedEventArgs e) {
