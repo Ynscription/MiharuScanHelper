@@ -129,6 +129,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 		}
 
 		public void TranslationCallback (string translation, TranslationType type) {
+			translation = translation.Replace("\\\"", "\"");
 			try {
 				Dispatcher.Invoke(() => {
 					if (type == TranslationType.Google) {

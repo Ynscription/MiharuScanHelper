@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd {
 
-	
+
 	public enum TranslationType {
 		Google,
 		Bing,
@@ -27,12 +27,12 @@ namespace Manga_Scan_Helper.BackEnd {
 
 		public static void GoogleTranslate (TranslationConsumer consumer, string source) {
 			/*
-			 * TODO I can feel the gods of concurrency looking down on me with disgust, 
+			 * TODO I can feel the gods of concurrency looking down on me with disgust,
 			 * but not putting any thread safety yet, cuz I don't feel like it
 			 * It'll probably be fine
 			 * */
-			Task.Run(() => internalGoogleTranslate(consumer, source)); 
-			
+			Task.Run(() => internalGoogleTranslate(consumer, source));
+
 		}
 
 		public static void BingTranslate (TranslationConsumer consumer, string source) {
@@ -47,7 +47,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			string res = "";
 			HttpWebResponse response = null;
 			Stream receiveStream = null;
-			
+
 			try {
 				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL + Uri.EscapeDataString(src));//Uri.EscapeUriString(src));
 				response = (HttpWebResponse) await request.GetResponseAsync();
@@ -59,9 +59,9 @@ namespace Manga_Scan_Helper.BackEnd {
 						readStream = new StreamReader(receiveStream);
 					else
 						readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-					
+
 					res = await readStream.ReadToEndAsync();
-					
+
 					receiveStream.Close();
 
 					int firstString = res.IndexOf("\"") + 1;
@@ -70,18 +70,18 @@ namespace Manga_Scan_Helper.BackEnd {
 					}
 					else {
 						res = res.Substring(firstString);
-						res = res.Substring(0, res.IndexOf("\""));
+						res = res.Substring(0, res.IndexOf("\",\""));
 						consumer.TranslationCallback(res, TranslationType.Google);
 					}
 				}
 				else {
-					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine 
+					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine
 															 + response.StatusDescription), TranslationType.Google);
 				}
 				response.Close();
 			}
 			catch (Exception e) {
-				
+
 				receiveStream?.Close();
 				response?.Close();
 				consumer.TranslationFailed(e, TranslationType.Google);
@@ -101,14 +101,14 @@ namespace Manga_Scan_Helper.BackEnd {
 					request.Headers.Add("Ocp-Apim-Subscription-Key", _A);
 
 					HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
-					
+
 					if (response.StatusCode == HttpStatusCode.OK) {
 						string result = await response.Content.ReadAsStringAsync();
 						string find = "\"text\":";
 						if (result.Contains(find)){
 							result = result.Substring(result.IndexOf(find) + find.Length);
 							result = result.Substring(result.IndexOf("\"") + 1);
-							result = result.Substring(0, result.IndexOf("\""));
+							result = result.Substring(0, result.IndexOf("\",\""));
 							consumer.TranslationCallback(result, TranslationType.Bing);
 						}
 						else {
@@ -148,7 +148,7 @@ namespace Manga_Scan_Helper.BackEnd {
 
 					receiveStream.Close();
 
-					
+
 				}
 				else {
 					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine
