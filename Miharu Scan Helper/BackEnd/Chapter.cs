@@ -42,7 +42,10 @@ namespace Manga_Scan_Helper.BackEnd
 			
 			FileInfo[] sortedFiles = null;
 			try {
-				sortedFiles = files.OrderBy(x => Int32.Parse(x.Name.Substring(0, x.Name.IndexOf('.')))).ToArray();
+				sortedFiles = files.OrderBy(x => {
+					return Int32.Parse(x.Name.Substring(0, x.Name.IndexOf('.')));
+				}).ToArray();
+
 			}
 			catch (FormatException e) {
 				sortedFiles = files.OrderBy(x=> x.Name).ToArray();
@@ -61,10 +64,13 @@ namespace Manga_Scan_Helper.BackEnd
 			Pages = new List<Page>();
 			string [] sortedFiles = null;
 			try {
-				sortedFiles = filesSrc.OrderBy(x => Int32.Parse(x.Substring(x.LastIndexOf("\\"), x.IndexOf('.')))).ToArray();
+				sortedFiles = filesSrc.OrderBy(x => {
+					int lastSlash = x.LastIndexOf("\\") + 1;
+					return Int32.Parse(x.Substring(lastSlash, x.IndexOf('.') - lastSlash));						
+				}).ToArray();
 			}
 			catch (FormatException e) {
-				sortedFiles = filesSrc.OrderBy(x=> x.Substring(x.LastIndexOf("\\"))).ToArray();
+				sortedFiles = filesSrc.OrderBy(x=> x.Substring(x.LastIndexOf("\\") + 1)).ToArray();
 			}
 
 			foreach (string file in sortedFiles) {
