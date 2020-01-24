@@ -59,15 +59,15 @@ namespace Manga_Scan_Helper.BackEnd
 
 		public Chapter (string [] filesSrc) {
 			Pages = new List<Page>();
-
+			string [] sortedFiles = null;
 			try {
-				filesSrc.OrderBy(x => Int32.Parse(x.Substring(x.LastIndexOf("\\"), x.IndexOf('.'))));
+				sortedFiles = filesSrc.OrderBy(x => Int32.Parse(x.Substring(x.LastIndexOf("\\"), x.IndexOf('.')))).ToArray();
 			}
 			catch (FormatException e) {
-				filesSrc.OrderBy(x=> x.Substring(x.LastIndexOf("\\")));
+				sortedFiles = filesSrc.OrderBy(x=> x.Substring(x.LastIndexOf("\\"))).ToArray();
 			}
 
-			foreach (string file in filesSrc) {
+			foreach (string file in sortedFiles) {
 				Page p = new Page (file);
 				Pages.Add(p);
 			}
