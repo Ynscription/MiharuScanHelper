@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace Manga_Scan_Helper.BackEnd {
 	[JsonObject(MemberSerialization.OptOut)]
-	class Page
+	public class Page
     {
 		[JsonIgnoreAttribute]
 		private volatile bool _ready = false;
@@ -26,6 +26,14 @@ namespace Manga_Scan_Helper.BackEnd {
 
 
 		public event EventHandler PageChanged;
+
+		[JsonIgnore]
+		public string Name {
+			get {
+				int lastSlash = Path.LastIndexOf('\\') + 1;
+				return Path.Substring(lastSlash);
+			}
+		}
 
 		public string Path {
 			get; private set;
@@ -45,14 +53,14 @@ namespace Manga_Scan_Helper.BackEnd {
 		public Page (string src) {
 			Path = src;
 			TextEntries = new List<Text>();
-			PageWaitHandle = new AutoResetEvent(false);
+			PageWaitHandle = new ManualResetEvent(false);
 		}
 
 		[JsonConstructor]
 		public Page (string path, List<Text> textEntries) {
 			Path = path;
 			TextEntries = textEntries;
-			PageWaitHandle = new AutoResetEvent(false);
+			PageWaitHandle = new ManualResetEvent(false);
 		}
 
 		
@@ -115,6 +123,10 @@ namespace Manga_Scan_Helper.BackEnd {
 			}
 		}
 
-		
+		public override string ToString() {
+			return Name;
+		}
+
+
 	}
 }

@@ -85,6 +85,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\EditChapterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\ImageDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +119,9 @@
     <Compile Include="BackEnd\TranslationConsumer.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\EditChapterWindow.xaml.cs">
+      <DependentUpon>EditChapterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\ImageDisplay.xaml.cs">
       <DependentUpon>ImageDisplay.xaml</DependentUpon>
@@ -299,6 +306,7 @@
     <Content Include="Resources\Graphics\CnC_EE.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\New Page.png" />
     <Content Include="Resources\Redist\Tesseract-OCR\ambiguous_words.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

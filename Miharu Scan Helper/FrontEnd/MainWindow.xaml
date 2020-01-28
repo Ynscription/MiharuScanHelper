@@ -33,10 +33,13 @@
 				<Separator />
 				<MenuItem x:Name="ExitMenuItem" Header="Exit" Click="ExitMenuItem_Click"/>
 			</MenuItem>
-			<MenuItem Header="_Tools" TabIndex="1">
+			<MenuItem Header="_Edit" TabIndex="1">
+				<MenuItem x:Name="EditPagesMenuItem" Header="Edit Pages..." IsEnabled="False" Click="EditPagesMenuItem_Click"/>
+			</MenuItem>
+			<MenuItem Header="_Tools" TabIndex="2">
 				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" />
 			</MenuItem>
-			<MenuItem Header="_Help" TabIndex="2">
+			<MenuItem Header="_Help" TabIndex="3">
 				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" />
 			</MenuItem>
 		</Menu>

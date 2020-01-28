@@ -186,6 +186,8 @@ Would you like to locate the Tesseract exectutable manually?";
 
 			ExportRScriptMenuItem.IsEnabled = set;
 			ExportAsRScriptMenuItem.IsEnabled = set;
+
+			EditPagesMenuItem.IsEnabled = set;
 			
 		}
 
@@ -318,7 +320,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			filesDialog.AddExtension = true;
 			filesDialog.CheckFileExists = true;
 			filesDialog.CheckPathExists = true;
-			filesDialog.DefaultExt = ".scan";
+			filesDialog.DefaultExt = ".png";
 			filesDialog.Filter = "Images (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png";
 			bool? res = filesDialog.ShowDialog(this);
 			if (res ?? false) {
@@ -624,10 +626,29 @@ Would you like to locate the Tesseract exectutable manually?";
 				
 		private void ExitMenuItem_Click (object sender, RoutedEventArgs e) {
 			
+			if (_loadedChapter != null && !Saved) {
+				ButtonType res = WarnNotSaved();
+				if (res == ButtonType.Yes)
+					SaveChapterMenuItem_Click(sender, new RoutedEventArgs());
+				else if (res == ButtonType.Cancel) {
+					return;
+				}
+			}
 			Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 			Application.Current.Shutdown(0);
 		}
 
+		private void EditPagesMenuItem_Click (object sender, RoutedEventArgs e) {
+			if (!_loadedChapter.AllPagesReady) {
+				Mouse.SetCursor(Cursors.Wait);
+				_loadedChapter.ChapterWaitHandle.WaitOne();
+				Mouse.SetCursor(Cursors.Arrow);
+			}
+			EditChapterWindow editPagesDialog = new EditChapterWindow(_loadedChapter, _currentPage);
+			editPagesDialog.Owner = this;
+			editPagesDialog.ShowDialog();
+			LoadChapter(editPagesDialog.SelectedIndex);
+		}
 		
 		private void RipMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
@@ -752,13 +773,18 @@ Would you like to locate the Tesseract exectutable manually?";
 				_currentPage = 0;
 			}			
 			int totalPages = 0;
-			if (_loadedChapter != null)
-				totalPages = _loadedChapter.TotalPages;	
+			if (_loadedChapter != null) {
+				totalPages = _loadedChapter.TotalPages;
+				CurrPageLabel.Content = "Page: " + (_loadedChapter.Pages[_currentPage].Name);
+			}
+			else {
+				CurrPageLabel.Content = "";
+			}
 			CurrPageTextBox.Text = (_currentPage + 1) + " / " + totalPages;
 			_previousCurrPageTBText = CurrPageTextBox.Text;
 			PrevPageButton.IsEnabled = _currentPage > 0;
 			NextPageButton.IsEnabled = _currentPage < totalPages - 1;
-			CurrPageLabel.Content = "Page " + (_currentPage +1);
+				
 			_previousPage = _currentPage;
 			//Translator.Cancel();
 		}

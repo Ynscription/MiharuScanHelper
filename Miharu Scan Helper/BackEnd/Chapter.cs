@@ -9,14 +9,22 @@ using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd
 {
-
-    class Chapter
+	[JsonObject(MemberSerialization.OptOut)]
+    public class Chapter
     {
+		[JsonIgnore]
+		private volatile bool _allPagesLoaded = false;
 
-
-		public string Path {
-			get; private set;
+		public bool AllPagesReady {
+			get => _allPagesLoaded;
 		}
+		
+		[JsonIgnore]
+		public EventWaitHandle ChapterWaitHandle {
+			get;
+			private set;
+		}
+
 
 		public List<Page> Pages {
 			get; private set;
@@ -55,7 +63,7 @@ namespace Manga_Scan_Helper.BackEnd
 				Pages.Add(p);
 			}
 			
-
+			ChapterWaitHandle = new ManualResetEvent(false);
 			Pages[0].Load();
 			Task.Run(() => LoadPagesAsync(this, 0));
 		}
@@ -78,15 +86,48 @@ namespace Manga_Scan_Helper.BackEnd
 				Pages.Add(p);
 			}
 
+			ChapterWaitHandle = new ManualResetEvent(false);
 			Pages[0].Load();
 			Task.Run(() => LoadPagesAsync(this, 0));
 		}
 
+		
+
 		[JsonConstructor]
-		private Chapter (string path, List<Page> pages) {
-			Path = path;
+		private Chapter (List<Page> pages) {
 			Pages = pages;
 		}
+
+		public void AddPage (int pageIndex, string src) {
+			Page page = new Page(src);
+			Pages.Insert(pageIndex, page);
+			page.Load();
+		}
+
+		public void RemovePage (int pageIndex) {
+			Pages.RemoveAt(pageIndex);
+		}
+
+
+		public void MovePageUp(int pageIndex)
+		{
+			Page aux = Pages [pageIndex];
+			Pages.RemoveAt(pageIndex);
+			Pages.Insert(pageIndex-1, aux);
+
+		}
+
+		public void MovePageDown(int pageIndex)
+		{
+			Page aux = Pages [pageIndex];
+			Pages.RemoveAt(pageIndex);
+			if (pageIndex >= TotalPages)
+				Pages.Add(aux);
+			else
+				Pages.Insert(pageIndex+1, aux);
+
+		}
+
 
 		public void Save (string destPath, int currentPage = 0) {
 			StreamWriter writer = null;
@@ -141,6 +182,8 @@ namespace Manga_Scan_Helper.BackEnd
 				if (higher < res.TotalPages)
 					res.Pages[higher++].Load();
 			}
+			res._allPagesLoaded = true;
+			res.ChapterWaitHandle.Set();
 		}
 
 		public void ExportScript (string destPath) {
