@@ -96,6 +96,7 @@ namespace Manga_Scan_Helper.BackEnd
 		[JsonConstructor]
 		private Chapter (List<Page> pages) {
 			Pages = pages;
+			ChapterWaitHandle = new ManualResetEvent(false);
 		}
 
 		public void AddPage (int pageIndex, string src) {

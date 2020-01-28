@@ -238,6 +238,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 			_pageRectangles = new RectangleAdorner [_loadedChapter.Pages.Count];
 
+			_previousPage = page;
 			_currentPage = page;
 			ChangePage();
 
