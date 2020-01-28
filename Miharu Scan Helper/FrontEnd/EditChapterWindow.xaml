@@ -13,9 +13,9 @@
 			<RowDefinition Height="60"/>
 		</Grid.RowDefinitions>
 		<Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" Margin="1,1,1,10" >
-			<ScrollViewer>
+			<ScrollViewer x:Name="PagesScrollView">
 				<ListBox x:Name="PagesListBox" SelectionChanged="PagesListBox_SelectionChanged" 
-						 SelectedIndex="0">
+						 SelectedIndex="0" PreviewMouseWheel="PagesListBox_PreviewMouseWheel">
 					<ListBox.ItemContainerStyle>
 						<Style TargetType="ListBoxItem" >
 							<Setter Property="Template">

@@ -120,5 +120,11 @@ namespace Manga_Scan_Helper.FrontEnd
 		{
 			UpdateButtons();
 		}
+
+		private void PagesListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+		{
+			PagesScrollView.ScrollToVerticalOffset(PagesScrollView.VerticalOffset - e.Delta);
+			e.Handled = true;
+		}
 	}
 }
