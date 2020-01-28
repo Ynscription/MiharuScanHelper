@@ -1,18 +1,9 @@
 ﻿using Manga_Scan_Helper.BackEnd;
 using Ookii.Dialogs.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Manga_Scan_Helper.FrontEnd
 {
@@ -52,7 +43,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			//TODO open a dialog to choose 1 file and add it to the pages
 			
 			VistaOpenFileDialog fileDialog = new VistaOpenFileDialog();
-			fileDialog.Multiselect = false;
+			fileDialog.Multiselect = true;
 			fileDialog.Title = "Select Image";
 			fileDialog.AddExtension = true;
 			fileDialog.CheckFileExists = true;
@@ -64,17 +55,14 @@ namespace Manga_Scan_Helper.FrontEnd
 				int previousIndex = PagesListBox.SelectedIndex;
 				try {
 					Mouse.SetCursor(Cursors.Wait);
-					if (PagesListBox.SelectedIndex > -1) {
-						_loadedChapter.AddPage(PagesListBox.SelectedIndex+1, fileDialog.FileName);
-						PagesListBox.Items.Refresh();
-						PagesListBox.SelectedIndex++;
-					}
-					else {
-						int index = _loadedChapter.TotalPages;
-						_loadedChapter.AddPage(index, fileDialog.FileName);
-						PagesListBox.Items.Refresh();
-						PagesListBox.SelectedIndex = index;
-					}					
+					int index = _loadedChapter.TotalPages -1;
+					if (PagesListBox.SelectedIndex > -1)
+						index = PagesListBox.SelectedIndex;
+					
+					foreach (string file in fileDialog.FileNames)
+						_loadedChapter.AddPage(++index, file);		
+					PagesListBox.Items.Refresh();
+					PagesListBox.SelectedIndex = index;
 					UpdateButtons();
 					Mouse.SetCursor(Cursors.Arrow);
 				}
