@@ -114,7 +114,6 @@
     <Compile Include="BackEnd\HTTPTranslator.cs" />
     <Compile Include="BackEnd\Logger.cs" />
     <Compile Include="BackEnd\Ripper.cs" />
-    <Compile Include="BackEnd\SFXDictionary.cs" />
     <Compile Include="BackEnd\Text.cs" />
     <Compile Include="BackEnd\TranslationConsumer.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">

@@ -2,6 +2,7 @@
 using Manga_Scan_Helper.Properties;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -51,7 +52,20 @@ namespace Manga_Scan_Helper.BackEnd
 			}
 		}
 
-		private string _googleTranslatedText = null;
+		[JsonProperty]
+		private Dictionary<TranslationType, string> _translations;
+		public string GetTranslation (TranslationType type) {
+			string res = null;
+			if (!_translations.TryGetValue(type, out res))
+				return null;
+			return res;
+		}
+		public void SetTranslation (TranslationType type, string value) {
+			_translations[type] = value;
+			TextChanged?.Invoke(this, new EventArgs());
+		}
+
+		/*private string _googleTranslatedText = null;
 		public string GoogleTranslatedText {
 			get => _googleTranslatedText;
 			set {
@@ -67,16 +81,9 @@ namespace Manga_Scan_Helper.BackEnd
 				_bingTranslatedText = value;
 				TextChanged?.Invoke(this, new EventArgs());
 			}
-		}
+		}*/
 
-		private string _onoTranslatedText = null;
-		public string OnoTranslatedText {
-			get => _onoTranslatedText;
-			set {
-				_onoTranslatedText = value;
-				TextChanged?.Invoke(this, new EventArgs());
-			}
-		}
+		
 
 		private string _translatedText;
 		public string TranslatedText {
@@ -95,19 +102,28 @@ namespace Manga_Scan_Helper.BackEnd
 		}
 
 		
+		
+		//There are legacy parameters, so loading old saves still works
 		[JsonConstructor]
 		public Text (Rect rectangle, bool vertical, bool parseInvalidated,
-					string parsedText, string googleTranslatedText, string bingTranslatedText,
-					string onoTranslatedText, string translatedText) {
+					string parsedText, Dictionary<TranslationType, string> translations, 
+					string googleTranslatedText, string bingTranslatedText,
+					string translatedText) {
 			Rectangle = rectangle;
 			Vertical = vertical;
 			_parseInvalidated = parseInvalidated;
 			ParsedText = parsedText;
-			GoogleTranslatedText = googleTranslatedText;
-			BingTranslatedText = bingTranslatedText;
-			OnoTranslatedText = onoTranslatedText;
+			if (translations != null)
+				_translations = translations;
+			else {
+				_translations = new Dictionary<TranslationType, string>();
+				_translations[TranslationType.Google2] = googleTranslatedText;
+				_translations[TranslationType.Bing] = bingTranslatedText;
+			}
 			TranslatedText = translatedText;			
 		}
+
+		
 
 		private string ParseText () {
 			if (Source == null)

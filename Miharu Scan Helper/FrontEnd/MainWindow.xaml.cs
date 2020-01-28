@@ -20,6 +20,11 @@ namespace Manga_Scan_Helper {
 	/// </summary>
 	public partial class MainWindow : Window {
 
+		private const string _save = "Save";
+		private const string _discard = "Discard";
+		private const string _cancel = "Cancel";
+
+
 		private Chapter _loadedChapter = null;
 		private int _currentPage = 0;
 		private int _previousPage = 0;
@@ -249,31 +254,30 @@ Would you like to locate the Tesseract exectutable manually?";
 			SetTopMenuItems();
 		}
 
-		private ButtonType WarnNotSaved () {
+		private string WarnNotSaved () {
 			TaskDialog dialog = new TaskDialog();
 			dialog.WindowTitle = "Warning";
 			dialog.MainIcon = TaskDialogIcon.Warning;
 			dialog.MainInstruction = "There are unsaved changes.";
 			dialog.Content = "Would you like to save the current chapter?";
-			TaskDialogButton saveButton = new TaskDialogButton(ButtonType.Yes);
-			saveButton.Text = "Save";
+			
+			TaskDialogButton saveButton = new TaskDialogButton(_save);
 			dialog.Buttons.Add(saveButton);
-			TaskDialogButton noSaveButton = new TaskDialogButton(ButtonType.No);
-			noSaveButton.Text = "Discard";
+			TaskDialogButton noSaveButton = new TaskDialogButton(_discard);
 			dialog.Buttons.Add(noSaveButton);
-			TaskDialogButton cancelButton = new TaskDialogButton(ButtonType.Cancel);
-			cancelButton.Text = "Cancel";
+			TaskDialogButton cancelButton = new TaskDialogButton(_cancel);
 			dialog.Buttons.Add(cancelButton);
 			TaskDialogButton button = dialog.ShowDialog(this);
-			return button.ButtonType;
+
+			return button.Text;
 		}
 
 		private void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
-				ButtonType warnRes = WarnNotSaved();
-				if (warnRes == ButtonType.Yes)
+				string warnRes = WarnNotSaved();
+				if (warnRes == _save)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (warnRes == ButtonType.Cancel)
+				else if (warnRes == _cancel)
 					return;
 			}
 
@@ -308,10 +312,10 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private void NewChapterFilesMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
-				ButtonType warnRes = WarnNotSaved();
-				if (warnRes == ButtonType.Yes)
+				string warnRes = WarnNotSaved();
+				if (warnRes == _save)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (warnRes == ButtonType.Cancel)
+				else if (warnRes == _cancel)
 					return;
 			}
 
@@ -352,10 +356,10 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private void OpenChapterMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
-				ButtonType warnRes = WarnNotSaved();
-				if (warnRes == ButtonType.Yes)
+				string warnRes = WarnNotSaved();
+				if (warnRes == _save)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (warnRes == ButtonType.Cancel)
+				else if (warnRes == _cancel)
 					return;
 			}
 
@@ -375,10 +379,10 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private void CloseChapterMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (!Saved) {
-				ButtonType res = WarnNotSaved();
-				if (res == ButtonType.Yes)
+				string res = WarnNotSaved();
+				if (res == _save)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (res == ButtonType.Cancel)
+				else if (res == _cancel)
 					return;
 			}
 			
@@ -628,10 +632,10 @@ Would you like to locate the Tesseract exectutable manually?";
 		private void ExitMenuItem_Click (object sender, RoutedEventArgs e) {
 			
 			if (_loadedChapter != null && !Saved) {
-				ButtonType res = WarnNotSaved();
-				if (res == ButtonType.Yes)
+				string res = WarnNotSaved();
+				if (res == _save)
 					SaveChapterMenuItem_Click(sender, new RoutedEventArgs());
-				else if (res == ButtonType.Cancel) {
+				else if (res == _cancel) {
 					return;
 				}
 			}
@@ -653,10 +657,10 @@ Would you like to locate the Tesseract exectutable manually?";
 		
 		private void RipMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
-				ButtonType res = WarnNotSaved();
-				if (res == ButtonType.Yes)
+				string res = WarnNotSaved();
+				if (res == _save)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (res == ButtonType.Cancel)
+				else if (res == _cancel)
 					return;
 			}
 			RipDialog ripDialog = new RipDialog();

@@ -59,9 +59,8 @@ namespace Manga_Scan_Helper.FrontEnd {
 			
 			ShowImageFromBitmap(textEntry.Source);
 			InitializeParsedTextBox();
-			GoogleTranslationLabel.Text = textEntry.GoogleTranslatedText;
-			BingTranslationLabel.Text = textEntry.BingTranslatedText;
-			//OnoTranslationText.Text = textEntry.OnoTranslatedText;
+			GoogleTranslationLabel.Text = textEntry.GetTranslation(TranslationType.Google2);
+			BingTranslationLabel.Text = textEntry.GetTranslation(TranslationType.Bing);
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
 			
@@ -116,15 +115,20 @@ namespace Manga_Scan_Helper.FrontEnd {
 		}
 
 		private bool _awaitingGoogle = false;
+		private bool _awaitingGoogle2 = false;
 		private bool _awaitingBing = false;
+		private bool _awaitingYandex = false;
 		private void Translate (string text) {
 			RefreshTranslateButton.IsEnabled = false;
 			VerticalCheckBox.IsEnabled = false;
 			_awaitingGoogle = true;
 			HTTPTranslator.GoogleTranslate(this, text);
+			_awaitingGoogle2 = true;
+			HTTPTranslator.Google2Translate(this, text);
 			_awaitingBing = true;
 			HTTPTranslator.BingTranslate(this, text);
-			_textEntry.OnoTranslatedText = SFXDictionary.Translate(text);
+			_awaitingYandex = true;
+			HTTPTranslator.YandexTranslate(this, text);
 			
 		}
 
@@ -132,17 +136,23 @@ namespace Manga_Scan_Helper.FrontEnd {
 			translation = translation.Replace("\\\"", "\"");
 			try {
 				Dispatcher.Invoke(() => {
+					_textEntry.SetTranslation(type, translation);
 					if (type == TranslationType.Google) {
-						GoogleTranslationLabel.Text = translation;
-						_textEntry.GoogleTranslatedText = translation;
 						_awaitingGoogle = false;
 					}
-					else if (type == TranslationType.Bing) {
+					if (type == TranslationType.Google2) {
+						GoogleTranslationLabel.Text = translation;
+						_awaitingGoogle2 = false;
+					}
+					if (type == TranslationType.Bing) {
 						BingTranslationLabel.Text = translation;
-						_textEntry.BingTranslatedText = translation;
 						_awaitingBing = false;
 					}
-					if (!_awaitingGoogle && !_awaitingBing) {
+					if (type == TranslationType.Yandex) {
+						_awaitingYandex = false;
+					}
+					
+					if (!_awaitingGoogle2 && !_awaitingBing) {
 						RefreshTranslateButton.IsEnabled = true;
 						VerticalCheckBox.IsEnabled = true;
 					}
@@ -154,13 +164,13 @@ namespace Manga_Scan_Helper.FrontEnd {
 		public void TranslationFailed (Exception e, TranslationType type) {
 			try {
 				Dispatcher.Invoke(() => {
-					if (type == TranslationType.Google)
-						_awaitingGoogle = false;
+					if (type == TranslationType.Google2)
+						_awaitingGoogle2 = false;
 
 					else if (type == TranslationType.Bing)
 						_awaitingBing = false;
 					
-					if (!_awaitingGoogle && !_awaitingBing) {
+					if (!_awaitingGoogle2 && !_awaitingBing) {
 						RefreshTranslateButton.IsEnabled = true;
 						VerticalCheckBox.IsEnabled = true;
 					}

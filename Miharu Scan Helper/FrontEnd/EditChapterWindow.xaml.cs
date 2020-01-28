@@ -40,8 +40,7 @@ namespace Manga_Scan_Helper.FrontEnd
 
 		private void AddPageButton_Click(object sender, RoutedEventArgs e)
 		{
-			//TODO open a dialog to choose 1 file and add it to the pages
-			
+						
 			VistaOpenFileDialog fileDialog = new VistaOpenFileDialog();
 			fileDialog.Multiselect = true;
 			fileDialog.Title = "Select Image";
@@ -84,9 +83,26 @@ namespace Manga_Scan_Helper.FrontEnd
 		
 		private void DelPageButton_Click(object sender, RoutedEventArgs e)
 		{
-			//TODO warn if page contains translations
-			//TODO warn if about to delete last page
+
 			int index = PagesListBox.SelectedIndex;
+			if (_loadedChapter.Pages[index].TextEntries.Count > 0) {
+				TaskDialog dialog = new TaskDialog();
+				dialog.WindowTitle = "Warning";
+				dialog.MainIcon = TaskDialogIcon.Warning;
+				dialog.MainInstruction = "The page you are about to delete contains translations.";
+				dialog.Content = "Would you still like to delete the page?";
+				
+				TaskDialogButton deleteButton = new TaskDialogButton("Delete");
+				dialog.Buttons.Add(deleteButton);
+				
+				TaskDialogButton cancelButton = new TaskDialogButton(ButtonType.Cancel);
+				cancelButton.Text = "Cancel";
+				dialog.Buttons.Add(cancelButton);
+
+				TaskDialogButton button = dialog.ShowDialog(this);
+				if (button.ButtonType == ButtonType.Cancel)
+					return;
+			}
 			_loadedChapter.RemovePage (index);
 			PagesListBox.Items.Refresh();
 			PagesListBox.SelectedIndex = (index >= _loadedChapter.TotalPages) ? _loadedChapter.TotalPages -1 : index;
