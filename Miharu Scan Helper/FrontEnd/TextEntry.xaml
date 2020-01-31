@@ -5,80 +5,60 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
              mc:Ignorable="d" 
-             Height="352" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1">
+             Height="150" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1">
+	<Border x:Name="EntryBorder" BorderThickness="1" BorderBrush="#FF535353">
+		<Grid >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="1*"/>
+				<RowDefinition Height="1*"/>
+			</Grid.RowDefinitions>
+			<Button x:Name="MoveUpButton" HorizontalAlignment="Left" Width="38" Click="MoveUpButton_Click" Margin="3,3,1,3">
+				<StackPanel>
+					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowUp.png"  />
+				</StackPanel>
+			</Button>
+			<Button x:Name="MoveDownButton" HorizontalAlignment="Left" Width="38" Click="MoveDownButton_Click" Grid.Row="1" Margin="3,3,1,3">
+				<StackPanel>
+					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowDown.png"  />
+				</StackPanel>
+			</Button>
 
-	<Grid>
-		<Button x:Name="MoveUpButton" HorizontalAlignment="Left" Margin="5,35,0,180" Width="38" Click="MoveUpButton_Click">
-			<StackPanel>
-				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowUp.png"  />
-			</StackPanel>
-		</Button>
-		<Button x:Name="MoveDownButton" HorizontalAlignment="Left" Margin="5,180,0,35" Width="38" Click="MoveDownButton_Click">
-			<StackPanel>
-				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowDown.png"  />
-			</StackPanel>
-		</Button>
-		
-		<Image x:Name="PreviewIMG" Margin="48,10,0,10" Width="157" HorizontalAlignment="Left" />
+			<Grid Grid.RowSpan="2" Margin="43,0,0,0" >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="1*"/>
+				</Grid.ColumnDefinitions>
+				<Border BorderThickness="1" BorderBrush="Black" Grid.Column="0" Margin="0,3" >
+					<Image x:Name="PreviewIMG" Height="138" MinWidth="10" />
+				</Border>
 
-		<CheckBox x:Name="VerticalCheckBox" Content="Vertical" HorizontalAlignment="Left" Margin="215,15,0,0" VerticalAlignment="Top" IsChecked="True" Checked="VerticalCheckBox_Checked" Unchecked="VerticalCheckBox_Unchecked" Width="62"/>
-		
-		<Label x:Name="JishoLinkLabel" Content="https://whatever.com" Height="26" Margin="335,9,10,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="JishoLinkLabel_MouseLeftButtonUp"/>
-		<Label x:Name="label1" Content="Jisho:" HorizontalAlignment="Left" Height="26" Margin="304,9,0,0" VerticalAlignment="Top" Width="47"/>
-		
-		
-		
-		
-		<Label x:Name="label2" Content="Parsed Text" HorizontalAlignment="Left" Height="28" Margin="210,29,0,0" VerticalAlignment="Top" Width="73"/>
-		<Button x:Name="RefreshParseButton" HorizontalAlignment="Right" Margin="0,79,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="RefreshParseButton_Click" Height="24">
-			<StackPanel>
-				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
-			</StackPanel>
-		</Button>
-		<Grid Margin="215,49,29,219">
-			<Border BorderThickness="1" BorderBrush="Black">
-				<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="24" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
-			</Border>
+
+				<Grid Grid.Column="1" Margin="3">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="2*"/>
+						<RowDefinition Height="3"/>
+						<RowDefinition Height="1*"/>
+					</Grid.RowDefinitions>
+					<TextBox x:Name="ParsedLabel" TextWrapping="Wrap" FontSize="20" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" IsReadOnly="True"  BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
+					<Border BorderThickness="1" Grid.Row="0" BorderBrush="Black" />
+					<TextBox x:Name="TranslationLabel" Grid.Row="2" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto" MinWidth="10" />
+					<Border BorderThickness="1" Grid.Row="2" BorderBrush="Black" />
+				</Grid>
+				
+				
+			</Grid>
+
+
+
+			<!--<Button x:Name="DeleteButton" HorizontalAlignment="Right" Margin="0,261.128,4,-197" VerticalAlignment="Top" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24" Grid.Row="1">
+				<StackPanel>
+					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Delete.png"  />
+				</StackPanel>
+			</Button>-->
+
+			<!--<Border  />-->
+
 		</Grid>
+	</Border>
 
-		
-
-		<Label x:Name="label" Content="Google" HorizontalAlignment="Left" Margin="212,126,0,0" VerticalAlignment="Top" Width="55"/>
-		<Grid Margin="215,147,29,158">
-			<TextBox x:Name="GoogleTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto"/>
-			<Border BorderThickness="1" BorderBrush="Black" />
-		</Grid>
-
-		<Label x:Name="label10" Content="Bing" HorizontalAlignment="Left" Margin="212,188,0,0" VerticalAlignment="Top" Width="55"/>
-		<Grid Margin="215,209,29,96">
-			<TextBox x:Name="BingTranslationLabel" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" Margin="4,0,4,4" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto"/>
-			<Border BorderThickness="1" BorderBrush="Black" />
-		</Grid>
-
-		<Button x:Name="RefreshTranslateButton" HorizontalAlignment="Right" Margin="0,186,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="RefreshTranslateButton_Click" Height="24">
-			<StackPanel>
-				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
-			</StackPanel>
-		</Button>
-
-
-
-		<Label x:Name="label2_Copy" Content="Translation" HorizontalAlignment="Left" Height="28" Margin="210,252,0,0" VerticalAlignment="Top" Width="84"/>
-		<Grid Margin="215,272,29,7">
-			<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
-			<Border BorderThickness="1" BorderBrush="Black" />
-		</Grid>
-		
-
-		
-		
-		<Button x:Name="DeleteButton" HorizontalAlignment="Right" Margin="0,321,4,0" VerticalAlignment="Top" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24">
-			<StackPanel>
-				<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Delete.png"  />
-			</StackPanel>
-		</Button>
-
-		<Border BorderThickness="1" BorderBrush="#FF535353" />
-
-	</Grid>
 </UserControl>

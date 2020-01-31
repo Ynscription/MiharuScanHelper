@@ -127,6 +127,8 @@ Would you like to locate the Tesseract exectutable manually?";
 		public MainWindow () {
 			InitializeComponent();
 
+			
+
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 			_dpiX = g.DpiX;
 			_dpiY = g.DpiY;
@@ -768,6 +770,9 @@ Would you like to locate the Tesseract exectutable manually?";
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 
+				TextEntryGrid.Children.Clear();
+				if (_pageRectangles[_currentPage].SelectedRect != -1)
+					TextEntryGrid.Children.Add(new TextEntryControl(_loadedChapter.Pages[_currentPage].TextEntries[_pageRectangles[_currentPage].SelectedRect], this));
 				TextEntriesStackPanel.Children.Clear();
 				for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count; i++) {
 					TextEntriesStackPanel.Children.Add(new TextEntry(_loadedChapter.Pages[_currentPage].TextEntries[i],
@@ -952,7 +957,6 @@ Would you like to locate the Tesseract exectutable manually?";
 
 				TextEntry te = new TextEntry(txt, this);
 				TextEntriesStackPanel.Children.Add(te);
-				te.ForceTranslation();
 				Mouse.SetCursor(Cursors.Arrow);
 
 
@@ -967,27 +971,48 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		#region TextEntries
 
+		private TextEntry _selectedTextEntry = null;
+
 		public void SelectTextEntry (int index) {
 			_pageRectangles [_currentPage].SelectedRect = index;
+			TextEntryGrid.Children.Clear();
+			TextEntryGrid.Children.Add(new TextEntryControl(_loadedChapter.Pages[_currentPage].TextEntries[index], this));
+			if (_selectedTextEntry != null)
+				_selectedTextEntry.Selected = false;
+			((TextEntry)TextEntriesStackPanel.Children[index]).Selected = true;
+			_selectedTextEntry = (TextEntry)TextEntriesStackPanel.Children[index];
 		}
 
-		public void RemoveTextEntry (TextEntry target) {
-			int index = TextEntriesStackPanel.Children.IndexOf(target);
+		public void RemoveTextEntry (Text target) {
+			int index = _loadedChapter.Pages[_currentPage].TextEntries.IndexOf(target);
 			TextEntriesStackPanel.Children.RemoveAt(index);
 			_loadedChapter.Pages[_currentPage].RemoveTextEntry(index);
+			if (_pageRectangles [_currentPage].SelectedRect == index)
+				_pageRectangles [_currentPage].SelectedRect = -1;
+			if (_pageRectangles [_currentPage].MouseOverRect == index)
+				_pageRectangles [_currentPage].MouseOverRect = -1;
 			_pageRectangles [_currentPage].InvalidateVisual();
 		}
 
-		public void MoveTextEntry (TextEntry target, bool up) {
+		public void MoveTextEntry (Text target, bool up) {
 			int offset = up ? -1 : 1;
-			int index = TextEntriesStackPanel.Children.IndexOf(target);
-			if ((up && index > 0) || (!up && index < TextEntriesStackPanel.Children.Count-1)) {
+			int index = _loadedChapter.Pages[_currentPage].TextEntries.IndexOf(target);
+			if ((up && index > 0) || (!up && index < _loadedChapter.Pages[_currentPage].TextEntries.Count-1)) {
 				_loadedChapter.Pages [_currentPage].MoveTextEntry(index, index + offset);
+
+				if (_pageRectangles [_currentPage].SelectedRect == index)
+					_pageRectangles [_currentPage].SelectedRect+= offset;
+				if (_pageRectangles [_currentPage].MouseOverRect == index)
+					_pageRectangles [_currentPage].MouseOverRect+= offset;
+
 				var tmp2 = TextEntriesStackPanel.Children[index];
 				TextEntriesStackPanel.Children.RemoveAt(index);
 				TextEntriesStackPanel.Children.Insert(index + offset, tmp2);
+
 				_pageRectangles [_currentPage].InvalidateVisual();
+
 			}
+			
 		}
 
 
