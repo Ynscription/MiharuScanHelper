@@ -14,13 +14,18 @@ namespace Manga_Scan_Helper.BackEnd
 	[JsonObject(MemberSerialization.OptOut)]
 	public class Text
     {
+		
+		public event TxtEventHandler TextChanged;
 
-		public event EventHandler TextChanged;
-
+		[JsonIgnore]
 		private readonly static string TEMP_IMG = @"./tmp.png";
+		[JsonIgnore]
 		private readonly static string TEMP_TXT = @"./tmp.txt";
 
+		[JsonIgnore]
 		private bool _parseInvalidated = true;
+
+
 		public void Invalidate () {
 			_parseInvalidated = true;
 		}
@@ -30,7 +35,7 @@ namespace Manga_Scan_Helper.BackEnd
 			get => _vertical;
 			set {
 				_vertical = value;
-				TextChanged?.Invoke(this, new EventArgs());				
+				TextChanged?.Invoke(this, new TxtChangedEventArgs(TextChangeType.Vertical, null, null));
 			}
 		}
 		[JsonIgnoreAttribute]
@@ -48,7 +53,7 @@ namespace Manga_Scan_Helper.BackEnd
 			}
 			set {
 				_parsedText = value;
-				TextChanged?.Invoke(this, new EventArgs());
+				TextChanged?.Invoke(this, new TxtChangedEventArgs(TextChangeType.Parse, null, _parsedText));
 			}
 		}
 
@@ -62,27 +67,10 @@ namespace Manga_Scan_Helper.BackEnd
 		}
 		public void SetTranslation (TranslationType type, string value) {
 			_translations[type] = value;
-			TextChanged?.Invoke(this, new EventArgs());
+			TextChanged?.Invoke(this, new TxtChangedEventArgs(TextChangeType.TranslationSource, type, value));
 		}
 
-		/*private string _googleTranslatedText = null;
-		public string GoogleTranslatedText {
-			get => _googleTranslatedText;
-			set {
-				_googleTranslatedText = value;
-				TextChanged?.Invoke(this, new EventArgs());
-			}
-		}
-
-		private string _bingTranslatedText = null;
-		public string BingTranslatedText {
-			get => _bingTranslatedText;
-			set {
-				_bingTranslatedText = value;
-				TextChanged?.Invoke(this, new EventArgs());
-			}
-		}*/
-
+	
 		
 
 		private string _translatedText;
@@ -90,7 +78,7 @@ namespace Manga_Scan_Helper.BackEnd
 			get => _translatedText;
 			set {
 				_translatedText = value;
-				TextChanged?.Invoke(this, new EventArgs());
+				TextChanged?.Invoke(this, new TxtChangedEventArgs(TextChangeType.Translation, null, value));
 			}
 		}
 

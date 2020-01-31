@@ -22,6 +22,8 @@ namespace Manga_Scan_Helper.FrontEnd
 		public static extern bool DeleteObject ([In] IntPtr hObject);
 
 
+		public event TranslationFailEventHandler TranslationFail;
+
 		private MainWindow _parent;
 		private Text _textEntry;
 
@@ -36,18 +38,12 @@ namespace Manga_Scan_Helper.FrontEnd
 			ParsedTextBox.Text = _textEntry.ParsedText;
 			string refinedText = SanitizeString(_textEntry.ParsedText);
 			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
-			//Translate(refinedText);
 		}
 
 		public string ParsedText {
 			get => _textEntry.ParsedText;
 			set {
-				_textEntry.ParsedText = value;
-				ParsedTextBox.Text = _textEntry.ParsedText;
-				string refinedText = SanitizeString(_textEntry.ParsedText);
-				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
-				//Translate(refinedText);
-				
+				_textEntry.ParsedText = value;				
 			}
 		}
 
@@ -55,6 +51,7 @@ namespace Manga_Scan_Helper.FrontEnd
 		public TextEntryControl(Text textEntry, MainWindow parent) :base(){
 			InitializeComponent();
 			_textEntry = textEntry;
+			_textEntry.TextChanged += _textEntry_TextChanged;
 			_parent = parent;
 			
 			ShowImageFromBitmap(textEntry.Source);
@@ -63,6 +60,10 @@ namespace Manga_Scan_Helper.FrontEnd
 			//TODO
 			//GoogleTranslationLabel.Text = textEntry.GetTranslation(TranslationType.Google2);
 			//BingTranslationLabel.Text = textEntry.GetTranslation(TranslationType.Bing);
+			foreach (TranslationType t in Enum.GetValues(typeof (TranslationType))) {
+				if (t != TranslationType.JadedNetwork)
+					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (this, t, _textEntry));
+			}
 
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
@@ -70,6 +71,17 @@ namespace Manga_Scan_Helper.FrontEnd
 
 		}
 
+		private void _textEntry_TextChanged(object sender, TxtChangedEventArgs e)
+		{
+			if (e.ChangeType == TextChangeType.Parse) {
+				ParsedTextBox.Text = e.Text;
+				string refinedText = SanitizeString(e.Text);
+				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
+			}
+			else if (e.ChangeType == TextChangeType.Translation)
+				TranslatedTextBox.Text = e.Text;
+
+		}
 
 		private void RefreshParseButton_Click (object sender, RoutedEventArgs e) {
 			Mouse.SetCursor(Cursors.Wait);
@@ -80,12 +92,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			Mouse.SetCursor(Cursors.Arrow);
 		}
 
-		private void RefreshTranslateButton_Click (object sender, RoutedEventArgs e) {
-			string refinedText = SanitizeString(ParsedText);
-
-			Translate(refinedText);			
-		}
-
+		
 		
 
 		private void ParsedTextBox_TextChanged (object sender, TextChangedEventArgs e) {
@@ -107,6 +114,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			try {
 				ImageSource dest = Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 				PreviewIMG.Source = dest;
+				PreviewIMG.Width = PreviewIMG.Height* (dest.Width / dest.Height);
 			}
 			finally { DeleteObject(handle); }
 		}
@@ -114,71 +122,45 @@ namespace Manga_Scan_Helper.FrontEnd
 		public void ForceTranslation () {
 
 			string refinedText = SanitizeString(ParsedText);
-			Translate(refinedText);
-			
-		}
-
-		private bool _awaitingGoogle2 = false;
-		private bool _awaitingBing = false;
-		private void Translate (string text) {
 			//TODO
 			//RefreshTranslateButton.IsEnabled = false;
-			VerticalCheckBox.IsEnabled = false;
-			HTTPTranslator.GoogleTranslate(this, text);
+			//VerticalCheckBox.IsEnabled = false;
+			//HTTPTranslator.GoogleTranslate(this, text);
 
-			_awaitingGoogle2 = true;
-			HTTPTranslator.Google2Translate(this, text);
-			_awaitingBing = true;
-			HTTPTranslator.BingTranslate(this, text);
+			HTTPTranslator.Google2Translate(this, refinedText);
+			HTTPTranslator.BingTranslate(this, refinedText);
+			HTTPTranslator.YandexTranslate(this, refinedText);
 
-			HTTPTranslator.YandexTranslate(this, text);
-			HTTPTranslator.JadedNetworkTranslate(this, text);
+			HTTPTranslator.JadedNetworkTranslate(this, refinedText);
 			
 		}
 
+		public void RequestTranslation (TranslationType type) {
+			string refinedText = SanitizeString(ParsedText);
+			
+			if (type == TranslationType.Google2)
+				HTTPTranslator.Google2Translate(this, refinedText);
+			else if (type == TranslationType.Bing)
+				HTTPTranslator.BingTranslate(this, refinedText);
+			else if (type == TranslationType.Yandex)
+				HTTPTranslator.YandexTranslate(this, refinedText);
+			else if (type == TranslationType.JadedNetwork)
+				HTTPTranslator.JadedNetworkTranslate(this, refinedText);
+		}
+
+		
 		public void TranslationCallback (string translation, TranslationType type) {
 			translation = translation.Replace("\\\"", "\"");
 			try {
 				Dispatcher.Invoke(() => {
 					_textEntry.SetTranslation(type, translation);
-					if (type == TranslationType.Google2) {
-						//TODO
-						//GoogleTranslationLabel.Text = translation;
-						_awaitingGoogle2 = false;
-					}
-					if (type == TranslationType.Bing) {
-						//TODO
-						//BingTranslationLabel.Text = translation;
-						_awaitingBing = false;
-					}
-										
-					if (!_awaitingGoogle2 && !_awaitingBing) {
-						//TODO
-						//RefreshTranslateButton.IsEnabled = true;
-						VerticalCheckBox.IsEnabled = true;
-					}
 				});
 			}
 			catch (TaskCanceledException) { }
 		}
 
 		public void TranslationFailed (Exception e, TranslationType type) {
-			try {
-				Dispatcher.Invoke(() => {
-					if (type == TranslationType.Google2)
-						_awaitingGoogle2 = false;
-
-					else if (type == TranslationType.Bing)
-						_awaitingBing = false;
-					
-					if (!_awaitingGoogle2 && !_awaitingBing) {
-						//TODO
-						//RefreshTranslateButton.IsEnabled = true;
-						VerticalCheckBox.IsEnabled = true;
-					}
-				});
-			}
-			catch (TaskCanceledException) { }
+			TranslationFail?.Invoke(this, new TranslationFailEventArgs(e, type));
 		}
 
 		

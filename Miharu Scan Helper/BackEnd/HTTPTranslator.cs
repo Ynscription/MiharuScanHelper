@@ -12,7 +12,7 @@ namespace Manga_Scan_Helper.BackEnd {
 
 
 	public enum TranslationType {
-		Google,
+		//GoogleAPI,
 		Google2,
 		Bing,
 		Yandex,
@@ -21,17 +21,22 @@ namespace Manga_Scan_Helper.BackEnd {
 
 	public static class HTTPTranslator {
 		private const string _googleTranslateURL = "";
+		
 		private const string _google2TranslateURL = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=ja&tl=en&dt=t&q=";
+		
 		private const string _bingTranslateURL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=ja&to=en";
-		//TODO Add notice "Powered by Yandex https://tech.yandex.com/translate/doc/dg/concepts/design-requirements-docpage/"
+		
 		private const string _yandexTranslateURL = "https://translate.yandex.net/api/v1.5/tr.json/translate";
+		
 		private const string _jadedNetworkURL1 = "http://thejadednetwork.com/sfx/search/?keyword=";
 		private const string _jadedNetworkURL2 = "&submitSearch=Search+SFX&x=";
 		
-		//Your Azure Cognitive Services key here
+		//Your Google Cloud Translation API key here
 		private const string _A = "";
-		//Your Yandex Translate API key here
+		//Your Azure Cognitive Services key here
 		private const string _B = "";
+		//Your Yandex Translate API key here
+		private const string _C = "";
 
 		public static void GoogleTranslate (TranslationConsumer consumer, string source) {
 			Task.Run(() => internalGoogleTranslate(consumer, source));
@@ -78,19 +83,18 @@ namespace Manga_Scan_Helper.BackEnd {
 
 					receiveStream.Close();
 
-					consumer.TranslationFailed(new NotImplementedException(), TranslationType.Google);
+					//consumer.TranslationFailed(new NotImplementedException(), TranslationType.GoogleAPI);
 				}
 				else {
-					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine
-															 + response.StatusDescription), TranslationType.Google);
+					//consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine + response.StatusDescription), TranslationType.GoogleAPI);
 				}
 				response.Close();
 			}
-			catch (Exception e) {
+			catch (Exception) {
 
 				receiveStream?.Close();
 				response?.Close();
-				consumer.TranslationFailed(e, TranslationType.Google);
+				//consumer.TranslationFailed(e, TranslationType.GoogleAPI);
 			}
 		}
 
@@ -149,7 +153,7 @@ namespace Manga_Scan_Helper.BackEnd {
 					request.Method = HttpMethod.Post;
 					request.RequestUri = new Uri(_bingTranslateURL);
 					request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-					request.Headers.Add("Ocp-Apim-Subscription-Key", _A);
+					request.Headers.Add("Ocp-Apim-Subscription-Key", _B);
 
 					HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
 
@@ -186,7 +190,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			try {
 				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_yandexTranslateURL 
 					+ "?lang=" + "ja-en"
-					+ "&key=" + _B
+					+ "&key=" + _C
 					+ "&text=" + Uri.EscapeDataString(src));
 				response = (HttpWebResponse) await request.GetResponseAsync();
 				if (response.StatusCode == HttpStatusCode.OK) {

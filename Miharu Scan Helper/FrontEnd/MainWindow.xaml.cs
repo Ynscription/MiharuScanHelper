@@ -952,7 +952,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				}
 				Text txt = _loadedChapter.Pages[_currentPage].AddTextEntry(rect);
 				txt.TextChanged += OnItemChange;
-				SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1);
+				SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1).ForceTranslation();
 				_pageRectangles [_currentPage].InvalidateVisual();
 
 				TextEntry te = new TextEntry(txt, this);
@@ -973,14 +973,19 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private TextEntry _selectedTextEntry = null;
 
-		public void SelectTextEntry (int index) {
+		public TextEntryControl SelectTextEntry (int index) {
 			_pageRectangles [_currentPage].SelectedRect = index;
 			TextEntryGrid.Children.Clear();
-			TextEntryGrid.Children.Add(new TextEntryControl(_loadedChapter.Pages[_currentPage].TextEntries[index], this));
+			TextEntryControl tec = new TextEntryControl(_loadedChapter.Pages[_currentPage].TextEntries[index], this);
+			TextEntryGrid.Children.Add(tec);
+
+
 			if (_selectedTextEntry != null)
 				_selectedTextEntry.Selected = false;
-			((TextEntry)TextEntriesStackPanel.Children[index]).Selected = true;
 			_selectedTextEntry = (TextEntry)TextEntriesStackPanel.Children[index];
+			_selectedTextEntry.Selected = true;
+			
+			return tec;
 		}
 
 		public void RemoveTextEntry (Text target) {

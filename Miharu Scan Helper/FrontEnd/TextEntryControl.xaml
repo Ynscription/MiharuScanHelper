@@ -10,14 +10,14 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="250"/>
 			<RowDefinition Height="1*"/>
-			<RowDefinition Height="100"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200"/>
+			<ColumnDefinition Width="Auto" MinWidth="10"/>
 			<ColumnDefinition Width="2*"/>
 		</Grid.ColumnDefinitions>
 		<Border BorderThickness="1" BorderBrush="Black" Margin="3" Grid.Column="0" Grid.Row="0">
-			<Image x:Name="PreviewIMG"/>
+			<Image x:Name="PreviewIMG" Height="242"/>
 		</Border>
 
 		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Column="1" Grid.Row="0">
@@ -41,7 +41,7 @@
 				</Button>
 
 				<Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" Margin="3,0,3,3">
-					<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="24" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
+					<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="26" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
 				</Border>
 				<Label Content="Jisho:" Height="26" Width="47" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,0"/>
 				<Label x:Name="JishoLinkLabel" Content="https://whatever.com" Height="26" Foreground="#FF0013CF" MouseLeftButtonUp="JishoLinkLabel_MouseLeftButtonUp" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="34,0,0,0" Grid.RowSpan="1"/>
@@ -50,6 +50,18 @@
 			</Grid>
 		</Border>
 
+
+		<TabControl Margin="3" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+			<TabItem Header="Text">
+				<ScrollViewer Grid.Column="1" Margin="6,5,5,5" Grid.Row="1">
+					<StackPanel x:Name="TranslationSourcesStackPanel"/>
+				</ScrollViewer>
+			</TabItem>
+			<TabItem Header="SFX" >
+				<Grid x:Name="TextEntryGrid" />
+			</TabItem>
+		</TabControl>
+		
 		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.ColumnSpan="2" Grid.Row="2">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -63,7 +75,7 @@
 				<Label Content="Translation" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="84" Grid.Row="0" Grid.Column="0" Margin="0,0,0,-5 "/>
 				
 				<Border BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Grid.Row="1">
-					<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>	
+					<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="18" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>	
 				</Border>
 			</Grid>
 		</Border>

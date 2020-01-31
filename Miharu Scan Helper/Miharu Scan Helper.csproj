@@ -115,6 +115,8 @@
     <Compile Include="BackEnd\Logger.cs" />
     <Compile Include="BackEnd\Ripper.cs" />
     <Compile Include="BackEnd\Text.cs" />
+    <Compile Include="BackEnd\TranslationFailEventArgs.cs" />
+    <Compile Include="BackEnd\TxtChangedEventArgs.cs" />
     <Compile Include="BackEnd\TranslationConsumer.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
@@ -140,11 +142,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\TranslationSourceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackEnd\Page.cs" />
     <Compile Include="FrontEnd\TextEntryControl.xaml.cs">
       <DependentUpon>TextEntryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\TranslationSourceView.xaml.cs">
+      <DependentUpon>TranslationSourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

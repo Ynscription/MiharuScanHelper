@@ -58,11 +58,14 @@ namespace Manga_Scan_Helper.FrontEnd {
 		}
 
 
-		private void OnTextChanged (object sender, EventArgs args) {
+		private void OnTextChanged (object sender, TxtChangedEventArgs args) {
 			try {
 				Dispatcher.Invoke(() => {
-					TranslationLabel.Text = _textEntry.TranslatedText;
-					ParsedLabel.Text = _textEntry.ParsedText;
+					if (args.ChangeType == TextChangeType.Parse)
+						ParsedLabel.Text = _textEntry.ParsedText;
+					else if (args.ChangeType == TextChangeType.Translation)
+						TranslationLabel.Text = _textEntry.TranslatedText;
+					
 				});
 			}
 			catch (TaskCanceledException) { }

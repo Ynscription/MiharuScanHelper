@@ -55,7 +55,7 @@ namespace Manga_Scan_Helper.BackEnd
 				}).ToArray();
 
 			}
-			catch (FormatException e) {
+			catch (FormatException) {
 				sortedFiles = files.OrderBy(x=> x.Name).ToArray();
 			}
 			foreach (FileInfo file in sortedFiles) {
@@ -77,7 +77,7 @@ namespace Manga_Scan_Helper.BackEnd
 					return Int32.Parse(x.Substring(lastSlash, x.IndexOf('.') - lastSlash));						
 				}).ToArray();
 			}
-			catch (FormatException e) {
+			catch (FormatException) {
 				sortedFiles = filesSrc.OrderBy(x=> x.Substring(x.LastIndexOf("\\") + 1)).ToArray();
 			}
 
