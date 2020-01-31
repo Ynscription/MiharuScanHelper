@@ -971,10 +971,10 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private void MainWindow1_Closing (object sender, System.ComponentModel.CancelEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
-				ButtonType res = WarnNotSaved();
-				if (res == ButtonType.Yes)
+				string res = WarnNotSaved();
+				if (res == _save)
 					SaveChapterMenuItem_Click(sender, new RoutedEventArgs());
-				else if (res == ButtonType.Cancel) {
+				else if (res == _cancel) {
 					e.Cancel = true;
 					return;
 				}

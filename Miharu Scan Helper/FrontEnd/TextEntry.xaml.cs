@@ -114,21 +114,20 @@ namespace Manga_Scan_Helper.FrontEnd {
 			
 		}
 
-		private bool _awaitingGoogle = false;
 		private bool _awaitingGoogle2 = false;
 		private bool _awaitingBing = false;
-		private bool _awaitingYandex = false;
 		private void Translate (string text) {
 			RefreshTranslateButton.IsEnabled = false;
 			VerticalCheckBox.IsEnabled = false;
-			_awaitingGoogle = true;
 			HTTPTranslator.GoogleTranslate(this, text);
+
 			_awaitingGoogle2 = true;
 			HTTPTranslator.Google2Translate(this, text);
 			_awaitingBing = true;
 			HTTPTranslator.BingTranslate(this, text);
-			_awaitingYandex = true;
+
 			HTTPTranslator.YandexTranslate(this, text);
+			HTTPTranslator.JadedNetworkTranslate(this, text);
 			
 		}
 
@@ -137,9 +136,6 @@ namespace Manga_Scan_Helper.FrontEnd {
 			try {
 				Dispatcher.Invoke(() => {
 					_textEntry.SetTranslation(type, translation);
-					if (type == TranslationType.Google) {
-						_awaitingGoogle = false;
-					}
 					if (type == TranslationType.Google2) {
 						GoogleTranslationLabel.Text = translation;
 						_awaitingGoogle2 = false;
@@ -148,10 +144,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 						BingTranslationLabel.Text = translation;
 						_awaitingBing = false;
 					}
-					if (type == TranslationType.Yandex) {
-						_awaitingYandex = false;
-					}
-					
+										
 					if (!_awaitingGoogle2 && !_awaitingBing) {
 						RefreshTranslateButton.IsEnabled = true;
 						VerticalCheckBox.IsEnabled = true;

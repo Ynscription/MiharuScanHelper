@@ -99,6 +99,7 @@ namespace Manga_Scan_Helper.BackEnd
 			Rectangle = rect;
 			TranslatedText = "";
 			Vertical = src.Height >= src.Width;
+			_translations = new Dictionary<TranslationType, string>();
 		}
 
 		
