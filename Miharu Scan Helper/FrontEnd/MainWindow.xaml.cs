@@ -883,7 +883,21 @@ Would you like to locate the Tesseract exectutable manually?";
 		private RectangleAdorner [] _pageRectangles = null;
 		bool _previousMouseState = false;
 
-		private void PreviewIMG_MouseLeftButtonDown (object sender, MouseButtonEventArgs e) {
+		private void PreviewIMG_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
+			bool found = false;
+
+			for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !found; i++) {
+				if (found = _loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
+					SelectTextEntry(i);
+					_pageRectangles[_currentPage].InvalidateVisual();
+				}
+			}
+		}
+		
+
+		private void PreviewIMG_PreviewMouseRightButtonDown (object sender, MouseButtonEventArgs e) {
 			if (_loadedChapter != null) {
 				_startingPoint = e.GetPosition(PreviewIMG);			
 			
@@ -898,7 +912,20 @@ Would you like to locate the Tesseract exectutable manually?";
 		}
 
 		private void PreviewIMG_MouseMove (object sender, MouseEventArgs e) {
-			if (e.LeftButton == MouseButtonState.Pressed && _previousMouseState) {
+			System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
+			bool found = false;
+			for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !found; i++) {
+				if (found = _loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
+					_pageRectangles[_currentPage].MouseOverRect = i;
+					_pageRectangles[_currentPage].InvalidateVisual();
+				}
+			}
+			if (!found) {
+				_pageRectangles[_currentPage].MouseOverRect = -1;
+				_pageRectangles[_currentPage].InvalidateVisual();
+			}
+
+			if (e.RightButton == MouseButtonState.Pressed && _previousMouseState) {
 				Rect rect = new Rect(_startingPoint, e.GetPosition(PreviewIMG));
 				_pageRectangles [_currentPage].DragRect = rect;
 				_pageRectangles [_currentPage].InvalidateVisual();
@@ -920,6 +947,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				}
 				Text txt = _loadedChapter.Pages[_currentPage].AddTextEntry(rect);
 				txt.TextChanged += OnItemChange;
+				SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1);
 				_pageRectangles [_currentPage].InvalidateVisual();
 
 				TextEntry te = new TextEntry(txt, this);
@@ -938,6 +966,10 @@ Would you like to locate the Tesseract exectutable manually?";
 
 
 		#region TextEntries
+
+		public void SelectTextEntry (int index) {
+			_pageRectangles [_currentPage].SelectedRect = index;
+		}
 
 		public void RemoveTextEntry (TextEntry target) {
 			int index = TextEntriesStackPanel.Children.IndexOf(target);
@@ -1007,11 +1039,14 @@ Would you like to locate the Tesseract exectutable manually?";
 			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);
 		}
 
-		
+
+
+
+
 
 
 		#endregion
 
-
+		
 	}
 }
