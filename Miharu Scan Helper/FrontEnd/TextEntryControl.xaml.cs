@@ -125,8 +125,8 @@ namespace Manga_Scan_Helper.FrontEnd
 			//TODO
 			//RefreshTranslateButton.IsEnabled = false;
 			//VerticalCheckBox.IsEnabled = false;
-			//HTTPTranslator.GoogleTranslate(this, text);
 
+			/*HTTPTranslator.GoogleTranslate(this, refinedText);*/
 			HTTPTranslator.Google2Translate(this, refinedText);
 			HTTPTranslator.BingTranslate(this, refinedText);
 			HTTPTranslator.YandexTranslate(this, refinedText);
@@ -137,7 +137,8 @@ namespace Manga_Scan_Helper.FrontEnd
 
 		public void RequestTranslation (TranslationType type) {
 			string refinedText = SanitizeString(ParsedText);
-			
+			/*if (type == TranslationType.GoogleAPI)
+				HTTPTranslator.GoogleTranslate(this, refinedText);*/
 			if (type == TranslationType.Google2)
 				HTTPTranslator.Google2Translate(this, refinedText);
 			else if (type == TranslationType.Bing)
@@ -180,16 +181,6 @@ namespace Manga_Scan_Helper.FrontEnd
 		private void DeleteButton_Click (object sender, RoutedEventArgs e) {
 			//TODO
 			//_parent.RemoveTextEntry(this);
-		}
-
-		private void MoveUpButton_Click (object sender, RoutedEventArgs e) {
-			//TODO
-			//_parent.MoveTextEntry(this, true);
-		}
-
-		private void MoveDownButton_Click (object sender, RoutedEventArgs e) {
-			//TODO
-			//_parent.MoveTextEntry(this, false);
 		}
 
 

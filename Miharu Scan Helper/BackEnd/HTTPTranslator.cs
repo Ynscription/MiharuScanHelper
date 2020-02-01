@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -61,41 +60,39 @@ namespace Manga_Scan_Helper.BackEnd {
 		}
 
 		private static async Task internalGoogleTranslate (TranslationConsumer consumer, string src) {
-			string res = "";
-			HttpWebResponse response = null;
-			Stream receiveStream = null;
+			/*string res = "";
+			GoogleAPIRequestBody garb = new GoogleAPIRequestBody();
+			garb.contents = new string [1];
+			garb.contents[0] = src;
+			string requestBody = JsonConvert.SerializeObject(garb);
 
 			try {
-				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL + Uri.EscapeDataString(src));//Uri.EscapeUriString(src));
-				request.Method = "GET";
-				request.ContentType = "application/x-www-form-urlencoded";
-				response = (HttpWebResponse) await request.GetResponseAsync();
-				if (response.StatusCode == HttpStatusCode.OK) {
-					receiveStream = response.GetResponseStream();
-					StreamReader readStream = null;
+				TranslationServiceClientBuilder builder = new TranslationServiceClientBuilder ();
+				builder.TokenAccessMethod = new Func<string, System.Threading.CancellationToken, Task<string>>() {
 
-					if (response.CharacterSet == null)
-						readStream = new StreamReader(receiveStream);
-					else
-						readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+				};
+				TranslationServiceClient client = TranslationServiceClient.Create();
+				
 
-					res = await readStream.ReadToEndAsync();
+				TranslateTextRequest request = new TranslateTextRequest {
+					Contents = { src, },
+					TargetLanguageCode = "ja",
+					ParentAsLocationName = new LocationName (_googleTranslateProjectId, "global"),
+				};
+				
 
-					receiveStream.Close();
+				TranslateTextResponse response = client.TranslateText(request);
 
-					//consumer.TranslationFailed(new NotImplementedException(), TranslationType.GoogleAPI);
+
+				
+				foreach (Translation t in response.Translations) {
+
 				}
-				else {
-					//consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine + response.StatusDescription), TranslationType.GoogleAPI);
-				}
-				response.Close();
 			}
-			catch (Exception) {
+			catch (Exception e) {
 
-				receiveStream?.Close();
-				response?.Close();
-				//consumer.TranslationFailed(e, TranslationType.GoogleAPI);
-			}
+				consumer.TranslationFailed(e, TranslationType.GoogleAPI);
+			}*/
 		}
 
 		private static async Task internalGoogle2Translate (TranslationConsumer consumer, string src) {
