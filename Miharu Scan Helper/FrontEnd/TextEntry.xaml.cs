@@ -83,6 +83,11 @@ namespace Manga_Scan_Helper.FrontEnd {
 			_parent.MoveTextEntry(_textEntry, false);
 		}
 
-		
+				
+
+		private void Event_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			_parent.SelectTextEntry(this);
+		}
 	}
 }

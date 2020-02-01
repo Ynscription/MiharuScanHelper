@@ -231,7 +231,7 @@ namespace Manga_Scan_Helper.BackEnd {
 
 
 
-		private static Regex _jadedNetworkRegex = new Regex("<td class=\"romaji\">((.|\\n)*)<a href=\"http://thejadednetwork[.]com/sfx/browse/");
+		private static Regex _jadedNetworkRegex = new Regex("<td class=\"jap\" (lang=\"ja\"|xml:lang=\"ja\") (lang=\"ja\"|xml:lang=\"ja\")>((.|\\n)*)<a href=\"http://thejadednetwork[.]com/sfx/browse/");
 		private static async Task internalJadedNetworkTranslate (TranslationConsumer consumer, string src) {
 			string res = "";
 			HttpWebResponse response = null;
@@ -242,16 +242,17 @@ namespace Manga_Scan_Helper.BackEnd {
 				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_jadedNetworkURL1
 					+ Uri.EscapeDataString(src)
 					+ _jadedNetworkURL2);
+				request.Method = "GET";
+				request.ContentType = "application/x-www-form-urlencoded;charset=utf-8";
+				
 				response = (HttpWebResponse) await request.GetResponseAsync();
 				if (response.StatusCode == HttpStatusCode.OK) {
 					receiveStream = response.GetResponseStream();
 					readStream = null;
 
-					if (response.CharacterSet == null)
-						readStream = new StreamReader(receiveStream);
-					else
-						readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-
+					//We can't even trust the server anymore, JadedNetwork reports ISO-8859-1 as the charset smh...
+					readStream = new StreamReader(receiveStream, Encoding.UTF8);
+					
 					res = await readStream.ReadToEndAsync();
 
 					readStream.Close();
@@ -262,12 +263,12 @@ namespace Manga_Scan_Helper.BackEnd {
 					MatchCollection matches = _jadedNetworkRegex.Matches(res);
 
 					if (matches.Count > 0) {
-						res = matches[0].Groups[1].Value;
+						res = matches[0].Groups[3].Value;
 
 						consumer.TranslationCallback(res, TranslationType.JadedNetwork);
 					}
 					else
-						consumer.TranslationFailed(new Exception("No regex matches found in HTTP response."), TranslationType.JadedNetwork);
+						consumer.TranslationFailed(new Exception("No results found or there was an error parsing the source."), TranslationType.JadedNetwork);
 					
 				}
 				else {

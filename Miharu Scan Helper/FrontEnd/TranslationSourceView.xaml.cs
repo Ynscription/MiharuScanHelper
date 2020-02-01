@@ -49,15 +49,6 @@ namespace Manga_Scan_Helper.FrontEnd
 			
 		}
 
-		
-		private void RefreshButton_Click(object sender, RoutedEventArgs e)
-		{
-			_parent.RequestTranslation(Type);
-			RefreshButton.IsEnabled = false;
-			ErrorIMG.Visibility = Visibility.Hidden;
-			ErrorIMG.ToolTip = null;
-		}
-
 		private void OnTranslationFailed(object sender, TranslationFailEventArgs e)
 		{
 			try {
@@ -72,9 +63,21 @@ namespace Manga_Scan_Helper.FrontEnd
 			catch (TaskCanceledException) { }
 		}
 
+		
+		private void RefreshButton_Click(object sender, RoutedEventArgs e)
+		{
+			_parent.RequestTranslation(Type);
+			RefreshButton.IsEnabled = false;
+			ErrorIMG.Visibility = Visibility.Hidden;
+			ErrorIMG.ToolTip = null;
+		}
+
+		
+
 
 		private void LinkLabel_Click (object sender, RoutedEventArgs e) {
 			System.Diagnostics.Process.Start((string)LinkLabel.Content);
 		}
+
 	}
 }

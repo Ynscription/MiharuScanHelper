@@ -65,6 +65,8 @@ namespace Manga_Scan_Helper.FrontEnd
 					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (this, t, _textEntry));
 			}
 
+			SFXTranslationGrid.Children.Add(new TranslationSourceJadedNetworkView(this, _textEntry));
+
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
 			
@@ -187,7 +189,6 @@ namespace Manga_Scan_Helper.FrontEnd
 			//TODO
 			//_parent.RemoveTextEntry(this);
 		}
-
 
 		
 	}

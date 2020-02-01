@@ -114,6 +114,7 @@
     <Compile Include="BackEnd\HTTPTranslator.cs" />
     <Compile Include="BackEnd\Logger.cs" />
     <Compile Include="BackEnd\Ripper.cs" />
+    <Compile Include="BackEnd\SFXContainer.cs" />
     <Compile Include="BackEnd\Text.cs" />
     <Compile Include="BackEnd\TranslationFailEventArgs.cs" />
     <Compile Include="BackEnd\TxtChangedEventArgs.cs" />
@@ -142,6 +143,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\TranslationSourceJadedNetworkView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\TranslationSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +156,9 @@
     <Compile Include="BackEnd\Page.cs" />
     <Compile Include="FrontEnd\TextEntryControl.xaml.cs">
       <DependentUpon>TextEntryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\TranslationSourceJadedNetworkView.xaml.cs">
+      <DependentUpon>TranslationSourceJadedNetworkView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\TranslationSourceView.xaml.cs">
       <DependentUpon>TranslationSourceView.xaml</DependentUpon>

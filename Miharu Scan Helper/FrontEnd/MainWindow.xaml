@@ -77,7 +77,7 @@
 			</Grid>
 
 			<Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-				<TabControl>
+				<TabControl >
 					<TabItem Header="Translation Management">
 						<ScrollViewer Grid.Column="1" Margin="11,10,10,10" Grid.Row="1">
 							<StackPanel x:Name="TextEntriesStackPanel"/>

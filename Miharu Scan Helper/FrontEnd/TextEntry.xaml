@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
              mc:Ignorable="d" 
-             Height="150" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1">
+             Height="150" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1"
+			 PreviewMouseUp="Event_MouseUp">
 	<Border x:Name="EntryBorder" BorderThickness="1" BorderBrush="#FF535353">
 		<Grid >
 			<Grid.RowDefinitions>
@@ -29,7 +30,7 @@
 					<ColumnDefinition Width="1*"/>
 				</Grid.ColumnDefinitions>
 				<Border BorderThickness="1" BorderBrush="Black" Grid.Column="0" Margin="0,3" >
-					<Image x:Name="PreviewIMG" Height="138" MinWidth="10" />
+					<Image x:Name="PreviewIMG" Height="138" MinWidth="10" MouseUp="Event_MouseUp" />
 				</Border>
 
 
@@ -43,10 +44,11 @@
 						<ColumnDefinition Width="1*"/>
 						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
-					<TextBox x:Name="ParsedLabel" Grid.ColumnSpan="2" TextWrapping="Wrap" FontSize="20" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" IsReadOnly="True"  BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
-					<Border BorderThickness="1" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" />
-					<TextBox x:Name="TranslationLabel" Grid.Row="2" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto" MinWidth="10" />
-					<Border BorderThickness="1" Grid.Row="2" BorderBrush="Black" />
+					
+					<TextBox x:Name="ParsedLabel" Grid.ColumnSpan="2" TextWrapping="Wrap" FontSize="20" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" IsReadOnly="True"  BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" PreviewMouseUp="Event_MouseUp"/>
+					<Border BorderThickness="1" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" PreviewMouseUp="Event_MouseUp"/>
+					<TextBox x:Name="TranslationLabel" Grid.Row="2" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto" MinWidth="10" PreviewMouseUp="Event_MouseUp"/>
+					<Border BorderThickness="1" Grid.Row="2" BorderBrush="Black" PreviewMouseUp="Event_MouseUp"/>
 
 					<Button x:Name="DeleteButton" Grid.Column="1" Grid.Row="2" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24" VerticalAlignment="Bottom" Background="#FFBB4D4D">
 						<StackPanel>

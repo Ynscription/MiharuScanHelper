@@ -988,6 +988,12 @@ Would you like to locate the Tesseract exectutable manually?";
 			return tec;
 		}
 
+		public void SelectTextEntry (TextEntry entry) {
+			int index = TextEntriesStackPanel.Children.IndexOf(entry);
+			SelectTextEntry(index);
+			_pageRectangles[_currentPage].InvalidateVisual();
+		}
+
 		public void RemoveTextEntry (Text target) {
 			int index = _loadedChapter.Pages[_currentPage].TextEntries.IndexOf(target);
 			TextEntriesStackPanel.Children.RemoveAt(index);
