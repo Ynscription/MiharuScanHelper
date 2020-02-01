@@ -6,8 +6,8 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Manga_Scan_Helper.BackEnd {
 
@@ -91,7 +91,7 @@ namespace Manga_Scan_Helper.BackEnd {
 				}
 				response.Close();
 			}
-			catch (Exception e) {
+			catch (Exception) {
 				readStream?.Close();
 				receiveStream?.Close();
 				response?.Close();
@@ -231,7 +231,7 @@ namespace Manga_Scan_Helper.BackEnd {
 
 
 
-		
+		private static Regex _jadedNetworkRegex = new Regex("<td class=\"romaji\">((.|\\n)*)<a href=\"http://thejadednetwork[.]com/sfx/browse/");
 		private static async Task internalJadedNetworkTranslate (TranslationConsumer consumer, string src) {
 			string res = "";
 			HttpWebResponse response = null;
@@ -259,19 +259,16 @@ namespace Manga_Scan_Helper.BackEnd {
 
 					List<string> chunks = new List<string>();
 					
-					XElement xres = XElement.Parse(res, );
+					MatchCollection matches = _jadedNetworkRegex.Matches(res);
 
+					if (matches.Count > 0) {
+						res = matches[0].Groups[1].Value;
 
-					/*int startIndex = 0;
-					while ((startIndex = res.IndexOf("<td class=\"romaji\">")) < res.Length) {
-						res = res.Substring(startIndex);
-						int endIndex = res.IndexOf("<a href=\"http://thejadednetwork.com/sfx/browse/");
-						chunks.Add(res.Substring(0, endIndex));
-						res = res.Substring(endIndex);
-					}*/
-
+						consumer.TranslationCallback(res, TranslationType.JadedNetwork);
+					}
+					else
+						consumer.TranslationFailed(new Exception("No regex matches found in HTTP response."), TranslationType.JadedNetwork);
 					
-					consumer.TranslationCallback(res, TranslationType.JadedNetwork);
 				}
 				else {
 					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine

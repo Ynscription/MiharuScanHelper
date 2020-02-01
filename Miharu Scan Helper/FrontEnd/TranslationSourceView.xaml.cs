@@ -34,6 +34,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			_textEntry = textEntry;
 			_textEntry.TextChanged += TextEntry_TextChanged;
 			_parent = parent;
+			_parent.TranslationFail += OnTranslationFailed;
 			TranslationTextBox.Text = _textEntry.GetTranslation(Type);
 		}
 
@@ -52,7 +53,6 @@ namespace Manga_Scan_Helper.FrontEnd
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
 			_parent.RequestTranslation(Type);
-			_parent.TranslationFail += OnTranslationFailed;
 			RefreshButton.IsEnabled = false;
 			ErrorIMG.Visibility = Visibility.Hidden;
 			ErrorIMG.ToolTip = null;
@@ -62,9 +62,11 @@ namespace Manga_Scan_Helper.FrontEnd
 		{
 			try {
 				Dispatcher.Invoke(() => {
-					ErrorIMG.Visibility = Visibility.Visible;
-					ErrorIMG.ToolTip = e.Exception.Message;
-					RefreshButton.IsEnabled = true;
+					if (e.Type == Type) {
+						ErrorIMG.Visibility = Visibility.Visible;
+						ErrorIMG.ToolTip = e.Exception.Message;
+						RefreshButton.IsEnabled = true;
+					}
 				});
 			}
 			catch (TaskCanceledException) { }

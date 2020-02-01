@@ -177,7 +177,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\Data\onomatopoeia.json" />
     <None Include="Resources\Licenses\Newtonsoft.Json LICENSE.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

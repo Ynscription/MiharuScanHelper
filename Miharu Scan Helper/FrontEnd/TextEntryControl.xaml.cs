@@ -119,6 +119,11 @@ namespace Manga_Scan_Helper.FrontEnd
 			finally { DeleteObject(handle); }
 		}
 
+		private void RefreshAllButton_Click(object sender, RoutedEventArgs e)
+		{
+			ForceTranslation();
+		}
+
 		public void ForceTranslation () {
 
 			string refinedText = SanitizeString(ParsedText);
@@ -131,7 +136,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			HTTPTranslator.BingTranslate(this, refinedText);
 			HTTPTranslator.YandexTranslate(this, refinedText);
 
-			HTTPTranslator.JadedNetworkTranslate(this, refinedText);
+			//HTTPTranslator.JadedNetworkTranslate(this, refinedText);
 			
 		}
 
@@ -183,10 +188,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			//_parent.RemoveTextEntry(this);
 		}
 
-		private void SFXRefreshButton_Click (object sender, RoutedEventArgs e) {
-			RequestTranslation(TranslationType.JadedNetwork);
-		}
 
-
+		
 	}
 }

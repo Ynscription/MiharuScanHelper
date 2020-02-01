@@ -53,21 +53,24 @@
 
 		<TabControl Margin="3" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
 			<TabItem Header="Text">
-				<ScrollViewer Grid.Column="1" Margin="6,5,5,5" Grid.Row="1">
-					<StackPanel x:Name="TranslationSourcesStackPanel"/>
-				</ScrollViewer>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="1*"/>
+					</Grid.RowDefinitions>
+					<Button x:Name="RefreshAllButton" Margin="5" Grid.Row="0" Content="Refresh all translations" HorizontalAlignment="Left" Click="RefreshAllButton_Click"/>
+					<ScrollViewer Margin="6,5,5,5" Grid.Row="1">
+						<StackPanel x:Name="TranslationSourcesStackPanel"/>
+					</ScrollViewer>
+				</Grid>
 			</TabItem>
 			<TabItem Header="SFX" >
 				<Grid x:Name="SFXTranslationGrid" >
-					<Button x:Name="SFXRefreshButton"  Width="24" Height="24" Margin="3" FontSize="10" Click="SFXRefreshButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top">
-						<StackPanel>
-							<Image Height="22" Width="22" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
-						</StackPanel>
-					</Button>
+
 				</Grid>
 			</TabItem>
 		</TabControl>
-		
+
 		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.ColumnSpan="2" Grid.Row="2">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -79,13 +82,13 @@
 					<ColumnDefinition Width="2*"/>
 				</Grid.ColumnDefinitions>
 				<Label Content="Translation" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="84" Grid.Row="0" Grid.Column="0" Margin="0,0,0,-5 "/>
-				
+
 				<Border BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Grid.Row="1">
-					<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="18" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>	
+					<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="18" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
 				</Border>
 			</Grid>
 		</Border>
-		
-		
+
+
 	</Grid>
 </UserControl>

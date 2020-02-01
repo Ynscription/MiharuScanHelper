@@ -17,6 +17,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 		private readonly static string OokiiLicenseFile = @".\Resources\Licenses\Ookii.Dialogs  LICENSE";
 		
 		private readonly static string TesseractLicenseFile = @".\Resources\Licenses\Tesseract OCR LICENSE";
+
 		
 
 		private void ShowFileInExplorer (string file) {
@@ -41,6 +42,12 @@ namespace Manga_Scan_Helper.FrontEnd {
 		private void TesseractLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
 			ShowFileInExplorer(TesseractLicenseFile);
 		}
+
+
+		private void YandexLinkLabel_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			System.Diagnostics.Process.Start((string)YandexLinkLabel.Content);
+		}
 		
 
 		private void Button_Click (object sender, RoutedEventArgs e) {
@@ -57,5 +64,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			} else
 				counter++;
 		}
+
+		
 	}
 }
