@@ -183,6 +183,10 @@ namespace Manga_Scan_Helper.FrontEnd
 			//_parent.RemoveTextEntry(this);
 		}
 
+		private void SFXRefreshButton_Click (object sender, RoutedEventArgs e) {
+			RequestTranslation(TranslationType.JadedNetwork);
+		}
+
 
 	}
 }

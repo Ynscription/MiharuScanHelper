@@ -952,11 +952,11 @@ Would you like to locate the Tesseract exectutable manually?";
 				}
 				Text txt = _loadedChapter.Pages[_currentPage].AddTextEntry(rect);
 				txt.TextChanged += OnItemChange;
-				SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1).ForceTranslation();
-				_pageRectangles [_currentPage].InvalidateVisual();
-
 				TextEntry te = new TextEntry(txt, this);
 				TextEntriesStackPanel.Children.Add(te);
+				SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1).ForceTranslation();
+				_pageRectangles [_currentPage].InvalidateVisual();
+				
 				Mouse.SetCursor(Cursors.Arrow);
 
 

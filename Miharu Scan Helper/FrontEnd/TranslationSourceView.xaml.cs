@@ -42,6 +42,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			if (args.TranslationType.HasValue && args.ChangeType == TextChangeType.TranslationSource) {
 				if (args.TranslationType.Value == Type) {
 					TranslationTextBox.Text = args.Text;
+					RefreshButton.IsEnabled = true;
 				}
 			}
 			
@@ -52,13 +53,18 @@ namespace Manga_Scan_Helper.FrontEnd
 		{
 			_parent.RequestTranslation(Type);
 			_parent.TranslationFail += OnTranslationFailed;
+			RefreshButton.IsEnabled = false;
+			ErrorIMG.Visibility = Visibility.Hidden;
+			ErrorIMG.ToolTip = null;
 		}
 
 		private void OnTranslationFailed(object sender, TranslationFailEventArgs e)
 		{
 			try {
 				Dispatcher.Invoke(() => {
-					
+					ErrorIMG.Visibility = Visibility.Visible;
+					ErrorIMG.ToolTip = e.Exception.Message;
+					RefreshButton.IsEnabled = true;
 				});
 			}
 			catch (TaskCanceledException) { }

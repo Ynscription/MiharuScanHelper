@@ -18,7 +18,7 @@
 				<RowDefinition Height="20"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-			<Image x:Name="ErrorIMG" Grid.Column="0" Grid.Row="0"/>
+			<Image x:Name="ErrorIMG" Grid.Column="0" Grid.Row="0" Visibility="Hidden" Source="/Miharu Scan Helper;component/Resources/Warning.png"/>
 			<Label x:Name="SourceLabel" Grid.Column="1" FontSize="16" Margin="0,-1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2"/>
 			<Label x:Name="LinkLabel" Grid.Column="2" FontSize="16" Margin="10,-1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonUp="LinkLabel_Click" Grid.RowSpan="2" Foreground="#FF0013CF"/>
 			

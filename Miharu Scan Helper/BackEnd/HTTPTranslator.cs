@@ -1,11 +1,13 @@
 ﻿
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Manga_Scan_Helper.BackEnd {
 
@@ -60,52 +62,16 @@ namespace Manga_Scan_Helper.BackEnd {
 		}
 
 		private static async Task internalGoogleTranslate (TranslationConsumer consumer, string src) {
-			/*string res = "";
-			GoogleAPIRequestBody garb = new GoogleAPIRequestBody();
-			garb.contents = new string [1];
-			garb.contents[0] = src;
-			string requestBody = JsonConvert.SerializeObject(garb);
-
-			try {
-				TranslationServiceClientBuilder builder = new TranslationServiceClientBuilder ();
-				builder.TokenAccessMethod = new Func<string, System.Threading.CancellationToken, Task<string>>() {
-
-				};
-				TranslationServiceClient client = TranslationServiceClient.Create();
-				
-
-				TranslateTextRequest request = new TranslateTextRequest {
-					Contents = { src, },
-					TargetLanguageCode = "ja",
-					ParentAsLocationName = new LocationName (_googleTranslateProjectId, "global"),
-				};
-				
-
-				TranslateTextResponse response = client.TranslateText(request);
-
-
-				
-				foreach (Translation t in response.Translations) {
-
-				}
-			}
-			catch (Exception e) {
-
-				consumer.TranslationFailed(e, TranslationType.GoogleAPI);
-			}*/
-		}
-
-		private static async Task internalGoogle2Translate (TranslationConsumer consumer, string src) {
 			string res = "";
 			HttpWebResponse response = null;
 			Stream receiveStream = null;
+			StreamReader readStream = null;
 
 			try {
-				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_google2TranslateURL + Uri.EscapeDataString(src));//Uri.EscapeUriString(src));
+				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_googleTranslateURL);
 				response = (HttpWebResponse) await request.GetResponseAsync();
 				if (response.StatusCode == HttpStatusCode.OK) {
 					receiveStream = response.GetResponseStream();
-					StreamReader readStream = null;
 
 					if (response.CharacterSet == null)
 						readStream = new StreamReader(receiveStream);
@@ -114,6 +80,45 @@ namespace Manga_Scan_Helper.BackEnd {
 
 					res = await readStream.ReadToEndAsync();
 
+					readStream.Close();
+					receiveStream.Close();
+					
+					//consumer.TranslationFailed(new Exception("Google 2 translation failed"), TranslationType.Google2);
+					
+				}
+				else {
+					//consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine + response.StatusDescription), TranslationType.Google2);
+				}
+				response.Close();
+			}
+			catch (Exception e) {
+				readStream?.Close();
+				receiveStream?.Close();
+				response?.Close();
+				//consumer.TranslationFailed(e, TranslationType.GoogleAPI);
+			}
+		}
+
+		private static async Task internalGoogle2Translate (TranslationConsumer consumer, string src) {
+			string res = "";
+			HttpWebResponse response = null;
+			Stream receiveStream = null;
+			StreamReader readStream = null;
+
+			try {
+				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_google2TranslateURL + Uri.EscapeDataString(src));//Uri.EscapeUriString(src));
+				response = (HttpWebResponse) await request.GetResponseAsync();
+				if (response.StatusCode == HttpStatusCode.OK) {
+					receiveStream = response.GetResponseStream();
+					
+					if (response.CharacterSet == null)
+						readStream = new StreamReader(receiveStream);
+					else
+						readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+
+					res = await readStream.ReadToEndAsync();
+
+					readStream.Close();
 					receiveStream.Close();
 
 					int firstString = res.IndexOf("\"") + 1;
@@ -133,7 +138,7 @@ namespace Manga_Scan_Helper.BackEnd {
 				response.Close();
 			}
 			catch (Exception e) {
-
+				readStream?.Close();
 				receiveStream?.Close();
 				response?.Close();
 				consumer.TranslationFailed(e, TranslationType.Google2);
@@ -183,6 +188,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			string res = "";
 			HttpWebResponse response = null;
 			Stream receiveStream = null;
+			StreamReader readStream = null;
 
 			try {
 				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_yandexTranslateURL 
@@ -192,7 +198,6 @@ namespace Manga_Scan_Helper.BackEnd {
 				response = (HttpWebResponse) await request.GetResponseAsync();
 				if (response.StatusCode == HttpStatusCode.OK) {
 					receiveStream = response.GetResponseStream();
-					StreamReader readStream = null;
 
 					if (response.CharacterSet == null)
 						readStream = new StreamReader(receiveStream);
@@ -201,6 +206,7 @@ namespace Manga_Scan_Helper.BackEnd {
 
 					res = await readStream.ReadToEndAsync();
 
+					readStream.Close();
 					receiveStream.Close();
 
 					int firstBracket = res.IndexOf('[') + 2;
@@ -216,6 +222,7 @@ namespace Manga_Scan_Helper.BackEnd {
 			}
 			catch (Exception e) {
 
+				readStream?.Close();
 				receiveStream?.Close();
 				response?.Close();
 				consumer.TranslationFailed(e, TranslationType.Yandex);
@@ -223,10 +230,13 @@ namespace Manga_Scan_Helper.BackEnd {
 		}
 
 
+
+		
 		private static async Task internalJadedNetworkTranslate (TranslationConsumer consumer, string src) {
 			string res = "";
 			HttpWebResponse response = null;
 			Stream receiveStream = null;
+			StreamReader readStream = null;
 
 			try {
 				HttpWebRequest request = (HttpWebRequest) WebRequest.Create(_jadedNetworkURL1
@@ -235,7 +245,7 @@ namespace Manga_Scan_Helper.BackEnd {
 				response = (HttpWebResponse) await request.GetResponseAsync();
 				if (response.StatusCode == HttpStatusCode.OK) {
 					receiveStream = response.GetResponseStream();
-					StreamReader readStream = null;
+					readStream = null;
 
 					if (response.CharacterSet == null)
 						readStream = new StreamReader(receiveStream);
@@ -244,11 +254,24 @@ namespace Manga_Scan_Helper.BackEnd {
 
 					res = await readStream.ReadToEndAsync();
 
+					readStream.Close();
 					receiveStream.Close();
 
+					List<string> chunks = new List<string>();
 					
-					consumer.TranslationFailed(new NotImplementedException(), TranslationType.JadedNetwork);
-					//consumer.TranslationCallback(res, TranslationType.JadedNetwork);
+					XElement xres = XElement.Parse(res, );
+
+
+					/*int startIndex = 0;
+					while ((startIndex = res.IndexOf("<td class=\"romaji\">")) < res.Length) {
+						res = res.Substring(startIndex);
+						int endIndex = res.IndexOf("<a href=\"http://thejadednetwork.com/sfx/browse/");
+						chunks.Add(res.Substring(0, endIndex));
+						res = res.Substring(endIndex);
+					}*/
+
+					
+					consumer.TranslationCallback(res, TranslationType.JadedNetwork);
 				}
 				else {
 					consumer.TranslationFailed(new Exception("HTTP bad response (" + response.StatusCode.ToString() + "):" + Environment.NewLine
@@ -258,8 +281,9 @@ namespace Manga_Scan_Helper.BackEnd {
 			}
 			catch (Exception e) {
 
-				receiveStream?.Close();
+				readStream?.Close();
 				response?.Close();
+				receiveStream?.Close();
 				consumer.TranslationFailed(e, TranslationType.JadedNetwork);
 			}
 		}

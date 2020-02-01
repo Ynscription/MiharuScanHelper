@@ -48,7 +48,7 @@
 					<TextBox x:Name="TranslationLabel" Grid.Row="2" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto" MinWidth="10" />
 					<Border BorderThickness="1" Grid.Row="2" BorderBrush="Black" />
 
-					<Button x:Name="DeleteButton" Grid.Column="1" Grid.Row="2" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24" VerticalAlignment="Bottom">
+					<Button x:Name="DeleteButton" Grid.Column="1" Grid.Row="2" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24" VerticalAlignment="Bottom" Background="#FFBB4D4D">
 						<StackPanel>
 							<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Delete.png"  />
 						</StackPanel>

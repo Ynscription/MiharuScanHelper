@@ -321,6 +321,7 @@
     <Content Include="Resources\Graphics\CnC_EE.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Warning.png" />
     <Resource Include="Resources\New Page.png" />
     <Content Include="Resources\Redist\Tesseract-OCR\ambiguous_words.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

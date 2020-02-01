@@ -58,7 +58,13 @@
 				</ScrollViewer>
 			</TabItem>
 			<TabItem Header="SFX" >
-				<Grid x:Name="TextEntryGrid" />
+				<Grid x:Name="SFXTranslationGrid" >
+					<Button x:Name="SFXRefreshButton"  Width="24" Height="24" Margin="3" FontSize="10" Click="SFXRefreshButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top">
+						<StackPanel>
+							<Image Height="22" Width="22" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
+						</StackPanel>
+					</Button>
+				</Grid>
 			</TabItem>
 		</TabControl>
 		
