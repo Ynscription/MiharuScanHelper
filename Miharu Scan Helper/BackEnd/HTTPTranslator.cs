@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -38,6 +39,16 @@ namespace Manga_Scan_Helper.BackEnd {
 		private const string _B = "";
 		//Your Yandex Translate API key here
 		private const string _C = "";
+
+		private static string DecodeEncodedUnicodeCharacters(string src)
+		{
+			return Regex.Replace(
+            src,
+            @"\\u(?<Value>[a-zA-Z0-9]{4})",
+            m => {
+                return ((char) int.Parse( m.Groups["Value"].Value, NumberStyles.HexNumber )).ToString();
+            } );
+		}
 
 		public static void GoogleTranslate (TranslationConsumer consumer, string source) {
 			Task.Run(() => internalGoogleTranslate(consumer, source));
@@ -128,6 +139,8 @@ namespace Manga_Scan_Helper.BackEnd {
 					else {
 						res = res.Substring(firstString);
 						res = res.Substring(0, res.IndexOf("\",\""));
+						if (res.Contains("\\u"))
+							res = DecodeEncodedUnicodeCharacters(res);
 						consumer.TranslationCallback(res, TranslationType.Google2);
 					}
 				}
@@ -144,6 +157,8 @@ namespace Manga_Scan_Helper.BackEnd {
 				consumer.TranslationFailed(e, TranslationType.Google2);
 			}
 		}
+
+		
 
 		private static async Task internalBingTranslate (TranslationConsumer consumer, string src) {
 			object [] body = new object [] { new { Text = src} };
@@ -166,6 +181,8 @@ namespace Manga_Scan_Helper.BackEnd {
 							result = result.Substring(result.IndexOf(find) + find.Length);
 							result = result.Substring(result.IndexOf("\"") + 1);
 							result = result.Substring(0, result.IndexOf("\",\""));
+							if (result.Contains("\\u"))
+								result = DecodeEncodedUnicodeCharacters(result);
 							consumer.TranslationCallback(result, TranslationType.Bing);
 						}
 						else {
@@ -211,7 +228,8 @@ namespace Manga_Scan_Helper.BackEnd {
 
 					int firstBracket = res.IndexOf('[') + 2;
 					res = res.Substring(firstBracket, (res.LastIndexOf(']') - 1) - firstBracket );
-
+					if (res.Contains("\\u"))
+						res = DecodeEncodedUnicodeCharacters(res);
 					consumer.TranslationCallback(res, TranslationType.Yandex);
 				}
 				else {
