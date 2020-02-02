@@ -55,7 +55,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL">
       <HintPath>..\packages\Ookii.Dialogs.1.0\lib\net35\Ookii.Dialogs.Wpf.dll</HintPath>
@@ -75,6 +75,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9e7cd3b544a090dc, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.2.0.0-beta.2\lib\net40\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -332,11 +335,15 @@
     <Resource Include="ScanHelperIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Graphics\S_Tail.gif" />
+    <Resource Include="Resources\Graphics\S_Head.gif" />
     <Content Include="Resources\Graphics\CnC_EE.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Warning.png" />
     <Resource Include="Resources\New Page.png" />
+    <Resource Include="Resources\JadedNetworkIcon.png" />
+    <Resource Include="Resources\Licenses\WpfAnimatedGif LICENSE.txt" />
     <Content Include="Resources\Redist\Tesseract-OCR\ambiguous_words.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -5,121 +5,179 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
         mc:Ignorable="d"
-        Title="About Miharu Scan Helper"  Width="500" ResizeMode="NoResize" Icon="/Miharu Scan Helper;component/ScanHelperIcon.ico" d:DesignHeight="452" Height="436" >
+        Title="About Miharu Scan Helper"  Width="550" ResizeMode="NoResize" Icon="/Miharu Scan Helper;component/ScanHelperIcon.ico" Height="523" >
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		
-		<Label Content="Licenses" Grid.Row="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="74" Height="33" FontSize="16" FontWeight="Bold"/>
-
-		<StackPanel Grid.Row="0" HorizontalAlignment="Left" Margin="20,45,0,0" VerticalAlignment="Top" >
-			<Grid >
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Label Grid.Column="0" Content="Miharu Scan Helper" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
-				<Label Grid.Column="1" Content="is licensed under this" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7,0,0,0"/>
-				<Label x:Name="ScanHelperLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="ScanHelperLicense_MouseLeftButtonUp" Margin="-8,0,0,0"/>
-			</Grid>
-			<Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
+		<ScrollViewer Grid.Row="0">
+			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
-				<Label Grid.Row="0" Content="Miharu Scan Helper uses the following software as libraries" />
 
-				<Grid Grid.Row="1" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<Label Grid.Column="0" Content="· Newtonsoft.Json" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
-					<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
-					<Label x:Name="NewtonsoftLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="NewtonsoftLicense_MouseLeftButtonUp"/>
+				<Label Content="Licenses" Grid.Row="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="74" Height="33" FontSize="16" FontWeight="Bold"/>
+
+				<StackPanel Grid.Row="0" HorizontalAlignment="Left" Margin="20,45,0,0" VerticalAlignment="Top" >
+					<Grid >
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<Label Grid.Column="0" Content="Miharu Scan Helper" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+						<Label Grid.Column="1" Content="is licensed under this" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7,0,0,0"/>
+						<Label x:Name="ScanHelperLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="ScanHelperLicense_MouseLeftButtonUp" Margin="-8,0,0,0"/>
+					</Grid>
+					<Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Grid.Row="0" Content="Miharu Scan Helper uses the following software as libraries" />
+
+						<Grid Grid.Row="1" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="· Newtonsoft.Json" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
+							<Label x:Name="NewtonsoftLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="NewtonsoftLicense_MouseLeftButtonUp"/>
+						</Grid>
+
+						<Grid Grid.Row="2" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="· Ookii.Dialogs" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
+							<Label x:Name="OokiiLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="OokiiLicense_MouseLeftButtonUp"/>
+						</Grid>
+
+						<Grid Grid.Row="3" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="· WpfAnimatedGif" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
+							<Label x:Name="WpfGifLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="WpfGifLicense_MouseLeftButtonUp"/>
+						</Grid>
+					</Grid>
+					<Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Grid.Row="0" Content="The following software is distributed and used externally by Miharu Scan Helper" />
+
+						<Grid Grid.Row="1" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="· Tesseract OCR " HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
+							<Label x:Name="TesseractLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="TesseractLicense_MouseLeftButtonUp"/>
+						</Grid>
+					</Grid>
+				</StackPanel>
+
+
+
+
+				<Separator Height="5" VerticalAlignment="Top" Grid.Row="1"/>
+
+
+				<Grid Grid.Row="2" Margin="0,0,0,20">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Label Content="Translation Sources" Grid.Row="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+					<StackPanel Grid.Row="1">
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="Miharu Scan Helper" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+							<Label Grid.Column="1" Content="is" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7,0,0,0"/>
+							<Label Grid.Column="2" Content="Powered by Yandex.Translate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-8,0,0,0"/>
+							<Label x:Name="YandexLinkLabel" Grid.Column="3" Content="https://translate.yandex.com/" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="LinkLabel_Click" Margin="0,0,0,0"/>
+						</Grid>
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="Google Translate" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+							<Label x:Name="GoogleLinkLabel" Grid.Column="2" Content="https://translate.google.com/" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="LinkLabel_Click" Margin="0,0,0,0"/>
+						</Grid>
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="Bing Translator" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+							<Label x:Name="BingLinkLabel" Grid.Column="2" Content="https://www.bing.com/translator/" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="LinkLabel_Click" Margin="0,0,0,0"/>
+						</Grid>
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="The Jaded Network SFX" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+							<Label x:Name="TJNLinkLabel" Grid.Column="2" Content="http://thejadednetwork.com/sfx" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="LinkLabel_Click" Margin="0,0,0,0"/>
+						</Grid>
+					</StackPanel>
+					
 				</Grid>
 
-				<Grid Grid.Row="2" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<Label Grid.Column="0" Content="· Ookii.Dialogs" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
-					<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
-					<Label x:Name="OokiiLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="OokiiLicense_MouseLeftButtonUp"/>
-				</Grid>
-			</Grid>
-			<Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Label Grid.Row="0" Content="The following software is distributed and used externally by Miharu Scan Helper" />
 
-				<Grid Grid.Row="1" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<Label Grid.Column="0" Content="· Tesseract OCR " HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
-					<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
-					<Label x:Name="TesseractLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="TesseractLicense_MouseLeftButtonUp"/>
-				</Grid>
-			</Grid>
-		</StackPanel>
+				<Separator Height="5" VerticalAlignment="Top" Grid.Row="3"/>
 
-		
-		
-		
-		<Separator Height="5" VerticalAlignment="Top" Grid.Row="1"/>
 
-		<Grid Grid.Row="2" Margin="10,0,0,10">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
-			<Label Grid.Row="0" Content="Why the name Miharu?" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" />
-			<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Margin="14,0,10,0">
+
+				<Grid Grid.Row="4" Margin="10,0,0,10">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Label Grid.Row="0" Content="Why the name Miharu?" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" />
+					<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Margin="14,0,10,0">
 				<Run Text="I started work on this project with the intention of being able to read the manga Candy &amp; Cigarettes. "/>
 				<LineBreak/>
 				<Run Text="The name of one of the main characters in that manga is 美晴 (Miharu) and that was the first set of characters ever transcripted using this program during development."/>
 				<LineBreak/>
 				<Run Text="The icon was chosen from her name as well."/>
-			</TextBlock>
-			<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="17" Margin="315,32,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="74" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp" Grid.Row="1"/>
-		</Grid>
-		
+					</TextBlock>
+					<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="17" Margin="315,32,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="74" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp" Grid.Row="1"/>
+				</Grid>
 
-
-		<Separator Height="5" VerticalAlignment="Top" Grid.Row="3"/>
-
-		<Grid Grid.Row="4" Margin="10,0,0,10">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			<Label Grid.Column="0" Content="Miharu Scan Helper" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
-			<Label Grid.Column="1" Content="is" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7,0,0,0"/>
-			<Label Grid.Column="2" Content="Powered by Yandex.Translate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-8,0,0,0"/>
-			<Label x:Name="YandexLinkLabel" Grid.Column="3" Content="https://translate.yandex.com/" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="YandexLinkLabel_Click" Margin="0,0,0,0"/>
-		</Grid>
-
-
-		<Button x:Name="button" Grid.Row="5" Content="Ok" Margin="0,0,10,10" Click="Button_Click" Width="65" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
-
+			</Grid>
+		</ScrollViewer>
+		<Button x:Name="button" Grid.Row="1" Content="Ok" Margin="10" Click="Button_Click" Width="65" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
 	</Grid>
+	
+	
 </Window>

@@ -21,6 +21,7 @@ namespace Manga_Scan_Helper.FrontEnd
 		private Text _textEntry;
 		private TextEntryControl _parent;
 		private List<SFXContainer> _sfxEntries;
+		private const string _JADED_NETWORK_URL = "http://thejadednetwork.com/sfx";
 
 		public TranslationSourceJadedNetworkView(TextEntryControl parent, Text textEntry)
 		{
@@ -128,6 +129,13 @@ namespace Manga_Scan_Helper.FrontEnd
 			RefreshButton.IsEnabled = false;
 			_parent.RequestTranslation(Type);
 		}
+
+
+		private void JadedNetworkButton_Click(object sender, RoutedEventArgs e)
+		{
+			System.Diagnostics.Process.Start(_JADED_NETWORK_URL);
+		}
+
 
 	}
 }

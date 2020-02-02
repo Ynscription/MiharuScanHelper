@@ -1,6 +1,7 @@
 ﻿
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Manga_Scan_Helper.FrontEnd {
 	/// <summary>
@@ -15,8 +16,10 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 		private readonly static string NewtosoftLicenseFile = @".\Resources\Licenses\Newtonsoft.Json LICENSE.md";
 		private readonly static string OokiiLicenseFile = @".\Resources\Licenses\Ookii.Dialogs  LICENSE";
-		
 		private readonly static string TesseractLicenseFile = @".\Resources\Licenses\Tesseract OCR LICENSE";
+		
+		private readonly static string WpfGifLicenseFile = @".\Resources\Licenses\WpfAnimatedGif LICENSE.txt";
+
 
 		
 
@@ -39,14 +42,19 @@ namespace Manga_Scan_Helper.FrontEnd {
 			ShowFileInExplorer(OokiiLicenseFile);
 		}
 
+
+		private void WpfGifLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
+			ShowFileInExplorer(WpfGifLicenseFile);
+		}
+
 		private void TesseractLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
 			ShowFileInExplorer(TesseractLicenseFile);
 		}
 
 
-		private void YandexLinkLabel_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private void LinkLabel_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			System.Diagnostics.Process.Start((string)YandexLinkLabel.Content);
+			System.Diagnostics.Process.Start((string)((Label)sender).Content);
 		}
 		
 

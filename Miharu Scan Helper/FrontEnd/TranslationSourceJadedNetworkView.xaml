@@ -7,12 +7,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="464" d:DesignWidth="594">
 	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="1*" />
+		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
-		<Image x:Name="ErrorIMG" Grid.Row="0" Margin="10,0,0,0" Height="30" Width="30" Visibility="Hidden" Source="/Miharu Scan Helper;component/Resources/Warning.png" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-		<Button x:Name="RefreshButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,27, -4" Click="RefreshButton_Click">
+		<Image x:Name="ErrorIMG" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Height="30" Width="30" Visibility="Hidden" Source="/Miharu Scan Helper;component/Resources/Warning.png" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+		<Grid Grid.Row="0" Grid.Column="1" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<Label Content="From The Jaded Network" Grid.Column="0" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+			<Button x:Name="JadedNetworkButton" Grid.Column="1" BorderThickness="0" VerticalAlignment="Bottom" Margin="5,0,0,0" Click="JadedNetworkButton_Click" >
+				<Image Source="/Miharu Scan Helper;component/Resources/JadedNetworkIcon.png" />
+			</Button>
+		</Grid>
+		<Button x:Name="RefreshButton" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,27,0" Click="RefreshButton_Click">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
@@ -22,8 +38,9 @@
 				<Image Height="20" Width="20" Margin="0,0,3,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
 			</Grid>			
 		</Button>
-		
-		<ScrollViewer x:Name="MainScrollViewer" Grid.Row="1" >
+
+		<Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
+		<ScrollViewer x:Name="MainScrollViewer" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,-3" >
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="4*"/>

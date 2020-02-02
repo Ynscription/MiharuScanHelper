@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
+			 xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" 
              d:DesignHeight="802" d:DesignWidth="606">
+
+		
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="250"/>
@@ -31,27 +34,39 @@
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="2*"/>
 				</Grid.ColumnDefinitions>
-				<Label Content="Parsed Text" Width="73" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,-5" />
-				<CheckBox x:Name="VerticalCheckBox" Content="Vertical" IsChecked="True" Checked="VerticalCheckBox_Checked" Unchecked="VerticalCheckBox_Unchecked" Width="62" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Column="1" />
+				<Grid Grid.Column="0" Grid.ColumnSpan="2">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="1*"/>
+					</Grid.ColumnDefinitions>
+					<Label Content="Parsed Text" Grid.Column="0" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,30,-5" />
+					<CheckBox x:Name="VerticalCheckBox" Content="Vertical" FontSize="16" IsChecked="True" Checked="VerticalCheckBox_Checked" Unchecked="VerticalCheckBox_Unchecked" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Column="1" />
 
+					<Image x:Name="S_Tail" Grid.Column="2" Width="32" Height="32" Visibility="Hidden" gif:ImageBehavior.AnimatedSource="/Miharu Scan Helper;component/Resources/Graphics/S_Tail.gif" gif:ImageBehavior.AutoStart="True" Margin="50,0,0,-80" />
+					<Image x:Name="S_Head" Grid.Column="3" Width="32" Height="32" Visibility="Hidden" gif:ImageBehavior.AnimatedSource="/Miharu Scan Helper;component/Resources/Graphics/S_Head.gif" gif:ImageBehavior.AutoStart="True" Margin="0,0,0,-80"/>
+					
+					<Button x:Name="RefreshParseButton" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,1,3,1" Click="RefreshParseButton_Click" >
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Content="Refresh" FontSize="12" Grid.Column="0"/>
+							<Image Height="12" Width="12" Margin="0,0,3,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
+						</Grid>
+					</Button>
 
-				<Button x:Name="RefreshParseButton" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,1,3,1" Click="RefreshParseButton_Click" >
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto"/>
-							<ColumnDefinition Width="Auto"/>
-						</Grid.ColumnDefinitions>
-						<Label Content="Refresh" FontSize="12" Grid.Column="0"/>
-						<Image Height="12" Width="12" Margin="0,0,3,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Refresh.png"  />
-					</Grid>
-				</Button>
+				</Grid>
 				
 
 				<Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" Margin="3,0,3,3">
-					<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="26" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
+					<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="26" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" />
 				</Border>
 				<Label Content="Jisho:" Height="26" Width="47" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,0"/>
-				<Label x:Name="JishoLinkLabel" Content="https://whatever.com" Height="26" Foreground="#FF0013CF" MouseLeftButtonUp="JishoLinkLabel_MouseLeftButtonUp" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="34,0,0,0" Grid.RowSpan="1"/>
+				<Label x:Name="JishoLinkLabel" Content="https://whatever.com" Height="26" Foreground="#FF0013CF" MouseLeftButtonUp="JishoLinkLabel_MouseLeftButtonUp" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,0" Grid.RowSpan="1"/>
 
 
 			</Grid>

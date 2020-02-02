@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace Manga_Scan_Helper.FrontEnd
@@ -50,6 +51,8 @@ namespace Manga_Scan_Helper.FrontEnd
 
 		public TextEntryControl(Text textEntry, MainWindow parent) :base(){
 			InitializeComponent();
+			
+			InitializeSAnimation();
 			_textEntry = textEntry;
 			_textEntry.TextChanged += _textEntry_TextChanged;
 			_parent = parent;
@@ -66,7 +69,6 @@ namespace Manga_Scan_Helper.FrontEnd
 
 			TranslatedTextBox.Text = textEntry.TranslatedText;
 			VerticalCheckBox.IsChecked = textEntry.Vertical;
-			
 
 		}
 
@@ -101,6 +103,7 @@ namespace Manga_Scan_Helper.FrontEnd
 		private void ParsedTextBox_TextChanged (object sender, TextChangedEventArgs e) {
 			if (ParsedText != ParsedTextBox.Text)
 				ParsedText = ParsedTextBox.Text;
+			CheckAnimation(ParsedTextBox.Text);
 		}
 
 		private void TranslatedTextBox_TextChanged (object sender, TextChangedEventArgs e) {
@@ -191,6 +194,124 @@ namespace Manga_Scan_Helper.FrontEnd
 			//_parent.RemoveTextEntry(this);
 		}
 
+		/*
+		<Storyboard>
+			<ThicknessAnimation
+								Storyboard.TargetName="S_Tail"
+								Storyboard.TargetProperty="Margin"
+								From="50,0,0,-80" To="50,0,0,-1" Duration="0:0:1" />
+		</Storyboard>*/
+		private Storyboard _showS;
+		private Storyboard _hideS;
+		private enum AnimState {
+			Hidden,
+			Showing,
+			Shown,
+			Hiding
+		}
+		private volatile AnimState _currentState = AnimState.Hidden;
+		private volatile AnimState _desiredState = AnimState.Hidden;
+
+		private void InitializeSAnimation () {
+			_showS = new Storyboard();
+
+			ThicknessAnimation animation = new ThicknessAnimation();
+			animation.From = new Thickness(S_Tail.Margin.Left, S_Tail.Margin.Top, S_Tail.Margin.Right, S_Tail.Margin.Bottom);
+			animation.To = new Thickness(S_Tail.Margin.Left, S_Tail.Margin.Top, S_Tail.Margin.Right, -1);
+			animation.Duration = new Duration(TimeSpan.FromSeconds(1));
+
+			
+			_showS.Children.Add(animation);
+			Storyboard.SetTargetName(animation, S_Tail.Name);
+			Storyboard.SetTargetProperty(animation, new PropertyPath(System.Windows.Controls.Image.MarginProperty));
+
+						
+			
+			animation = new ThicknessAnimation();
+			animation.From = new Thickness(S_Head.Margin.Left, S_Head.Margin.Top, S_Tail.Margin.Right, S_Head.Margin.Bottom);
+			animation.To = new Thickness(S_Head.Margin.Left, S_Head.Margin.Top, S_Head.Margin.Right, -1);
+			animation.Duration = new Duration(TimeSpan.FromSeconds(1));
+
+			_showS.Children.Add(animation);
+			Storyboard.SetTargetName(animation, S_Head.Name);
+			Storyboard.SetTargetProperty(animation, new PropertyPath(System.Windows.Controls.Image.MarginProperty));
+
+
+
+
+			_hideS = new Storyboard();
+			
+			animation = new ThicknessAnimation();
+			animation.To = new Thickness(S_Tail.Margin.Left, S_Tail.Margin.Top, S_Tail.Margin.Right, S_Tail.Margin.Bottom);
+			animation.From = new Thickness(S_Tail.Margin.Left, S_Tail.Margin.Top, S_Tail.Margin.Right, -1);
+			animation.Duration = new Duration(TimeSpan.FromSeconds(1));
+
+			
+			_hideS.Children.Add(animation);
+			Storyboard.SetTargetName(animation, S_Tail.Name);
+			Storyboard.SetTargetProperty(animation, new PropertyPath(System.Windows.Controls.Image.MarginProperty));
+
+
+
+
+			animation = new ThicknessAnimation();
+			animation.To = new Thickness(S_Head.Margin.Left, S_Head.Margin.Top, S_Tail.Margin.Right, S_Head.Margin.Bottom);
+			animation.From = new Thickness(S_Head.Margin.Left, S_Head.Margin.Top, S_Head.Margin.Right, -1);
+			animation.Duration = new Duration(TimeSpan.FromSeconds(1));
+
+			_hideS.Children.Add(animation);
+			Storyboard.SetTargetName(animation, S_Head.Name);
+			Storyboard.SetTargetProperty(animation, new PropertyPath(System.Windows.Controls.Image.MarginProperty));
+
+			_hideS.Completed += HideComplete;
+			_showS.Completed += ShowComplete;
+		}
+
 		
+
+		private void AnimateS () {
+			S_Head.Visibility = Visibility.Visible;
+			S_Tail.Visibility = Visibility.Visible;
+			_currentState = AnimState.Showing;
+			_showS.Begin(this);
+		}
+
+		private void StopAnimateS () {
+			_currentState = AnimState.Hiding;
+			_hideS.Begin(this);
+		}
+
+		private void ShowComplete(object sender, EventArgs e)
+		{
+			_currentState = AnimState.Shown;
+			if (_desiredState == AnimState.Hidden)
+				StopAnimateS();
+		}
+
+		private void HideComplete(object sender, EventArgs e)
+		{
+			S_Head.Visibility = Visibility.Hidden;
+			S_Tail.Visibility = Visibility.Hidden;
+			_currentState = AnimState.Hidden;
+			if (_desiredState == AnimState.Shown)
+				AnimateS();
+			
+		}
+
+		private void CheckAnimation (string parse) {
+			if (parse == "おかえりなのじゃ") {
+				 _desiredState = AnimState.Shown;
+			}
+			else {
+				_desiredState = AnimState.Hidden;
+			}
+
+			if ((_currentState == AnimState.Hidden || _currentState == AnimState.Shown) && _currentState != _desiredState) {
+				if (_desiredState == AnimState.Shown)
+					AnimateS();
+				else if (_desiredState == AnimState.Hidden)
+					StopAnimateS();
+			}
+		}	
 	}
 }
