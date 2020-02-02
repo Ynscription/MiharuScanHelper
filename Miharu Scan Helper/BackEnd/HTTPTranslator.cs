@@ -40,12 +40,11 @@ namespace Manga_Scan_Helper.BackEnd {
 		//Your Yandex Translate API key here
 		private const string _C = "";
 
+		private static Regex _unicodeReplacer = new Regex(@"\\u(?<Value>[a-zA-Z0-9]{4})");
+
 		private static string DecodeEncodedUnicodeCharacters(string src)
 		{
-			return Regex.Replace(
-            src,
-            @"\\u(?<Value>[a-zA-Z0-9]{4})",
-            m => {
+			return _unicodeReplacer.Replace(src, m => {
                 return ((char) int.Parse( m.Groups["Value"].Value, NumberStyles.HexNumber )).ToString();
             } );
 		}
