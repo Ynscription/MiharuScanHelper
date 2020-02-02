@@ -36,6 +36,8 @@
 			</MenuItem>
 			<MenuItem Header="_Edit" TabIndex="1">
 				<MenuItem x:Name="EditPagesMenuItem" Header="Edit Pages..." IsEnabled="False" Click="EditPagesMenuItem_Click"/>
+				<Separator/>
+				<MenuItem x:Name="PreferencesMenuItem" Header="Preferences..." Click="PreferencesMenuItem_Click"/>
 			</MenuItem>
 			<MenuItem Header="_Tools" TabIndex="2">
 				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" />

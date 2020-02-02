@@ -26,7 +26,7 @@
 
 			<Grid Grid.RowSpan="2" Margin="43,0,0,0" >
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition x:Name="PreviewImgColumn" Width="Auto" MaxWidth="200"/>
 					<ColumnDefinition Width="1*"/>
 				</Grid.ColumnDefinitions>
 				<Border BorderThickness="1" BorderBrush="Black" Grid.Column="0" Margin="0,3" >

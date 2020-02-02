@@ -52,7 +52,10 @@ namespace Manga_Scan_Helper.FrontEnd {
 			try {
 				ImageSource dest = Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 				PreviewIMG.Source = dest;
-				PreviewIMG.Width = PreviewIMG.Height* (dest.Width / dest.Height);
+				double desiredWidth = PreviewIMG.Height* (dest.Width / dest.Height);
+				if (desiredWidth > PreviewImgColumn.MaxWidth)
+					desiredWidth = PreviewImgColumn.MaxWidth;
+				PreviewIMG.Width = desiredWidth;
 			}
 			finally { DeleteObject(handle); }
 		}

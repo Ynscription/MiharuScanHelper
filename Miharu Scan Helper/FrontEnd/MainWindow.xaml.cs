@@ -274,6 +274,8 @@ Would you like to locate the Tesseract exectutable manually?";
 			return button.Text;
 		}
 
+		
+		
 		private void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string warnRes = WarnNotSaved();
@@ -645,6 +647,8 @@ Would you like to locate the Tesseract exectutable manually?";
 			Application.Current.Shutdown(0);
 		}
 
+		
+		
 		private void EditPagesMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (!_loadedChapter.AllPagesReady) {
 				Mouse.SetCursor(Cursors.Wait);
@@ -657,6 +661,16 @@ Would you like to locate the Tesseract exectutable manually?";
 			LoadChapter(editPagesDialog.SelectedIndex);
 		}
 		
+
+		private void PreferencesMenuItem_Click (object sender, RoutedEventArgs e) {
+			PreferencesDialog pd = new PreferencesDialog();
+			pd.Owner = this;
+			pd.ShowDialog();
+		}
+		
+		
+
+
 		private void RipMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string res = WarnNotSaved();
@@ -706,6 +720,8 @@ Would you like to locate the Tesseract exectutable manually?";
 			}
 		}
 
+		
+		
 		
 		private void AboutMenuItem_Click (object sender, RoutedEventArgs e) {
 			AboutDialog aboutDialog = new AboutDialog();
