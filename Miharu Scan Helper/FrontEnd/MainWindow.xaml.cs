@@ -397,7 +397,12 @@ Would you like to locate the Tesseract exectutable manually?";
 			PreviewIMG.Source = null;
 			PreviewIMG.InvalidateVisual();
 
-			TextEntriesStackPanel.Children.Clear();	
+			TextEntriesStackPanel.Children.Clear();
+			TextEntriesStackPanel.InvalidateVisual();
+
+			_selectedTextEntry = null;
+			TextEntryGrid.Children.Clear();
+			TextEntryGrid.InvalidateVisual();
 			
 			_loadedChapter = null;
 			_pageRectangles = null;
@@ -911,17 +916,19 @@ Would you like to locate the Tesseract exectutable manually?";
 			
 			bool next = false;
 			bool done = false;
-			for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !done; i++) {
-				if (_loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
-					if (index < 0) {						
-						index = i;
-						firstIndex = i;
+			if (_loadedChapter != null) {
+				for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !done; i++) {
+					if (_loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
+						if (index < 0) {						
+							index = i;
+							firstIndex = i;
+						}
+						else if (next) {
+							index = i;
+							done = true;
+						}
+						next = i == _pageRectangles[_currentPage].SelectedRect;
 					}
-					else if (next) {
-						index = i;
-						done = true;
-					}
-					next = i == _pageRectangles[_currentPage].SelectedRect;
 				}
 			}
 
@@ -960,43 +967,45 @@ Would you like to locate the Tesseract exectutable manually?";
 		}
 
 		private void PreviewIMG_MouseMove (object sender, MouseEventArgs e) {
-			System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
+			if (_loadedChapter != null) {
+				System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
 
-			int index = NextRectangle(mousePos);
-			_pageRectangles[_currentPage].MouseOverRect = index;
-			_pageRectangles[_currentPage].InvalidateVisual();
+				int index = NextRectangle(mousePos);
+				_pageRectangles[_currentPage].MouseOverRect = index;
+				_pageRectangles[_currentPage].InvalidateVisual();
 			
 
-			if (e.RightButton == MouseButtonState.Pressed && _previousMouseState) {
-				Rect rect = new Rect(_startingPoint, e.GetPosition(PreviewIMG));
-				_pageRectangles [_currentPage].DragRect = rect;
-				_pageRectangles [_currentPage].InvalidateVisual();
-				
-			}
-			else if (_previousMouseState) {
-				Mouse.SetCursor(Cursors.Wait);
-				_previousMouseState = false;
-				Rect rect = new Rect (_pageRectangles [_currentPage].DragRect.Value.X,
-										_pageRectangles [_currentPage].DragRect.Value.Y,
-										_pageRectangles [_currentPage].DragRect.Value.Width,
-										_pageRectangles [_currentPage].DragRect.Value.Height);
-				_pageRectangles [_currentPage].DragRect = null;
-
-				if (rect .Width == 0 || rect.Height == 0) {
-					Mouse.SetCursor(Cursors.Arrow);
+				if (e.RightButton == MouseButtonState.Pressed && _previousMouseState) {
+					Rect rect = new Rect(_startingPoint, e.GetPosition(PreviewIMG));
+					_pageRectangles [_currentPage].DragRect = rect;
 					_pageRectangles [_currentPage].InvalidateVisual();
-					return;
-				}
-				Text txt = _loadedChapter.Pages[_currentPage].AddTextEntry(rect);
-				txt.TextChanged += OnItemChange;
-				TextEntry te = new TextEntry(txt, this);
-				TextEntriesStackPanel.Children.Add(te);
-				SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1).ForceTranslation();
-				_pageRectangles [_currentPage].InvalidateVisual();
 				
-				Mouse.SetCursor(Cursors.Arrow);
+				}
+				else if (_previousMouseState) {
+					Mouse.SetCursor(Cursors.Wait);
+					_previousMouseState = false;
+					Rect rect = new Rect (_pageRectangles [_currentPage].DragRect.Value.X,
+											_pageRectangles [_currentPage].DragRect.Value.Y,
+											_pageRectangles [_currentPage].DragRect.Value.Width,
+											_pageRectangles [_currentPage].DragRect.Value.Height);
+					_pageRectangles [_currentPage].DragRect = null;
+
+					if (rect .Width == 0 || rect.Height == 0) {
+						Mouse.SetCursor(Cursors.Arrow);
+						_pageRectangles [_currentPage].InvalidateVisual();
+						return;
+					}
+					Text txt = _loadedChapter.Pages[_currentPage].AddTextEntry(rect);
+					txt.TextChanged += OnItemChange;
+					TextEntry te = new TextEntry(txt, this);
+					TextEntriesStackPanel.Children.Add(te);
+					SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1).ForceTranslation();
+					_pageRectangles [_currentPage].InvalidateVisual();
+				
+					Mouse.SetCursor(Cursors.Arrow);
 
 
+				}
 			}
 		}
 
