@@ -888,17 +888,44 @@ Would you like to locate the Tesseract exectutable manually?";
 		private RectangleAdorner [] _pageRectangles = null;
 		bool _previousMouseState = false;
 
-		private void PreviewIMG_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
-			bool found = false;
 
-			for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !found; i++) {
-				if (found = _loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
-					SelectTextEntry(i);
-					_pageRectangles[_currentPage].InvalidateVisual();
+		private int NextRectangle (System.Windows.Point mousePos) {
+			int index = -1;
+			int firstIndex = -1;
+			
+			bool next = false;
+			bool done = false;
+			for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !done; i++) {
+				if (_loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
+					if (index < 0) {						
+						index = i;
+						firstIndex = i;
+					}
+					else if (next) {
+						index = i;
+						done = true;
+					}
+					next = i == _pageRectangles[_currentPage].SelectedRect;
 				}
 			}
+
+			if (!done)
+				index = firstIndex;
+			
+			return index;
+		}
+
+		private void PreviewIMG_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
+			
+			int index = NextRectangle(mousePos);
+			if (index >= 0) {
+				SelectTextEntry(index);
+				_pageRectangles[_currentPage].InvalidateVisual();
+			}
+
+			
 		}
 		
 
@@ -918,17 +945,11 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private void PreviewIMG_MouseMove (object sender, MouseEventArgs e) {
 			System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
-			bool found = false;
-			for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !found; i++) {
-				if (found = _loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
-					_pageRectangles[_currentPage].MouseOverRect = i;
-					_pageRectangles[_currentPage].InvalidateVisual();
-				}
-			}
-			if (!found) {
-				_pageRectangles[_currentPage].MouseOverRect = -1;
-				_pageRectangles[_currentPage].InvalidateVisual();
-			}
+
+			int index = NextRectangle(mousePos);
+			_pageRectangles[_currentPage].MouseOverRect = index;
+			_pageRectangles[_currentPage].InvalidateVisual();
+			
 
 			if (e.RightButton == MouseButtonState.Pressed && _previousMouseState) {
 				Rect rect = new Rect(_startingPoint, e.GetPosition(PreviewIMG));

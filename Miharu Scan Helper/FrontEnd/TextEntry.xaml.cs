@@ -57,7 +57,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			finally { DeleteObject(handle); }
 		}
 
-
+		
 		private void OnTextChanged (object sender, TxtChangedEventArgs args) {
 			try {
 				Dispatcher.Invoke(() => {

@@ -57,9 +57,6 @@ namespace Manga_Scan_Helper.FrontEnd
 			ShowImageFromBitmap(textEntry.Source);
 			InitializeParsedTextBox();
 
-			//TODO
-			//GoogleTranslationLabel.Text = textEntry.GetTranslation(TranslationType.Google2);
-			//BingTranslationLabel.Text = textEntry.GetTranslation(TranslationType.Bing);
 			foreach (TranslationType t in Enum.GetValues(typeof (TranslationType))) {
 				if (t != TranslationType.JadedNetwork)
 					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (this, t, _textEntry));
@@ -87,10 +84,14 @@ namespace Manga_Scan_Helper.FrontEnd
 
 		private void RefreshParseButton_Click (object sender, RoutedEventArgs e) {
 			Mouse.SetCursor(Cursors.Wait);
+			RefreshParseButton.IsEnabled = false;
+			VerticalCheckBox.IsEnabled = false;
 			_textEntry.Invalidate();
 			ParsedTextBox.Text = _textEntry.ParsedText;
 			string refinedText = SanitizeString(_textEntry.ParsedText);
 			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
+			RefreshParseButton.IsEnabled = true;
+			VerticalCheckBox.IsEnabled = true;
 			Mouse.SetCursor(Cursors.Arrow);
 		}
 
@@ -128,17 +129,17 @@ namespace Manga_Scan_Helper.FrontEnd
 
 		public void ForceTranslation () {
 
+			foreach (TranslationSourceView t in TranslationSourcesStackPanel.Children)
+				t.AwaitTranslation();
+
 			string refinedText = SanitizeString(ParsedText);
-			//TODO
-			//RefreshTranslateButton.IsEnabled = false;
-			//VerticalCheckBox.IsEnabled = false;
 
 			/*HTTPTranslator.GoogleTranslate(this, refinedText);*/
 			HTTPTranslator.Google2Translate(this, refinedText);
 			HTTPTranslator.BingTranslate(this, refinedText);
 			HTTPTranslator.YandexTranslate(this, refinedText);
 
-			//HTTPTranslator.JadedNetworkTranslate(this, refinedText);
+			//It makes sense to not ask for an SFX translation by default.
 			
 		}
 

@@ -55,7 +55,7 @@
 			</Grid.ColumnDefinitions>
 			<Border x:Name="PreviewIMGBorder" BorderBrush="Black" BorderThickness="1" Margin="10,1,10,10" Grid.Row="1" Grid.ColumnSpan="1">
 				<ScrollViewer x:Name="PreviewIMGScroll" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Right">
-					<Image x:Name="PreviewIMG" Focusable="True" PreviewMouseMove="PreviewIMG_MouseMove" PreviewMouseWheel="PreviewIMGScroll_PreviewMouseWheel" PreviewMouseRightButtonDown="PreviewIMG_PreviewMouseRightButtonDown" PreviewMouseLeftButtonDown="PreviewIMG_PreviewMouseLeftButtonDown"/>					
+					<Image x:Name="PreviewIMG" Focusable="True" PreviewMouseMove="PreviewIMG_MouseMove" PreviewMouseWheel="PreviewIMGScroll_PreviewMouseWheel" PreviewMouseRightButtonDown="PreviewIMG_PreviewMouseRightButtonDown" MouseLeftButtonUp="PreviewIMG_MouseLeftButtonUp"/>					
 				</ScrollViewer>
 			</Border>
 			<Grid Margin="10" Focusable="True">

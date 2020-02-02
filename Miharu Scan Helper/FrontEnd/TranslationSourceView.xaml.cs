@@ -63,6 +63,11 @@ namespace Manga_Scan_Helper.FrontEnd
 			catch (TaskCanceledException) { }
 		}
 
+		public void AwaitTranslation () {
+			RefreshButton.IsEnabled = false;
+			ErrorIMG.Visibility = Visibility.Hidden;
+			ErrorIMG.ToolTip = null;
+		}
 		
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
