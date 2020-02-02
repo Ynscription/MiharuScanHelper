@@ -26,6 +26,7 @@ namespace Manga_Scan_Helper {
 
 
 		private Chapter _loadedChapter = null;
+
 		private int _currentPage = 0;
 		private int _previousPage = 0;
 
@@ -218,6 +219,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				}
 				_currSavedFile = file;
 				Saved = true;
+				GC.Collect();
 				Mouse.SetCursor(Cursors.Arrow);
 			}
 			catch (Exception ex) {
@@ -295,6 +297,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					LoadChapter();
 					foreach (Page p in _loadedChapter.Pages)
 						p.PageChanged += OnItemChange;
+					GC.Collect();
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 				catch (Exception ex) {
@@ -310,8 +313,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					TaskDialogButton button = dialog.ShowDialog(this);
 				
 				}
-			}
-			
+			}			
 		}
 
 		private void NewChapterFilesMenuItem_Click (object sender, RoutedEventArgs e) {
@@ -339,6 +341,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					LoadChapter();
 					foreach (Page p in _loadedChapter.Pages)
 						p.PageChanged += OnItemChange;
+					GC.Collect();
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 				catch (Exception ex) {
@@ -354,8 +357,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					TaskDialogButton button = dialog.ShowDialog(this);
 				
 				}
-			}
-
+			}			
 		}
 
 		private void OpenChapterMenuItem_Click (object sender, RoutedEventArgs e) {
@@ -390,6 +392,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					return;
 			}
 			
+			Mouse.SetCursor(Cursors.Wait);
 			AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
 			if (_pageRectangles [_previousPage] != null)
 				adornerLayer.Remove(_pageRectangles [_previousPage]);
@@ -413,6 +416,9 @@ Would you like to locate the Tesseract exectutable manually?";
 			Saved = false;			
 
 			SetTopMenuItems();
+
+			GC.Collect();
+			Mouse.SetCursor(Cursors.Arrow);
 		}
 
 		
@@ -663,7 +669,10 @@ Would you like to locate the Tesseract exectutable manually?";
 			EditChapterWindow editPagesDialog = new EditChapterWindow(_loadedChapter, _currentPage);
 			editPagesDialog.Owner = this;
 			editPagesDialog.ShowDialog();
+			Mouse.SetCursor(Cursors.Wait);
 			LoadChapter(editPagesDialog.SelectedIndex);
+			GC.Collect();
+			Mouse.SetCursor(Cursors.Arrow);
 		}
 		
 
@@ -695,6 +704,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					LoadChapter();
 					foreach (Page p in _loadedChapter.Pages)
 						p.PageChanged += OnItemChange;
+					GC.Collect();
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 				catch (RipperException ex) {
