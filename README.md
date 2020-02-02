@@ -4,7 +4,7 @@ A tool to (hopefully) speed up manga translation efforts and ease tentative tran
 
 ## Installing and Running Miharu
 
-The [binaries](https://github.com/Ynscription/ScanHelper/releases) of Miharu are ~~should be~~ 100% portable and require no installation as long as .Net Framework 4.5 or later is installed.
+The [binaries](https://github.com/Ynscription/ScanHelper/releases) of Miharu ~~should be~~ are 100% portable and require no installation as long as .Net Framework 4.5 or later is installed.
 
 ## Getting the Source Code Running
 
