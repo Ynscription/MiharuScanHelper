@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Manga_Scan_Helper.BackEnd.Translation;
+using System;
 
-namespace Manga_Scan_Helper.BackEnd
+namespace Manga_Scan_Helper.BackEnd.Translation
 {
 
 	public delegate void TranslationFailEventHandler (object sender, TranslationFailEventArgs e);

@@ -1,4 +1,5 @@
 ﻿
+using Manga_Scan_Helper.BackEnd.Translation;
 using Manga_Scan_Helper.Properties;
 using Newtonsoft.Json;
 using System;
@@ -106,8 +107,8 @@ namespace Manga_Scan_Helper.BackEnd
 				_translations = translations;
 			else {
 				_translations = new Dictionary<TranslationType, string>();
-				_translations[TranslationType.Google2] = googleTranslatedText;
-				_translations[TranslationType.Bing] = bingTranslatedText;
+				_translations[TranslationType.Google_API] = googleTranslatedText;
+				_translations[TranslationType.Bing_API] = bingTranslatedText;
 			}
 			TranslatedText = translatedText;			
 		}

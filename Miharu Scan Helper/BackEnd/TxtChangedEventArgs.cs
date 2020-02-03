@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Manga_Scan_Helper.BackEnd.Translation;
+using System;
 
 namespace Manga_Scan_Helper.BackEnd
 {

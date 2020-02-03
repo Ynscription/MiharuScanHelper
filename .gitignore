@@ -260,5 +260,10 @@ paket-files/
 __pycache__/
 *.pyc
 
+
+
 # Ignore binaries to redist
 **/Miharu*Scan*Helper/Resources/Redist/
+
+# Ignore App.config
+**/Miharu*Scan*Helper/App.config

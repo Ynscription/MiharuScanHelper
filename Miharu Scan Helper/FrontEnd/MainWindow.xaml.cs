@@ -3,6 +3,7 @@ using Manga_Scan_Helper.FrontEnd;
 using Manga_Scan_Helper.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -20,9 +21,11 @@ namespace Manga_Scan_Helper {
 	/// </summary>
 	public partial class MainWindow : Window {
 
-		private const string _save = "Save";
-		private const string _discard = "Discard";
-		private const string _cancel = "Cancel";
+		private const string _DEFAULT_TESSERACT_PATH = "./Resources/Redist/Tesseract-OCR/tesseract.exe";
+
+		private const string _SAVE = "Save";
+		private const string _DISCARD = "Discard";
+		private const string _CANCEL = "Cancel";
 
 
 		private Chapter _loadedChapter = null;
@@ -78,7 +81,16 @@ namespace Manga_Scan_Helper {
 		}
 
 		private void CheckForTesseract() {
-			if (!File.Exists((string)Settings.Default["TesseractPath"])) {
+			string tesseractPath = _DEFAULT_TESSERACT_PATH;
+			try {
+				tesseractPath = (string)Settings.Default["TesseractPath"];
+			}
+			catch (SettingsPropertyNotFoundException) {
+				Settings.Default ["TesseractPath"] = _DEFAULT_TESSERACT_PATH;
+				Settings.Default.Save();
+			}
+
+			if (!File.Exists(tesseractPath)) {
 				if (ExistsInPath("tesseract.exe")) {
 					if ((string) Settings.Default ["TesseractPath"] == "tesseract.exe")
 						return;
@@ -265,11 +277,11 @@ Would you like to locate the Tesseract exectutable manually?";
 			dialog.MainInstruction = "There are unsaved changes.";
 			dialog.Content = "Would you like to save the current chapter?";
 			
-			TaskDialogButton saveButton = new TaskDialogButton(_save);
+			TaskDialogButton saveButton = new TaskDialogButton(_SAVE);
 			dialog.Buttons.Add(saveButton);
-			TaskDialogButton noSaveButton = new TaskDialogButton(_discard);
+			TaskDialogButton noSaveButton = new TaskDialogButton(_DISCARD);
 			dialog.Buttons.Add(noSaveButton);
-			TaskDialogButton cancelButton = new TaskDialogButton(_cancel);
+			TaskDialogButton cancelButton = new TaskDialogButton(_CANCEL);
 			dialog.Buttons.Add(cancelButton);
 			TaskDialogButton button = dialog.ShowDialog(this);
 
@@ -281,9 +293,9 @@ Would you like to locate the Tesseract exectutable manually?";
 		private void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string warnRes = WarnNotSaved();
-				if (warnRes == _save)
+				if (warnRes == _SAVE)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (warnRes == _cancel)
+				else if (warnRes == _CANCEL)
 					return;
 			}
 
@@ -319,9 +331,9 @@ Would you like to locate the Tesseract exectutable manually?";
 		private void NewChapterFilesMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string warnRes = WarnNotSaved();
-				if (warnRes == _save)
+				if (warnRes == _SAVE)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (warnRes == _cancel)
+				else if (warnRes == _CANCEL)
 					return;
 			}
 
@@ -363,9 +375,9 @@ Would you like to locate the Tesseract exectutable manually?";
 		private void OpenChapterMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string warnRes = WarnNotSaved();
-				if (warnRes == _save)
+				if (warnRes == _SAVE)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (warnRes == _cancel)
+				else if (warnRes == _CANCEL)
 					return;
 			}
 
@@ -386,9 +398,9 @@ Would you like to locate the Tesseract exectutable manually?";
 		private void CloseChapterMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (!Saved) {
 				string res = WarnNotSaved();
-				if (res == _save)
+				if (res == _SAVE)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (res == _cancel)
+				else if (res == _CANCEL)
 					return;
 			}
 			
@@ -648,9 +660,9 @@ Would you like to locate the Tesseract exectutable manually?";
 			
 			if (_loadedChapter != null && !Saved) {
 				string res = WarnNotSaved();
-				if (res == _save)
+				if (res == _SAVE)
 					SaveChapterMenuItem_Click(sender, new RoutedEventArgs());
-				else if (res == _cancel) {
+				else if (res == _CANCEL) {
 					return;
 				}
 			}
@@ -688,9 +700,9 @@ Would you like to locate the Tesseract exectutable manually?";
 		private void RipMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string res = WarnNotSaved();
-				if (res == _save)
+				if (res == _SAVE)
 					SaveChapterMenuItem_Click(sender, e);
-				else if (res == _cancel)
+				else if (res == _CANCEL)
 					return;
 			}
 			RipDialog ripDialog = new RipDialog();
@@ -1096,9 +1108,9 @@ Would you like to locate the Tesseract exectutable manually?";
 		private void MainWindow1_Closing (object sender, System.ComponentModel.CancelEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string res = WarnNotSaved();
-				if (res == _save)
+				if (res == _SAVE)
 					SaveChapterMenuItem_Click(sender, new RoutedEventArgs());
-				else if (res == _cancel) {
+				else if (res == _CANCEL) {
 					e.Cancel = true;
 					return;
 				}

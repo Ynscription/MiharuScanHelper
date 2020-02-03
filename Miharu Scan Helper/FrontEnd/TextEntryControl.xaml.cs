@@ -1,5 +1,7 @@
 ﻿
 using Manga_Scan_Helper.BackEnd;
+using Manga_Scan_Helper.BackEnd.Translation;
+using Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -61,7 +63,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			InitializeParsedTextBox();
 
 			foreach (TranslationType t in Enum.GetValues(typeof (TranslationType))) {
-				if (t != TranslationType.JadedNetwork)
+				if (t != TranslationType.Jaded_Network)
 					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (this, t, _textEntry));
 			}
 
@@ -137,10 +139,10 @@ namespace Manga_Scan_Helper.FrontEnd
 
 			string refinedText = SanitizeString(ParsedText);
 
-			/*HTTPTranslator.GoogleTranslate(this, refinedText);*/
-			HTTPTranslator.Google2Translate(this, refinedText);
-			HTTPTranslator.BingTranslate(this, refinedText);
-			HTTPTranslator.YandexTranslate(this, refinedText);
+			foreach (TranslationType t in Enum.GetValues(typeof (TranslationType))) {
+				if (t != TranslationType.Jaded_Network)
+					TranslationProvider.Translate(t, refinedText, this);
+			}
 
 			//It makes sense to not ask for an SFX translation by default.
 			
@@ -150,14 +152,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			string refinedText = SanitizeString(ParsedText);
 			/*if (type == TranslationType.GoogleAPI)
 				HTTPTranslator.GoogleTranslate(this, refinedText);*/
-			if (type == TranslationType.Google2)
-				HTTPTranslator.Google2Translate(this, refinedText);
-			else if (type == TranslationType.Bing)
-				HTTPTranslator.BingTranslate(this, refinedText);
-			else if (type == TranslationType.Yandex)
-				HTTPTranslator.YandexTranslate(this, refinedText);
-			else if (type == TranslationType.JadedNetwork)
-				HTTPTranslator.JadedNetworkTranslate(this, refinedText);
+			TranslationProvider.Translate(type, refinedText, this);
 		}
 
 		

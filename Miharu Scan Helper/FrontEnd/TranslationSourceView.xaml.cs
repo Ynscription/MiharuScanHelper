@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Manga_Scan_Helper.BackEnd;
+using Manga_Scan_Helper.BackEnd.Translation;
 
 namespace Manga_Scan_Helper.FrontEnd
 {
@@ -25,7 +26,7 @@ namespace Manga_Scan_Helper.FrontEnd
 		{
 			InitializeComponent();
 			Type = type;
-			if (Type == TranslationType.Yandex) {
+			if (Type == TranslationType.Yandex_API) {
 				SourceLabel.Content = "Powered by Yandex.Translate";
 				LinkLabel.Content = _YANDEX_LINK;
 			}

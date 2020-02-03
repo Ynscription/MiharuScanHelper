@@ -118,14 +118,21 @@
     </Compile>
     <Compile Include="BackEnd\Chapter.cs" />
     <Compile Include="BackEnd\CrashHandler.cs" />
-    <Compile Include="BackEnd\HTTPTranslator.cs" />
+    <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPBingTranslator.cs" />
+    <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPGoogleTranslator.cs" />
+    <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPTJNTranslator.cs" />
+    <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPTranslator.cs" />
     <Compile Include="BackEnd\Logger.cs" />
     <Compile Include="BackEnd\Ripper.cs" />
     <Compile Include="BackEnd\SFXContainer.cs" />
     <Compile Include="BackEnd\Text.cs" />
-    <Compile Include="BackEnd\TranslationFailEventArgs.cs" />
+    <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPYandexTranslator.cs" />
+    <Compile Include="BackEnd\Translation\TranslationFailEventArgs.cs" />
+    <Compile Include="BackEnd\Translation\TranslationProvider.cs" />
+    <Compile Include="BackEnd\Translation\Translator.cs" />
+    <Compile Include="BackEnd\Translation\WebCrawlers\WebCrawlerTranslator.cs" />
     <Compile Include="BackEnd\TxtChangedEventArgs.cs" />
-    <Compile Include="BackEnd\TranslationConsumer.cs" />
+    <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>

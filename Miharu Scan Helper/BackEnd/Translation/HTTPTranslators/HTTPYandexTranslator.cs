@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
+{
+	class HTTPYandexTranslator : HTTPTranslator
+	{
+
+		private const string _yandexTranslateURL = "https://translate.yandex.net/api/v1.5/tr.json/translate";
+		//Your Yandex Translate API key here
+		private const string _C = "";
+
+
+		public override TranslationType Type {
+			get { return TranslationType.Yandex_API; }
+		}
+
+		protected override string GetUri(string text)
+		{
+			return _yandexTranslateURL 
+					+ "?lang=" + "ja-en"
+					+ "&key=" + _C
+					+ "&text=" + Uri.EscapeDataString(text);
+		}
+
+		protected override string ProcessResponse(string res)
+		{
+			int firstBracket = res.IndexOf('[') + 2;
+			res = res.Substring(firstBracket, (res.LastIndexOf(']') - 1) - firstBracket );
+			if (res.Contains("\\u"))
+				res = DecodeEncodedUnicodeCharacters(res);
+			return res;
+		}
+	}
+}

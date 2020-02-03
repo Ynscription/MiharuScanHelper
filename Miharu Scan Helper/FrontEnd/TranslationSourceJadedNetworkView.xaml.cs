@@ -1,4 +1,5 @@
 ﻿using Manga_Scan_Helper.BackEnd;
+using Manga_Scan_Helper.BackEnd.Translation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Manga_Scan_Helper.FrontEnd
 	{
 		public TranslationType Type {
 			get {
-				return TranslationType.JadedNetwork;
+				return TranslationType.Jaded_Network;
 			}
 		}
 		private Text _textEntry;
