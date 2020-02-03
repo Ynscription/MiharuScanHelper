@@ -32,18 +32,11 @@
 						</Grid.ColumnDefinitions>
 						<Label Grid.Column="0" Content="Miharu Scan Helper" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
 						<Label Grid.Column="1" Content="is licensed under this" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7,0,0,0"/>
-						<Label x:Name="ScanHelperLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="ScanHelperLicense_MouseLeftButtonUp" Margin="-8,0,0,0"/>
+						<Label Grid.Column="2" Content="license" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="MiharuLicense_MouseLeftButtonUp" Margin="-8,0,0,0"/>
 					</Grid>
-					<Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<Label Grid.Row="0" Content="Miharu Scan Helper uses the following software as libraries" />
-
-						<Grid Grid.Row="1" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+					<Label Content="Miharu Scan Helper uses the following software as libraries" Margin="0, 10, 0, 0"/>
+					<StackPanel Margin="10, 0, 0, 0">
+						<Grid HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
@@ -51,10 +44,10 @@
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0" Content="· Newtonsoft.Json" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
 							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
-							<Label x:Name="NewtonsoftLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="NewtonsoftLicense_MouseLeftButtonUp"/>
+							<Label Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="NewtonsoftLicense_MouseLeftButtonUp"/>
 						</Grid>
 
-						<Grid Grid.Row="2" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+						<Grid HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
@@ -62,10 +55,10 @@
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0" Content="· Ookii.Dialogs" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
 							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
-							<Label x:Name="OokiiLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="OokiiLicense_MouseLeftButtonUp"/>
+							<Label Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="OokiiLicense_MouseLeftButtonUp"/>
 						</Grid>
 
-						<Grid Grid.Row="3" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+						<Grid HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
@@ -73,28 +66,49 @@
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0" Content="· WpfAnimatedGif" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
 							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
-							<Label x:Name="WpfGifLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="WpfGifLicense_MouseLeftButtonUp"/>
+							<Label Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="WpfGifLicense_MouseLeftButtonUp"/>
 						</Grid>
-					</Grid>
-					<Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<Label Grid.Row="0" Content="The following software is distributed and used externally by Miharu Scan Helper" />
 
-						<Grid Grid.Row="1" HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+						<Grid HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
-							<Label Grid.Column="0" Content="· Tesseract OCR " HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+							<Label Grid.Column="0" Content="· Selenium" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
 							<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
-							<Label x:Name="TesseractLicense" Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="TesseractLicense_MouseLeftButtonUp"/>
+							<Label Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="SeleniumLicense_MouseLeftButtonUp"/>
 						</Grid>
-					</Grid>
+					</StackPanel>
+
+					<Label Content="The following software is distributed and used externally by Miharu Scan Helper" Margin="0,10,0,0"/>
+
+					<StackPanel>
+						<StackPanel Margin="10, 0, 0, 0">
+							<Grid HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="Auto"/>
+								</Grid.ColumnDefinitions>
+								<Label Grid.Column="0" Content="· Tesseract OCR" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+								<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
+								<Label Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="TesseractLicense_MouseLeftButtonUp"/>
+							</Grid>
+
+							<Grid HorizontalAlignment="Left" Margin="20,-10,0,0" VerticalAlignment="Top" >
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="Auto"/>
+								</Grid.ColumnDefinitions>
+								<Label Grid.Column="0" Content="· Gecko Driver" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+								<Label Grid.Column="1" Content="under this" HorizontalAlignment="Left" Margin="-7,0,0,0" VerticalAlignment="Top"/>
+								<Label Grid.Column="2" Content="license" HorizontalAlignment="Left" Margin="-8,0,0,0" VerticalAlignment="Top" Foreground="#FF0013CF" MouseLeftButtonUp="GeckoLicense_MouseLeftButtonUp"/>
+							</Grid>
+						</StackPanel>
+					</StackPanel>
+					
 				</StackPanel>
 
 

@@ -72,6 +72,12 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -209,7 +215,7 @@
     <None Include="Resources\Licenses\Ookii.Dialogs  LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\Licenses\Scan Helper LICENSE">
+    <None Include="Resources\Licenses\Miharu LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Licenses\Selenium LICENSE">
@@ -351,7 +357,12 @@
     <Resource Include="Resources\Warning.png" />
     <Resource Include="Resources\New Page.png" />
     <Resource Include="Resources\JadedNetworkIcon.png" />
-    <Resource Include="Resources\Licenses\WpfAnimatedGif LICENSE.txt" />
+    <None Include="Resources\Licenses\WpfAnimatedGif LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Licenses\GeckoDriver LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Resources\Redist\Tesseract-OCR\ambiguous_words.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

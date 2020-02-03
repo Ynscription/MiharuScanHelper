@@ -12,13 +12,16 @@ namespace Manga_Scan_Helper.FrontEnd {
 			InitializeComponent();
 		}
 
-		private readonly static string ScanHelperLicenseFile = @".\Resources\Licenses\Scan Helper LICENSE";
+		private readonly static string MiharuLicenseFile = @".\Resources\Licenses\Miharu LICENSE";
 
 		private readonly static string NewtosoftLicenseFile = @".\Resources\Licenses\Newtonsoft.Json LICENSE.md";
 		private readonly static string OokiiLicenseFile = @".\Resources\Licenses\Ookii.Dialogs  LICENSE";
 		private readonly static string TesseractLicenseFile = @".\Resources\Licenses\Tesseract OCR LICENSE";
 		
-		private readonly static string WpfGifLicenseFile = @".\Resources\Licenses\WpfAnimatedGif LICENSE.txt";
+		private readonly static string WpfGifLicenseFile = @".\Resources\Licenses\WpfAnimatedGif LICENSE";
+		private readonly static string SeleniumLicenseFile = @".\Resources\Licenses\Selenium LICENSE";
+		private readonly static string GeckoLicenseFile = @".\Resources\Licenses\GeckoDriver LICENSE";
+
 
 
 		
@@ -30,8 +33,8 @@ namespace Manga_Scan_Helper.FrontEnd {
 			System.Diagnostics.Process.Start("explorer.exe", argument);
 		}
 
-		private void ScanHelperLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
-			ShowFileInExplorer(ScanHelperLicenseFile);
+		private void MiharuLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
+			ShowFileInExplorer(MiharuLicenseFile);
 		}
 
 		private void NewtonsoftLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
@@ -49,6 +52,14 @@ namespace Manga_Scan_Helper.FrontEnd {
 
 		private void TesseractLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
 			ShowFileInExplorer(TesseractLicenseFile);
+		}
+
+		private void SeleniumLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
+			ShowFileInExplorer(SeleniumLicenseFile);
+		}
+
+		private void GeckoLicense_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
+			ShowFileInExplorer(GeckoLicenseFile);
 		}
 
 
