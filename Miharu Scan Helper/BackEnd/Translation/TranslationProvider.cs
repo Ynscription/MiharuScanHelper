@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,11 +23,11 @@ namespace Manga_Scan_Helper.BackEnd.Translation
 		Jaded_Network,
 	}
 
-	public class TranslationProvider
+	public class TranslationProvider : IEnumerable<TranslationType>
 	{
 
 		private static readonly TranslationProvider _instance = new TranslationProvider();
-		private static TranslationProvider Instance {
+		public static TranslationProvider Instance {
 			get => _instance;
 		}
 
@@ -36,7 +38,10 @@ namespace Manga_Scan_Helper.BackEnd.Translation
 			
 			_translators = new Dictionary<TranslationType, Translator>();
 			
-			//_translators.Add();
+			_translators.Add(TranslationType.Google_API, new HTTPGoogleTranslator());
+			_translators.Add(TranslationType.Bing_API, new HTTPBingTranslator());
+			_translators.Add(TranslationType.Yandex_API, new HTTPYandexTranslator());
+			_translators.Add(TranslationType.Jaded_Network, new HTTPTJNTranslator());
 
 		}
 
@@ -56,6 +61,19 @@ namespace Manga_Scan_Helper.BackEnd.Translation
 				consumer.TranslationFailed(e, type);
 			}
 		}
+
+		public IEnumerator<TranslationType> GetEnumerator()
+		{
+			return Instance._translators.Keys.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return Instance._translators.Keys.GetEnumerator();
+		}
+
+
+		
 
 
 	}

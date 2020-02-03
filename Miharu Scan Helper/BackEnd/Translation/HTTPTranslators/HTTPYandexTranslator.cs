@@ -9,9 +9,8 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 	class HTTPYandexTranslator : HTTPTranslator
 	{
 
-		private const string _yandexTranslateURL = "https://translate.yandex.net/api/v1.5/tr.json/translate";
-		//Your Yandex Translate API key here
-		private const string _C = "";
+		private const string _URL = "https://translate.yandex.net/api/v1.5/tr.json/translate";
+		
 
 
 		public override TranslationType Type {
@@ -20,9 +19,9 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 
 		protected override string GetUri(string text)
 		{
-			return _yandexTranslateURL 
+			return _URL 
 					+ "?lang=" + "ja-en"
-					+ "&key=" + _C
+					+ "&key=" + _Y
 					+ "&text=" + Uri.EscapeDataString(text);
 		}
 

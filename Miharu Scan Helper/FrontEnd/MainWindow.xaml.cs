@@ -21,8 +21,6 @@ namespace Manga_Scan_Helper {
 	/// </summary>
 	public partial class MainWindow : Window {
 
-		private const string _DEFAULT_TESSERACT_PATH = "./Resources/Redist/Tesseract-OCR/tesseract.exe";
-
 		private const string _SAVE = "Save";
 		private const string _DISCARD = "Discard";
 		private const string _CANCEL = "Cancel";
@@ -81,16 +79,7 @@ namespace Manga_Scan_Helper {
 		}
 
 		private void CheckForTesseract() {
-			string tesseractPath = _DEFAULT_TESSERACT_PATH;
-			try {
-				tesseractPath = (string)Settings.Default["TesseractPath"];
-			}
-			catch (SettingsPropertyNotFoundException) {
-				Settings.Default ["TesseractPath"] = _DEFAULT_TESSERACT_PATH;
-				Settings.Default.Save();
-			}
-
-			if (!File.Exists(tesseractPath)) {
+			if (!File.Exists((string)Settings.Default["TesseractPath"])) {
 				if (ExistsInPath("tesseract.exe")) {
 					if ((string) Settings.Default ["TesseractPath"] == "tesseract.exe")
 						return;

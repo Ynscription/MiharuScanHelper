@@ -9,8 +9,8 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 {
 	class HTTPTJNTranslator : HTTPTranslator
 	{
-		private const string _jadedNetworkURL1 = "http://thejadednetwork.com/sfx/search/?keyword=";
-		private const string _jadedNetworkURL2 = "&submitSearch=Search+SFX&x=";
+		private const string _URL1 = "http://thejadednetwork.com/sfx/search/?keyword=";
+		private const string _URL2 = "&submitSearch=Search+SFX&x=";
 
 
 		public override TranslationType Type {
@@ -21,9 +21,9 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 
 		protected override string GetUri(string text)
 		{
-			return _jadedNetworkURL1
+			return _URL1
 					+ Uri.EscapeDataString(text)
-					+ _jadedNetworkURL2;
+					+ _URL2;
 		}
 
 		protected override string ProcessResponse(string res)
@@ -35,6 +35,11 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 			else
 				throw new Exception("No results found or there was an error parsing the source.");
 			return res;
+		}
+
+		protected override Encoding GetEncoding(string received)
+		{
+			return Encoding.UTF8;
 		}
 	}
 }

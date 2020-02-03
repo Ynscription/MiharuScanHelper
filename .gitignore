@@ -264,6 +264,3 @@ __pycache__/
 
 # Ignore binaries to redist
 **/Miharu*Scan*Helper/Resources/Redist/
-
-# Ignore App.config
-**/Miharu*Scan*Helper/App.config

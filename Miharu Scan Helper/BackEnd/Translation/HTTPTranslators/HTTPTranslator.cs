@@ -17,14 +17,11 @@ namespace Manga_Scan_Helper.BackEnd.Translation {
 
 	public abstract class HTTPTranslator : Translator {
 		
-		private const string _bingTranslateURL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=ja&to=en";
-		
-		
-		
-		
-		
-		
-		
+		//Your Azure Cognitive Services key here
+		protected const string _A = "";
+		//Your Yandex Translate API key here
+		protected const string _Y = "";
+
 
 		private static Regex _unicodeReplacer = new Regex(@"\\u(?<Value>[a-zA-Z0-9]{4})");
 		
@@ -32,6 +29,13 @@ namespace Manga_Scan_Helper.BackEnd.Translation {
 		protected abstract string GetUri (string text);
 
 		protected abstract string ProcessResponse (string response);
+
+		protected virtual Encoding GetEncoding (string received) {
+			if (received == null)
+				return Encoding.UTF8;
+			else
+				return Encoding.GetEncoding(received);
+		}
 
 		protected static string DecodeEncodedUnicodeCharacters(string src)
 		{
@@ -47,10 +51,9 @@ namespace Manga_Scan_Helper.BackEnd.Translation {
 			HttpWebRequest request = (HttpWebRequest) WebRequest.Create(GetUri(text));
 			using (HttpWebResponse response = (HttpWebResponse) request.GetResponse()) {
 				if (response.StatusCode == HttpStatusCode.OK) {
-					using (Stream receiveStream = response.GetResponseStream()) 
+					using (Stream receiveStream = response.GetResponseStream())
 					using (StreamReader readStream = 
-							new StreamReader(receiveStream, 
-								response.CharacterSet == null ? Encoding.UTF8 : Encoding.GetEncoding(response.CharacterSet))) {
+							new StreamReader(receiveStream, GetEncoding(response.CharacterSet))) {
 
 						res = readStream.ReadToEnd();
 
@@ -71,42 +74,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation {
 		
 
 		private static async Task internalBingTranslate (TranslationConsumer consumer, string src) {
-			object [] body = new object [] { new { Text = src} };
-			string requestBody = JsonConvert.SerializeObject(body);
-
-			try {
-				using (HttpClient client = new HttpClient())
-				using (HttpRequestMessage request = new HttpRequestMessage()) {
-					request.Method = HttpMethod.Post;
-					request.RequestUri = new Uri(_bingTranslateURL);
-					request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-					request.Headers.Add("Ocp-Apim-Subscription-Key", _B);
-
-					HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
-
-					if (response.StatusCode == HttpStatusCode.OK) {
-						string result = await response.Content.ReadAsStringAsync();
-						string find = "\"text\":";
-						if (result.Contains(find)){
-							result = result.Substring(result.IndexOf(find) + find.Length);
-							result = result.Substring(result.IndexOf("\"") + 1);
-							result = result.Substring(0, result.IndexOf("\",\""));
-							if (result.Contains("\\u"))
-								result = DecodeEncodedUnicodeCharacters(result);
-							consumer.TranslationCallback(result, TranslationType.Bing_API);
-						}
-						else {
-							consumer.TranslationFailed(new Exception("Bad response format"), TranslationType.Bing_API);
-						}
-					}
-					else {
-						consumer.TranslationFailed (new Exception("HTTP bad response (" + response.StatusCode.ToString() + ")"), TranslationType.Bing_API);
-					}
-				}
-			}
-			catch (Exception e) {
-				consumer.TranslationFailed(e, TranslationType.Bing_API);
-			}
+			
 
 		}
 

@@ -62,7 +62,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			ShowImageFromBitmap(textEntry.Source);
 			InitializeParsedTextBox();
 
-			foreach (TranslationType t in Enum.GetValues(typeof (TranslationType))) {
+			foreach (TranslationType t in TranslationProvider.Instance) {
 				if (t != TranslationType.Jaded_Network)
 					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (this, t, _textEntry));
 			}
@@ -139,11 +139,11 @@ namespace Manga_Scan_Helper.FrontEnd
 
 			string refinedText = SanitizeString(ParsedText);
 
-			foreach (TranslationType t in Enum.GetValues(typeof (TranslationType))) {
+			foreach (TranslationType t in TranslationProvider.Instance) {
 				if (t != TranslationType.Jaded_Network)
 					TranslationProvider.Translate(t, refinedText, this);
 			}
-
+			
 			//It makes sense to not ask for an SFX translation by default.
 			
 		}
