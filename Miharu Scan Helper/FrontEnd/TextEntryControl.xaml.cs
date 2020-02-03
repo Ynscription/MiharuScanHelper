@@ -1,7 +1,6 @@
 ﻿
 using Manga_Scan_Helper.BackEnd;
 using Manga_Scan_Helper.BackEnd.Translation;
-using Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;

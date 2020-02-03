@@ -130,6 +130,7 @@
     <Compile Include="BackEnd\Translation\TranslationFailEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationProvider.cs" />
     <Compile Include="BackEnd\Translation\Translator.cs" />
+    <Compile Include="BackEnd\Translation\WebCrawlers\WCGoogleTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebCrawlerTranslator.cs" />
     <Compile Include="BackEnd\TxtChangedEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />

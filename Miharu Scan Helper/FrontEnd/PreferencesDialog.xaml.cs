@@ -1,6 +1,5 @@
 ﻿using Manga_Scan_Helper.Properties;
 using Ookii.Dialogs.Wpf;
-using System;
 using System.IO;
 using System.Windows;
 

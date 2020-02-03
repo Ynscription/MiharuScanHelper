@@ -1,4 +1,5 @@
 ﻿using Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators;
+using Manga_Scan_Helper.BackEnd.Translation.WebCrawlers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,11 +26,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation
 
 	public class TranslationProvider : IEnumerable<TranslationType>
 	{
-
-		private static readonly TranslationProvider _instance = new TranslationProvider();
-		public static TranslationProvider Instance {
-			get => _instance;
-		}
+		public static TranslationProvider Instance { get; } = new TranslationProvider();
 
 
 		private Dictionary<TranslationType, Translator> _translators;
@@ -39,9 +36,10 @@ namespace Manga_Scan_Helper.BackEnd.Translation
 			_translators = new Dictionary<TranslationType, Translator>();
 			
 			_translators.Add(TranslationType.Google_API, new HTTPGoogleTranslator());
+			_translators.Add(TranslationType.Google_Web, new WCGoogleTranslator());
 			_translators.Add(TranslationType.Bing_API, new HTTPBingTranslator());
 			_translators.Add(TranslationType.Yandex_API, new HTTPYandexTranslator());
-			_translators.Add(TranslationType.Jaded_Network, new HTTPTJNTranslator());
+			_translators.Add(TranslationType.Jaded_Network, new HTTPTJNTranslator());			
 
 		}
 
