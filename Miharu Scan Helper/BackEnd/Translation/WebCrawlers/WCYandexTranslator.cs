@@ -1,6 +1,7 @@
 ﻿using Manga_Scan_Helper.FrontEnd;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,11 +26,18 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 			return _URL + Uri.EscapeDataString(text);
 		}
 
+		public IWebElement ResultIsNotEmpty (IWebDriver driver) {
+			string res = "";
+			while ((res = driver.FindElement(FetchBy).Text) == "");
+			return driver.FindElement(FetchBy);
+		}
+
 
 		public IWebElement OverrideNavigation (IWebDriver driver, string url) {
 			IWebElement result = null;
 
 			driver.Navigate().GoToUrl(url);
+
 			while (driver.Url.Contains("showcaptcha")) {
 				IWebElement captcha = driver.FindElement(By.XPath("//div[@class='captcha__image']"));
 				string captchaSrc = captcha.FindElement(By.XPath("//img")).GetAttribute("src");
@@ -48,10 +56,10 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 				inputBox.Submit();
 				Thread.Sleep(500);				
 			}
-			//Magic I guess ¯\_(ツ)_/¯
-			result = driver.FindElement(FetchBy);
-			Thread.Sleep(500);
-			result = driver.FindElement(FetchBy);
+
+			//Wait for result to be available
+			WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(1));
+			result = wait.Until(ResultIsNotEmpty);
 					
 
 			return result;
@@ -69,7 +77,8 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 		public override async Task<string> Translate(string text)
 		{
 			string res = "";
-
+			if (text == "")
+				return res;
 			res = WebDriverManager.NavigateAndFetch(GetUri(text), FetchBy, ProcessResult, OverrideNavigation);
 
 

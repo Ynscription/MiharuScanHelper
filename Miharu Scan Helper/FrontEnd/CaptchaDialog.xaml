@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
         mc:Ignorable="d"
-        ResizeMode="NoResize" Title="Solve Captcha" Height="358" Width="509">
+        ResizeMode="NoResize" Title="Solve Captcha" Height="358" Width="509"
+		FocusManager.FocusedElement="{Binding ElementName=SolveTextBox}">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*" />
