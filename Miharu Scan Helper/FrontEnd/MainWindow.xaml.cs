@@ -1,4 +1,5 @@
 ﻿using Manga_Scan_Helper.BackEnd;
+using Manga_Scan_Helper.BackEnd.Translation.WebCrawlers;
 using Manga_Scan_Helper.FrontEnd;
 using Manga_Scan_Helper.Properties;
 using Ookii.Dialogs.Wpf;
@@ -1104,7 +1105,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					return;
 				}
 			}
-			//Translator.CleanUp();
+			WebDriverManager.Instance.Dispose();
 
 		}
 
@@ -1118,19 +1119,22 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		
 		public void UnhandledException (object sender, DispatcherUnhandledExceptionEventArgs e) {
-			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);			
+			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);	
+			WebDriverManager.Instance.Dispose();
 		}
 
 		public void UnhandledException (object sender, UnhandledExceptionEventArgs e) {
 			try {
 				CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, (Exception)e.ExceptionObject);
 			}catch { }
-
+			WebDriverManager.Instance.Dispose();
 		}
 
 		public void UnhandledException (object sender, UnobservedTaskExceptionEventArgs e) {
 			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);
+			WebDriverManager.Instance.Dispose();
 		}
+
 
 
 
@@ -1140,6 +1144,9 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		#endregion
 
-		
+		private void CrashSimulatorItemItem_Click(object sender, RoutedEventArgs e)
+		{
+			throw new Exception("Simulated Crash");
+		}
 	}
 }

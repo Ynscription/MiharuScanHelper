@@ -140,6 +140,7 @@
     <Compile Include="BackEnd\Translation\Translator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WCGoogleTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebCrawlerTranslator.cs" />
+    <Compile Include="BackEnd\Translation\WebCrawlers\WebDriverManager.cs" />
     <Compile Include="BackEnd\TxtChangedEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">
@@ -365,6 +366,9 @@
     <None Include="Resources\Licenses\GeckoDriver LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\Redist\GeckoDriver\geckodriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Redist\Tesseract-OCR\ambiguous_words.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

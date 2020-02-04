@@ -28,7 +28,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 			throw new NotImplementedException();
 		}
 
-		public override string Translate(string text)
+		public override async Task<string> Translate(string text)
 		{
 			string result = "";
 			object [] body = new object [] { new { Text = text} };
@@ -42,10 +42,10 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 				request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 				request.Headers.Add("Ocp-Apim-Subscription-Key", _A);
 
-				HttpResponseMessage response = client.SendAsync(request).Result;
+				HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
 
 				if (response.StatusCode == HttpStatusCode.OK) {
-					result = response.Content.ReadAsStringAsync().Result;
+					result = await response.Content.ReadAsStringAsync();
 					string find = "\"text\":";
 					if (result.Contains(find)){
 						result = result.Substring(result.IndexOf(find) + find.Length);

@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators {
 
@@ -38,18 +39,18 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators {
             } );
 		}
 		
-		public override string Translate(string text)
+		public override async Task<string> Translate(string text)
 		{
 			string res = "";
 						
 			HttpWebRequest request = (HttpWebRequest) WebRequest.Create(GetUri(text));
-			using (HttpWebResponse response = (HttpWebResponse) request.GetResponse()) {
+			using (HttpWebResponse response = (HttpWebResponse) await request.GetResponseAsync()) {
 				if (response.StatusCode == HttpStatusCode.OK) {
 					using (Stream receiveStream = response.GetResponseStream())
 					using (StreamReader readStream = 
 							new StreamReader(receiveStream, GetEncoding(response.CharacterSet))) {
 
-						res = readStream.ReadToEnd();
+						res = await readStream.ReadToEndAsync();
 
 						readStream.Close();
 					

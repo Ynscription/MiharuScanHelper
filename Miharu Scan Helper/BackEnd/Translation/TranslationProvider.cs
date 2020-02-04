@@ -45,9 +45,9 @@ namespace Manga_Scan_Helper.BackEnd.Translation
 
 		}
 
-		private static void internalTranslate (TranslationType type, string text, TranslationConsumer consumer) {
+		private static async void internalTranslate (TranslationType type, string text, TranslationConsumer consumer) {
 			try {
-				string res = Instance._translators[type].Translate(text);
+				string res = await Instance._translators[type].Translate(text);
 				consumer.TranslationCallback(res, type);
 			}
 			catch (Exception e) {
