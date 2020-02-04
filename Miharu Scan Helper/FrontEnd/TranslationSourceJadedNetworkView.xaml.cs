@@ -96,6 +96,14 @@ namespace Manga_Scan_Helper.FrontEnd
 							ProcessSourceSFX(src);
 						SFXListBox.Items.Refresh();
 						RefreshButton.IsEnabled = true;
+
+						WorkingRect.Visibility = Visibility.Hidden;
+						WorkingRect.ToolTip = null;
+
+						ErrorRect.Visibility = Visibility.Hidden;
+						ErrorRect.ToolTip = null;
+					
+						SuccessRect.Visibility = Visibility.Visible;
 					}
 					catch (Exception ex) {
 						OnTranslationFailed(this, new TranslationFailEventArgs(ex, Type));
@@ -109,9 +117,15 @@ namespace Manga_Scan_Helper.FrontEnd
 			try {
 				Dispatcher.Invoke(() => {
 					if (e.Type == Type) {
-						ErrorIMG.Visibility = Visibility.Visible;
-						ErrorIMG.ToolTip = e.Exception.Message;
 						RefreshButton.IsEnabled = true;
+
+						SuccessRect.Visibility = Visibility.Hidden;
+
+						WorkingRect.Visibility = Visibility.Hidden;
+						WorkingRect.ToolTip = null;
+
+						ErrorRect.Visibility = Visibility.Visible;
+						ErrorRect.ToolTip = e.Exception.Message;
 					}
 				});
 			}
@@ -123,12 +137,21 @@ namespace Manga_Scan_Helper.FrontEnd
 			e.Handled = true;
 		}
 
+		public void AwaitTranslation () {
+			RefreshButton.IsEnabled = false;
 
+			SuccessRect.Visibility = Visibility.Hidden;
+
+			ErrorRect.Visibility = Visibility.Hidden;
+			ErrorRect.ToolTip = null;
+
+			WorkingRect.Visibility = Visibility.Visible;
+			WorkingRect.ToolTip = "Working...";
+		}
 
 		private void RefreshButton_Click (object sender, RoutedEventArgs e) {
-			ErrorIMG.Visibility = Visibility.Hidden;
-			RefreshButton.IsEnabled = false;
 			_parent.RequestTranslation(Type);
+			AwaitTranslation();
 		}
 
 

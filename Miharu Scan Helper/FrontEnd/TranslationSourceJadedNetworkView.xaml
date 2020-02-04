@@ -17,7 +17,9 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
-		<Image x:Name="ErrorIMG" Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Height="30" Width="30" Visibility="Hidden" Source="/Miharu Scan Helper;component/Resources/Warning.png" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+		<Rectangle x:Name="SuccessRect" Grid.Column="0" Grid.Row="0" Visibility="Visible" Width="{Binding ActualHeight, ElementName=SuccessRect, Mode=OneWay}"  Margin="5" Fill="#FF06a006"/>
+		<Rectangle x:Name="WorkingRect" Grid.Column="0" Grid.Row="0" Visibility="Hidden" Width="{Binding ActualHeight, ElementName=WorkingRect, Mode=OneWay}" Margin="5" Fill="#FF909090"/>
+		<Rectangle x:Name="ErrorRect" Grid.Column="0" Grid.Row="0" Visibility="Hidden" Width="{Binding ActualHeight, ElementName=ErrorRect, Mode=OneWay}" Margin="5" Fill="#FFF2D100"/>
 		<Grid Grid.Row="0" Grid.Column="1" >
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
