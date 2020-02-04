@@ -95,6 +95,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\CaptchaDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\EditChapterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,12 +143,16 @@
     <Compile Include="BackEnd\Translation\TranslationProvider.cs" />
     <Compile Include="BackEnd\Translation\Translator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WCGoogleTranslator.cs" />
+    <Compile Include="BackEnd\Translation\WebCrawlers\WCYandexTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebCrawlerTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebDriverManager.cs" />
     <Compile Include="BackEnd\TxtChangedEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\CaptchaDialog.xaml.cs">
+      <DependentUpon>CaptchaDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\EditChapterWindow.xaml.cs">
       <DependentUpon>EditChapterWindow.xaml</DependentUpon>

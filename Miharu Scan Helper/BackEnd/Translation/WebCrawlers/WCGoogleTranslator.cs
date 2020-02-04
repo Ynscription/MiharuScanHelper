@@ -1,8 +1,6 @@
 ﻿
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 {
@@ -14,16 +12,14 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 			get { return TranslationType.Google_Web; }
 		}
 
-		
+		protected override By FetchBy {
+			get { return By.XPath("//span[@class='tlid-translation translation']"); }
+		}
 
-		public override async Task<string> Translate(string text)
+		protected override string GetUri(string text)
 		{
-			string res = "";
-
-			res = WebDriverManager.NavigateAndFetch(_URL + Uri.EscapeDataString(text), By.XPath("//span[@class='tlid-translation translation']"));
-
-
-			return res;
+			return _URL + Uri.EscapeDataString(text);
 		}
 	}
 }
+

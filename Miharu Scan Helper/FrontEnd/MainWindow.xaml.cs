@@ -737,7 +737,12 @@ Would you like to locate the Tesseract exectutable manually?";
 			}
 		}
 
-		
+		private void CrashSimulatorItemItem_Click(object sender, RoutedEventArgs e)
+		{
+			throw new Exception("Simulated Crash");
+		}
+
+
 		
 		
 		private void AboutMenuItem_Click (object sender, RoutedEventArgs e) {
@@ -1144,9 +1149,6 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		#endregion
 
-		private void CrashSimulatorItemItem_Click(object sender, RoutedEventArgs e)
-		{
-			throw new Exception("Simulated Crash");
-		}
+		
 	}
 }

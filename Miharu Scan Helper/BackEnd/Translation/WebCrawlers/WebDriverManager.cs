@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 {
@@ -24,32 +25,37 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 			ffo.SetPreference("Headless", true); 
 			ffo.AddArgument("-headless");
 			_driver = new FirefoxDriver(ffds, ffo);
-			_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-			_driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+			_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+			_driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
 		}
 
 
-		private string InternalNavigateAndFetch (string url, By by) {
+		private string InternalNavigateAndFetch (string url, By by, Func<IWebElement, string> processResult, Func<IWebDriver, string, IWebElement> overrideNavigation) {
 			string res = "";
 			Monitor.Enter(_driver);
 			try  {
-				_driver.Navigate().GoToUrl(url);
+				IWebElement result = null;
+				if (overrideNavigation != null)
+					result = overrideNavigation(_driver, url);
+				else {
+					_driver.Navigate().GoToUrl(url);
+					result = _driver.FindElement(by);
+				}
+							
+				res = processResult(result);
 
-			
-				res = _driver.FindElement(by).Text;
-
-				_driver.Navigate().GoToUrl("about:blank");
 			}
 			finally {
+				_driver.Navigate().GoToUrl("about:blank");
 				Monitor.Exit(_driver);
 			}
 
 			return res;
 		}
 
-		public static string NavigateAndFetch (string url, By by) {
+		public static string NavigateAndFetch (string url, By by, Func<IWebElement, string> processResult, Func<IWebDriver, string, IWebElement> overrideNavigation = null) {
 			
-			return Instance.InternalNavigateAndFetch(url, by);
+			return Instance.InternalNavigateAndFetch(url, by, processResult, overrideNavigation);
 			
 		}
 
@@ -91,6 +97,8 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 			// TODO: uncomment the following line if the finalizer is overridden above.
 			// GC.SuppressFinalize(this);
 		}
+
+		
 		#endregion
 
 	}
