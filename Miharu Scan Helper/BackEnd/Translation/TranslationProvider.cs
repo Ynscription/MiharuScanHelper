@@ -8,12 +8,7 @@ using System.Threading.Tasks;
 namespace Manga_Scan_Helper.BackEnd.Translation
 {
 
-	//TODO write a script to convert old saves to new ones!!!!
-	/*
-	 * Google2 -> Google_API
-	 * Bing -> Bing_API
-	 * Yandex -> Yandex_API
-	 * */
+
 	public enum TranslationType {
 		Google_Web,
 		Google_API,

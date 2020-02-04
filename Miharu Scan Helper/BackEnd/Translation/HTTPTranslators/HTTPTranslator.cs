@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators {
 

@@ -188,13 +188,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			//_parent.RemoveTextEntry(this);
 		}
 
-		/*
-		<Storyboard>
-			<ThicknessAnimation
-								Storyboard.TargetName="S_Tail"
-								Storyboard.TargetProperty="Margin"
-								From="50,0,0,-80" To="50,0,0,-1" Duration="0:0:1" />
-		</Storyboard>*/
+		
 		private Storyboard _showS;
 		private Storyboard _hideS;
 		private enum AnimState {

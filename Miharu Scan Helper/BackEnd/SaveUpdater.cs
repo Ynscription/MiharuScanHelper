@@ -1,7 +1,6 @@
 ﻿using Manga_Scan_Helper.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
-using System.Configuration;
 using System.IO;
 
 namespace Manga_Scan_Helper.BackEnd
