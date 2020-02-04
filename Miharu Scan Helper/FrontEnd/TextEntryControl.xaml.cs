@@ -29,17 +29,17 @@ namespace Manga_Scan_Helper.FrontEnd
 		private MainWindow _parent;
 		private Text _textEntry;
 
-		private string SanitizeString (string input) {
-			string sanitized = input.Replace(Environment.NewLine, " ");
+		/*private string SanitizeString (string input) {
+			return input;
+			/*string sanitized = input.Replace(Environment.NewLine, " ");
 			sanitized = sanitized.Replace("\n", " ");
 
 			return sanitized;
-		}
+		}*/
 
 		private void InitializeParsedTextBox () {
 			ParsedTextBox.Text = _textEntry.ParsedText;
-			string refinedText = SanitizeString(_textEntry.ParsedText);
-			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
+			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(_textEntry.ParsedText);
 		}
 
 		public string ParsedText {
@@ -77,8 +77,7 @@ namespace Manga_Scan_Helper.FrontEnd
 		{
 			if (e.ChangeType == TextChangeType.Parse) {
 				ParsedTextBox.Text = e.Text;
-				string refinedText = SanitizeString(e.Text);
-				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
+				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(e.Text);
 			}
 			else if (e.ChangeType == TextChangeType.Translation)
 				TranslatedTextBox.Text = e.Text;
@@ -91,8 +90,7 @@ namespace Manga_Scan_Helper.FrontEnd
 			VerticalCheckBox.IsEnabled = false;
 			_textEntry.Invalidate();
 			ParsedTextBox.Text = _textEntry.ParsedText;
-			string refinedText = SanitizeString(_textEntry.ParsedText);
-			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(refinedText);
+			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(_textEntry.ParsedText);
 			RefreshParseButton.IsEnabled = true;
 			VerticalCheckBox.IsEnabled = true;
 			Mouse.SetCursor(Cursors.Arrow);
@@ -136,11 +134,10 @@ namespace Manga_Scan_Helper.FrontEnd
 			foreach (TranslationSourceView t in TranslationSourcesStackPanel.Children)
 				t.AwaitTranslation();
 
-			string refinedText = SanitizeString(ParsedText);
 
 			foreach (TranslationType t in TranslationProvider.Instance) {
 				if (t != TranslationType.Jaded_Network)
-					TranslationProvider.Translate(t, refinedText, this);
+					TranslationProvider.Translate(t, ParsedText, this);
 			}
 			
 			//It makes sense to not ask for an SFX translation by default.
@@ -148,10 +145,9 @@ namespace Manga_Scan_Helper.FrontEnd
 		}
 
 		public void RequestTranslation (TranslationType type) {
-			string refinedText = SanitizeString(ParsedText);
 			/*if (type == TranslationType.GoogleAPI)
 				HTTPTranslator.GoogleTranslate(this, refinedText);*/
-			TranslationProvider.Translate(type, refinedText, this);
+			TranslationProvider.Translate(type, ParsedText, this);
 		}
 
 		

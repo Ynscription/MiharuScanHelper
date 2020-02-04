@@ -20,12 +20,25 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 
 		protected override string GetUri(string text)
 		{
-			throw new NotImplementedException();
+			return _URL;
 		}
 
 		protected override string ProcessResponse(string response)
 		{
-			throw new NotImplementedException();
+			string result = response;
+			string find = "\"text\":";
+			if (result.Contains(find)){
+				result = result.Substring(result.IndexOf(find) + find.Length);
+				result = result.Substring(result.IndexOf("\"") + 1);
+				result = result.Substring(0, result.IndexOf("\",\""));
+				if (result.Contains("\\u"))
+					result = DecodeEncodedUnicodeCharacters(result);
+				result = CleanNewLines(result);
+			}
+			else {
+				throw new Exception("Bad response format");
+			}
+			return result;
 		}
 
 		public override async Task<string> Translate(string text)
@@ -38,7 +51,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 			using (HttpClient client = new HttpClient())
 			using (HttpRequestMessage request = new HttpRequestMessage()) {
 				request.Method = HttpMethod.Post;
-				request.RequestUri = new Uri(_URL);
+				request.RequestUri = new Uri(GetUri(text));
 				request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 				request.Headers.Add("Ocp-Apim-Subscription-Key", _A);
 
@@ -46,17 +59,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 
 				if (response.StatusCode == HttpStatusCode.OK) {
 					result = await response.Content.ReadAsStringAsync();
-					string find = "\"text\":";
-					if (result.Contains(find)){
-						result = result.Substring(result.IndexOf(find) + find.Length);
-						result = result.Substring(result.IndexOf("\"") + 1);
-						result = result.Substring(0, result.IndexOf("\",\""));
-						if (result.Contains("\\u"))
-							result = DecodeEncodedUnicodeCharacters(result);
-					}
-					else {
-						throw new Exception("Bad response format");
-					}
+					result = ProcessResponse(result);
 				}
 				else {
 					throw new Exception("HTTP bad response (" + response.StatusCode.ToString() + ")");

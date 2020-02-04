@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -37,6 +38,13 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators {
 			return _unicodeReplacer.Replace(src, m => {
                 return ((char) int.Parse( m.Groups["Value"].Value, NumberStyles.HexNumber )).ToString();
             } );
+		}
+
+		protected static string CleanNewLines (string src) {
+			string res = src;
+			res = res.Replace("\\n", Environment.NewLine);
+			res = res.Replace("\\r", "");
+			return res;
 		}
 		
 		public override async Task<string> Translate(string text)

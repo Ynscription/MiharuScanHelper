@@ -19,7 +19,9 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 
 		protected override string GetUri(string text)
 		{
-			return _URL + Uri.EscapeDataString(text);
+			string refinedText = text.Replace(Environment.NewLine, " ");
+			refinedText = refinedText.Replace("\n", " ");
+			return _URL + Uri.EscapeDataString(refinedText);
 		}
 
 		protected override string ProcessResponse(string res)
@@ -33,6 +35,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
 				res = res.Substring(0, res.IndexOf("\",\""));
 				if (res.Contains("\\u"))
 					res = DecodeEncodedUnicodeCharacters(res);
+				res = CleanNewLines(res);
 			}
 
 			return res;
