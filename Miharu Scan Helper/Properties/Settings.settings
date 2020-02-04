@@ -5,5 +5,8 @@
     <Setting Name="TesseractPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">./Resources/Redist/Tesseract-OCR/tesseract.exe</Value>
     </Setting>
+    <Setting Name="SaveVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">v3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

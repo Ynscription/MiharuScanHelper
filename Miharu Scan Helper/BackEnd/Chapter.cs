@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Manga_Scan_Helper.Properties;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -133,7 +134,8 @@ namespace Manga_Scan_Helper.BackEnd
 		public void Save (string destPath, int currentPage = 0) {
 			StreamWriter writer = null;
 			try {
-				writer = new StreamWriter(destPath, false, Encoding.UTF8);	
+				writer = new StreamWriter(destPath, false, Encoding.UTF8);
+				writer.WriteLine((string)Settings.Default["SaveVersion"]);
 				writer.WriteLine(currentPage);
 				writer.Write(JsonConvert.SerializeObject(this, Formatting.Indented));
 				/*writer.WriteLine(Path);
@@ -149,14 +151,17 @@ namespace Manga_Scan_Helper.BackEnd
 			
 		}
 
+
 		public static Chapter Load (string src, out int page) {
 			Chapter res = null;
-			StreamReader reader = null;
+			
+			string finalSrc = SaveUpdater.CheckSaveVersion (src);
+
+
 			page = 0;
-			try {
-				reader = new StreamReader(src);
-				if (reader.Peek() != '{')
-					page = int.Parse(reader.ReadLine());
+			using (StreamReader reader = new StreamReader(finalSrc)) {
+				reader.ReadLine();
+				page = int.Parse(reader.ReadLine());
 				res = JsonConvert.DeserializeObject<Chapter>(reader.ReadToEnd());
 				res.Pages[page].Load();
 
@@ -165,10 +170,7 @@ namespace Manga_Scan_Helper.BackEnd
 				
 				reader.Close();
 			}
-			catch (Exception e){
-				reader?.Close();
-				throw e;
-			}
+			
 
 			return res;
 			

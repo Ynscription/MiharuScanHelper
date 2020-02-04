@@ -60,20 +60,6 @@ namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators {
 
 			return ProcessResponse(res);
 		}
-
-		
-
-		
-
-				
-		
-
-		private static async Task internalBingTranslate (TranslationConsumer consumer, string src) {
-			
-
-		}
-
-
 		
 
 	}

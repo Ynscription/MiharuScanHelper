@@ -61,6 +61,7 @@
       <HintPath>..\packages\Ookii.Dialogs.1.0\lib\net35\Ookii.Dialogs.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
@@ -124,6 +125,7 @@
     </Compile>
     <Compile Include="BackEnd\Chapter.cs" />
     <Compile Include="BackEnd\CrashHandler.cs" />
+    <Compile Include="BackEnd\SaveUpdater.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPBingTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPGoogleTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPTJNTranslator.cs" />
