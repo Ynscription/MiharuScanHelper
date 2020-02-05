@@ -127,15 +127,12 @@ Would you like to locate the Tesseract exectutable manually?";
 			}
 		}
 
-		public void WebDriverInitFailed (object sender, EventArgs e) {
-			//TODO show Warning that Firefox is not installed or something.
-		}
+		
 
 		public MainWindow () {
 			InitializeComponent();
 
-			WebDriverManager.InitFailed += WebDriverInitFailed;
-			WebDriverManager.Init();
+			
 
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 			_dpiX = g.DpiX;
@@ -177,8 +174,25 @@ Would you like to locate the Tesseract exectutable manually?";
 				_openChapterOnLoad = true;
 			}
 
+			WebDriverManager.Init();
+			Task.Run(() => {
+				if (!WebDriverManager.IsAlive) {
+					
+					TaskDialog dialog = new TaskDialog();
+					dialog.WindowTitle = "Warning";
+					dialog.MainIcon = TaskDialogIcon.Warning;
+					dialog.MainInstruction = "Could not load Firefox Web Driver.";
+					dialog.Content = "To access more and better translation sources, Firefox Web Browser must be installed in your system.";
 
-
+					TaskDialogButton okButton = new TaskDialogButton("Ok");
+					okButton.ButtonType = ButtonType.Ok;
+					dialog.Buttons.Add(okButton);
+					Application.Current.Dispatcher.Invoke((Action)delegate{
+						TaskDialogButton button = dialog.ShowDialog(this);
+					});
+					
+				}
+			});
 
 		}
 

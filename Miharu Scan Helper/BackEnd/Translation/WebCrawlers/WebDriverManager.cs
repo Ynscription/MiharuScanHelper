@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System;
 using System.IO;
@@ -16,7 +17,6 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 		private volatile Object _lock = new Object ();
 
 		public static WebDriverManager Instance { get; } = new WebDriverManager();
-		public static event EventHandler InitFailed;
 
 		private WebDriverManager () {
 			FileInfo geckoDriverFile = new FileInfo(_DRIVER_PATH);
@@ -28,13 +28,12 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 			ffo.AddArgument("-headless");
 			Monitor.Enter (_lock);
 			try {
-				_driver = new FirefoxDriver(ffds, ffo);
+				_driver = new FirefoxDriver(ffds, ffo);				
 				_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 				_driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
 			}
-			catch (Exception e) {
-				_driver = null;
-				InitFailed?.Invoke(this, new EventArgs());
+			catch (Exception) {
+				_driver = null;				
 			}
 			finally {
 				Monitor.Exit(_lock);
@@ -44,12 +43,12 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 		public static bool IsAlive {
 			get {
 				bool res = false;
-				Monitor.Enter(_lock);
+				Monitor.Enter(Instance._lock);
 				try {
-					res = Instance._driver == null;
+					res = Instance._driver != null;
 				}
 				finally{
-					Monitor.Exit(_lock);
+					Monitor.Exit(Instance._lock);
 				}
 				return res;
 			}
