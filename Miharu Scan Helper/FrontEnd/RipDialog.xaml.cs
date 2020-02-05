@@ -11,7 +11,7 @@ namespace Manga_Scan_Helper.FrontEnd {
 			get; private set;
 		}
 
-		public string URL {
+		public string File {
 			get; private set;
 		}
 
@@ -33,13 +33,15 @@ namespace Manga_Scan_Helper.FrontEnd {
 			}
 		}
 
+		
+
 		private void CancelButton_Click (object sender, RoutedEventArgs e) {
 			Close();
 		}
 
 		private void RipButton_Click (object sender, RoutedEventArgs e) {
 			try {
-				URL = URLTextBox.Text;
+				File = HTMLFileTextBox.Text;
 				DestinationPath = FolderTextBox.Text;
 				Success = true;
 				Close();
@@ -53,6 +55,22 @@ namespace Manga_Scan_Helper.FrontEnd {
 				TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
 				dialog.Buttons.Add(okButton);
 				TaskDialogButton button = dialog.ShowDialog(this);
+			}
+		}
+
+		private void HTMLFileButton_Click(object sender, RoutedEventArgs e)
+		{
+			VistaOpenFileDialog fileDialog = new VistaOpenFileDialog();
+			fileDialog.AddExtension = true;
+			fileDialog.CheckFileExists = true;
+			fileDialog.CheckPathExists = true;
+			fileDialog.DefaultExt = ".html";
+			fileDialog.Filter = "HTML files (*.html)|*.html";
+			fileDialog.Multiselect = false;
+			fileDialog.Title = "Choose source HTML";
+			bool? res = fileDialog.ShowDialog(this);
+			if (res ?? false) {
+				HTMLFileTextBox.Text = fileDialog.FileName;
 			}
 		}
 	}

@@ -174,8 +174,9 @@ Would you like to locate the Tesseract exectutable manually?";
 				_openChapterOnLoad = true;
 			}
 
-			WebDriverManager.Init();
+			
 			Task.Run(() => {
+				WebDriverManager.Init();
 				if (!WebDriverManager.IsAlive) {
 					
 					TaskDialog dialog = new TaskDialog();
@@ -720,7 +721,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			if (ripDialog.Success) {
 				try {
 					Mouse.SetCursor(Cursors.Wait);
-					string dest = Ripper.Rip(ripDialog.URL, ripDialog.DestinationPath);
+					string dest = Ripper.FileRip(ripDialog.File, ripDialog.DestinationPath);
 					_loadedChapter = new Chapter(dest);
 					LoadChapter();
 					foreach (Page p in _loadedChapter.Pages)

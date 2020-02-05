@@ -14,7 +14,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 		private const string _DRIVER_PATH = @".\Resources\Redist\GeckoDriver\geckodriver.exe";
 
 		private volatile IWebDriver _driver = null;
-		private volatile Object _lock = new Object ();
+		private volatile object _lock = new object();
 
 		public static WebDriverManager Instance { get; } = new WebDriverManager();
 

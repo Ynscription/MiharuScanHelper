@@ -39,10 +39,10 @@
 				<Separator/>
 				<MenuItem x:Name="PreferencesMenuItem" Header="Preferences..." Click="PreferencesMenuItem_Click"/>
 			</MenuItem>
-			<MenuItem Header="_Tools" TabIndex="2">
+			<!--<MenuItem Header="_Tools" TabIndex="2">
 				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" />
-				<!--<MenuItem x:Name="CrashSimulatorItem" Header="Simulate Crash" Click="CrashSimulatorItemItem_Click" />-->
-			</MenuItem>
+				<MenuItem x:Name="CrashSimulatorItem" Header="Simulate Crash" Click="CrashSimulatorItemItem_Click" />
+			</MenuItem>-->
 			<MenuItem Header="_Help" TabIndex="3">
 				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" />
 			</MenuItem>

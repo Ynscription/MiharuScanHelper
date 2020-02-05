@@ -5,18 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
         mc:Ignorable="d"
-        Title="Rip manga from URL..." Height="254.667" Width="600" ResizeMode="CanMinimize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        Title="Rip manga from local" Height="254.667" Width="600" ResizeMode="CanMinimize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition/>
-		</Grid.ColumnDefinitions>
-		<Label x:Name="label" Content="URL (Only lhscan.net is supported at the moment)" HorizontalAlignment="Left" Margin="4,10,0,0" VerticalAlignment="Top"/>
-		<Label x:Name="label1" Content="Destination Folder" HorizontalAlignment="Left" Margin="4,102,0,0" VerticalAlignment="Top"/>
-		<TextBox x:Name="URLTextBox" Height="19" Margin="10,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-		<TextBox x:Name="FolderTextBox" Height="19" Margin="10,133,58,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-		<Button x:Name="BrowseFolderButton" Content="..." HorizontalAlignment="Left" Height="19" Margin="541,133,0,0" VerticalAlignment="Top" Width="43" Click="BrowseFolderButton_Click"/>
-		<Button x:Name="CancelButton" Content="Cancel" Margin="0,0,10,10" Click="CancelButton_Click" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="85"/>
-		<Button x:Name="RipButton" Content="Rip" Margin="0,0,100,10" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="85" Click="RipButton_Click"/>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0" Margin="10">
+			<Label Content="Choose the HTML file" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" 
+				   ToolTip="To rip a chapter, visit the web page on your browser and save it as HTML"/>
+
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="HTMLFileTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5" Height="{Binding ActualHeight, ElementName=HTMLFileButton, Mode=OneWay}"/>
+				<Button x:Name="HTMLFileButton" Grid.Column="1" Margin="5" Content="..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Click="HTMLFileButton_Click"/>
+			</Grid>
+		</StackPanel>
+		
+		<StackPanel Grid.Row="1" Margin="10">
+			<Label Content="Destination Folder" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<TextBox x:Name="FolderTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5" Height="{Binding ActualHeight, ElementName=HTMLFileButton, Mode=OneWay}"/>
+				<Button x:Name="BrowseFolderButton" Grid.Column="1" Margin="5" Content="..." HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Click="BrowseFolderButton_Click"/>
+			</Grid>
+		</StackPanel>
+
+		<Grid Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Button x:Name="RipButton" Margin="5" Grid.Column="0" Content="Rip" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="85" Click="RipButton_Click"/>
+			<Button x:Name="CancelButton" Margin="5" Grid.Column="1" Content="Cancel" Click="CancelButton_Click" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="85"/>
+		</Grid>
+		
+		
 
 	</Grid>
 </Window>

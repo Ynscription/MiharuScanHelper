@@ -25,10 +25,54 @@ namespace Manga_Scan_Helper.BackEnd
 
 			}
 		}
+
+		private const string _IMAGE_TAG = "<img class=\"chapter-img\" src=";
+
+		public static string FileRip(string src, string path) {
+			string destinationFolder = null;
+			if (Directory.Exists(path)) {
+				if (!(path [path.Length - 1] == '\\' || path [path.Length - 1] == '/'))
+					path += "\\";
+				destinationFolder = path;
+			}
+			else
+				throw new RipperException("Could not find or access the directory " + path);
+
+			if (!File.Exists(src))
+				throw new RipperException("Could not open file " + src);
+			FileInfo srcInfo = new FileInfo(src);
+
+			using (StreamReader reader = new StreamReader(src)) {
+				int i = 1;
+				while (!reader.EndOfStream) {
+					string input = reader.ReadLine();
+
+					if (input.Contains(_IMAGE_TAG)) {
+						string img = input.Substring(input.IndexOf(_IMAGE_TAG) + _IMAGE_TAG.Length + 1);
+						img = img.Substring(0, img.IndexOf(".jpg") + 4);
+						img = img.Replace("%20", " ");
+						if (!img.Contains(".html"))
+							CopyImage(srcInfo.DirectoryName + "/" + img, i++, destinationFolder);
+
+					}
+				}
+			}
+			
+
+			
+			return destinationFolder;
+		}
+
+		private static void CopyImage (string img, int index, string destinationFolder) {
+			
+			File.Copy(img, destinationFolder + index.ToString("D3") + ".jpg");			
+		}
+
+
 		
-		public static string Rip (string url, string path) {
+		/*public static string Rip (string url, string path) {
 			Uri uriResult = null;
-			if (!url.Contains("lhscan.net"))
+			if (!(url.Contains("lhscan.net") | url.Contains("loveheaven.net")))
 				throw new RipperException("The URL belongs to a non supported site. Only lhscan.net pages supported (for now).");
 
 			bool result = Uri.TryCreate(url, UriKind.Absolute, out uriResult)
@@ -38,14 +82,7 @@ namespace Manga_Scan_Helper.BackEnd
 			
 
 
-			string destinationFolder = null;
-			if (Directory.Exists(path)) {
-				if (!(path [path.Length - 1] == '\\' || path [path.Length - 1] == '/'))
-					path += "\\";
-				destinationFolder = path;
-			}
-			else
-				throw new RipperException("Could not find or acces the directory " + path);
+			
 
 
 			HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
@@ -68,7 +105,7 @@ namespace Manga_Scan_Helper.BackEnd
 				
 				
 				int i = 1;
-				string find = "data-src=";
+				string find = "data-original=";
 				while (!readStream.EndOfStream) {
 					string input = readStream.ReadLine();
 
@@ -91,14 +128,16 @@ namespace Manga_Scan_Helper.BackEnd
 
 
 			return destinationFolder;
-		}
+		}*/
 
-		private static void DownloadImage (string url, int index, string destinationFolder) {
+		
+
+		/*private static void DownloadImage (string url, int index, string destinationFolder) {
 			using (WebClient client = new WebClient()) {
 				client.DownloadFile(new Uri(url), destinationFolder + index.ToString("D3") + ".jpg");				
 			}
 			
-		}
+		}*/
 
 
 	}
