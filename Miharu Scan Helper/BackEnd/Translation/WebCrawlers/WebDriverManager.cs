@@ -13,26 +13,58 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 		private const string _DRIVER_PATH = @".\Resources\Redist\GeckoDriver\geckodriver.exe";
 
 		private volatile IWebDriver _driver = null;
+		private volatile Object _lock = new Object ();
 
 		public static WebDriverManager Instance { get; } = new WebDriverManager();
+		public static event EventHandler InitFailed;
 
 		private WebDriverManager () {
 			FileInfo geckoDriverFile = new FileInfo(_DRIVER_PATH);
 			FirefoxDriverService ffds = FirefoxDriverService.CreateDefaultService(geckoDriverFile.DirectoryName);
-			ffds.HideCommandPromptWindow = true; 
+			ffds.HideCommandPromptWindow = true;
 			FirefoxOptions ffo = new FirefoxOptions();
 			ffo.PageLoadStrategy = PageLoadStrategy.Eager;
-			ffo.SetPreference("Headless", true); 
+			ffo.SetPreference("Headless", true);
 			ffo.AddArgument("-headless");
-			_driver = new FirefoxDriver(ffds, ffo);
-			_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-			_driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
+			Monitor.Enter (_lock);
+			try {
+				_driver = new FirefoxDriver(ffds, ffo);
+				_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+				_driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
+			}
+			catch (Exception e) {
+				_driver = null;
+				InitFailed?.Invoke(this, new EventArgs());
+			}
+			finally {
+				Monitor.Exit(_lock);
+			}
+		}
+
+		public static bool IsAlive {
+			get {
+				bool res = false;
+				Monitor.Enter(_lock);
+				try {
+					res = Instance._driver == null;
+				}
+				finally{
+					Monitor.Exit(_lock);
+				}
+				return res;
+			}
+		}
+
+		public static void Init () {
+			Task.Run(() => {
+				WebDriverManager wdm = Instance;
+			});
 		}
 
 
 		private string InternalNavigateAndFetch (string url, By by, Func<IWebElement, string> processResult, Func<IWebDriver, string, IWebElement> overrideNavigation) {
 			string res = "";
-			Monitor.Enter(_driver);
+			Monitor.Enter(_lock);
 			try  {
 				IWebElement result = null;
 				if (overrideNavigation != null)
@@ -41,22 +73,22 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 					_driver.Navigate().GoToUrl(url);
 					result = _driver.FindElement(by);
 				}
-							
+
 				res = processResult(result);
 
 			}
 			finally {
 				_driver.Navigate().GoToUrl("about:blank");
-				Monitor.Exit(_driver);
+				Monitor.Exit(_lock);
 			}
 
 			return res;
 		}
 
 		public static string NavigateAndFetch (string url, By by, Func<IWebElement, string> processResult, Func<IWebDriver, string, IWebElement> overrideNavigation = null) {
-			
+
 			return Instance.InternalNavigateAndFetch(url, by, processResult, overrideNavigation);
-			
+
 		}
 
 
@@ -71,10 +103,16 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 			{
 				if (disposing)
 				{
-					
+
 				}
-				_driver?.Quit();
-				_driver = null;
+				Monitor.Enter(_lock);
+				try {
+					_driver?.Quit();
+					_driver = null;
+				}
+				finally {
+					Monitor.Exit(_lock);
+				}
 				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
 				// TODO: set large fields to null.
 
@@ -98,7 +136,7 @@ namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
 			// GC.SuppressFinalize(this);
 		}
 
-		
+
 		#endregion
 
 	}

@@ -45,7 +45,7 @@ namespace Manga_Scan_Helper {
 
 		private bool Saved {
 			get => _saved;
-			set { 
+			set {
 				_saved = value;
 				string title = "";
 				if (_loadedChapter != null) {
@@ -92,7 +92,7 @@ namespace Manga_Scan_Helper {
 				dialog.WindowTitle = "Warning Tesseract Not Found";
 				dialog.MainIcon = TaskDialogIcon.Warning;
 				dialog.MainInstruction = "Tesseract executable could not be located.";
-				dialog.Content = @"Miharu requires Tesseract to function. 
+				dialog.Content = @"Miharu requires Tesseract to function.
 Would you like to locate the Tesseract exectutable manually?";
 
 				TaskDialogButton okButton = new TaskDialogButton(ButtonType.Yes);
@@ -127,17 +127,22 @@ Would you like to locate the Tesseract exectutable manually?";
 			}
 		}
 
+		public void WebDriverInitFailed (object sender, EventArgs e) {
+			//TODO show Warning that Firefox is not installed or something.
+		}
+
 		public MainWindow () {
 			InitializeComponent();
 
-			
+			WebDriverManager.InitFailed += WebDriverInitFailed;
+			WebDriverManager.Init();
 
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 			_dpiX = g.DpiX;
 			_dpiY = g.DpiY;
 
 			ChangePage();
-			
+
 			Dispatcher.UnhandledException += UnhandledException;
 			AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 			TaskScheduler.UnobservedTaskException += UnhandledException;
@@ -182,7 +187,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private void SetTopMenuItems () {
 			bool set = _loadedChapter != null;
-			
+
 			SaveChapterMenuItem.IsEnabled = set;
 			SaveAsChapterMenuItem.IsEnabled = set;
 
@@ -198,7 +203,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			ExportAsRScriptMenuItem.IsEnabled = set;
 
 			EditPagesMenuItem.IsEnabled = set;
-			
+
 		}
 
 		private void MainWindow1_KeyDown (object sender, KeyEventArgs e) {
@@ -266,7 +271,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			dialog.MainIcon = TaskDialogIcon.Warning;
 			dialog.MainInstruction = "There are unsaved changes.";
 			dialog.Content = "Would you like to save the current chapter?";
-			
+
 			TaskDialogButton saveButton = new TaskDialogButton(_SAVE);
 			dialog.Buttons.Add(saveButton);
 			TaskDialogButton noSaveButton = new TaskDialogButton(_DISCARD);
@@ -278,8 +283,8 @@ Would you like to locate the Tesseract exectutable manually?";
 			return button.Text;
 		}
 
-		
-		
+
+
 		private void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_loadedChapter != null && !Saved) {
 				string warnRes = WarnNotSaved();
@@ -313,9 +318,9 @@ Would you like to locate the Tesseract exectutable manually?";
 					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
 					dialog.Buttons.Add(okButton);
 					TaskDialogButton button = dialog.ShowDialog(this);
-				
+
 				}
-			}			
+			}
 		}
 
 		private void NewChapterFilesMenuItem_Click (object sender, RoutedEventArgs e) {
@@ -357,9 +362,9 @@ Would you like to locate the Tesseract exectutable manually?";
 					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
 					dialog.Buttons.Add(okButton);
 					TaskDialogButton button = dialog.ShowDialog(this);
-				
+
 				}
-			}			
+			}
 		}
 
 		private void OpenChapterMenuItem_Click (object sender, RoutedEventArgs e) {
@@ -377,7 +382,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			fileDialog.CheckPathExists = true;
 			fileDialog.DefaultExt = ".scan";
 			fileDialog.Filter = "Scans files (*.scan)|*.scan";
-			fileDialog.Multiselect = false;			
+			fileDialog.Multiselect = false;
 			fileDialog.Title = "Open Chapter";
 			bool? res = fileDialog.ShowDialog(this);
 			if (res ?? false) {
@@ -393,7 +398,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				else if (res == _CANCEL)
 					return;
 			}
-			
+
 			Mouse.SetCursor(Cursors.Wait);
 			AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
 			if (_pageRectangles [_previousPage] != null)
@@ -408,14 +413,14 @@ Would you like to locate the Tesseract exectutable manually?";
 			_selectedTextEntry = null;
 			TextEntryGrid.Children.Clear();
 			TextEntryGrid.InvalidateVisual();
-			
+
 			_loadedChapter = null;
 			_pageRectangles = null;
 			_currentPage = 0;
 			ChangePage();
 
 			_currSavedFile = null;
-			Saved = false;			
+			Saved = false;
 
 			SetTopMenuItems();
 
@@ -423,7 +428,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			Mouse.SetCursor(Cursors.Arrow);
 		}
 
-		
+
 		private void SaveChapterMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_currSavedFile != null) {
 				try {
@@ -463,7 +468,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					Mouse.SetCursor(Cursors.Wait);
 					_loadedChapter.Save(fileDialog.FileName, _currentPage);
 					_currSavedFile = fileDialog.FileName;
-					Saved = true;					
+					Saved = true;
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 				catch (Exception ex) {
@@ -482,7 +487,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			}
 		}
 
-		
+
 		private void ExportScriptMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_currSavedScript != null) {
 				try {
@@ -645,9 +650,9 @@ Would you like to locate the Tesseract exectutable manually?";
 			}
 		}
 
-				
+
 		private void ExitMenuItem_Click (object sender, RoutedEventArgs e) {
-			
+
 			if (_loadedChapter != null && !Saved) {
 				string res = WarnNotSaved();
 				if (res == _SAVE)
@@ -660,8 +665,8 @@ Would you like to locate the Tesseract exectutable manually?";
 			Application.Current.Shutdown(0);
 		}
 
-		
-		
+
+
 		private void EditPagesMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (!_loadedChapter.AllPagesReady) {
 				Mouse.SetCursor(Cursors.Wait);
@@ -676,15 +681,15 @@ Would you like to locate the Tesseract exectutable manually?";
 			GC.Collect();
 			Mouse.SetCursor(Cursors.Arrow);
 		}
-		
+
 
 		private void PreferencesMenuItem_Click (object sender, RoutedEventArgs e) {
 			PreferencesDialog pd = new PreferencesDialog();
 			pd.Owner = this;
 			pd.ShowDialog();
 		}
-		
-		
+
+
 
 
 		private void RipMenuItem_Click (object sender, RoutedEventArgs e) {
@@ -743,8 +748,8 @@ Would you like to locate the Tesseract exectutable manually?";
 		}
 
 
-		
-		
+
+
 		private void AboutMenuItem_Click (object sender, RoutedEventArgs e) {
 			AboutDialog aboutDialog = new AboutDialog();
 			aboutDialog.Owner = this;
@@ -774,13 +779,13 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		private void ChangePage () {
 			if (CurrPageTextBox.IsEnabled = (_loadedChapter != null)) {
-				
+
 				BitmapImage imgSrc = new BitmapImage();
 				imgSrc.BeginInit();
 				imgSrc.UriSource = new Uri(_loadedChapter.Pages[_currentPage].Path, UriKind.Relative);
-				imgSrc.CacheOption = BitmapCacheOption.OnLoad;				
+				imgSrc.CacheOption = BitmapCacheOption.OnLoad;
 				imgSrc.EndInit();
-								
+
 				if (imgSrc.DpiX != _dpiX || imgSrc.DpiY != _dpiY)
 					PreviewIMG.Source = ChangeImageDPI(imgSrc);
 				else
@@ -788,7 +793,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 				PreviewIMGScroll.ScrollToTop();
 				PreviewIMGScroll.ScrollToRightEnd();
-				
+
 				if (_pageRectangles[_currentPage] == null) {
 					_pageRectangles[_currentPage] = new RectangleAdorner(PreviewIMG, _loadedChapter.Pages[_currentPage].TextEntries);
 					_pageRectangles [_currentPage].IsHitTestVisible = false;
@@ -801,7 +806,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				_pageRectangles [_currentPage].InvalidateVisual();
 
 				//_imageProcessing = new ImageProcessing (_loadedChapter.Pages[_currentPage].Path, rects);
-				
+
 				if (!_loadedChapter.Pages [_currentPage].Ready) {
 					Mouse.SetCursor(Cursors.Wait);
 					_loadedChapter.Pages [_currentPage].PageWaitHandle.WaitOne();
@@ -819,7 +824,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			}
 			else {
 				_currentPage = 0;
-			}			
+			}
 			int totalPages = 0;
 			if (_loadedChapter != null) {
 				totalPages = _loadedChapter.TotalPages;
@@ -832,12 +837,12 @@ Would you like to locate the Tesseract exectutable manually?";
 			_previousCurrPageTBText = CurrPageTextBox.Text;
 			PrevPageButton.IsEnabled = _currentPage > 0;
 			NextPageButton.IsEnabled = _currentPage < totalPages - 1;
-				
+
 			_previousPage = _currentPage;
 			//Translator.Cancel();
 		}
 
-		
+
 		private void NextPageButton_Click (object sender, RoutedEventArgs e) {
 			if (_currentPage < _loadedChapter.TotalPages - 1)
 				_currentPage++;
@@ -872,7 +877,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				CurrPageTextBox.Text = _previousCurrPageTBText;
 				e.Handled = true;
 			}
-			
+
 		}
 
 
@@ -930,13 +935,13 @@ Would you like to locate the Tesseract exectutable manually?";
 		private int NextRectangle (System.Windows.Point mousePos) {
 			int index = -1;
 			int firstIndex = -1;
-			
+
 			bool next = false;
 			bool done = false;
 			if (_loadedChapter != null) {
 				for (int i = 0; i < _loadedChapter.Pages[_currentPage].TextEntries.Count && !done; i++) {
 					if (_loadedChapter.Pages[_currentPage].TextEntries[i].Rectangle.Contains(mousePos)) {
-						if (index < 0) {						
+						if (index < 0) {
 							index = i;
 							firstIndex = i;
 						}
@@ -951,36 +956,36 @@ Would you like to locate the Tesseract exectutable manually?";
 
 			if (!done)
 				index = firstIndex;
-			
+
 			return index;
 		}
 
 		private void PreviewIMG_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			System.Windows.Point mousePos = e.GetPosition(PreviewIMG);
-			
+
 			int index = NextRectangle(mousePos);
 			if (index >= 0) {
 				SelectTextEntry(index);
 				_pageRectangles[_currentPage].InvalidateVisual();
 			}
 
-			
+
 		}
-		
+
 
 		private void PreviewIMG_PreviewMouseRightButtonDown (object sender, MouseButtonEventArgs e) {
 			if (_loadedChapter != null) {
-				_startingPoint = e.GetPosition(PreviewIMG);			
-			
+				_startingPoint = e.GetPosition(PreviewIMG);
+
 				_startingPoint = e.GetPosition(PreviewIMG);
 				Rect rect = new Rect(_startingPoint, _startingPoint);
 				_pageRectangles[_currentPage].DragRect = rect;
 				_pageRectangles [_currentPage].InvalidateVisual();
-			
+
 				_previousMouseState = true;
 			}
-			
+
 		}
 
 		private void PreviewIMG_MouseMove (object sender, MouseEventArgs e) {
@@ -990,13 +995,13 @@ Would you like to locate the Tesseract exectutable manually?";
 				int index = NextRectangle(mousePos);
 				_pageRectangles[_currentPage].MouseOverRect = index;
 				_pageRectangles[_currentPage].InvalidateVisual();
-			
+
 
 				if (e.RightButton == MouseButtonState.Pressed && _previousMouseState) {
 					Rect rect = new Rect(_startingPoint, e.GetPosition(PreviewIMG));
 					_pageRectangles [_currentPage].DragRect = rect;
 					_pageRectangles [_currentPage].InvalidateVisual();
-				
+
 				}
 				else if (_previousMouseState) {
 					Mouse.SetCursor(Cursors.Wait);
@@ -1018,7 +1023,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					TextEntriesStackPanel.Children.Add(te);
 					SelectTextEntry(_loadedChapter.Pages[_currentPage].TextEntries.Count-1).ForceTranslation();
 					_pageRectangles [_currentPage].InvalidateVisual();
-				
+
 					Mouse.SetCursor(Cursors.Arrow);
 
 
@@ -1047,7 +1052,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				_selectedTextEntry.Selected = false;
 			_selectedTextEntry = (TextEntry)TextEntriesStackPanel.Children[index];
 			_selectedTextEntry.Selected = true;
-			
+
 			return tec;
 		}
 
@@ -1086,7 +1091,7 @@ Would you like to locate the Tesseract exectutable manually?";
 				_pageRectangles [_currentPage].InvalidateVisual();
 
 			}
-			
+
 		}
 
 
@@ -1114,17 +1119,17 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		}
 
-		
+
 
 		private void OnImageLoaded (object sender, RoutedEventArgs e) {
-			
+
 			if (_openChapterOnLoad)
 				OpenChapter(_currSavedFile);
 		}
 
-		
+
 		public void UnhandledException (object sender, DispatcherUnhandledExceptionEventArgs e) {
-			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);	
+			CrashHandler.HandleCrash(_loadedChapter, _currSavedFile, e.Exception);
 			WebDriverManager.Instance.Dispose();
 		}
 
@@ -1149,6 +1154,6 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		#endregion
 
-		
+
 	}
 }
