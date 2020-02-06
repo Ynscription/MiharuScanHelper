@@ -43,6 +43,9 @@ namespace Miharu {
 		private double _dpiX;
 		private double _dpiY;
 
+
+
+
 		private bool Saved {
 			get => _saved;
 			set {
@@ -147,7 +150,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 			System.IO.Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
 			CheckForTesseract();
-			Logger.SessionLog("[Tesseract path in use]:" + (string) Settings.Default ["TesseractPath"] + Environment.NewLine);
+			
 			if (CrashHandler.LastSessionCrashed) {
 				TaskDialog dialog = new TaskDialog();
 				dialog.WindowTitle = "Warning";
@@ -228,7 +231,8 @@ Would you like to locate the Tesseract exectutable manually?";
 			try {
 				Mouse.SetCursor(Cursors.Wait);
 				int page = 0;
-				LoadedChapter = Chapter.Load(file, out page);
+				string finalFile = file;
+				LoadedChapter = Chapter.Load(file, out page, out finalFile);
 				if (LoadedChapter == null)
 					throw new Exception("Failed to open chapter from file: " + file);
 				LoadChapter(page);
@@ -237,7 +241,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					foreach (Text t in p.TextEntries)
 						t.TextChanged += OnItemChange;
 				}
-				CurrentSaveFile = file;
+				CurrentSaveFile = finalFile;
 				Saved = true;
 				GC.Collect();
 				Mouse.SetCursor(Cursors.Arrow);

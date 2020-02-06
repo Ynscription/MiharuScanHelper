@@ -132,9 +132,8 @@ namespace Miharu.BackEnd.Data
 
 
 		public void Save (string destPath, int currentPage = 0) {
-			StreamWriter writer = null;
-			try {
-				writer = new StreamWriter(destPath, false, Encoding.UTF8);
+			
+			using (StreamWriter writer = new StreamWriter(destPath, false, Encoding.UTF8)) {
 				writer.WriteLine((string)Settings.Default["SaveVersion"]);
 				writer.WriteLine(currentPage);
 				writer.Write(JsonConvert.SerializeObject(this, Formatting.Indented));
@@ -143,19 +142,14 @@ namespace Miharu.BackEnd.Data
 				foreach (Page p in Pages)
 					p.Save(writer);*/
 				writer.Close();
-			}
-			catch (Exception e) {
-				writer?.Close();
-				throw e;
-			}
-			
+			}			
 		}
 
 
-		public static Chapter Load (string src, out int page) {
+		public static Chapter Load (string src, out int page, out string finalSrc) {
 			Chapter res = null;
 			
-			string finalSrc = SaveUpdater.CheckSaveVersion (src);
+			finalSrc = SaveUpdater.CheckSaveVersion (src);
 
 
 			page = 0;

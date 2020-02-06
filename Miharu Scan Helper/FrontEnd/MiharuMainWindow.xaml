@@ -1,0 +1,49 @@
+﻿<Window x:Class="Miharu.FrontEnd.MiharuMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Miharu.FrontEnd"
+        mc:Ignorable="d"
+        Title="Miharu Scan Helper"
+		Height="720" Width="1280"
+		IsTabStop="False"
+		MinWidth="1090" MinHeight="640" 
+		Closing="Window_Closing" 
+		KeyDown="Window_KeyDown">
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="_File" TabIndex="0">
+				<MenuItem Header="New Chapter">
+					<MenuItem x:Name="NewChapterFolderMenuItem" Header="From Folder..." IsEnabled="True" Click="NewChapterFolderMenuItem_Click"/>
+					<MenuItem x:Name="NewChapterFilesMenuItem" Header="Select Files..." IsEnabled="True" Click="NewChapterFilesMenuItem_Click"/>
+				</MenuItem>
+				<MenuItem x:Name="OpenChapterMenuItem" Header="Open Chapter..." IsEnabled="True" Click="OpenChapterMenuItem_Click"/>
+				<MenuItem x:Name="CloseChapterMenuItem" Header="Close Chapter" IsEnabled="False" Click="CloseChapterMenuItem_Click"/>
+				<Separator />
+				<MenuItem x:Name="SaveChapterMenuItem" Header="Save Chapter" IsEnabled="False" Click="SaveChapterMenuItem_Click"/>
+				<MenuItem x:Name="SaveAsChapterMenuItem" Header="Save Chapter As..." IsEnabled="False" Click="SaveAsChapterMenuItem_Click"/>
+				<Separator />
+				<MenuItem x:Name="ExportMenuItem" Header="Export As" IsEnabled="True">
+					<MenuItem x:Name="ExportAsTSScriptMenuItem" Header="Typesetter Script..." IsEnabled="False" Click="ExportAsScriptMenuItem_Click"/>
+					<MenuItem x:Name="ExportAsJPScriptMenuItem" Header="Japanese Transcription..." IsEnabled="False" Click="ExportAsJPScriptMenuItem_Click"/>
+					<MenuItem x:Name="ExportAsRScriptMenuItem" Header="Complete Script..." IsEnabled="False" Click="ExportAsCompleteMenuItem_Click"/>
+				</MenuItem>
+				<Separator />
+				<MenuItem x:Name="ExitMenuItem" Header="Exit" Click="ExitMenuItem_Click"/>
+			</MenuItem>
+			<MenuItem Header="_Edit" TabIndex="1">
+				<MenuItem x:Name="EditChapterPagesMenuItem" Header="Chapter Pages..." IsEnabled="False" Click="EditChapterPagesMenuItem_Click"/>
+				<Separator/>
+				<MenuItem x:Name="PreferencesMenuItem" Header="Preferences..." Click="PreferencesMenuItem_Click"/>
+			</MenuItem>
+			<MenuItem Header="_Tools" TabIndex="2">
+				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" />
+				<MenuItem x:Name="CrashSimulatorItem" Header="Simulate Crash" Click="CrashSimulatorItemItem_Click" />
+			</MenuItem>
+			<MenuItem Header="_Help" TabIndex="3">
+				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" />
+			</MenuItem>
+		</Menu>
+	</DockPanel>
+</Window>

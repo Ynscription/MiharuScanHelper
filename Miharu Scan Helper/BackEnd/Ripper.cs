@@ -27,36 +27,43 @@ namespace Miharu.BackEnd
 
 		public static string FileRip(string src, string path) {
 			string destinationFolder = null;
-			if (Directory.Exists(path)) {
-				if (!(path [path.Length - 1] == '\\' || path [path.Length - 1] == '/'))
-					path += "\\";
-				destinationFolder = path;
-			}
-			else
-				throw new RipperException("Could not find or access the directory " + path);
+			try {				
+				if (Directory.Exists(path)) {
+					if (!(path [path.Length - 1] == '\\' || path [path.Length - 1] == '/'))
+						path += "\\";
+					destinationFolder = path;
+				}
+				else
+					throw new RipperException("Could not find or access the directory " + path);
 
-			if (!File.Exists(src))
-				throw new RipperException("Could not open file " + src);
-			FileInfo srcInfo = new FileInfo(src);
+				if (!File.Exists(src))
+					throw new RipperException("Could not open file " + src);
+				FileInfo srcInfo = new FileInfo(src);
 
-			using (StreamReader reader = new StreamReader(src)) {
-				int i = 1;
-				while (!reader.EndOfStream) {
-					string input = reader.ReadLine();
+				using (StreamReader reader = new StreamReader(src)) {
+					int i = 1;
+					while (!reader.EndOfStream) {
+						string input = reader.ReadLine();
 
-					if (input.Contains(_IMAGE_TAG)) {
-						string img = input.Substring(input.IndexOf(_IMAGE_TAG) + _IMAGE_TAG.Length + 1);
-						img = img.Substring(0, img.IndexOf(".jpg") + 4);
-						img = img.Replace("%20", " ");
-						if (!img.Contains(".html"))
-							CopyImage(srcInfo.DirectoryName + "/" + img, i++, destinationFolder);
+						if (input.Contains(_IMAGE_TAG)) {
+							string img = input.Substring(input.IndexOf(_IMAGE_TAG) + _IMAGE_TAG.Length + 1);
+							img = img.Substring(0, img.IndexOf(".jpg") + 4);
+							img = img.Replace("%20", " ");
+							if (!img.Contains(".html"))
+								CopyImage(srcInfo.DirectoryName + "/" + img, i++, destinationFolder);
 
+						}
 					}
 				}
 			}
-			
-
-			
+			catch (RipperException e) {
+				Logger.Log(e);
+				throw e;
+			}
+			catch(Exception e) {
+				RipperException ex = new RipperException("Something went wrong while ripping.", e);
+				throw ex;
+			}
 			return destinationFolder;
 		}
 

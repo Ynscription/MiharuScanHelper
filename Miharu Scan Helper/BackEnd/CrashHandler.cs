@@ -1,4 +1,5 @@
 ﻿using Miharu.BackEnd.Data;
+using Miharu.Control;
 using System;
 using System.IO;
 using System.Text;
@@ -41,6 +42,31 @@ namespace Miharu.BackEnd
 			}
 		}
 
+		public static void HandleCrash(ChapterManager chapterManager, Exception e)
+		{
+			if (!_emergencyHandled) {
+				try {
+					Logger.CrashLog(e);
+					
+					if (chapterManager.IsChapterLoaded) {
+						string dest = "";
+						if (chapterManager.SaveFileExists)
+							dest = @"\recovery\" + "RECOVERY" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".scan";
+						else
+							dest = chapterManager.CurrentSaveFile.Insert(chapterManager.CurrentSaveFile.LastIndexOf("."), "_RECOVERY" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss"));
+						chapterManager.SaveChapter(dest);
+						using (StreamWriter writer = new StreamWriter(EMERGENCY_FILE, false, Encoding.UTF8)) {
+							writer.WriteLine(dest);
+							writer.Close();
+						}
+					}
+					
+					_emergencyHandled = true;
+				}
+				catch (Exception) { }
+			}
+		}
+
 		public static string RecoverLastSessionFile () {
 			string res = null;
 
@@ -53,5 +79,7 @@ namespace Miharu.BackEnd
 			
 			return res;
 		}
-    }
+
+		
+	}
 }

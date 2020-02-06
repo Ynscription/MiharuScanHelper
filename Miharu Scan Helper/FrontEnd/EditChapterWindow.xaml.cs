@@ -1,4 +1,5 @@
 ﻿using Miharu.BackEnd.Data;
+using Miharu.Control;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Windows;
@@ -34,6 +35,19 @@ namespace Miharu.FrontEnd
 			PagesListBox.ItemsSource = _loadedChapter.Pages;
 			PagesListBox.Items.Refresh();
 			PagesListBox.SelectedIndex = currentPage;
+			
+			UpdateButtons();
+		}
+
+		public EditChapterWindow (ChapterManager chapterManager)
+		{
+			InitializeComponent();
+			_loadedChapter = null;
+
+			
+			PagesListBox.ItemsSource = _loadedChapter.Pages;
+			PagesListBox.Items.Refresh();
+			PagesListBox.SelectedIndex = chapterManager.PageManager.CurrentPageIndex;
 			
 			UpdateButtons();
 		}

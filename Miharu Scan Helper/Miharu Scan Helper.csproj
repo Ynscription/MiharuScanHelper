@@ -102,11 +102,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\Dictionaries\ButtonText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\EditChapterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FrontEnd\ImageDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrontEnd\MiharuMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +159,8 @@
     <Compile Include="BackEnd\Translation\WebCrawlers\WebDriverManager.cs" />
     <Compile Include="BackEnd\Data\TxtChangedEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />
+    <Compile Include="Control\ChapterManager.cs" />
+    <Compile Include="Control\PageManager.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
@@ -162,6 +172,9 @@
     </Compile>
     <Compile Include="FrontEnd\ImageDisplay.xaml.cs">
       <DependentUpon>ImageDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\MiharuMainWindow.xaml.cs">
+      <DependentUpon>MiharuMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\PreferencesDialog.xaml.cs">
       <DependentUpon>PreferencesDialog.xaml</DependentUpon>
@@ -547,7 +560,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Control\" />
     <Folder Include="Resources\Redist\Tesseract-OCR\tessdata\script\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
