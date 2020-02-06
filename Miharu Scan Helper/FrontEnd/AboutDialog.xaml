@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Miharu.FrontEnd"
         mc:Ignorable="d"
-        Title="About Miharu Scan Helper"  Width="550" ResizeMode="NoResize" Icon="/Miharu Scan Helper;component/ScanHelperIcon.ico" Height="523" >
+        Title="About Miharu Scan Helper"  Width="550" ResizeMode="NoResize" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico" Height="523" >
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*" />

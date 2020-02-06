@@ -4,15 +4,18 @@ using System.IO;
 namespace Miharu.BackEnd {
 	public static class Logger {
 
-		private static string _currCrashLog = null;
+		
+		public static string CurrentCrashLog {
+			get; private set;
+		}
 		private static string _currLog = null;
 		private static string _currSessionLog = null;
 
 		public static void CrashLog(string log) {
-			if (_currCrashLog == null)
-				_currCrashLog = "Crash " + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".log";
+			if (CurrentCrashLog == null)
+				CurrentCrashLog = "Crash " + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".log";
 
-			StreamWriter writer = new StreamWriter(_currCrashLog, true);
+			StreamWriter writer = new StreamWriter(CurrentCrashLog, true);
 			writer.Write(log + Environment.NewLine + Environment.NewLine);
 			writer.Close();
 		}

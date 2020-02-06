@@ -1,7 +1,0 @@
-Changed Assembly name to Miharu Scan Helper
-
-Started work on Yandex translation, might need to rethink how translations are shown on the UI
-
-Started work on SFX translation, definately need to rethink how translations are shown on the UI
-
-Started work on fixing issue #1

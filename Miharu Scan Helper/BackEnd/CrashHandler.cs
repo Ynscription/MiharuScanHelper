@@ -16,9 +16,11 @@ namespace Miharu.BackEnd
 		}
 
 		public static void HandleCrash (Chapter chapter, string currSavedFile, Exception e) {
+			
 			if (!_emergencyHandled) {
 				try {
-					Logger.CrashLog(e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine);
+					Logger.CrashLog("Exception thrown from " + e.Source + Environment.NewLine 
+						+ e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine);
 					
 					if (chapter != null) {
 						string dest = "";

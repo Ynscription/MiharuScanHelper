@@ -51,7 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ScanHelperIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icons\ScanHelperIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Miharu.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -87,10 +90,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
     <Page Include="FrontEnd\AboutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -345,19 +348,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Delete.png" />
+    <Resource Include="Resources\Icons\Delete.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Refresh.png" />
+    <Resource Include="Resources\Icons\Refresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ArrowDown.png" />
-    <Resource Include="Resources\ArrowLeft.png" />
-    <Resource Include="Resources\ArrowRight.png" />
-    <Resource Include="Resources\ArrowUp.png" />
+    <Resource Include="Resources\Icons\ArrowDown.png" />
+    <Resource Include="Resources\Icons\ArrowLeft.png" />
+    <Resource Include="Resources\Icons\ArrowRight.png" />
+    <Resource Include="Resources\Icons\ArrowUp.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ScanHelperIcon.ico" />
+    <Resource Include="Resources\Icons\ScanHelperIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Graphics\S_Tail.gif" />
@@ -365,9 +368,9 @@
     <Content Include="Resources\Graphics\CnC_EE.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Warning.png" />
-    <Resource Include="Resources\New Page.png" />
-    <Resource Include="Resources\JadedNetworkIcon.png" />
+    <Resource Include="Resources\Icons\Warning.png" />
+    <Resource Include="Resources\Icons\New Page.png" />
+    <Resource Include="Resources\Icons\JadedNetworkIcon.png" />
     <None Include="Resources\Licenses\WpfAnimatedGif LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

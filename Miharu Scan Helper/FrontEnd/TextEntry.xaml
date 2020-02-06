@@ -15,12 +15,12 @@
 			</Grid.RowDefinitions>
 			<Button x:Name="MoveUpButton" HorizontalAlignment="Left" Width="38" Click="MoveUpButton_Click" Margin="3,3,1,3">
 				<StackPanel>
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowUp.png"  />
+					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/ArrowUp.png"  />
 				</StackPanel>
 			</Button>
 			<Button x:Name="MoveDownButton" HorizontalAlignment="Left" Width="38" Click="MoveDownButton_Click" Grid.Row="1" Margin="3,3,1,3">
 				<StackPanel>
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/ArrowDown.png"  />
+					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/ArrowDown.png"  />
 				</StackPanel>
 			</Button>
 
@@ -52,7 +52,7 @@
 
 					<Button x:Name="DeleteButton" Grid.Column="1" Grid.Row="2" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24" VerticalAlignment="Bottom" Background="#FFBB4D4D">
 						<StackPanel>
-							<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Delete.png"  />
+							<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/Delete.png"  />
 						</StackPanel>
 					</Button>
 

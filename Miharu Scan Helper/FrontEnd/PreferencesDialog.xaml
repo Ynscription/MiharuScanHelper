@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Miharu.FrontEnd"
         mc:Ignorable="d"
-        Title="Miharu - Preferences" Icon="/Miharu Scan Helper;component/ScanHelperIcon.ico"
+        Title="Miharu - Preferences" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico"
 		ResizeMode="NoResize" Width="770" Height="190">
 	<Grid>
 		<Grid.RowDefinitions>
