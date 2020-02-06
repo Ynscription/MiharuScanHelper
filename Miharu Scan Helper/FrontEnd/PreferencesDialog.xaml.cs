@@ -1,9 +1,9 @@
-﻿using Manga_Scan_Helper.Properties;
+﻿using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System.IO;
 using System.Windows;
 
-namespace Manga_Scan_Helper.FrontEnd
+namespace Miharu.FrontEnd
 {
 	/// <summary>
 	/// Interaction logic for PreferencesDialog.xaml

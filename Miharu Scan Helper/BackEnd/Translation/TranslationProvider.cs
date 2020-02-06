@@ -1,11 +1,11 @@
-﻿using Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators;
-using Manga_Scan_Helper.BackEnd.Translation.WebCrawlers;
+﻿using Miharu.BackEnd.Translation.HTTPTranslators;
+using Miharu.BackEnd.Translation.WebCrawlers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Manga_Scan_Helper.BackEnd.Translation
+namespace Miharu.BackEnd.Translation
 {
 
 

@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Manga_Scan_Helper.FrontEnd {
+namespace Miharu.FrontEnd {
 	/// <summary>
 	/// Interaction logic for AboutDialog.xaml
 	/// </summary>

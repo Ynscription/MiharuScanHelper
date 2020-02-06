@@ -1,7 +1,7 @@
-﻿using Manga_Scan_Helper.BackEnd.Translation;
+﻿using Miharu.BackEnd.Translation;
 using System;
 
-namespace Manga_Scan_Helper.BackEnd
+namespace Miharu.BackEnd.Data
 {
 
 	public delegate void TxtEventHandler (object sender, TxtChangedEventArgs e);

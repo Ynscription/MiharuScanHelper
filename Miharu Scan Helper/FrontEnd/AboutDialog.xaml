@@ -1,9 +1,9 @@
-﻿<Window x:Class="Manga_Scan_Helper.FrontEnd.AboutDialog"
+﻿<Window x:Class="Miharu.FrontEnd.AboutDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Manga_Scan_Helper.FrontEnd"
+        xmlns:local="clr-namespace:Miharu.FrontEnd"
         mc:Ignorable="d"
         Title="About Miharu Scan Helper"  Width="550" ResizeMode="NoResize" Icon="/Miharu Scan Helper;component/ScanHelperIcon.ico" Height="523" >
 	<Grid>

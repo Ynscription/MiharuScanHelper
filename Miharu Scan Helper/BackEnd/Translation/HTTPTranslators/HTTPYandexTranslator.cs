@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
+namespace Miharu.BackEnd.Translation.HTTPTranslators
 {
 	class HTTPYandexTranslator : HTTPTranslator
 	{

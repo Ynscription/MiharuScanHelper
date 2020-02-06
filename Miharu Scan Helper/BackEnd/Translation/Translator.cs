@@ -2,7 +2,7 @@
 
 using System.Threading.Tasks;
 
-namespace Manga_Scan_Helper.BackEnd.Translation
+namespace Miharu.BackEnd.Translation
 {
 	public abstract class Translator
 	{

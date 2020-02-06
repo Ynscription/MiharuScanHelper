@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Manga_Scan_Helper.BackEnd;
-using Manga_Scan_Helper.BackEnd.Translation;
+using Miharu.BackEnd.Data;
+using Miharu.BackEnd.Translation;
 
-namespace Manga_Scan_Helper.FrontEnd
+namespace Miharu.FrontEnd
 {
 	/// <summary>
 	/// Interaction logic for TranslationSourceView.xaml

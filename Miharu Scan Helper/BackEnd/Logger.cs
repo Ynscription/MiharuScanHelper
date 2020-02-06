@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Manga_Scan_Helper.BackEnd {
+namespace Miharu.BackEnd {
 	public static class Logger {
 
 		private static string _currCrashLog = null;

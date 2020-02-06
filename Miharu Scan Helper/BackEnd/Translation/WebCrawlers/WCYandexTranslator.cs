@@ -1,4 +1,4 @@
-﻿using Manga_Scan_Helper.FrontEnd;
+﻿using Miharu.FrontEnd;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
+namespace Miharu.BackEnd.Translation.WebCrawlers
 {
 	class WCYandexTranslator :WebCrawlerTranslator {
 	

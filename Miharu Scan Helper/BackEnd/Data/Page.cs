@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Windows;
 
-namespace Manga_Scan_Helper.BackEnd {
+namespace Miharu.BackEnd.Data {
 	[JsonObject(MemberSerialization.OptOut)]
 	public class Page
     {

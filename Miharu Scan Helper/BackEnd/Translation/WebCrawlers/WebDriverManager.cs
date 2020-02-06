@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
+namespace Miharu.BackEnd.Translation.WebCrawlers
 {
 	public class WebDriverManager : IDisposable
 	{

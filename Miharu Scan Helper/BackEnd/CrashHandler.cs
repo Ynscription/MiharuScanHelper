@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Miharu.BackEnd.Data;
+using System;
 using System.IO;
 using System.Text;
 
-namespace Manga_Scan_Helper.BackEnd
+namespace Miharu.BackEnd
 {
     static class CrashHandler
     {

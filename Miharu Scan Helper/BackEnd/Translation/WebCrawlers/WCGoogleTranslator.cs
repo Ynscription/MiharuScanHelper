@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using System;
 
-namespace Manga_Scan_Helper.BackEnd.Translation.WebCrawlers
+namespace Miharu.BackEnd.Translation.WebCrawlers
 {
 	class WCGoogleTranslator : WebCrawlerTranslator {
 	

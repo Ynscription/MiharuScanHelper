@@ -1,5 +1,5 @@
 ﻿
-using Manga_Scan_Helper.BackEnd;
+using Miharu.BackEnd.Data;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -10,7 +10,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Manga_Scan_Helper.FrontEnd {
+namespace Miharu.FrontEnd {
 
 	/// <summary>
 	/// Interaction logic for TextEntry.xaml

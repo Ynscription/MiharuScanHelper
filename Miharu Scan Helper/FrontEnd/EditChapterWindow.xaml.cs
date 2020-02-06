@@ -1,11 +1,11 @@
-﻿using Manga_Scan_Helper.BackEnd;
+﻿using Miharu.BackEnd.Data;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Manga_Scan_Helper.FrontEnd
+namespace Miharu.FrontEnd
 {
 	/// <summary>
 	/// Interaction logic for EditChapterWindow.xaml

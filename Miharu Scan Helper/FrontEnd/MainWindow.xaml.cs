@@ -1,10 +1,10 @@
-﻿using Manga_Scan_Helper.BackEnd;
-using Manga_Scan_Helper.BackEnd.Translation.WebCrawlers;
-using Manga_Scan_Helper.FrontEnd;
-using Manga_Scan_Helper.Properties;
+﻿using Miharu.BackEnd;
+using Miharu.BackEnd.Data;
+using Miharu.BackEnd.Translation.WebCrawlers;
+using Miharu.FrontEnd;
+using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
-using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,9 +14,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using static Manga_Scan_Helper.BackEnd.Ripper;
+using static Miharu.BackEnd.Ripper;
 
-namespace Manga_Scan_Helper {
+namespace Miharu {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>

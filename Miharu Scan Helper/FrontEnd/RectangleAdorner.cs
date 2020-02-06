@@ -1,12 +1,12 @@
 ﻿
 
-using Manga_Scan_Helper.BackEnd;
+using Miharu.BackEnd.Data;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Manga_Scan_Helper.FrontEnd {
+namespace Miharu.FrontEnd {
 	internal class RectangleAdorner :Adorner{
 
 		private List<Text> _textEntries;

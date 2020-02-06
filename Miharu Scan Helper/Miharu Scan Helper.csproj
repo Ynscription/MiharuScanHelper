@@ -127,17 +127,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BackEnd\Chapter.cs" />
+    <Compile Include="BackEnd\Data\Chapter.cs" />
     <Compile Include="BackEnd\CrashHandler.cs" />
-    <Compile Include="BackEnd\SaveUpdater.cs" />
+    <Compile Include="BackEnd\Data\SaveUpdater.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPBingTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPGoogleTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPTJNTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPTranslator.cs" />
     <Compile Include="BackEnd\Logger.cs" />
     <Compile Include="BackEnd\Ripper.cs" />
-    <Compile Include="BackEnd\SFXContainer.cs" />
-    <Compile Include="BackEnd\Text.cs" />
+    <Compile Include="BackEnd\Data\SFXContainer.cs" />
+    <Compile Include="BackEnd\Data\Text.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPYandexTranslator.cs" />
     <Compile Include="BackEnd\Translation\TranslationFailEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationProvider.cs" />
@@ -146,7 +146,7 @@
     <Compile Include="BackEnd\Translation\WebCrawlers\WCYandexTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebCrawlerTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebDriverManager.cs" />
-    <Compile Include="BackEnd\TxtChangedEventArgs.cs" />
+    <Compile Include="BackEnd\Data\TxtChangedEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />
     <Compile Include="FrontEnd\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
@@ -188,7 +188,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackEnd\Page.cs" />
+    <Compile Include="BackEnd\Data\Page.cs" />
     <Compile Include="FrontEnd\TextEntryControl.xaml.cs">
       <DependentUpon>TextEntryControl.xaml</DependentUpon>
     </Compile>
@@ -544,6 +544,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Control\" />
     <Folder Include="Resources\Redist\Tesseract-OCR\tessdata\script\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

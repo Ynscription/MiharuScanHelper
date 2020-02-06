@@ -1,4 +1,4 @@
-﻿using Manga_Scan_Helper.Properties;
+﻿using Miharu.Properties;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Manga_Scan_Helper.BackEnd
+namespace Miharu.BackEnd.Data
 {
 	[JsonObject(MemberSerialization.OptOut)]
     public class Chapter

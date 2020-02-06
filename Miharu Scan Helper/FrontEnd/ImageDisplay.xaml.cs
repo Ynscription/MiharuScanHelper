@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Manga_Scan_Helper.FrontEnd {
+namespace Miharu.FrontEnd {
 	/// <summary>
 	/// Interaction logic for ImageDisplay.xaml
 	/// </summary>

@@ -1,8 +1,7 @@
 ﻿
-using Manga_Scan_Helper.BackEnd.Translation;
-using Manga_Scan_Helper.Properties;
+using Miharu.BackEnd.Translation;
+using Miharu.Properties;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -10,7 +9,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
 
-namespace Manga_Scan_Helper.BackEnd
+namespace Miharu.BackEnd.Data
 {
 	[JsonObject(MemberSerialization.OptOut)]
 	public class Text

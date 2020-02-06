@@ -1,6 +1,6 @@
 ﻿
-using Manga_Scan_Helper.BackEnd;
-using Manga_Scan_Helper.BackEnd.Translation;
+using Miharu.BackEnd.Data;
+using Miharu.BackEnd.Translation;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
-namespace Manga_Scan_Helper.FrontEnd
+namespace Miharu.FrontEnd
 {
 	/// <summary>
 	/// Interaction logic for TextEntryControl.xaml

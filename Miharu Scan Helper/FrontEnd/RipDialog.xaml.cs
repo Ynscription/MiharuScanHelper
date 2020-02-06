@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace Manga_Scan_Helper.FrontEnd {
+namespace Miharu.FrontEnd {
 	/// <summary>
 	/// Interaction logic for RipDialog.xaml
 	/// </summary>

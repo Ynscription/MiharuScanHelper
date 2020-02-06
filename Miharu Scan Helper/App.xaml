@@ -1,7 +1,7 @@
-﻿<Application x:Class="Manga_Scan_Helper.App"
+﻿<Application x:Class="Miharu.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Manga_Scan_Helper"
+             xmlns:local="clr-namespace:Miharu"
              StartupUri="FrontEnd/MainWindow.xaml">
     <Application.Resources>
          

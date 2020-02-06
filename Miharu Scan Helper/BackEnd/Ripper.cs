@@ -2,11 +2,8 @@
 
 using System;
 using System.IO;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 
-namespace Manga_Scan_Helper.BackEnd
+namespace Miharu.BackEnd
 {
     public static class Ripper
     {

@@ -1,5 +1,6 @@
-﻿using Manga_Scan_Helper.BackEnd;
-using Manga_Scan_Helper.BackEnd.Translation;
+﻿
+using Miharu.BackEnd.Data;
+using Miharu.BackEnd.Translation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Manga_Scan_Helper.FrontEnd
+namespace Miharu.FrontEnd
 {
 	/// <summary>
 	/// Interaction logic for TranslationSourceJadedNetworkView.xaml

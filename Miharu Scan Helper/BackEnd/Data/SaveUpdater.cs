@@ -1,9 +1,9 @@
-﻿using Manga_Scan_Helper.Properties;
+﻿using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.IO;
 
-namespace Manga_Scan_Helper.BackEnd
+namespace Miharu.BackEnd.Data
 {
 	public static class SaveUpdater
 	{

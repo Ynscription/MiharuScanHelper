@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Manga_Scan_Helper.BackEnd.Translation.HTTPTranslators
+namespace Miharu.BackEnd.Translation.HTTPTranslators
 {
 	public class HTTPGoogleTranslator : HTTPTranslator
 	{
