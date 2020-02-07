@@ -8,8 +8,11 @@
     <Setting Name="SaveVersion" Type="System.String" Scope="User">
       <Value Profile="(Default)">v3</Value>
     </Setting>
-    <Setting Name="Skin" Type="System.String" Scope="User">
-      <Value Profile="(Default)">./FrontEnd/Skins/DarkSkin.xaml</Value>
+    <Setting Name="Theme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Dark</Value>
+    </Setting>
+    <Setting Name="Accent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Emerald</Value>
     </Setting>
   </Settings>
 </SettingsFile>

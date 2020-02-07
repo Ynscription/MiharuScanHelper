@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Windows.Media.Imaging;
 
 namespace Miharu.FrontEnd {
 	/// <summary>
 	/// Interaction logic for ImageDisplay.xaml
 	/// </summary>
-	public partial class ImageDisplay : Window {
+	public partial class ImageDisplay : MetroWindow {
 		public ImageDisplay (string src) {
 			InitializeComponent();
 			BitmapImage imgSrc = new BitmapImage();

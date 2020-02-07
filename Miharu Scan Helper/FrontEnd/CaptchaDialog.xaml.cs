@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -8,7 +9,7 @@ namespace Miharu.FrontEnd
 	/// <summary>
 	/// Interaction logic for CaptchaDialog.xaml
 	/// </summary>
-	public partial class CaptchaDialog : Window
+	public partial class CaptchaDialog : MetroWindow
 	{
 
 		public string CaptchaInput {

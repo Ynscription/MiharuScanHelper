@@ -49,13 +49,25 @@ namespace Miharu.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("./FrontEnd/Skins/DarkSkin.xaml")]
-        public string Skin {
+        [global::System.Configuration.DefaultSettingValueAttribute("Dark")]
+        public string Theme {
             get {
-                return ((string)(this["Skin"]));
+                return ((string)(this["Theme"]));
             }
             set {
-                this["Skin"] = value;
+                this["Theme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Emerald")]
+        public string Accent {
+            get {
+                return ((string)(this["Accent"]));
+            }
+            set {
+                this["Accent"] = value;
             }
         }
     }

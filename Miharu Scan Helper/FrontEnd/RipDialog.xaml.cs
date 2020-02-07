@@ -1,4 +1,5 @@
-﻿using Ookii.Dialogs.Wpf;
+﻿using MahApps.Metro.Controls;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Windows;
 
@@ -6,7 +7,7 @@ namespace Miharu.FrontEnd {
 	/// <summary>
 	/// Interaction logic for RipDialog.xaml
 	/// </summary>
-	public partial class RipDialog : Window {
+	public partial class RipDialog : MetroWindow {
 		public bool Success {
 			get; private set;
 		}

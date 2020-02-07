@@ -1,8 +1,10 @@
-﻿<Window x:Class="Miharu.FrontEnd.MiharuMainWindow"
+﻿<Controls:MetroWindow x:Class="Miharu.FrontEnd.MiharuMainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:Controls ="http://metro.mahapps.com/winfx/xaml/controls"
+		xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:Miharu.FrontEnd"
         mc:Ignorable="d"
         Title="Miharu Scan Helper"
@@ -10,39 +12,97 @@
 		IsTabStop="False"
 		MinWidth="900" MinHeight="640" 
 		Closing="Window_Closing" 
-		KeyDown="Window_KeyDown">
+		KeyDown="Window_KeyDown" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico"
+		>
 	<DockPanel>
-		<Menu DockPanel.Dock="Top" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}">
+		<Menu DockPanel.Dock="Top" >
+			<Menu.Resources>
+				<Style TargetType="iconPacks:PackIconModern">
+					<Setter Property="Margin" Value="5,0,0,0" />
+					<Setter Property="HorizontalAlignment" Value="Stretch" />
+					<Setter Property="VerticalAlignment" Value="Stretch" />
+				</Style>
+			</Menu.Resources>
 			<MenuItem Header="_File" TabIndex="0">
 				<MenuItem Header="New Chapter">
-					<MenuItem x:Name="NewChapterFolderMenuItem" Header="From Folder..." IsEnabled="True" Click="NewChapterFolderMenuItem_Click"/>
-					<MenuItem x:Name="NewChapterFilesMenuItem" Header="Select Files..." IsEnabled="True" Click="NewChapterFilesMenuItem_Click"/>
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="PageNew" />
+					</MenuItem.Icon>
+					<MenuItem x:Name="NewChapterFolderMenuItem" Header="From Folder..." IsEnabled="True" Click="NewChapterFolderMenuItem_Click" >
+						<MenuItem.Icon >
+							<iconPacks:PackIconModern Kind="FolderEllipsis" />	
+						</MenuItem.Icon>						
+					</MenuItem>
+					<MenuItem x:Name="NewChapterFilesMenuItem" Header="Select Files..." IsEnabled="True" Click="NewChapterFilesMenuItem_Click">
+						<MenuItem.Icon >
+							<iconPacks:PackIconModern Kind="PageSelect" />
+						</MenuItem.Icon>
+					</MenuItem>
 				</MenuItem>
-				<MenuItem x:Name="OpenChapterMenuItem" Header="Open Chapter..." IsEnabled="True" Click="OpenChapterMenuItem_Click"/>
-				<MenuItem x:Name="CloseChapterMenuItem" Header="Close Chapter" IsEnabled="False" Click="CloseChapterMenuItem_Click"/>
+				<MenuItem x:Name="OpenChapterMenuItem" Header="Open Chapter..." IsEnabled="True" Click="OpenChapterMenuItem_Click">
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="PageArrow" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem x:Name="CloseChapterMenuItem" Header="Close Chapter" IsEnabled="False" Click="CloseChapterMenuItem_Click">
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="PageDelete" />
+					</MenuItem.Icon>
+				</MenuItem>
 				<Separator />
-				<MenuItem x:Name="SaveChapterMenuItem" Header="Save Chapter" IsEnabled="False" Click="SaveChapterMenuItem_Click"/>
+				<MenuItem x:Name="SaveChapterMenuItem" Header="Save Chapter" IsEnabled="False" Click="SaveChapterMenuItem_Click">
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="Save" />
+					</MenuItem.Icon>
+				</MenuItem>
 				<MenuItem x:Name="SaveAsChapterMenuItem" Header="Save Chapter As..." IsEnabled="False" Click="SaveAsChapterMenuItem_Click"/>
 				<Separator />
 				<MenuItem x:Name="ExportMenuItem" Header="Export As" IsEnabled="True">
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="PageText" />
+					</MenuItem.Icon>
 					<MenuItem x:Name="ExportAsTSScriptMenuItem" Header="Typesetter Script..." IsEnabled="False" Click="ExportAsScriptMenuItem_Click"/>
 					<MenuItem x:Name="ExportAsJPScriptMenuItem" Header="Japanese Transcription..." IsEnabled="False" Click="ExportAsJPScriptMenuItem_Click"/>
 					<MenuItem x:Name="ExportAsRScriptMenuItem" Header="Complete Script..." IsEnabled="False" Click="ExportAsCompleteMenuItem_Click"/>
 				</MenuItem>
 				<Separator />
-				<MenuItem x:Name="ExitMenuItem" Header="Exit" Click="ExitMenuItem_Click"/>
+				<MenuItem x:Name="ExitMenuItem" Header="Exit" Click="ExitMenuItem_Click">
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="Close" Foreground="Red" />
+					</MenuItem.Icon>
+				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Edit" TabIndex="1">
-				<MenuItem x:Name="EditChapterPagesMenuItem" Header="Chapter Pages..." IsEnabled="False" Click="EditChapterPagesMenuItem_Click"/>
+				<MenuItem x:Name="EditChapterPagesMenuItem" Header="Chapter Pages..." IsEnabled="False" Click="EditChapterPagesMenuItem_Click">
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="List" />
+					</MenuItem.Icon>
+				</MenuItem>
 				<Separator/>
-				<MenuItem x:Name="PreferencesMenuItem" Header="Preferences..." Click="PreferencesMenuItem_Click"/>
+				<MenuItem x:Name="PreferencesMenuItem" Header="Preferences..." Click="PreferencesMenuItem_Click">
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="Settings" />
+					</MenuItem.Icon>
+				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Tools" TabIndex="2">
-				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" />
-				<MenuItem x:Name="CrashSimulatorItem" Header="Simulate Crash" Click="CrashSimulatorItemItem_Click" />
+				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" >
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="Download" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem x:Name="CrashSimulatorItem" Header="Simulate Crash" Click="CrashSimulatorItemItem_Click" >
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="Bug" />
+					</MenuItem.Icon>
+				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Help" TabIndex="3">
-				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" />
+				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" >
+					<MenuItem.Icon >
+						<iconPacks:PackIconModern Kind="InformationCircle" />
+					</MenuItem.Icon>
+				</MenuItem>
 			</MenuItem>
 		</Menu>
 		<Grid >
@@ -63,4 +123,4 @@
 
 
 	</DockPanel>
-</Window>
+</Controls:MetroWindow>

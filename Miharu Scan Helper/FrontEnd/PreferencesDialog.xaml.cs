@@ -1,4 +1,6 @@
-﻿using Miharu.Properties;
+﻿using MahApps.Metro;
+using MahApps.Metro.Controls;
+using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System.IO;
 using System.Windows;
@@ -8,8 +10,11 @@ namespace Miharu.FrontEnd
 	/// <summary>
 	/// Interaction logic for PreferencesDialog.xaml
 	/// </summary>
-	public partial class PreferencesDialog : Window
+	public partial class PreferencesDialog : MetroWindow
 	{
+
+		private readonly string [] BaseColors = { "Dark", "Light" };
+		private readonly string [] AccentColors = { "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt", "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna" };
 
 		private string _tesseractPath;
 		public string TesseractPath {
@@ -20,11 +25,26 @@ namespace Miharu.FrontEnd
 			}
 		}
 
+		public string ThemeBaseColor {
+			get;
+			private set;
+		} = null;
+
+		public string ThemeAccentColor {
+			get;
+			private set;
+		} = null;
+
 		public PreferencesDialog()
 		{
 			InitializeComponent();
 			TesseractPathTextBox.Text = (string)Settings.Default["TesseractPath"];
 			ApplyButton.IsEnabled = false;
+			ThemeBaseColorListBox.ItemsSource = BaseColors;
+			ThemeBaseColorListBox.SelectedItem = (string)Settings.Default["Theme"];
+			ThemeAccentColorListBox.ItemsSource = AccentColors;
+			ThemeAccentColorListBox.SelectedItem = (string)Settings.Default["Accent"];
+
 			
 		}
 
@@ -50,7 +70,15 @@ namespace Miharu.FrontEnd
 		}
 
 		public void WarnBadPath (string reason) {
-
+			using (TaskDialog dialog = new TaskDialog()) {
+				dialog.WindowTitle = "Error";
+				dialog.MainIcon = TaskDialogIcon.Error;
+				dialog.MainInstruction = "Can't apply changes.";
+				dialog.Content = reason;
+				TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+				dialog.Buttons.Add(okButton);
+				TaskDialogButton button = dialog.ShowDialog(this);
+			}
 		}
 
 		private string _failReason;
@@ -66,11 +94,18 @@ namespace Miharu.FrontEnd
 			return res;
 		}
 
+		private void SavePreferences () {
+			Settings.Default ["TesseractPath"] = TesseractPath;
+			Settings.Default["Theme"] = (string)ThemeBaseColorListBox.SelectedValue;
+			Settings.Default["Accent"] = (string)ThemeAccentColorListBox.SelectedValue;
+			Settings.Default.Save();
+		}
+
 		private void OkButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (CheckTesseractPath()) {
-				Settings.Default ["TesseractPath"] = TesseractPath;
-				Settings.Default.Save();
+				SavePreferences();
+				ThemeManager.ChangeTheme(Application.Current, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
 				Close();
 			}
 			else
@@ -85,12 +120,19 @@ namespace Miharu.FrontEnd
 		private void ApplyButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (CheckTesseractPath()) {
-				Settings.Default ["TesseractPath"] = TesseractPath;
-				Settings.Default.Save();
+				SavePreferences();
+				ThemeManager.ChangeTheme(Application.Current, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
 				ApplyButton.IsEnabled = false;
 			}
 			else
 				WarnBadPath(_failReason);
 		}
+
+		private void ThemeSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			ThemeManager.ChangeTheme(this, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
+			ApplyButton.IsEnabled = true;
+		}
+
 	}
 }

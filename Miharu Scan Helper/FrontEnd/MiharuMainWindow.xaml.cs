@@ -1,4 +1,5 @@
-﻿using Miharu.BackEnd;
+﻿using MahApps.Metro.Controls;
+using Miharu.BackEnd;
 using Miharu.Control;
 using Ookii.Dialogs.Wpf;
 using System;
@@ -11,10 +12,10 @@ namespace Miharu.FrontEnd
 	/// <summary>
 	/// Interaction logic for MiharuMainWindow.xaml
 	/// </summary>
-	public partial class MiharuMainWindow : Window
+	public partial class MiharuMainWindow : MetroWindow
 	{
 
-		private ChapterManager _chapterManager = null;
+		private readonly ChapterManager _chapterManager = null;
 
 		public MiharuMainWindow(ChapterManager chapterManager)
 		{
@@ -84,22 +85,27 @@ namespace Miharu.FrontEnd
 		}
 
 		private string WarnNotSaved () {
-			TaskDialog dialog = new TaskDialog();
-			dialog.WindowTitle = "Warning";
-			dialog.MainIcon = TaskDialogIcon.Warning;
-			dialog.MainInstruction = "There are unsaved changes.";
-			dialog.Content = "Would you like to save the current chapter?";
+			string res = "";
 
-			Application app = Application.Current;
-			TaskDialogButton saveButton = new TaskDialogButton(GetResource("SaveButtonText"));
-			dialog.Buttons.Add(saveButton);
-			TaskDialogButton discardSaveButton = new TaskDialogButton(GetResource("DiscardButtonText"));
-			dialog.Buttons.Add(discardSaveButton);
-			TaskDialogButton cancelButton = new TaskDialogButton(GetResource("CancelButtonText"));
-			dialog.Buttons.Add(cancelButton);
-			TaskDialogButton button = dialog.ShowDialog(this);
+			using (TaskDialog dialog = new TaskDialog()) {
+				dialog.WindowTitle = "Warning";
+				dialog.MainIcon = TaskDialogIcon.Warning;
+				dialog.MainInstruction = "There are unsaved changes.";
+				dialog.Content = "Would you like to save the current chapter?";
 
-			return button.Text;
+				Application app = Application.Current;
+				TaskDialogButton saveButton = new TaskDialogButton(GetResource("SaveButtonText"));
+				dialog.Buttons.Add(saveButton);
+				TaskDialogButton discardSaveButton = new TaskDialogButton(GetResource("DiscardButtonText"));
+				dialog.Buttons.Add(discardSaveButton);
+				TaskDialogButton cancelButton = new TaskDialogButton(GetResource("CancelButtonText"));
+				dialog.Buttons.Add(cancelButton);
+				TaskDialogButton button = dialog.ShowDialog(this);
+
+
+				res  = button.Text;				
+			}
+			return res;
 		}
 
 		private void DoSave (string saveFile = null) {
@@ -110,14 +116,15 @@ namespace Miharu.FrontEnd
 			}
 			catch (Exception ex) {
 				Mouse.SetCursor(Cursors.Arrow);
-				TaskDialog dialog = new TaskDialog();
-				dialog.WindowTitle = "Error";
-				dialog.MainIcon = TaskDialogIcon.Error;
-				dialog.MainInstruction = "There was an error saving the chapter.";
-				dialog.Content = ex.Message;
-				TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-				dialog.Buttons.Add(okButton);
-				TaskDialogButton button = dialog.ShowDialog(this);
+				using (TaskDialog dialog = new TaskDialog()) {
+					dialog.WindowTitle = "Error";
+					dialog.MainIcon = TaskDialogIcon.Error;
+					dialog.MainInstruction = "There was an error saving the chapter.";
+					dialog.Content = ex.Message;
+					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+					dialog.Buttons.Add(okButton);
+					TaskDialogButton button = dialog.ShowDialog(this);
+				}
 			}
 		}
 
@@ -149,15 +156,15 @@ namespace Miharu.FrontEnd
 				}
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error loading the chapter.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
-
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error loading the chapter.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 			}
 		}
@@ -190,14 +197,15 @@ namespace Miharu.FrontEnd
 				}
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error loading the chapter.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error loading the chapter.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 			}
 		}
@@ -227,14 +235,15 @@ namespace Miharu.FrontEnd
 				}
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error loading the chapter.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error loading the chapter.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 			}
 		}
@@ -297,14 +306,15 @@ namespace Miharu.FrontEnd
 				}
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error exporting the script.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error exporting the script.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 			}
 		}
@@ -325,14 +335,15 @@ namespace Miharu.FrontEnd
 				}
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error exporting the transcription.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error exporting the transcription.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 			}
 		}
@@ -354,14 +365,15 @@ namespace Miharu.FrontEnd
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);
 
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error exporting the complete script.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error exporting the complete script.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 			}
 		}
@@ -369,7 +381,7 @@ namespace Miharu.FrontEnd
 
 
 		private void ExitMenuItem_Click (object sender, RoutedEventArgs e) {
-			if (!_chapterManager.IsChapterSaved) {
+			if (_chapterManager.IsChapterLoaded && !_chapterManager.IsChapterSaved) {
 				string res = WarnNotSaved();
 				if (res == GetResource("SaveButtonText"))
 					SaveChapterMenuItem_Click(sender, new RoutedEventArgs());
@@ -429,25 +441,27 @@ namespace Miharu.FrontEnd
 				}
 				catch (Ripper.RipperException ex) {
 					Mouse.SetCursor(Cursors.Arrow);
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error while ripping.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error while ripping.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 				catch (Exception ex) {
 					Mouse.SetCursor(Cursors.Arrow);
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Error";
-					dialog.MainIcon = TaskDialogIcon.Error;
-					dialog.MainInstruction = "There was an error opening the ripped images.";
-					dialog.Content = ex.Message;
-					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-					dialog.Buttons.Add(okButton);
-					TaskDialogButton button = dialog.ShowDialog(this);
+					using (TaskDialog dialog = new TaskDialog()) {
+						dialog.WindowTitle = "Error";
+						dialog.MainIcon = TaskDialogIcon.Error;
+						dialog.MainInstruction = "There was an error opening the ripped images.";
+						dialog.Content = ex.Message;
+						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+						dialog.Buttons.Add(okButton);
+						TaskDialogButton button = dialog.ShowDialog(this);
+					}
 				}
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using Miharu.BackEnd.Data;
+﻿using MahApps.Metro.Controls;
+using Miharu.BackEnd.Data;
 using Miharu.Control;
 using Ookii.Dialogs.Wpf;
 using System;
@@ -11,7 +12,7 @@ namespace Miharu.FrontEnd
 	/// <summary>
 	/// Interaction logic for EditChapterWindow.xaml
 	/// </summary>
-	public partial class EditChapterWindow : Window
+	public partial class EditChapterWindow : MetroWindow
 	{
 		private Chapter _loadedChapter = null;
 		public int SelectedIndex {

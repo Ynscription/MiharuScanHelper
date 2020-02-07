@@ -1,4 +1,5 @@
 ﻿
+using MahApps.Metro;
 using Miharu.BackEnd;
 using Miharu.BackEnd.Translation.WebCrawlers;
 using Miharu.Control;
@@ -6,7 +7,6 @@ using Miharu.FrontEnd;
 using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -129,7 +129,6 @@ Would you like to locate the Tesseract exectutable manually?";
 			try {
 
 				App application = new App();
-				application.ChangeSkin((string) Settings.Default ["Skin"]);
 				
 				
 				/*MainWindow mw = new MainWindow();
@@ -189,16 +188,25 @@ Would you like to locate the Tesseract exectutable manually?";
 			InitializeComponent();
 		}
 
-		
-		public void ChangeSkin(string newSkin) {
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			ThemeManager.ChangeTheme(Current, 
+				(string)Settings.Default["Theme"] + "." + 
+				(string)Settings.Default["Accent"]);
+
+			base.OnStartup(e);
+		}
+
+
+		/*public void ChangeSkin(string newSkin) {
 			Uri skinDictUri;
-			if (newSkin != null && Uri.TryCreate(newSkin,UriKind.Relative, out skinDictUri)) {
+			if (newSkin != null && Uri.TryCreate(newSkin,UriKind.Absolute, out skinDictUri)) {
 				ResourceDictionary skinDict = (ResourceDictionary)LoadComponent(skinDictUri);
 				Collection<ResourceDictionary> mergedDicts = base.Resources.MergedDictionaries;
 				mergedDicts.Add(skinDict);
 			}
 						
-		}
-	
+		}*/
+
 	}
 }

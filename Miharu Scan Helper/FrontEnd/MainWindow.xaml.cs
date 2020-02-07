@@ -1,4 +1,5 @@
-﻿using Miharu.BackEnd;
+﻿using MahApps.Metro.Controls;
+using Miharu.BackEnd;
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation.WebCrawlers;
 using Miharu.FrontEnd;
@@ -20,7 +21,7 @@ namespace Miharu {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window {
+	public partial class MainWindow : MetroWindow {
 
 		private const string _SAVE = "Save";
 		private const string _DISCARD = "Discard";
