@@ -48,7 +48,7 @@ namespace Miharu.Control
 		private bool _isChapterSaved = false;
 		public bool IsChapterSaved {
 			get => _isChapterSaved;
-			private set {
+			set {
 				_isChapterSaved = value;
 				SaveChanged?.Invoke(this, new EventArgs());
 			}

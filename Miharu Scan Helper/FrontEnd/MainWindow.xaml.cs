@@ -835,7 +835,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 				TextEntryGrid.Children.Clear();
 				if (_pageRectangles[_currentPage].SelectedRect != -1)
-					TextEntryGrid.Children.Add(new TextEntryControl(LoadedChapter.Pages[_currentPage].TextEntries[_pageRectangles[_currentPage].SelectedRect], this));
+					TextEntryGrid.Children.Add(new TextEntryControl(LoadedChapter.Pages[_currentPage].TextEntries[_pageRectangles[_currentPage].SelectedRect]));
 				TextEntriesStackPanel.Children.Clear();
 				for (int i = 0; i < LoadedChapter.Pages[_currentPage].TextEntries.Count; i++) {
 					TextEntriesStackPanel.Children.Add(new TextEntryListView(LoadedChapter.Pages[_currentPage].TextEntries[i],
@@ -1064,7 +1064,7 @@ Would you like to locate the Tesseract exectutable manually?";
 		public TextEntryControl SelectTextEntry (int index) {
 			_pageRectangles [_currentPage].SelectedRect = index;
 			TextEntryGrid.Children.Clear();
-			TextEntryControl tec = new TextEntryControl(LoadedChapter.Pages[_currentPage].TextEntries[index], this);
+			TextEntryControl tec = new TextEntryControl(LoadedChapter.Pages[_currentPage].TextEntries[index]);
 			TextEntryGrid.Children.Add(tec);
 
 

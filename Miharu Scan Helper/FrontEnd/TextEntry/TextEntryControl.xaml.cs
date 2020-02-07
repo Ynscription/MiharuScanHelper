@@ -27,7 +27,6 @@ namespace Miharu.FrontEnd
 
 		public event TranslationFailEventHandler TranslationFail;
 
-		private MainWindow _parent;
 		private Text _textEntry;
 
 		/*private string SanitizeString (string input) {
@@ -51,13 +50,13 @@ namespace Miharu.FrontEnd
 		}
 
 
-		public TextEntryControl(Text textEntry, MainWindow parent) :base(){
+		public TextEntryControl(Text textEntry) :base(){
 			InitializeComponent();
 			
 			InitializeSAnimation();
+
 			_textEntry = textEntry;
 			_textEntry.TextChanged += _textEntry_TextChanged;
-			_parent = parent;
 			
 			ShowImageFromBitmap(textEntry.Source);
 			InitializeParsedTextBox();

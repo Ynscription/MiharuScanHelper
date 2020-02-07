@@ -404,7 +404,7 @@ namespace Miharu.FrontEnd
 				_chapterManager.WaitForPages();
 				Mouse.SetCursor(Cursors.Arrow);
 			}
-			EditChapterWindow editPagesDialog = new EditChapterWindow(_chapterManager);
+			EditChapterWindow editPagesDialog = new EditChapterWindow(_chapterManager.LoadedChapter, _chapterManager.PageManager.CurrentPageIndex);
 			editPagesDialog.Owner = this;
 			editPagesDialog.ShowDialog();
 			GC.Collect();

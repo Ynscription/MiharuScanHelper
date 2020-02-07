@@ -104,6 +104,7 @@ namespace Miharu.Control
 		{
 			Text text = CurrentPage.AddTextEntry(rect);
 			TextEntryManager.SelectTextEntry(text, CurrentPage.TextEntries.Count -1);
+			ChapterManager.IsChapterSaved = false;
 		}
 
 		public void SelectTextEntry(int index)

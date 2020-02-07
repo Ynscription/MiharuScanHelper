@@ -5,6 +5,7 @@ using Miharu.BackEnd.Translation.WebCrawlers;
 using Miharu.Control;
 using Miharu.FrontEnd;
 using Miharu.FrontEnd.Page;
+using Miharu.FrontEnd.TextEntry;
 using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
@@ -20,6 +21,7 @@ namespace Miharu {
 
 
 		#region Main
+		#region Helper Methods
 		private static bool ExistsInPath (string fileName) {
 			bool res = false;
 
@@ -120,7 +122,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			});
 		}
 
-		
+		#endregion
 
 		[STAThread]
 		public static void Main(string [] args)
@@ -155,9 +157,12 @@ Would you like to locate the Tesseract exectutable manually?";
 					}
 
 					MiharuMainWindow mainWindow = new MiharuMainWindow(chapterManager);
+
 					PageControl pageControl = new PageControl(chapterManager.PageManager);
 					mainWindow.PageControlArea.Child = pageControl;
 
+					TextEntryView textEntryView = new TextEntryView(chapterManager.PageManager.TextEntryManager);
+					mainWindow.TextEntryArea.Child = textEntryView;
 
 					application.Run(mainWindow);
 				}

@@ -220,6 +220,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\TextEntry\TextEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\TextEntry\TranslationSourceJadedNetworkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -233,6 +237,9 @@
     <Compile Include="BackEnd\Data\Page.cs" />
     <Compile Include="FrontEnd\TextEntry\TextEntryControl.xaml.cs">
       <DependentUpon>TextEntryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\TextEntry\TextEntryView.xaml.cs">
+      <DependentUpon>TextEntryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\TextEntry\TranslationSourceJadedNetworkView.xaml.cs">
       <DependentUpon>TranslationSourceJadedNetworkView.xaml</DependentUpon>

@@ -13,11 +13,11 @@ namespace Miharu.Control
 		public event EventHandler TextChanged;
 		public event EventHandler TextIndexChanged;
 
-		private PageManager pageManager;
+		public PageManager pageManager;
 
 
 		private Text _currentText = null;
-		private Text CurrentText {
+		public Text CurrentText {
 			get => _currentText;
 			set {
 				_currentText = value;

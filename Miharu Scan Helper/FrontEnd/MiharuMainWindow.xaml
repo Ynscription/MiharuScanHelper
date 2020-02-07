@@ -114,7 +114,7 @@
 
 			</Border>
 			<GridSplitter Grid.Column="1" ResizeDirection="Columns" HorizontalAlignment="Stretch" />
-			<Border Grid.Column="2" BorderThickness="1">
+			<Border x:Name="TextEntryArea" Grid.Column="2" BorderThickness="1">
 
 			</Border>
 
