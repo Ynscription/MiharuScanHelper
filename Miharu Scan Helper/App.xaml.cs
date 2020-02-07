@@ -6,6 +6,7 @@ using Miharu.FrontEnd;
 using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,8 @@ namespace Miharu {
 	/// </summary>
 	public partial class App : Application {
 
+
+		#region Main
 		private static bool ExistsInPath (string fileName) {
 			bool res = false;
 
@@ -116,9 +119,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			});
 		}
 
-		public App () {
-			InitializeComponent();
-		}
+		
 
 		[STAThread]
 		public static void Main(string [] args)
@@ -126,7 +127,14 @@ Would you like to locate the Tesseract exectutable manually?";
 			MiharuMainWindow mainWindow = null;
 			ChapterManager chapterManager = null;
 			try {
-				var application = new App();
+
+				App application = new App();
+				application.ChangeSkin((string) Settings.Default ["Skin"]);
+				
+				
+				/*MainWindow mw = new MainWindow();
+				application.Run(mw);*/			
+				
 				
 				//Initialize stuff
 				Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
@@ -171,5 +179,26 @@ Would you like to locate the Tesseract exectutable manually?";
 				WebDriverManager.Instance.Dispose();
 			}			
 		}
+
+		#endregion
+
+		
+				
+		
+		public App () {
+			InitializeComponent();
+		}
+
+		
+		public void ChangeSkin(string newSkin) {
+			Uri skinDictUri;
+			if (newSkin != null && Uri.TryCreate(newSkin,UriKind.Relative, out skinDictUri)) {
+				ResourceDictionary skinDict = (ResourceDictionary)LoadComponent(skinDictUri);
+				Collection<ResourceDictionary> mergedDicts = base.Resources.MergedDictionaries;
+				mergedDicts.Add(skinDict);
+			}
+						
+		}
+	
 	}
 }

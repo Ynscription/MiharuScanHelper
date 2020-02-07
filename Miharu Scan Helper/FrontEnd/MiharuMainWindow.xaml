@@ -8,11 +8,11 @@
         Title="Miharu Scan Helper"
 		Height="720" Width="1280"
 		IsTabStop="False"
-		MinWidth="1090" MinHeight="640" 
+		MinWidth="900" MinHeight="640" 
 		Closing="Window_Closing" 
 		KeyDown="Window_KeyDown">
 	<DockPanel>
-		<Menu DockPanel.Dock="Top">
+		<Menu DockPanel.Dock="Top" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}">
 			<MenuItem Header="_File" TabIndex="0">
 				<MenuItem Header="New Chapter">
 					<MenuItem x:Name="NewChapterFolderMenuItem" Header="From Folder..." IsEnabled="True" Click="NewChapterFolderMenuItem_Click"/>
@@ -45,5 +45,22 @@
 				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" />
 			</MenuItem>
 		</Menu>
+		<Grid >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*" MinWidth="300"/>
+				<ColumnDefinition Width="5"/>
+				<ColumnDefinition Width="2*" MinWidth="500"/>
+			</Grid.ColumnDefinitions>
+			<Border Grid.Column="0" BorderThickness="1">
+				<Rectangle />
+			</Border>
+			<GridSplitter Grid.Column="1" ResizeDirection="Columns" HorizontalAlignment="Stretch" />
+			<Border Grid.Column="2" BorderThickness="1">
+
+			</Border>
+
+		</Grid>
+
+
 	</DockPanel>
 </Window>

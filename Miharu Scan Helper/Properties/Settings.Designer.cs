@@ -46,5 +46,17 @@ namespace Miharu.Properties {
                 this["SaveVersion"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("./FrontEnd/Skins/DarkSkin.xaml")]
+        public string Skin {
+            get {
+                return ((string)(this["Skin"]));
+            }
+            set {
+                this["Skin"] = value;
+            }
+        }
     }
 }
