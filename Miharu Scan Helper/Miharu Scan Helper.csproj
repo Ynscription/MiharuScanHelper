@@ -110,11 +110,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FrontEnd\AboutDialog.xaml">
+    <Page Include="FrontEnd\Helper\AboutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FrontEnd\CaptchaDialog.xaml">
+    <Page Include="FrontEnd\Helper\CaptchaDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -126,11 +126,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FrontEnd\ImageDisplay.xaml">
+    <Page Include="FrontEnd\Helper\ImageDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FrontEnd\MiharuMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrontEnd\Page\PageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,7 +146,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FrontEnd\TextEntry.xaml">
+    <Page Include="FrontEnd\TextEntry\TextEntryListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,58 +181,63 @@
     <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />
     <Compile Include="Control\ChapterManager.cs" />
     <Compile Include="Control\PageManager.cs" />
-    <Compile Include="FrontEnd\AboutDialog.xaml.cs">
+    <Compile Include="Control\TextEntryManager.cs" />
+    <Compile Include="FrontEnd\Helper\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\CaptchaDialog.xaml.cs">
+    <Compile Include="FrontEnd\Helper\CaptchaDialog.xaml.cs">
       <DependentUpon>CaptchaDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\EditChapterWindow.xaml.cs">
       <DependentUpon>EditChapterWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\ImageDisplay.xaml.cs">
+    <Compile Include="FrontEnd\Helper\ImageDisplay.xaml.cs">
       <DependentUpon>ImageDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\LinkLabel.cs" />
+    <Compile Include="FrontEnd\Helper\LinkLabel.cs" />
     <Compile Include="FrontEnd\MiharuMainWindow.xaml.cs">
       <DependentUpon>MiharuMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FrontEnd\Page\PageControl.xaml.cs">
+      <DependentUpon>PageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\Page\RectangleOverlay.cs" />
     <Compile Include="FrontEnd\PreferencesDialog.xaml.cs">
       <DependentUpon>PreferencesDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\RectangleAdorner.cs" />
+    <Compile Include="FrontEnd\Page\RectangleAdorner.cs" />
     <Compile Include="FrontEnd\RipDialog.xaml.cs">
       <DependentUpon>RipDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\TextEntry.xaml.cs">
-      <DependentUpon>TextEntry.xaml</DependentUpon>
+    <Compile Include="FrontEnd\TextEntry\TextEntryListView.xaml.cs">
+      <DependentUpon>TextEntryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="FrontEnd\TextEntryControl.xaml">
+    <Page Include="FrontEnd\TextEntry\TextEntryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FrontEnd\TranslationSourceJadedNetworkView.xaml">
+    <Page Include="FrontEnd\TextEntry\TranslationSourceJadedNetworkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FrontEnd\TranslationSourceView.xaml">
+    <Page Include="FrontEnd\TextEntry\TranslationSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackEnd\Data\Page.cs" />
-    <Compile Include="FrontEnd\TextEntryControl.xaml.cs">
+    <Compile Include="FrontEnd\TextEntry\TextEntryControl.xaml.cs">
       <DependentUpon>TextEntryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\TranslationSourceJadedNetworkView.xaml.cs">
+    <Compile Include="FrontEnd\TextEntry\TranslationSourceJadedNetworkView.xaml.cs">
       <DependentUpon>TranslationSourceJadedNetworkView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\TranslationSourceView.xaml.cs">
+    <Compile Include="FrontEnd\TextEntry\TranslationSourceView.xaml.cs">
       <DependentUpon>TranslationSourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

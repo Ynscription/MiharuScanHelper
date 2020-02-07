@@ -10,12 +10,12 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Miharu.FrontEnd {
+namespace Miharu.FrontEnd.TextEntry {
 
 	/// <summary>
 	/// Interaction logic for TextEntry.xaml
 	/// </summary>
-	public partial class TextEntry : UserControl {
+	public partial class TextEntryListView : UserControl {
 		[DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool DeleteObject ([In] IntPtr hObject);
@@ -37,7 +37,7 @@ namespace Miharu.FrontEnd {
 			}
 		}
 		
-		public TextEntry (Text textEntry, MainWindow parent) :base(){
+		public TextEntryListView (Text textEntry, MainWindow parent) :base(){
 			InitializeComponent();
 			_textEntry = textEntry;
 			_parent = parent;

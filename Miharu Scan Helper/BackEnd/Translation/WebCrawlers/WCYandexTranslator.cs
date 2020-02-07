@@ -1,4 +1,5 @@
 ﻿using Miharu.FrontEnd;
+using Miharu.FrontEnd.Helper;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;

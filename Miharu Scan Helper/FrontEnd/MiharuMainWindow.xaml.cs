@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using Miharu.BackEnd;
 using Miharu.Control;
+using Miharu.FrontEnd.Helper;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.IO;

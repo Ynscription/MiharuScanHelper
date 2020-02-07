@@ -18,7 +18,7 @@ namespace Miharu.Control
 		#region Data
 				
 		private Chapter _loadedChapter = null;
-		private Chapter LoadedChapter {
+		public Chapter LoadedChapter {
 			get => _loadedChapter;
 			set {
 				_loadedChapter = value;
@@ -27,6 +27,9 @@ namespace Miharu.Control
 		}
 		public bool IsChapterLoaded {
 			get { return _loadedChapter != null; }
+		}
+		public int ChapterTotalPages {
+			get { return _loadedChapter.TotalPages; }
 		}
 					   		
 		
@@ -90,6 +93,7 @@ namespace Miharu.Control
 
 		public void NewChapter (string sourceFolder) {
 			try {
+				UnloadChapter();
 				LoadedChapter = new Chapter(sourceFolder);
 				PageManager.LoadPage(LoadedChapter.Pages[0], 0);
 				CurrentSaveFile = null;
@@ -106,6 +110,7 @@ namespace Miharu.Control
 
 		public void NewChapter (string [] files) {
 			try {
+				UnloadChapter();
 				LoadedChapter = new Chapter(files);
 				PageManager.LoadPage(LoadedChapter.Pages[0], 0);
 				CurrentSaveFile = null;
@@ -122,6 +127,7 @@ namespace Miharu.Control
 
 		public void LoadChapter (string source) {
 			try {
+				UnloadChapter();
 				int index = 0;
 				string finalSource = source;
 				LoadedChapter = Chapter.Load(source, out index, out finalSource);
@@ -143,6 +149,7 @@ namespace Miharu.Control
 			LoadedChapter = null;
 			CurrentSaveFile = null;
 			IsChapterSaved = false;
+			PageManager.Unload();
 		}
 			   		 
 		public void SaveChapter (string newSaveFile = null) {

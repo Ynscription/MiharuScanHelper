@@ -3,6 +3,9 @@ using Miharu.BackEnd;
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation.WebCrawlers;
 using Miharu.FrontEnd;
+using Miharu.FrontEnd.Helper;
+using Miharu.FrontEnd.Page;
+using Miharu.FrontEnd.TextEntry;
 using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
@@ -14,7 +17,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using static Miharu.BackEnd.Ripper;
 
 namespace Miharu {
@@ -836,7 +838,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					TextEntryGrid.Children.Add(new TextEntryControl(LoadedChapter.Pages[_currentPage].TextEntries[_pageRectangles[_currentPage].SelectedRect], this));
 				TextEntriesStackPanel.Children.Clear();
 				for (int i = 0; i < LoadedChapter.Pages[_currentPage].TextEntries.Count; i++) {
-					TextEntriesStackPanel.Children.Add(new TextEntry(LoadedChapter.Pages[_currentPage].TextEntries[i],
+					TextEntriesStackPanel.Children.Add(new TextEntryListView(LoadedChapter.Pages[_currentPage].TextEntries[i],
 																	this));
 				}
 			}
@@ -1037,7 +1039,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					}
 					Text txt = LoadedChapter.Pages[_currentPage].AddTextEntry(rect);
 					txt.TextChanged += OnItemChange;
-					TextEntry te = new TextEntry(txt, this);
+					TextEntryListView te = new TextEntryListView(txt, this);
 					TextEntriesStackPanel.Children.Add(te);
 					SelectTextEntry(LoadedChapter.Pages[_currentPage].TextEntries.Count-1).ForceTranslation();
 					_pageRectangles [_currentPage].InvalidateVisual();
@@ -1057,7 +1059,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		#region TextEntries
 
-		private TextEntry _selectedTextEntry = null;
+		private TextEntryListView _selectedTextEntry = null;
 
 		public TextEntryControl SelectTextEntry (int index) {
 			_pageRectangles [_currentPage].SelectedRect = index;
@@ -1068,13 +1070,13 @@ Would you like to locate the Tesseract exectutable manually?";
 
 			if (_selectedTextEntry != null)
 				_selectedTextEntry.Selected = false;
-			_selectedTextEntry = (TextEntry)TextEntriesStackPanel.Children[index];
+			_selectedTextEntry = (TextEntryListView)TextEntriesStackPanel.Children[index];
 			_selectedTextEntry.Selected = true;
 
 			return tec;
 		}
 
-		public void SelectTextEntry (TextEntry entry) {
+		public void SelectTextEntry (TextEntryListView entry) {
 			int index = TextEntriesStackPanel.Children.IndexOf(entry);
 			SelectTextEntry(index);
 			_pageRectangles[_currentPage].InvalidateVisual();

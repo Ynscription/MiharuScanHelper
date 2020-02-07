@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
 
-namespace Miharu.FrontEnd
+namespace Miharu.FrontEnd.TextEntry
 {
 	/// <summary>
 	/// Interaction logic for TranslationSourceView.xaml

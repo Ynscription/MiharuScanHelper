@@ -2,15 +2,15 @@
 using MahApps.Metro.Controls;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 
-namespace Miharu.FrontEnd {
+namespace Miharu.FrontEnd.Helper {
 	/// <summary>
 	/// Interaction logic for AboutDialog.xaml
 	/// </summary>
 	public partial class AboutDialog : MetroWindow {
 		public AboutDialog () {
 			InitializeComponent();
+			
 		}
 
 		private readonly string MiharuLicenseFile = @".\Resources\Licenses\Miharu LICENSE";

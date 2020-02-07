@@ -4,6 +4,7 @@ using Miharu.BackEnd;
 using Miharu.BackEnd.Translation.WebCrawlers;
 using Miharu.Control;
 using Miharu.FrontEnd;
+using Miharu.FrontEnd.Page;
 using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
 using System;
@@ -124,7 +125,7 @@ Would you like to locate the Tesseract exectutable manually?";
 		[STAThread]
 		public static void Main(string [] args)
 		{
-			MiharuMainWindow mainWindow = null;
+			
 			ChapterManager chapterManager = null;
 			try {
 
@@ -152,8 +153,10 @@ Would you like to locate the Tesseract exectutable manually?";
 					catch (Exception) {
 						chapterManager = new ChapterManager();
 					}
-					mainWindow = new MiharuMainWindow(chapterManager);
 
+					MiharuMainWindow mainWindow = new MiharuMainWindow(chapterManager);
+					PageControl pageControl = new PageControl(chapterManager.PageManager);
+					mainWindow.PageControlArea.Child = pageControl;
 
 
 					application.Run(mainWindow);

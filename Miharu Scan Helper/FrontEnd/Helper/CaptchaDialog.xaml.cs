@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace Miharu.FrontEnd
+namespace Miharu.FrontEnd.Helper
 {
 	/// <summary>
 	/// Interaction logic for CaptchaDialog.xaml

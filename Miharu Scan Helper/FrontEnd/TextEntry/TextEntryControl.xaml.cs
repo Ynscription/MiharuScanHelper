@@ -1,6 +1,7 @@
 ﻿
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
+using Miharu.FrontEnd.TextEntry;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;

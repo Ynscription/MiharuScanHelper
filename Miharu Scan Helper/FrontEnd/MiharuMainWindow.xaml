@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:Controls ="http://metro.mahapps.com/winfx/xaml/controls"
 		xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:local="clr-namespace:Miharu.FrontEnd"
-        mc:Ignorable="d"
+		mc:Ignorable="d"
         Title="Miharu Scan Helper"
 		Height="720" Width="1280"
 		IsTabStop="False"
@@ -111,8 +110,8 @@
 				<ColumnDefinition Width="5"/>
 				<ColumnDefinition Width="2*" MinWidth="500"/>
 			</Grid.ColumnDefinitions>
-			<Border Grid.Column="0" BorderThickness="1">
-				<Rectangle />
+			<Border x:Name="PageControlArea" Grid.Column="0" BorderThickness="1">
+
 			</Border>
 			<GridSplitter Grid.Column="1" ResizeDirection="Columns" HorizontalAlignment="Stretch" />
 			<Border Grid.Column="2" BorderThickness="1">

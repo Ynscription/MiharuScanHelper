@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Media.Imaging;
 
-namespace Miharu.FrontEnd {
+namespace Miharu.FrontEnd.Helper {
 	/// <summary>
 	/// Interaction logic for ImageDisplay.xaml
 	/// </summary>
@@ -14,8 +14,8 @@ namespace Miharu.FrontEnd {
 			imgSrc.UriSource = new Uri (src, UriKind.Relative);
 			imgSrc.CacheOption = BitmapCacheOption.OnLoad;
 			imgSrc.EndInit();
-			Width = imgSrc.Width + 5;
-			Height = imgSrc.Height + 29;
+			Width = imgSrc.Width;
+			Height = imgSrc.Height + 28;
 			DisplayImage.Source = imgSrc;
 		}
 	}
