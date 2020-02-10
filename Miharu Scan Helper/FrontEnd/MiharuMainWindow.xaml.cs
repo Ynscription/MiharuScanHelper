@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Miharu.BackEnd;
 using Miharu.Control;
 using Miharu.FrontEnd.Helper;
@@ -116,7 +117,7 @@ namespace Miharu.FrontEnd
 				Mouse.SetCursor(Cursors.Arrow);
 			}
 			catch (Exception ex) {
-				Mouse.SetCursor(Cursors.Arrow);
+				Mouse.SetCursor(Cursors.Arrow);				
 				using (TaskDialog dialog = new TaskDialog()) {
 					dialog.WindowTitle = "Error";
 					dialog.MainIcon = TaskDialogIcon.Error;
@@ -135,7 +136,7 @@ namespace Miharu.FrontEnd
 		
 		
 		
-		private void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
+		private async void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_chapterManager.IsChapterLoaded && !_chapterManager.IsChapterSaved) {
 				string saveRes = WarnNotSaved();
 				if (saveRes == GetResource("SaveButtonText"))
@@ -497,7 +498,7 @@ namespace Miharu.FrontEnd
 		
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-
+			
 			if (_chapterManager.IsChapterLoaded && !_chapterManager.IsChapterSaved) {
 				string res = WarnNotSaved();
 				if (res == GetResource("SaveButtonText"))
@@ -508,6 +509,8 @@ namespace Miharu.FrontEnd
 				}
 			}
 		}
+
+
 
 
 		#endregion

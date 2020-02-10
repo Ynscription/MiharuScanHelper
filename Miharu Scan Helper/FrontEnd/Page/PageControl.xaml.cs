@@ -57,6 +57,8 @@ namespace Miharu.FrontEnd.Page
 		
 		private void OnPageChanged (object sender, EventArgs e) {
 			if (CurrPageTextBox.IsEnabled = _pageManager.IsPageLoaded) {
+				CurrPageLabel.Text = (_pageManager.CurrentPageName);
+
 				BitmapImage imgSrc = new BitmapImage();
 				imgSrc.BeginInit();
 				imgSrc.UriSource = new Uri(_pageManager.CurrentPagePath, UriKind.Relative);
@@ -79,6 +81,7 @@ namespace Miharu.FrontEnd.Page
 
 			}
 			else {
+				CurrPageLabel.Text = "";
 				PreviewIMG.Source = null;
 				PreviewIMG.InvalidateVisual();
 			}
@@ -90,13 +93,10 @@ namespace Miharu.FrontEnd.Page
 		{
 			if (_pageManager.ChapterManager.IsChapterLoaded) {
 				int totalPages = 0;
-				if (_pageManager.ChapterManager.IsChapterLoaded && _pageManager.IsPageLoaded) {
-					totalPages = _pageManager.ChapterManager.ChapterTotalPages;
-					CurrPageLabel.Content = "Page: " + (_pageManager.CurrentPageName);
-				}
-				else {
-					CurrPageLabel.Content = "";
-				}
+				if (_pageManager.ChapterManager.IsChapterLoaded && _pageManager.IsPageLoaded)
+					totalPages = _pageManager.ChapterManager.ChapterTotalPages;					
+				
+				
 				CurrPageTextBox.Text = (_pageManager.CurrentPageIndex + 1) + " / " + totalPages;
 				_previousCurrPageTBText = CurrPageTextBox.Text;
 				PrevPageButton.IsEnabled = _pageManager.CurrentPageIndex > 0;

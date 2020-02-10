@@ -6,8 +6,18 @@
 			 xmlns:Controls ="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:Miharu.FrontEnd.TextEntry"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800">
-	<Controls:MetroAnimatedSingleRowTabControl FontSize="8">
+             d:DesignHeight="800" d:DesignWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+	<TabControl>
+		<TabItem Header="Entries List">
+			<ScrollViewer>
+				<StackPanel x:Name="TextEntriesStackPanel" />
+			</ScrollViewer>
+		</TabItem>
+		<TabItem Header="Edit Entry" x:Name="TextEntryArea">
+
+		</TabItem>
+	</TabControl>
+	<!--<Controls:MetroAnimatedSingleRowTabControl FontSize="8">
 		<Controls:MetroTabItem Header="Entries List" >
 			<ScrollViewer>
 				<StackPanel x:Name="TextEntriesStackPanel" />
@@ -16,5 +26,5 @@
 		<Controls:MetroTabItem Header="Edit Entry" x:Name="TextEntryArea" >
 
 		</Controls:MetroTabItem>
-	</Controls:MetroAnimatedSingleRowTabControl>
+	</Controls:MetroAnimatedSingleRowTabControl>-->
 </UserControl>

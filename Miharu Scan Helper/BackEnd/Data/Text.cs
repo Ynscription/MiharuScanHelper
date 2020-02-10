@@ -2,6 +2,7 @@
 using Miharu.BackEnd.Translation;
 using Miharu.Properties;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -83,6 +84,8 @@ namespace Miharu.BackEnd.Data
 		}
 
 		public Text (Bitmap src, Rect rect) {
+			if (rect .Width == 0 || rect.Height == 0)
+				throw new ArgumentOutOfRangeException("rect", rect, "Can't create text entry with 0 width or 0 height rectangle.");
 			Source = src;
 			Rectangle = rect;
 			TranslatedText = "";

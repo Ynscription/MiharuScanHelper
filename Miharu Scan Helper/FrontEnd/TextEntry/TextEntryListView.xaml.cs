@@ -1,5 +1,6 @@
 ﻿
 using Miharu.BackEnd.Data;
+using Miharu.Control;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -24,6 +25,7 @@ namespace Miharu.FrontEnd.TextEntry {
 		private static System.Windows.Media.Brush _normalBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 83, 83, 83));
 		
 		private MainWindow _parent;
+		private PageManager _pageManager;
 		private Text _textEntry;
 
 		private bool _selected;
@@ -37,6 +39,8 @@ namespace Miharu.FrontEnd.TextEntry {
 			}
 		}
 		
+
+		//TODO remove this constructor
 		public TextEntryListView (Text textEntry, MainWindow parent) :base(){
 			InitializeComponent();
 			_textEntry = textEntry;
@@ -47,6 +51,17 @@ namespace Miharu.FrontEnd.TextEntry {
 			ShowImageFromBitmap(textEntry.Source);
 		}
 
+		public TextEntryListView (Text textEntry, PageManager pageManager) :base(){
+			InitializeComponent();
+			_textEntry = textEntry;
+			_pageManager = pageManager;
+			TranslationLabel.Text = _textEntry.TranslatedText;
+			ParsedLabel.Text = _textEntry.ParsedText;
+			_textEntry.TextChanged += OnTextChanged;
+			ShowImageFromBitmap(textEntry.Source);
+		}
+
+		
 		private void ShowImageFromBitmap (Bitmap src) {
 			var handle = src.GetHbitmap();
 			try {
@@ -75,22 +90,22 @@ namespace Miharu.FrontEnd.TextEntry {
 		}
 
 		private void DeleteButton_Click (object sender, RoutedEventArgs e) {
-			_parent.RemoveTextEntry(_textEntry);
+			_pageManager.RemoveTextEntry(_textEntry);
 		}
 
 		private void MoveUpButton_Click (object sender, RoutedEventArgs e) {
-			_parent.MoveTextEntry(_textEntry, true);
+			_pageManager.MoveTextEntry(_textEntry, true);
 		}
 
 		private void MoveDownButton_Click (object sender, RoutedEventArgs e) {
-			_parent.MoveTextEntry(_textEntry, false);
+			_pageManager.MoveTextEntry(_textEntry, false);
 		}
 
 				
 
 		private void Event_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			_parent.SelectTextEntry(this);
+			_pageManager.SelectTextEntry(_textEntry);
 		}
 	}
 }

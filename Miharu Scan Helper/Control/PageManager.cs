@@ -1,9 +1,7 @@
-﻿using Miharu.BackEnd.Data;
+﻿using Miharu.BackEnd;
+using Miharu.BackEnd.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Miharu.Control
@@ -14,6 +12,8 @@ namespace Miharu.Control
 		#region Events
 		public event EventHandler PageChanged;
 		public event EventHandler PageIndexChanged;
+		public event ListModificationEventHandler TextEntryRemoved;
+		public event ListModificationEventHandler TextEntryMoved;
 		#endregion
 
 		#region Data
@@ -96,13 +96,26 @@ namespace Miharu.Control
 
 		public void ChangePage(int index)
 		{
-			CurrentPageIndex = index;
-			CurrentPage = ChapterManager.LoadedChapter.Pages[index];
+			try {
+				CurrentPage = ChapterManager.LoadedChapter.Pages[index];
+				CurrentPageIndex = index;
+			}
+			catch (Exception e) {
+				Logger.Log(e);
+				throw e;
+			}
 		}
 
 		public void AddTextEntry(Rect rect)
 		{
-			Text text = CurrentPage.AddTextEntry(rect);
+			Text text = null;
+			try {
+				text = CurrentPage.AddTextEntry(rect);
+			}
+			catch (Exception e) {
+				Logger.Log(e);
+				throw e;
+			}
 			TextEntryManager.SelectTextEntry(text, CurrentPage.TextEntries.Count -1);
 			ChapterManager.IsChapterSaved = false;
 		}
@@ -121,6 +134,46 @@ namespace Miharu.Control
 			CurrentPage = null;
 			CurrentPageIndex = 0;
 			TextEntryManager.Unload();
+		}
+
+		internal void RemoveTextEntry(Text textEntry)
+		{
+			try {
+				int index = CurrentPage.TextEntries.IndexOf(textEntry);
+				CurrentPage.RemoveTextEntry(index);
+				TextEntryManager.RemovedTextEntry(textEntry);
+				TextEntryRemoved?.Invoke(this, new ListModificationEventArgs(index, textEntry));
+				ChapterManager.IsChapterSaved = false;
+			}
+			catch (Exception e) {
+				Logger.Log(e);
+				throw e;
+			}
+		}
+
+		internal void MoveTextEntry(Text textEntry, bool up)
+		{
+			try {
+				int offset = up ? -1 : 1;
+				int index = CurrentPage.TextEntries.IndexOf(textEntry);
+				if ((up && index > 0) || (!up && index < CurrentPage.TextEntries.Count-1)) {
+					CurrentPage.MoveTextEntry(index, index + offset);					
+					TextEntryMoved?.Invoke(this, new ListModificationEventArgs(index, textEntry, index + offset));
+					TextEntryManager.MovedTextEntry(index, textEntry, index + offset);
+					ChapterManager.IsChapterSaved = false;
+				}
+			}
+			catch(Exception e) {
+				Logger.Log(e);
+				throw e;
+			}
+
+		}
+
+		internal void SelectTextEntry(Text textEntry)
+		{
+			int index = CurrentPage.TextEntries.IndexOf(textEntry);
+			TextEntryManager.SelectTextEntry(textEntry, index);
 		}
 	}
 }

@@ -180,8 +180,10 @@
     <Compile Include="BackEnd\Data\TxtChangedEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationConsumer.cs" />
     <Compile Include="Control\ChapterManager.cs" />
+    <Compile Include="Control\ListModificationEventArgs.cs" />
     <Compile Include="Control\PageManager.cs" />
     <Compile Include="Control\TextEntryManager.cs" />
+    <Compile Include="Control\TranslationManager.cs" />
     <Compile Include="FrontEnd\Helper\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>

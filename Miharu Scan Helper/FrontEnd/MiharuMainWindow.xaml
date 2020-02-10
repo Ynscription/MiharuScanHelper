@@ -9,10 +9,9 @@
         Title="Miharu Scan Helper"
 		Height="720" Width="1280"
 		IsTabStop="False"
-		MinWidth="900" MinHeight="640" 
+		MinWidth="1000" MinHeight="640" 
 		Closing="Window_Closing" 
-		KeyDown="Window_KeyDown" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico"
-		>
+		KeyDown="Window_KeyDown" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico">
 	<DockPanel>
 		<Menu DockPanel.Dock="Top" >
 			<Menu.Resources>
@@ -106,15 +105,14 @@
 		</Menu>
 		<Grid >
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*" MinWidth="300"/>
-				<ColumnDefinition Width="5"/>
+				<ColumnDefinition Width="1*" MinWidth="350"/>
 				<ColumnDefinition Width="2*" MinWidth="500"/>
 			</Grid.ColumnDefinitions>
 			<Border x:Name="PageControlArea" Grid.Column="0" BorderThickness="1">
 
 			</Border>
-			<GridSplitter Grid.Column="1" ResizeDirection="Columns" HorizontalAlignment="Stretch" />
-			<Border x:Name="TextEntryArea" Grid.Column="2" BorderThickness="1">
+			
+			<Border x:Name="TextEntryArea" Grid.Column="1" BorderThickness="1" >
 
 			</Border>
 

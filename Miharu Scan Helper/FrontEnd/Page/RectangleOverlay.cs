@@ -38,7 +38,14 @@ namespace Miharu.FrontEnd.Page
 			_pageManager = pageManager;
 			_pageManager.PageChanged += OnPageChanged;
 			_pageManager.TextEntryManager.TextIndexChanged += OnTextIndexChanged;
+			_pageManager.TextEntryMoved += OnTextEntryMoved;
 			_page = _pageManager.CurrentPageIndex;
+		}
+
+		private void OnTextEntryMoved(object sender, ListModificationEventArgs e)
+		{
+			if (MouseOverRect == e.EventOldIndex)
+				MouseOverRect = e.EventNewIndex;
 		}
 
 		private void OnTextIndexChanged(object sender, EventArgs e)

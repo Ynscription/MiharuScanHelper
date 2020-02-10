@@ -49,7 +49,21 @@ namespace Miharu.Control
 		internal void Unload()
 		{
 			CurrentText = null;
-			CurrentTextIndex = 0;
+			CurrentTextIndex = -1;
+		}
+
+		internal void RemovedTextEntry(Text textEntry)
+		{
+			if (textEntry == CurrentText)
+				Unload();
+		}
+
+		internal void MovedTextEntry(int oldIndex, Text textEntry, int newIndex)
+		{
+			if (textEntry == CurrentText)
+				CurrentTextIndex = newIndex;
+			else if (newIndex == CurrentTextIndex)
+				CurrentTextIndex = oldIndex;
 		}
 	}
 }

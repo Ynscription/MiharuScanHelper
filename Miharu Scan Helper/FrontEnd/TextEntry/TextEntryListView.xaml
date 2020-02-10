@@ -3,10 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    mc:Ignorable="d" 
-    Height="150" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1"
-	PreviewMouseUp="Event_MouseUp">
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+	mc:Ignorable="d" 
+    Height="150" Foreground="{x:Null}" BorderBrush="#FFA60707" Padding="0,1">
 	<Border x:Name="EntryBorder" BorderThickness="1" BorderBrush="#FF535353">
 		<Grid >
 			<Grid.RowDefinitions>
@@ -14,14 +14,10 @@
 				<RowDefinition Height="1*"/>
 			</Grid.RowDefinitions>
 			<Button x:Name="MoveUpButton" HorizontalAlignment="Left" Width="38" Click="MoveUpButton_Click" Margin="3,3,1,3">
-				<StackPanel>
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/ArrowUp.png"  />
-				</StackPanel>
+				<iconPacks:PackIconModern Kind="ArrowUp" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"/>
 			</Button>
 			<Button x:Name="MoveDownButton" HorizontalAlignment="Left" Width="38" Click="MoveDownButton_Click" Grid.Row="1" Margin="3,3,1,3">
-				<StackPanel>
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/ArrowDown.png"  />
-				</StackPanel>
+				<iconPacks:PackIconModern Kind="ArrowDown" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="Auto" Height="Auto"/>
 			</Button>
 
 			<Grid Grid.RowSpan="2" Margin="43,0,0,0" >
@@ -37,7 +33,6 @@
 				<Grid Grid.Column="1" Margin="3">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="2*"/>
-						<RowDefinition Height="3"/>
 						<RowDefinition Height="1*"/>
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
@@ -45,15 +40,18 @@
 						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 					
-					<TextBox x:Name="ParsedLabel" Grid.ColumnSpan="2" TextWrapping="Wrap" FontSize="20" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" IsReadOnly="True"  BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" PreviewMouseUp="Event_MouseUp"/>
-					<Border BorderThickness="1" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" PreviewMouseUp="Event_MouseUp"/>
-					<TextBox x:Name="TranslationLabel" Grid.Row="2" Foreground="Black" BorderThickness="0" TextWrapping="Wrap" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto" MinWidth="10" PreviewMouseUp="Event_MouseUp"/>
-					<Border BorderThickness="1" Grid.Row="2" BorderBrush="Black" PreviewMouseUp="Event_MouseUp"/>
+					<TextBox x:Name="ParsedLabel" Grid.ColumnSpan="2" TextWrapping="Wrap" FontSize="20" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" IsReadOnly="True"  BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" PreviewMouseUp="Event_MouseUp" Margin="0,0,0,3"/>
+					<Border BorderThickness="1" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" PreviewMouseUp="Event_MouseUp" Margin="0,0,0,3"/>
+					<TextBox x:Name="TranslationLabel" Grid.Row="1" BorderThickness="0" TextWrapping="Wrap" FontSize="16" IsReadOnly="True" AcceptsReturn="True" BorderBrush="{x:Null}" VerticalScrollBarVisibility="Auto" MinWidth="10" PreviewMouseUp="Event_MouseUp" />
+					<Border BorderThickness="1" Grid.Row="1" BorderBrush="Black" PreviewMouseUp="Event_MouseUp"/>
 
-					<Button x:Name="DeleteButton" Grid.Column="1" Grid.Row="2" Width="24" FontSize="10" Click="DeleteButton_Click" Height="24" VerticalAlignment="Bottom" Background="#FFBB4D4D">
-						<StackPanel>
-							<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/Delete.png"  />
-						</StackPanel>
+					<Button x:Name="DeleteButton" Grid.Column="1" Grid.Row="1" FontSize="10" Click="DeleteButton_Click" Background="#FFBB4D4D" Margin="3,0,0,0"
+							MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" 
+							MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
+						<iconPacks:PackIconModern Kind="Delete" 
+							VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+							Width="Auto" Height="Auto"/>
+						
 					</Button>
 
 				</Grid>

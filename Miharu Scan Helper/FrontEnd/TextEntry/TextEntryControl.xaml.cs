@@ -29,13 +29,6 @@ namespace Miharu.FrontEnd
 
 		private Text _textEntry;
 
-		/*private string SanitizeString (string input) {
-			return input;
-			/*string sanitized = input.Replace(Environment.NewLine, " ");
-			sanitized = sanitized.Replace("\n", " ");
-
-			return sanitized;
-		}*/
 
 		private void InitializeParsedTextBox () {
 			ParsedTextBox.Text = _textEntry.ParsedText;
@@ -110,10 +103,7 @@ namespace Miharu.FrontEnd
 				_textEntry.TranslatedText = TranslatedTextBox.Text;
 		}
 
-		private void JishoLinkLabel_MouseLeftButtonUp (object sender, System.Windows.Input.MouseButtonEventArgs e) {
-			System.Diagnostics.Process.Start((string)JishoLinkLabel.Content);
-		}
-
+		
 		private void ShowImageFromBitmap (Bitmap src) {
 			var handle = src.GetHbitmap();
 			try {
@@ -283,7 +273,7 @@ namespace Miharu.FrontEnd
 		}
 
 		private void CheckAnimation (string parse) {
-			if (parse == "おかえりなのじゃ") {
+			if (parse.Contains("おかえりなのじゃ")) {
 				 _desiredState = AnimState.Shown;
 			}
 			else {

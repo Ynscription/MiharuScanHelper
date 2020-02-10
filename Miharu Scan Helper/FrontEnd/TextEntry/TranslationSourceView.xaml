@@ -5,7 +5,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:Miharu.FrontEnd"
-    mc:Ignorable="d" 
+	xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+	xmlns:helper="clr-namespace:Miharu.FrontEnd.Helper"
+	mc:Ignorable="d" 
     d:DesignWidth="300">
 	<Border BorderThickness="1" BorderBrush="Gray" Margin="3" >
 		<Grid>
@@ -19,24 +21,26 @@
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-			<Rectangle x:Name="SuccessRect" Grid.Column="0" Grid.Row="0" Visibility="Visible" Width="{Binding ActualHeight, ElementName=SuccessRect, Mode=OneWay}"  Margin="5" Fill="#FF06a006"/>
-			<Rectangle x:Name="WorkingRect" Grid.Column="0" Grid.Row="0" Visibility="Hidden" Width="{Binding ActualHeight, ElementName=WorkingRect, Mode=OneWay}" Margin="5" Fill="#FF909090"/>
-			<Rectangle x:Name="ErrorRect" Grid.Column="0" Grid.Row="0" Visibility="Hidden" Width="{Binding ActualHeight, ElementName=ErrorRect, Mode=OneWay}" Margin="5" Fill="#FFF2D100"/>
+			<Rectangle x:Name="SuccessRect" Grid.Column="0" Grid.Row="0" Visibility="Visible" Width="{Binding ActualHeight, ElementName=SuccessRect, Mode=OneWay}"  Margin="8" Fill="#FF06a006"/>
+			<Rectangle x:Name="WorkingRect" Grid.Column="0" Grid.Row="0" Visibility="Hidden" Width="{Binding ActualHeight, ElementName=WorkingRect, Mode=OneWay}" Margin="8" Fill="#FF909090"/>
+			<Rectangle x:Name="ErrorRect" Grid.Column="0" Grid.Row="0" Visibility="Hidden" Width="{Binding ActualHeight, ElementName=ErrorRect, Mode=OneWay}" Margin="8" Fill="#FFF2D100"/>
 
 			<Label x:Name="SourceLabel" Grid.Column="1" FontSize="16" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-			<Label x:Name="LinkLabel" Grid.Column="2" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" MouseLeftButtonUp="LinkLabel_Click"  Foreground="#FF0013CF"/>
+			<helper:LinkLabel x:Name="LinkLabel" Grid.Column="2" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" WebBrowser="True"/>
 
 			
 			
-			<Button x:Name="RefreshButton" Grid.Column="3" Click="RefreshButton_Click" Margin="0,3,3,3" HorizontalAlignment="Right">
-				<Grid >
+			<Button x:Name="RefreshButton" Grid.Column="3" Click="RefreshButton_Click" Margin="0,3,3,3" HorizontalAlignment="Right" Padding="0,2,3,2">
+				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
 					</Grid.ColumnDefinitions>
-					<Label Content="Refresh" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
-					<Image x:Name="RefreshIMG" Grid.Column="1" Width="20" Source="/Miharu Scan Helper;component/Resources/Icons/Refresh.png" />
-				</Grid>				
+					<Label x:Name="refreshSource" Content="Refresh" FontSize="10" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+					<iconPacks:PackIconModern Kind="Refresh" Grid.Column="1" Margin="3,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+								Width="Auto" 
+								MinHeight="{Binding ActualHeight, ElementName=refreshSource, Mode=OneWay}" />
+				</Grid>
 			</Button>
 			
 

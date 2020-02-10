@@ -98,10 +98,5 @@ namespace Miharu.FrontEnd.TextEntry
 
 		
 
-
-		private void LinkLabel_Click (object sender, RoutedEventArgs e) {
-			System.Diagnostics.Process.Start((string)LinkLabel.Content);
-		}
-
 	}
 }

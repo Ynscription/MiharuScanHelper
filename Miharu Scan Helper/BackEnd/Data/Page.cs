@@ -67,7 +67,6 @@ namespace Miharu.BackEnd.Data {
 
 		public Text AddTextEntry (Rect rect) {
 			
-			//g.Clear(Color.Red);
 			Text txt = new Text(CropImage(rect), rect);
 			TextEntries.Add(txt);
 			PageChanged?.Invoke(this, new EventArgs());
