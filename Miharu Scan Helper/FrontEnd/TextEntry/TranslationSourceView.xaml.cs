@@ -1,9 +1,11 @@
 ﻿
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
+using Miharu.Control;
 
 namespace Miharu.FrontEnd.TextEntry
 {
@@ -19,12 +21,14 @@ namespace Miharu.FrontEnd.TextEntry
 		public TranslationType Type {
 			get; private set;
 		}
-		private Text _textEntry;
-		private TextEntryControl _parent;
 
-		public TranslationSourceView(TextEntryControl parent, TranslationType type, Text textEntry)
-		{
+		private TranslationManager _translationManager;
+
+		public TranslationSourceView (TranslationManager translationManager, TranslationType type, Text textEntry) {
 			InitializeComponent();
+			_translationManager = translationManager;
+			_translationManager.TranslationFail += OnTranslationFailed;
+
 			Type = type;
 			if (Type == TranslationType.Yandex_API) {
 				SourceLabel.Content = "Powered by Yandex.Translate";
@@ -32,28 +36,35 @@ namespace Miharu.FrontEnd.TextEntry
 			}
 			else
 				SourceLabel.Content = Type.ToString();
-			_textEntry = textEntry;
-			_textEntry.TextChanged += TextEntry_TextChanged;
-			_parent = parent;
-			_parent.TranslationFail += OnTranslationFailed;
-			TranslationTextBox.Text = _textEntry.GetTranslation(Type);
+
+			textEntry.TextChanged += TextEntry_TextChanged;
+			TranslationTextBox.Text = _translationManager.TextEntryManager.CurrentText.GetTranslation(Type);
 		}
+
+		
 
 		private void TextEntry_TextChanged(object sender, TxtChangedEventArgs args)
 		{
 			if (args.TranslationType.HasValue && args.ChangeType == TextChangeType.TranslationSource) {
 				if (args.TranslationType.Value == Type) {
-					TranslationTextBox.Text = args.Text;
-					RefreshButton.IsEnabled = true;
+					try {
+						Dispatcher.Invoke(() => {
+							TranslationTextBox.Text = args.Text;
+							RefreshButton.IsEnabled = true;
 
-					WorkingRect.Visibility = Visibility.Hidden;
-					WorkingRect.ToolTip = null;
+							WorkingRect.Visibility = Visibility.Hidden;
+							WorkingRect.ToolTip = null;
 
-					ErrorRect.Visibility = Visibility.Hidden;
-					ErrorRect.ToolTip = null;
+							ErrorRect.Visibility = Visibility.Hidden;
+							ErrorRect.ToolTip = null;
 					
-					SuccessRect.Visibility = Visibility.Visible;
-			}
+							SuccessRect.Visibility = Visibility.Visible;
+						});
+					}
+					catch(Exception e) {
+						OnTranslationFailed(this, new TranslationFailEventArgs(e, Type));
+					}
+				}
 			}
 			
 		}
@@ -92,7 +103,7 @@ namespace Miharu.FrontEnd.TextEntry
 		
 		private void RefreshButton_Click(object sender, RoutedEventArgs e)
 		{
-			_parent.RequestTranslation(Type);
+			_translationManager.RequestTranslation(Type);
 			AwaitTranslation();
 		}
 

@@ -1,4 +1,5 @@
-﻿using Miharu.Control;
+﻿using Miharu.BackEnd.Data;
+using Miharu.Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,16 @@ namespace Miharu.FrontEnd.TextEntry
 			_textEntryManager = textEntryManager;
 			_textEntryManager.TextChanged += OnTextEntryChanged;
 			_textEntryManager.TextIndexChanged += OnTextEntryIndexChanged;
-			_pageManager = _textEntryManager.pageManager;
+			_pageManager = _textEntryManager.PageManager;
 			_pageManager.PageChanged += OnPageChanged;
 			_pageManager.TextEntryMoved += OnTextEntryMoved;
 			_pageManager.TextEntryRemoved += OnTextEntryRemoved;
+			_pageManager.TextEntryAdded += OnTextEntryAdded;
+		}
+
+		private void OnTextEntryAdded(object sender, ListModificationEventArgs e)
+		{
+			TextEntriesStackPanel.Children.Insert(e.EventNewIndex, new TextEntryListView((Text)e.EventObject, _pageManager));
 		}
 
 		private void OnTextEntryRemoved(object sender, ListModificationEventArgs e)
@@ -75,8 +82,8 @@ namespace Miharu.FrontEnd.TextEntry
 
 		private void OnTextEntryChanged(object sender, EventArgs e)
 		{
-			if (_textEntryManager.CurrentText != null)
-				TextEntryArea.Content = new TextEntryControl(_textEntryManager.CurrentText);
+			if (_textEntryManager.IsTextSelected)
+				TextEntryArea.Content = new TextEntryControl(_textEntryManager);
 			else
 				TextEntryArea.Content = null;
 		}

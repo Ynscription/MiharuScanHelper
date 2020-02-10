@@ -10,6 +10,16 @@ namespace Miharu.FrontEnd.Helper {
 	public partial class AboutDialog : MetroWindow {
 		public AboutDialog () {
 			InitializeComponent();
+			MiharuLicense.Link = MiharuLicenseFile;
+			NewtonSoftJsonLicense.Link = NewtosoftLicenseFile;
+			OokiiDialogsLicense.Link = OokiiLicenseFile;
+			WpfAnimatedGifLicense.Link = WpfGifLicenseFile;
+			SeleniumLicense.Link = SeleniumLicenseFile;
+			MahAppsMetroLicense.Link = MahAppsMetroLicenseFile;
+			MahAppsMetroIconPacksLicense.Link = MahAppsMetroIconPacksLicenseFile;
+			TesseractLicense.Link = TesseractLicenseFile;
+			GeckoLicense.Link = GeckoLicenseFile;
+
 			
 		}
 

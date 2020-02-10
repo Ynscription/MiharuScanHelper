@@ -150,10 +150,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FrontEnd\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -207,16 +203,11 @@
     <Compile Include="FrontEnd\PreferencesDialog.xaml.cs">
       <DependentUpon>PreferencesDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrontEnd\Page\RectangleAdorner.cs" />
     <Compile Include="FrontEnd\RipDialog.xaml.cs">
       <DependentUpon>RipDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\TextEntry\TextEntryListView.xaml.cs">
       <DependentUpon>TextEntryListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FrontEnd\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Page Include="FrontEnd\TextEntry\TextEntryControl.xaml">
       <SubType>Designer</SubType>

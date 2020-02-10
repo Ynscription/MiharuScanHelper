@@ -5,7 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Miharu.FrontEnd"
-        mc:Ignorable="d"
+	xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+	mc:Ignorable="d"
         Title="Edit Pages" Height="500" Width="400" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico">
 
 	<Grid>
@@ -74,27 +75,31 @@
 				<ColumnDefinition Width="60"/>
 				<ColumnDefinition Width="60"/>
 				<ColumnDefinition Width="60"/>
-				<ColumnDefinition Width="160"/>
+				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
 			<Button x:Name="AddPageButton" Grid.Column="0" Click="AddPageButton_Click" >
-				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/New Page.png"  />
-				</StackPanel>
+				<iconPacks:PackIconModern Kind="PageAdd" 
+							Margin="5"
+							VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+							Width="Auto" Height="Auto"/>
 			</Button>
 			<Button x:Name="DelPageButton" Grid.Column="1" Height="60" VerticalAlignment="Top" Click="DelPageButton_Click" >
-				<StackPanel>
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/Delete.png"  />
-				</StackPanel>
+				<iconPacks:PackIconModern Kind="Delete" 
+							Margin="5"
+							VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+							Width="Auto" Height="Auto"/>
 			</Button>
 			<Button x:Name="UpPageButton" Grid.Column="2" Click="UpPageButton_Click" >
-				<StackPanel>
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/ArrowUp.png"  />
-				</StackPanel>
+				<iconPacks:PackIconModern Kind="ArrowUp" 
+							Margin="5"
+							VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+							Width="Auto" Height="Auto"/>
 			</Button>
 			<Button x:Name="DownPageButton" Grid.Column="3" Click="DownPageButton_Click" >
-				<StackPanel>
-					<Image Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Miharu Scan Helper;component/Resources/Icons/ArrowDown.png"  />
-				</StackPanel>
+				<iconPacks:PackIconModern Kind="ArrowDown" 
+							Margin="5"
+							VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+							Width="Auto" Height="Auto"/>
 			</Button>
 			<Button x:Name="CloseButton" Grid.Column="4" Content="Close" FontSize="20" Click="CloseButton_Click">
 

@@ -14,7 +14,8 @@ namespace Miharu.FrontEnd
 	/// </summary>
 	public partial class EditChapterWindow : MetroWindow
 	{
-		private Chapter _loadedChapter = null;
+		private ChapterManager _chapterManager;
+
 		public int SelectedIndex {
 			get;
 			private set;
@@ -23,35 +24,23 @@ namespace Miharu.FrontEnd
 		private void UpdateButtons () {
 			int index = PagesListBox.SelectedIndex;
 			UpPageButton.IsEnabled = index > 0;
-			DownPageButton.IsEnabled = index < _loadedChapter.TotalPages -1 && index >= 0;
-			DelPageButton.IsEnabled = _loadedChapter.TotalPages > 1 && index >= 0;
+			DownPageButton.IsEnabled = index < _chapterManager.ChapterTotalPages -1 && index >= 0;
+			DelPageButton.IsEnabled = _chapterManager.ChapterTotalPages > 1 && index >= 0;
 			SelectedIndex = index >= 0 ? index : 0;
-		}
-
-		public EditChapterWindow (Chapter loadedChapter, int currentPage)
-		{
-			InitializeComponent();
-			_loadedChapter = loadedChapter;
-			
-			PagesListBox.ItemsSource = _loadedChapter.Pages;
-			PagesListBox.Items.Refresh();
-			PagesListBox.SelectedIndex = currentPage;
-			
-			UpdateButtons();
 		}
 
 		public EditChapterWindow (ChapterManager chapterManager)
 		{
 			InitializeComponent();
-			_loadedChapter = null;
-
+			_chapterManager = chapterManager;
 			
-			PagesListBox.ItemsSource = _loadedChapter.Pages;
+			PagesListBox.ItemsSource = _chapterManager.LoadedChapter.Pages;
 			PagesListBox.Items.Refresh();
 			PagesListBox.SelectedIndex = chapterManager.PageManager.CurrentPageIndex;
 			
 			UpdateButtons();
 		}
+
 
 		private void AddPageButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -69,12 +58,12 @@ namespace Miharu.FrontEnd
 				int previousIndex = PagesListBox.SelectedIndex;
 				try {
 					Mouse.SetCursor(Cursors.Wait);
-					int index = _loadedChapter.TotalPages -1;
-					if (PagesListBox.SelectedIndex > -1)
+					int index = _chapterManager.LoadedChapter.TotalPages -1;
+					if (PagesListBox.SelectedIndex >= 0)
 						index = PagesListBox.SelectedIndex;
 					
 					foreach (string file in fileDialog.FileNames)
-						_loadedChapter.AddPage(++index, file);		
+						_chapterManager.AddPage(++index, file);		
 					PagesListBox.Items.Refresh();
 					PagesListBox.SelectedIndex = index;
 					UpdateButtons();
@@ -100,7 +89,7 @@ namespace Miharu.FrontEnd
 		{
 
 			int index = PagesListBox.SelectedIndex;
-			if (_loadedChapter.Pages[index].TextEntries.Count > 0) {
+			if (_chapterManager.LoadedChapter.Pages[index].TextEntries.Count > 0) {
 				TaskDialog dialog = new TaskDialog();
 				dialog.WindowTitle = "Warning";
 				dialog.MainIcon = TaskDialogIcon.Warning;
@@ -118,9 +107,9 @@ namespace Miharu.FrontEnd
 				if (button.ButtonType == ButtonType.Cancel)
 					return;
 			}
-			_loadedChapter.RemovePage (index);
+			_chapterManager.RemovePage (index);
 			PagesListBox.Items.Refresh();
-			PagesListBox.SelectedIndex = (index >= _loadedChapter.TotalPages) ? _loadedChapter.TotalPages -1 : index;
+			PagesListBox.SelectedIndex = (index >= _chapterManager.LoadedChapter.TotalPages) ? _chapterManager.LoadedChapter.TotalPages -1 : index;
 			UpdateButtons();
 			
 		}
@@ -129,14 +118,14 @@ namespace Miharu.FrontEnd
 		private void UpPageButton_Click(object sender, RoutedEventArgs e)
 		{
 			
-			_loadedChapter.MovePageUp(PagesListBox.SelectedIndex);
+			_chapterManager.MovePageUp(PagesListBox.SelectedIndex);
 			PagesListBox.Items.Refresh();
 			UpdateButtons();
 		}
 
 		private void DownPageButton_Click(object sender, RoutedEventArgs e)
 		{
-			_loadedChapter.MovePageDown(PagesListBox.SelectedIndex);
+			_chapterManager.MovePageDown(PagesListBox.SelectedIndex);
 			PagesListBox.Items.Refresh();
 			UpdateButtons();
 		}

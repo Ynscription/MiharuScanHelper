@@ -1,6 +1,7 @@
 ﻿
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
+using Miharu.Control;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,21 +21,24 @@ namespace Miharu.FrontEnd.TextEntry
 				return TranslationType.Jaded_Network;
 			}
 		}
-		private Text _textEntry;
-		private TextEntryControl _parent;
+
+		private TranslationManager _translationManager;
 		private List<SFXContainer> _sfxEntries;
 		private const string _JADED_NETWORK_URL = "http://thejadednetwork.com/sfx";
 
-		public TranslationSourceJadedNetworkView(TextEntryControl parent, Text textEntry)
+		
+
+		public TranslationSourceJadedNetworkView(TranslationManager translationManager, Text textEntry)
 		{
 			InitializeComponent();
-			_textEntry = textEntry;
-			_textEntry.TextChanged += TextEntry_TextChanged;
-			_parent = parent;
-			_parent.TranslationFail += OnTranslationFailed;
+			textEntry.TextChanged += TextEntry_TextChanged;
+
+			_translationManager = translationManager;
+			_translationManager.TranslationFail += OnTranslationFailed;
+
 			_sfxEntries = new List<SFXContainer>();
 			string src = null;
-			if ((src = _textEntry.GetTranslation(Type)) != null)
+			if ((src = textEntry.GetTranslation(Type)) != null)
 				ProcessSourceSFX(src);
 			SFXListBox.ItemsSource = _sfxEntries;
 			SFXListBox.Items.Refresh();
@@ -92,19 +96,21 @@ namespace Miharu.FrontEnd.TextEntry
 			if (e.TranslationType.HasValue && e.ChangeType == TextChangeType.TranslationSource) {
 				if (e.TranslationType.Value == Type) {
 					try {
-						string src = null;
-						if ((src = _textEntry.GetTranslation(Type)) != null)
-							ProcessSourceSFX(src);
-						SFXListBox.Items.Refresh();
-						RefreshButton.IsEnabled = true;
+						Dispatcher.Invoke(() => {
+							string src = null;
+							if ((src = _translationManager.TextEntryManager.CurrentText.GetTranslation(Type)) != null)
+								ProcessSourceSFX(src);
+							SFXListBox.Items.Refresh();
+							RefreshButton.IsEnabled = true;
 
-						WorkingRect.Visibility = Visibility.Hidden;
-						WorkingRect.ToolTip = null;
+							WorkingRect.Visibility = Visibility.Hidden;
+							WorkingRect.ToolTip = null;
 
-						ErrorRect.Visibility = Visibility.Hidden;
-						ErrorRect.ToolTip = null;
+							ErrorRect.Visibility = Visibility.Hidden;
+							ErrorRect.ToolTip = null;
 					
-						SuccessRect.Visibility = Visibility.Visible;
+							SuccessRect.Visibility = Visibility.Visible;
+						});
 					}
 					catch (Exception ex) {
 						OnTranslationFailed(this, new TranslationFailEventArgs(ex, Type));
@@ -151,8 +157,8 @@ namespace Miharu.FrontEnd.TextEntry
 		}
 
 		private void RefreshButton_Click (object sender, RoutedEventArgs e) {
-			_parent.RequestTranslation(Type);
 			AwaitTranslation();
+			_translationManager.RequestTranslation(Type);			
 		}
 
 

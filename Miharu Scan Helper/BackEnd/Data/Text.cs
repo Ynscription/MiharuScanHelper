@@ -49,6 +49,7 @@ namespace Miharu.BackEnd.Data
 				if (_parsedText == null || _parseInvalidated) {
 					_parsedText = ParseText();
 					_parseInvalidated = false;
+					TextChanged?.Invoke(this, new TxtChangedEventArgs(TextChangeType.Parse, null, _parsedText));
 				}
 				return _parsedText;
 			}

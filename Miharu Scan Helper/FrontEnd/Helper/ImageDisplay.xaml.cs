@@ -14,9 +14,9 @@ namespace Miharu.FrontEnd.Helper {
 			imgSrc.UriSource = new Uri (src, UriKind.Relative);
 			imgSrc.CacheOption = BitmapCacheOption.OnLoad;
 			imgSrc.EndInit();
-			Width = imgSrc.Width;
-			Height = imgSrc.Height + 28;
 			DisplayImage.Source = imgSrc;
+			DisplayImage.Width = imgSrc.Width;
+			DisplayImage.Height = imgSrc.Height;
 		}
 	}
 }

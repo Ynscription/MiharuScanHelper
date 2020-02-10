@@ -6,6 +6,7 @@ using Miharu.FrontEnd.Helper;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -41,22 +42,27 @@ namespace Miharu.FrontEnd
 
 		private void OnSaveChanged(object sender, EventArgs e)
 		{
-			SetTopMenuItems();
-			string title = "";
-			if (_chapterManager.IsChapterLoaded) {
-				if (_chapterManager.SaveFileExists) {
-					FileInfo fi = new FileInfo(_chapterManager.CurrentSaveFile);
-					title += fi.Name.Replace(fi.Extension, "");
-				}
-				else
-					title += "untitled";
-				if (!_chapterManager.IsChapterSaved)
-					title += "*";
-				title += " - Miharu Scan Helper";
+			try {
+				Dispatcher.Invoke(() => {
+					SetTopMenuItems();
+					string title = "";
+					if (_chapterManager.IsChapterLoaded) {
+						if (_chapterManager.SaveFileExists) {
+							FileInfo fi = new FileInfo(_chapterManager.CurrentSaveFile);
+							title += fi.Name.Replace(fi.Extension, "");
+						}
+						else
+							title += "untitled";
+						if (!_chapterManager.IsChapterSaved)
+							title += "*";
+						title += " - Miharu Scan Helper";
+					}
+					else
+						title += "Miharu Scan Helper";
+					Title = title;
+				});
 			}
-			else
-				title += "Miharu Scan Helper";
-			Title = title;
+			catch (TaskCanceledException) { }
 		}
 
 
@@ -405,9 +411,10 @@ namespace Miharu.FrontEnd
 				_chapterManager.WaitForPages();
 				Mouse.SetCursor(Cursors.Arrow);
 			}
-			EditChapterWindow editPagesDialog = new EditChapterWindow(_chapterManager.LoadedChapter, _chapterManager.PageManager.CurrentPageIndex);
+			EditChapterWindow editPagesDialog = new EditChapterWindow(_chapterManager);
 			editPagesDialog.Owner = this;
 			editPagesDialog.ShowDialog();
+			_chapterManager.ReloadChapter(editPagesDialog.SelectedIndex);
 			GC.Collect();
 		}
 			   

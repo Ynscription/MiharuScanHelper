@@ -24,7 +24,8 @@ namespace Miharu.FrontEnd.TextEntry {
 		//FF535353
 		private static System.Windows.Media.Brush _normalBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 83, 83, 83));
 		
-		private MainWindow _parent;
+
+
 		private PageManager _pageManager;
 		private Text _textEntry;
 
@@ -39,17 +40,6 @@ namespace Miharu.FrontEnd.TextEntry {
 			}
 		}
 		
-
-		//TODO remove this constructor
-		public TextEntryListView (Text textEntry, MainWindow parent) :base(){
-			InitializeComponent();
-			_textEntry = textEntry;
-			_parent = parent;
-			TranslationLabel.Text = _textEntry.TranslatedText;
-			ParsedLabel.Text = _textEntry.ParsedText;
-			_textEntry.TextChanged += OnTextChanged;
-			ShowImageFromBitmap(textEntry.Source);
-		}
 
 		public TextEntryListView (Text textEntry, PageManager pageManager) :base(){
 			InitializeComponent();

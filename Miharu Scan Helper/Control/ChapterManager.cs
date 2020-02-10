@@ -59,7 +59,7 @@ namespace Miharu.Control
 		public PageManager PageManager {
 			get;
 			private set;
-		}
+		} = null;
 
 
 		public bool AllPagesReady { 
@@ -108,6 +108,8 @@ namespace Miharu.Control
 			}
 		}
 
+		
+
 		public void NewChapter (string [] files) {
 			try {
 				UnloadChapter();
@@ -151,11 +153,22 @@ namespace Miharu.Control
 			IsChapterSaved = false;
 			PageManager.Unload();
 		}
+
+		public void ReloadChapter (int index = 0) {
+			int innerIndex = index >= 0 && index < LoadedChapter.Pages.Count ? index : 0;
+			Chapter aux = LoadedChapter;
+			string source = CurrentSaveFile;
+			UnloadChapter();
+			LoadedChapter = aux;
+			PageManager.LoadPage(LoadedChapter.Pages[innerIndex], innerIndex);
+			CurrentSaveFile = source;
+			IsChapterSaved = false;
+		}
 			   		 
 		public void SaveChapter (string newSaveFile = null) {
 			try {
 				string file = newSaveFile ?? CurrentSaveFile;
-				LoadedChapter.Save(file);
+				LoadedChapter.Save(file, PageManager.CurrentPageIndex);
 				CurrentSaveFile = file;
 				IsChapterSaved = true;
 			}
@@ -177,6 +190,8 @@ namespace Miharu.Control
 				throw e;
 			}
 		}
+
+		
 
 		public void ExportJPScript(string fileName)
 		{
@@ -200,11 +215,40 @@ namespace Miharu.Control
 			}
 		}
 
-
+		
 
 		public void WaitForPages()
 		{
 			LoadedChapter.ChapterWaitHandle.WaitOne();
+		}
+
+
+
+		
+
+
+		public void AddPage(int v, string file)
+		{
+			LoadedChapter.AddPage(v, file);
+			IsChapterSaved = false;
+		}
+
+		public void RemovePage(int index)
+		{
+			LoadedChapter.RemovePage(index);
+			IsChapterSaved = false;
+		}
+
+		public void MovePageUp(int selectedIndex)
+		{
+			LoadedChapter.MovePageUp(selectedIndex);
+			IsChapterSaved = false;
+		}
+
+		public void MovePageDown(int selectedIndex)
+		{
+			LoadedChapter.MovePageDown(selectedIndex);
+			IsChapterSaved = false;
 		}
 	}
 }

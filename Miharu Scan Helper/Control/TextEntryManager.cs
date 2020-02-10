@@ -1,4 +1,5 @@
 ﻿using Miharu.BackEnd.Data;
+using Miharu.BackEnd.Translation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,15 @@ namespace Miharu.Control
 		public event EventHandler TextChanged;
 		public event EventHandler TextIndexChanged;
 
-		public PageManager pageManager;
+		public PageManager PageManager {
+			get;
+			private set;
+		} = null;
+		
+		public TranslationManager TranslationManager {
+			get;
+			private set;
+		} = null;
 
 
 		private Text _currentText = null;
@@ -23,6 +32,9 @@ namespace Miharu.Control
 				_currentText = value;
 				TextChanged?.Invoke(this, new EventArgs());
 			}
+		}
+		public bool IsTextSelected {
+			get { return CurrentText != null; }
 		}
 
 		private int _currentTextIndex = -1;
@@ -37,8 +49,11 @@ namespace Miharu.Control
 
 		public TextEntryManager(PageManager pageManager)
 		{
-			this.pageManager = pageManager;
+			PageManager = pageManager;
+			TranslationManager = new TranslationManager(this);
 		}
+
+		
 
 		internal void SelectTextEntry(Text entry, int index)
 		{
@@ -64,6 +79,31 @@ namespace Miharu.Control
 				CurrentTextIndex = newIndex;
 			else if (newIndex == CurrentTextIndex)
 				CurrentTextIndex = oldIndex;
+		}
+
+		internal void ReParse()
+		{
+			CurrentText.Invalidate();
+			string tmp = CurrentText.ParsedText;
+			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+
+		internal void ChangeParsedText(string text)
+		{
+			CurrentText.ParsedText = text;
+			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+
+		internal void SetVertical(bool v)
+		{
+			CurrentText.Vertical = v;
+			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+
+		internal void SetTranslation(TranslationType type, string translation)
+		{
+			CurrentText.SetTranslation(type, translation);
+			PageManager.ChapterManager.IsChapterSaved = false;
 		}
 	}
 }

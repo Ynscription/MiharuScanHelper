@@ -1,6 +1,7 @@
 ﻿
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
+using Miharu.Control;
 using Miharu.FrontEnd.TextEntry;
 using System;
 using System.Drawing;
@@ -19,58 +20,69 @@ namespace Miharu.FrontEnd
 	/// <summary>
 	/// Interaction logic for TextEntryControl.xaml
 	/// </summary>
-	public partial class TextEntryControl : UserControl, TranslationConsumer{
+	public partial class TextEntryControl : UserControl {
 		[DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool DeleteObject ([In] IntPtr hObject);
 
 
-		public event TranslationFailEventHandler TranslationFail;
 
-		private Text _textEntry;
+		private TextEntryManager _textEntryManager;
 
 
 		private void InitializeParsedTextBox () {
-			ParsedTextBox.Text = _textEntry.ParsedText;
-			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(_textEntry.ParsedText);
-		}
-
-		public string ParsedText {
-			get => _textEntry.ParsedText;
-			set {
-				_textEntry.ParsedText = value;				
+			if (_textEntryManager.IsTextSelected) {
+				ParsedTextBox.Text = _textEntryManager.CurrentText.ParsedText;
+				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(_textEntryManager.CurrentText.ParsedText);
 			}
 		}
 
+		
 
-		public TextEntryControl(Text textEntry) :base(){
+		public TextEntryControl (TextEntryManager textEntryManager) :base () {
 			InitializeComponent();
-			
+
 			InitializeSAnimation();
 
-			_textEntry = textEntry;
-			_textEntry.TextChanged += _textEntry_TextChanged;
+
+			_textEntryManager = textEntryManager;
+			if (_textEntryManager.IsTextSelected)
+				LoadTextEntry(_textEntryManager.CurrentText);
+		}
+
+		private void LoadTextEntry(Text currentText)
+		{			
+			_textEntryManager.CurrentText.TextChanged += OnTextContentChanged;
 			
-			ShowImageFromBitmap(textEntry.Source);
+			ShowImageFromBitmap(_textEntryManager.CurrentText.Source);
+
 			InitializeParsedTextBox();
 
+			TranslationSourcesStackPanel.Children.Clear();
 			foreach (TranslationType t in TranslationProvider.Instance) {
 				if (t != TranslationType.Jaded_Network)
-					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (this, t, _textEntry));
+					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (
+						_textEntryManager.TranslationManager, t, _textEntryManager.CurrentText));
 			}
 
-			SFXTranslationGrid.Children.Add(new TranslationSourceJadedNetworkView(this, _textEntry));
+			SFXTranslationGrid.Children.Clear();
+			SFXTranslationGrid.Children.Add(new TranslationSourceJadedNetworkView(_textEntryManager.TranslationManager, _textEntryManager.CurrentText));
 
-			TranslatedTextBox.Text = textEntry.TranslatedText;
-			VerticalCheckBox.IsChecked = textEntry.Vertical;
+			TranslatedTextBox.Text = _textEntryManager.CurrentText.TranslatedText;
+			VerticalCheckBox.IsChecked = _textEntryManager.CurrentText.Vertical;
 
 		}
 
-		private void _textEntry_TextChanged(object sender, TxtChangedEventArgs e)
+		
+
+		private void OnTextContentChanged(object sender, TxtChangedEventArgs e)
 		{
 			if (e.ChangeType == TextChangeType.Parse) {
-				ParsedTextBox.Text = e.Text;
+				if (ParsedTextBox.Text != e.Text)
+					ParsedTextBox.Text = e.Text;
 				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(e.Text);
+				RefreshParseButton.IsEnabled = true;
+				VerticalCheckBox.IsEnabled = true;
 			}
 			else if (e.ChangeType == TextChangeType.Translation)
 				TranslatedTextBox.Text = e.Text;
@@ -81,11 +93,7 @@ namespace Miharu.FrontEnd
 			Mouse.SetCursor(Cursors.Wait);
 			RefreshParseButton.IsEnabled = false;
 			VerticalCheckBox.IsEnabled = false;
-			_textEntry.Invalidate();
-			ParsedTextBox.Text = _textEntry.ParsedText;
-			JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(_textEntry.ParsedText);
-			RefreshParseButton.IsEnabled = true;
-			VerticalCheckBox.IsEnabled = true;
+			_textEntryManager.ReParse();			
 			Mouse.SetCursor(Cursors.Arrow);
 		}
 
@@ -93,14 +101,14 @@ namespace Miharu.FrontEnd
 		
 
 		private void ParsedTextBox_TextChanged (object sender, TextChangedEventArgs e) {
-			if (ParsedText != ParsedTextBox.Text)
-				ParsedText = ParsedTextBox.Text;
+			if (_textEntryManager.CurrentText.ParsedText != ParsedTextBox.Text)
+				_textEntryManager.ChangeParsedText(ParsedTextBox.Text);
 			CheckAnimation(ParsedTextBox.Text);
 		}
 
 		private void TranslatedTextBox_TextChanged (object sender, TextChangedEventArgs e) {
-			if (_textEntry.TranslatedText != TranslatedTextBox.Text)
-				_textEntry.TranslatedText = TranslatedTextBox.Text;
+			if (_textEntryManager.CurrentText.TranslatedText != TranslatedTextBox.Text)
+				_textEntryManager.CurrentText.TranslatedText = TranslatedTextBox.Text;
 		}
 
 		
@@ -116,57 +124,32 @@ namespace Miharu.FrontEnd
 
 		private void RefreshAllButton_Click(object sender, RoutedEventArgs e)
 		{
-			ForceTranslation();
+			TranslateAll();
 		}
 
-		public void ForceTranslation () {
+		public void TranslateAll () {
 
 			foreach (TranslationSourceView t in TranslationSourcesStackPanel.Children)
 				t.AwaitTranslation();
 
-
-			foreach (TranslationType t in TranslationProvider.Instance) {
-				if (t != TranslationType.Jaded_Network)
-					TranslationProvider.Translate(t, ParsedText, this);
-			}
+			_textEntryManager.TranslationManager.TranslateAll();
+			
 			
 			//It makes sense to not ask for an SFX translation by default.
 			
 		}
 
-		public void RequestTranslation (TranslationType type) {
-			/*if (type == TranslationType.GoogleAPI)
-				HTTPTranslator.GoogleTranslate(this, refinedText);*/
-			TranslationProvider.Translate(type, ParsedText, this);
-		}
-
-		
-		public void TranslationCallback (string translation, TranslationType type) {
-			translation = translation.Replace("\\\"", "\"");
-			try {
-				Dispatcher.Invoke(() => {
-					_textEntry.SetTranslation(type, translation);
-				});
-			}
-			catch (TaskCanceledException) { }
-		}
-
-		public void TranslationFailed (Exception e, TranslationType type) {
-			TranslationFail?.Invoke(this, new TranslationFailEventArgs(e, type));
-		}
-
 		
 
-
-
+		
 		private void VerticalCheckBox_Checked (object sender, RoutedEventArgs e) {
-			if (_textEntry != null && !_textEntry.Vertical)
-				_textEntry.Vertical = true;
+			if (_textEntryManager.IsTextSelected && !_textEntryManager.CurrentText.Vertical)
+				_textEntryManager.SetVertical(true);
 		}
 
 		private void VerticalCheckBox_Unchecked (object sender, RoutedEventArgs e) {
-			if (_textEntry != null && _textEntry.Vertical)
-				_textEntry.Vertical = false;
+			if (_textEntryManager.IsTextSelected && _textEntryManager.CurrentText.Vertical)
+				_textEntryManager.SetVertical(false);
 		}
 
 		private void DeleteButton_Click (object sender, RoutedEventArgs e) {

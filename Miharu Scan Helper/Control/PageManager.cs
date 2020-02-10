@@ -12,6 +12,7 @@ namespace Miharu.Control
 		#region Events
 		public event EventHandler PageChanged;
 		public event EventHandler PageIndexChanged;
+		public event ListModificationEventHandler TextEntryAdded;
 		public event ListModificationEventHandler TextEntryRemoved;
 		public event ListModificationEventHandler TextEntryMoved;
 		#endregion
@@ -111,6 +112,7 @@ namespace Miharu.Control
 			Text text = null;
 			try {
 				text = CurrentPage.AddTextEntry(rect);
+				TextEntryAdded?.Invoke(this, new ListModificationEventArgs(-1, text, CurrentPage.TextEntries.Count -1));
 			}
 			catch (Exception e) {
 				Logger.Log(e);
@@ -136,13 +138,13 @@ namespace Miharu.Control
 			TextEntryManager.Unload();
 		}
 
-		internal void RemoveTextEntry(Text textEntry)
+		public void RemoveTextEntry(Text textEntry)
 		{
 			try {
 				int index = CurrentPage.TextEntries.IndexOf(textEntry);
 				CurrentPage.RemoveTextEntry(index);
-				TextEntryManager.RemovedTextEntry(textEntry);
 				TextEntryRemoved?.Invoke(this, new ListModificationEventArgs(index, textEntry));
+				TextEntryManager.RemovedTextEntry(textEntry);
 				ChapterManager.IsChapterSaved = false;
 			}
 			catch (Exception e) {
@@ -151,7 +153,7 @@ namespace Miharu.Control
 			}
 		}
 
-		internal void MoveTextEntry(Text textEntry, bool up)
+		public void MoveTextEntry(Text textEntry, bool up)
 		{
 			try {
 				int offset = up ? -1 : 1;
@@ -170,7 +172,7 @@ namespace Miharu.Control
 
 		}
 
-		internal void SelectTextEntry(Text textEntry)
+		public void SelectTextEntry(Text textEntry)
 		{
 			int index = CurrentPage.TextEntries.IndexOf(textEntry);
 			TextEntryManager.SelectTextEntry(textEntry, index);

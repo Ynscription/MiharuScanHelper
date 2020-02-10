@@ -84,7 +84,7 @@
 				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Tools" TabIndex="2">
-				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" >
+				<!--<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" >
 					<MenuItem.Icon >
 						<iconPacks:PackIconModern Kind="Download" />
 					</MenuItem.Icon>
@@ -93,7 +93,7 @@
 					<MenuItem.Icon >
 						<iconPacks:PackIconModern Kind="Bug" />
 					</MenuItem.Icon>
-				</MenuItem>
+				</MenuItem>-->
 			</MenuItem>
 			<MenuItem Header="_Help" TabIndex="3">
 				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" >

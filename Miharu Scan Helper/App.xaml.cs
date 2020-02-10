@@ -141,8 +141,6 @@ Would you like to locate the Tesseract exectutable manually?";
 				//Initialize stuff
 				Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
 				if (CheckForTesseract()) {
-					Logger.Log("[Tesseract path in use]: " + (string) Settings.Default ["TesseractPath"] + Environment.NewLine);
-
 					InitWebDriver();
 
 					string startChapter = null;
