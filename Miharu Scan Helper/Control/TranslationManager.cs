@@ -10,6 +10,10 @@ namespace Miharu.Control
 	public class TranslationManager : TranslationConsumer
 	{
 		private TranslatorThread _translatorThread;
+		public bool IsWebDriverAvailable {
+			get { return _translatorThread.IsWebDriverAvailable; }
+		}
+
 
 		public event TranslationFailEventHandler TranslationFail;
 

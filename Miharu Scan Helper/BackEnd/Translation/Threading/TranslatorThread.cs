@@ -24,10 +24,32 @@ namespace Miharu.BackEnd.Translation.Threading
 			}
 		}
 
-		public TranslatorThread () {
+		public bool IsWebDriverAvailable {
+			get {
+				if (!_initialized)
+					_initializeHandle.WaitOne();
+				return _webDriverManager != null ? _webDriverManager.IsAlive : false;
+			}
+		}
+
+
+
+		private TranslatorThread () {
 			_initializeHandle = new ManualResetEvent(false);
 			_workHandle = new AutoResetEvent(false);
 		}
+
+		public static TranslatorThread StartThread () {
+			TranslatorThread res = new TranslatorThread();
+			
+			Thread thread = new Thread (new ThreadStart(res.Work));
+			thread.Start();
+
+			return res;
+		}
+
+
+
 
 		private void Init () {
 			_webDriverManager = new WebDriverManager();
@@ -85,14 +107,7 @@ namespace Miharu.BackEnd.Translation.Threading
 			_workHandle.Set();
 		}
 
-		public static TranslatorThread StartThread () {
-			TranslatorThread res = new TranslatorThread();
-			
-			Thread thread = new Thread (new ThreadStart(res.Work));
-			thread.Start();
-
-			return res;
-		}
+		
 
 	}
 }

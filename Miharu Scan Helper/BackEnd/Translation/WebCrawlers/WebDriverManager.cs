@@ -26,11 +26,12 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			ffo.SetPreference("Headless", true);
 			ffo.AddArgument("-headless");
 			try {
-				_driver = new FirefoxDriver(ffds, ffo);				
+				_driver = new FirefoxDriver(ffds, ffo;
 				_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 				_driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
 			}
-			catch (Exception) {
+			catch (Exception e) {
+				Logger.Log(e);
 				_driver = null;				
 			}
 		}

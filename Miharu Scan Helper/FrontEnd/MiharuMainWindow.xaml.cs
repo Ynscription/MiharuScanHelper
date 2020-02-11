@@ -501,6 +501,22 @@ namespace Miharu.FrontEnd
 					_chapterManager.LoadChapter(_startChapter);
 					Mouse.SetCursor(Cursors.Arrow);
 				}
+				Task.Run(() => {
+					if (!_chapterManager.PageManager.TextEntryManager.TranslationManager.IsWebDriverAvailable) {
+						Dispatcher.Invoke(() => {
+							using (TaskDialog dialog = new TaskDialog()) {
+								dialog.WindowTitle = "Warning";
+								dialog.MainIcon = TaskDialogIcon.Warning;
+								dialog.MainInstruction = "Firefox is missing.";
+								dialog.Content = "Some features will not be available if Firefox is not installed in the system.";
+								TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+								dialog.Buttons.Add(okButton);
+								TaskDialogButton button = dialog.ShowDialog(this);
+							}
+						});
+					}
+
+				});
 			}
 			catch (Exception ex) {
 				Mouse.SetCursor(Cursors.Arrow);
