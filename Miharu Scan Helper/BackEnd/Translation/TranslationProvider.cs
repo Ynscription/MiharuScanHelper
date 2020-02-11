@@ -12,16 +12,16 @@ namespace Miharu.BackEnd.Translation
 
 	[Flags]
 	public enum TranslationType {
-		Text = 0x1000,
-		SFX = 0x2000,
+		Text = 0x10,
+		SFX = 0x20,
 		//subtypes
-		Google_Web = 0x1001,
-		Google_API = 0x1002,
-		Bing_Web = 0x1004,
-		Bing_API = 0x1008,
-		Yandex_API = 0x1010,
-		Yandex_Web = 0x1020,
-		Jaded_Network = 0x2001,
+		Google_Web = 0x11,
+		Google_API = 0x12,
+		Bing_Web = 0x13,
+		Bing_API = 0x14,
+		Yandex_API = 0x15,
+		Yandex_Web = 0x16,
+		Jaded_Network = 0x21,
 	}
 
 	public class TranslationProvider : IEnumerable<TranslationType>
