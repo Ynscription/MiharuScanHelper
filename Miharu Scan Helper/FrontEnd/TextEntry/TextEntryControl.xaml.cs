@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using WpfAnimatedGif;
 
 namespace Miharu.FrontEnd
 {
@@ -41,6 +42,7 @@ namespace Miharu.FrontEnd
 
 		public TextEntryControl (TextEntryManager textEntryManager) :base () {
 			InitializeComponent();
+			
 
 			InitializeSAnimation();
 
