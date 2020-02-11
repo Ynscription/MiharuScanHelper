@@ -12,6 +12,7 @@ namespace Miharu.Control
 		#region Events
 		public event EventHandler PageChanged;
 		public event EventHandler PageIndexChanged;
+		public event EventHandler TextEntryRequiresTranslation;
 		public event ListModificationEventHandler TextEntryAdded;
 		public event ListModificationEventHandler TextEntryRemoved;
 		public event ListModificationEventHandler TextEntryMoved;
@@ -119,6 +120,7 @@ namespace Miharu.Control
 				throw e;
 			}
 			TextEntryManager.SelectTextEntry(text, CurrentPage.TextEntries.Count -1);
+			TextEntryRequiresTranslation?.Invoke(this, new EventArgs());
 			ChapterManager.IsChapterSaved = false;
 		}
 

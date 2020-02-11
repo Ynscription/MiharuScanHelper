@@ -48,7 +48,10 @@ namespace Miharu.FrontEnd
 			_textEntryManager = textEntryManager;
 			if (_textEntryManager.IsTextSelected)
 				LoadTextEntry(_textEntryManager.CurrentText);
+			_textEntryManager.PageManager.TextEntryRequiresTranslation += OnTextEntryRequiresTranslation;
 		}
+
+		
 
 		private void LoadTextEntry(Text currentText)
 		{			
@@ -123,6 +126,11 @@ namespace Miharu.FrontEnd
 		}
 
 		private void RefreshAllButton_Click(object sender, RoutedEventArgs e)
+		{
+			TranslateAll();
+		}
+
+		private void OnTextEntryRequiresTranslation(object sender, EventArgs e)
 		{
 			TranslateAll();
 		}
