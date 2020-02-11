@@ -8,6 +8,10 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 	
 		private const string _URL = "https://translate.google.com/#view=home&op=translate&sl=ja&tl=en&text=";
 
+		public WCGoogleTranslator(WebDriverManager webDriverManager) : base(webDriverManager)
+		{
+		}
+
 		public override TranslationType Type {
 			get { return TranslationType.Google_Web; }
 		}

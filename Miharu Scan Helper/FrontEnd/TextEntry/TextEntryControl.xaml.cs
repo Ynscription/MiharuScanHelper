@@ -64,8 +64,8 @@ namespace Miharu.FrontEnd
 			InitializeParsedTextBox();
 
 			TranslationSourcesStackPanel.Children.Clear();
-			foreach (TranslationType t in TranslationProvider.Instance) {
-				if (t != TranslationType.Jaded_Network)
+			foreach (TranslationType t in _textEntryManager.TranslationManager.AvailableTranslations) {
+				if (t.HasFlag(TranslationType.Text))
 					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (
 						_textEntryManager.TranslationManager, t, _textEntryManager.CurrentText));
 			}

@@ -167,6 +167,8 @@
     <Compile Include="BackEnd\Data\SFXContainer.cs" />
     <Compile Include="BackEnd\Data\Text.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPYandexTranslator.cs" />
+    <Compile Include="BackEnd\Translation\Threading\TranslationRequest.cs" />
+    <Compile Include="BackEnd\Translation\Threading\TranslatorThread.cs" />
     <Compile Include="BackEnd\Translation\TranslationFailEventArgs.cs" />
     <Compile Include="BackEnd\Translation\TranslationProvider.cs" />
     <Compile Include="BackEnd\Translation\Translator.cs" />

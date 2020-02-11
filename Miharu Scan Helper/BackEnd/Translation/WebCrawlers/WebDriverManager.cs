@@ -16,9 +16,8 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 		private volatile IWebDriver _driver = null;
 		private volatile object _lock = new object();
 
-		public static WebDriverManager Instance { get; } = new WebDriverManager();
 
-		private WebDriverManager () {
+		public WebDriverManager () {
 			FileInfo geckoDriverFile = new FileInfo(_DRIVER_PATH);
 			FirefoxDriverService ffds = FirefoxDriverService.CreateDefaultService(geckoDriverFile.DirectoryName);
 			ffds.HideCommandPromptWindow = true;
@@ -26,7 +25,6 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			ffo.PageLoadStrategy = PageLoadStrategy.Eager;
 			ffo.SetPreference("Headless", true);
 			ffo.AddArgument("-headless");
-			Monitor.Enter (_lock);
 			try {
 				_driver = new FirefoxDriver(ffds, ffo);				
 				_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
@@ -35,33 +33,15 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			catch (Exception) {
 				_driver = null;				
 			}
-			finally {
-				Monitor.Exit(_lock);
-			}
 		}
 
-		public static bool IsAlive {
+		public bool IsAlive {
 			get {
-				bool res = false;
-				Monitor.Enter(Instance._lock);
-				try {
-					res = Instance._driver != null;
-				}
-				finally{
-					Monitor.Exit(Instance._lock);
-				}
-				return res;
+				return _driver != null;
 			}
 		}
 
-		public static void Init () {
-			Task.Run(() => {
-				WebDriverManager wdm = Instance;
-			});
-		}
-
-
-		private string InternalNavigateAndFetch (string url, By by, Func<IWebElement, string> processResult, Func<IWebDriver, string, IWebElement> overrideNavigation) {
+		public string NavigateAndFetch (string url, By by, Func<IWebElement, string> processResult, Func<IWebDriver, string, IWebElement> overrideNavigation = null) {
 			string res = "";
 			Monitor.Enter(_lock);
 			try  {
@@ -84,14 +64,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			return res;
 		}
 
-		public static string NavigateAndFetch (string url, By by, Func<IWebElement, string> processResult, Func<IWebDriver, string, IWebElement> overrideNavigation = null) {
-
-			return Instance.InternalNavigateAndFetch(url, by, processResult, overrideNavigation);
-
-		}
-
-
-
+		
 
 		#region IDisposable Support
 		private bool disposedValue = false; // To detect redundant calls

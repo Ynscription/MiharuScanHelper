@@ -14,6 +14,10 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 	
 		private const string _URL = "https://translate.yandex.com/?lang=ja-en&text=";
 
+		public WCYandexTranslator (WebDriverManager webDriverManager) :base(webDriverManager){
+
+		}
+
 		public override TranslationType Type {
 			get { return TranslationType.Google_Web; }
 		}
@@ -80,7 +84,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			string res = "";
 			if (text == "")
 				return res;
-			res = WebDriverManager.NavigateAndFetch(GetUri(text), FetchBy, ProcessResult, OverrideNavigation);
+			res = _webDriverManager.NavigateAndFetch(GetUri(text), FetchBy, ProcessResult, OverrideNavigation);
 
 
 			return res;

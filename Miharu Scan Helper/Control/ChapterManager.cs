@@ -1,5 +1,6 @@
 ﻿using Miharu.BackEnd;
 using Miharu.BackEnd.Data;
+using Miharu.BackEnd.Translation.Threading;
 using System;
 
 namespace Miharu.Control
@@ -71,21 +72,8 @@ namespace Miharu.Control
 		#endregion
 
 
-		public ChapterManager (string chapterToLoad = null) {
-			try {
-				if (chapterToLoad != null)
-					LoadChapter(chapterToLoad);
-				}
-			catch (Exception e) {
-				LoadedChapter = null;
-				CurrentSaveFile = null;
-				IsChapterSaved = false;
-				Logger.Log(e);
-				throw e;
-			}
-
-
-			PageManager = new PageManager(this);
+		public ChapterManager (TranslatorThread translatorThread) {
+			PageManager = new PageManager(this, translatorThread);
 		}
 
 		

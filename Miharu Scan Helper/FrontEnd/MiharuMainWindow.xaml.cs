@@ -19,15 +19,15 @@ namespace Miharu.FrontEnd
 	{
 
 		private readonly ChapterManager _chapterManager = null;
+		private string _startChapter = null;
 
-		public MiharuMainWindow(ChapterManager chapterManager)
+		public MiharuMainWindow(ChapterManager chapterManager, string startChapter = null)
 		{
 			InitializeComponent();
 			_chapterManager = chapterManager;
 			_chapterManager.ChapterChanged += OnChapterChanged;
 			_chapterManager.SaveChanged += OnSaveChanged;
-
-			
+			_startChapter = startChapter;
 		}
 
 
@@ -493,6 +493,28 @@ namespace Miharu.FrontEnd
 
 
 #region Window Management
+		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			try {
+				if (_startChapter != null) {
+					Mouse.SetCursor(Cursors.Wait);
+					_chapterManager.LoadChapter(_startChapter);
+					Mouse.SetCursor(Cursors.Arrow);
+				}
+			}
+			catch (Exception ex) {
+				Mouse.SetCursor(Cursors.Arrow);
+				using (TaskDialog dialog = new TaskDialog()) {
+					dialog.WindowTitle = "Error";
+					dialog.MainIcon = TaskDialogIcon.Error;
+					dialog.MainInstruction = "There was an error opening the chapter.";
+					dialog.Content = ex.Message;
+					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+					dialog.Buttons.Add(okButton);
+					TaskDialogButton button = dialog.ShowDialog(this);
+				}
+			}
+		}
 		
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -516,6 +538,7 @@ namespace Miharu.FrontEnd
 				}
 			}
 		}
+
 
 
 

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Miharu.BackEnd;
+using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
+using Miharu.BackEnd.Translation.Threading;
 
 namespace Miharu.Control
 {
 	public class TranslationManager : TranslationConsumer
 	{
-
+		private TranslatorThread _translatorThread;
 
 		public event TranslationFailEventHandler TranslationFail;
 
@@ -16,31 +19,31 @@ namespace Miharu.Control
 		} = null;
 
 
-		public TranslationManager (TextEntryManager textEntryManager) {
+		public TranslationManager (TextEntryManager textEntryManager, TranslatorThread translatorThread) {
 			TextEntryManager = textEntryManager;
+			_translatorThread = translatorThread;
 		}
 
 		
 		public void RequestTranslation (TranslationType t) {
-			TranslationProvider.Translate(t, TextEntryManager.CurrentText.ParsedText, this);
+			_translatorThread.Translate(new TranslationRequest(TextEntryManager.CurrentText, t, TextEntryManager.CurrentText.ParsedText, this));
 		}
 
 
 		internal void TranslateAll()
 		{
-			foreach (TranslationType t in TranslationProvider.Instance) {
-				if (t != TranslationType.Jaded_Network)
-					TranslationProvider.Translate(t, TextEntryManager.CurrentText.ParsedText, this);
-			}
+			_translatorThread.TranslateAll(new TranslationRequest(TextEntryManager.CurrentText, null, TextEntryManager.CurrentText.ParsedText, this));
 		}
 
 
 
 
-		public void TranslationCallback(string translation, TranslationType type)
+		public void TranslationCallback(Text dest, string translation, TranslationType type)
 		{
-			translation = translation.Replace("\\\"", "\"");			
-			TextEntryManager.SetTranslation(type, translation);
+			translation = translation.Replace("\\\"", "\"");
+			dest.SetTranslation(type, translation);
+			TextEntryManager.PageManager.ChapterManager.IsChapterSaved = false;
+			TextEntryManager.TranslationChanged(dest);
 			
 		}
 
@@ -48,6 +51,12 @@ namespace Miharu.Control
 		{
 			Logger.Log(e);
 			TranslationFail?.Invoke(this, new TranslationFailEventArgs(e, type));
+		}
+
+		public IEnumerable<TranslationType> AvailableTranslations{
+			get {
+				return _translatorThread.AvailableTranslations;
+			}
 		}
 	}
 }

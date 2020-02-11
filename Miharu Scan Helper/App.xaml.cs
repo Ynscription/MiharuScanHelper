@@ -1,6 +1,7 @@
 ﻿
 using MahApps.Metro;
 using Miharu.BackEnd;
+using Miharu.BackEnd.Translation.Threading;
 using Miharu.BackEnd.Translation.WebCrawlers;
 using Miharu.Control;
 using Miharu.FrontEnd;
@@ -100,27 +101,7 @@ Would you like to locate the Tesseract exectutable manually?";
 			return res;
 		}
 
-		private static void InitWebDriver () {
-			Task.Run(() => {
-				WebDriverManager.Init();
-				if (!WebDriverManager.IsAlive) {
-					
-					TaskDialog dialog = new TaskDialog();
-					dialog.WindowTitle = "Warning";
-					dialog.MainIcon = TaskDialogIcon.Warning;
-					dialog.MainInstruction = "Could not load Firefox Web Driver.";
-					dialog.Content = "To access more and better translation sources, Firefox Web Browser must be installed in your system.";
-
-					TaskDialogButton okButton = new TaskDialogButton("Ok");
-					okButton.ButtonType = ButtonType.Ok;
-					dialog.Buttons.Add(okButton);
-					Current.Dispatcher.Invoke((Action)delegate{
-						TaskDialogButton button = dialog.ShowDialog();
-					});
-					
-				}
-			});
-		}
+		
 
 		#endregion
 
@@ -129,6 +110,8 @@ Would you like to locate the Tesseract exectutable manually?";
 		{
 			
 			ChapterManager chapterManager = null;
+			TranslatorThread translatorThread = null;
+			MiharuMainWindow mainWindow = null;
 			try {
 
 				App application = new App();
@@ -141,20 +124,21 @@ Would you like to locate the Tesseract exectutable manually?";
 				//Initialize stuff
 				Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
 				if (CheckForTesseract()) {
-					InitWebDriver();
+					translatorThread = TranslatorThread.StartThread();
 
 					string startChapter = null;
 					startChapter = CheckCrash();
-					if (startChapter == null && args.Length > 1 && File.Exists(args [1]))
-						startChapter = args[1];
-					try {
-						chapterManager = new ChapterManager(startChapter);
-					}
-					catch (Exception) {
-						chapterManager = new ChapterManager();
-					}
+					if (startChapter == null && args.Length > 0 && File.Exists(args [0]))
+						startChapter = args[0];
 
-					MiharuMainWindow mainWindow = new MiharuMainWindow(chapterManager);
+					/*Logger.Log("Start Chapter: " + startChapter);
+					Logger.Log("Args Length: " + args.Length);
+					for (int i = 0; i < args.Length; i++)
+						Logger.Log("\t" + args[i]);*/
+					
+					chapterManager = new ChapterManager(translatorThread);
+
+					mainWindow = new MiharuMainWindow(chapterManager, startChapter);
 
 					PageControl pageControl = new PageControl(chapterManager.PageManager);
 					mainWindow.PageControlArea.Child = pageControl;
@@ -181,7 +165,8 @@ Would you like to locate the Tesseract exectutable manually?";
 				TaskDialogButton button = dialog.ShowDialog();
 			}
 			finally {
-				WebDriverManager.Instance.Dispose();
+				mainWindow?.Close();
+				translatorThread?.FinalizeThread();				
 			}			
 		}
 

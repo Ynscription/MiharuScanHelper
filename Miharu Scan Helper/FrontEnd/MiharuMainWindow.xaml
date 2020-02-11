@@ -11,7 +11,7 @@
 		IsTabStop="False"
 		MinWidth="1000" MinHeight="640" 
 		Closing="Window_Closing" 
-		KeyDown="Window_KeyDown" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico">
+		KeyDown="Window_KeyDown" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico" Loaded="MetroWindow_Loaded">
 	<DockPanel>
 		<Menu DockPanel.Dock="Top" >
 			<Menu.Resources>

@@ -1,10 +1,7 @@
 ﻿using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
+using Miharu.BackEnd.Translation.Threading;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Miharu.Control
 {
@@ -47,10 +44,10 @@ namespace Miharu.Control
 		}
 
 
-		public TextEntryManager(PageManager pageManager)
+		public TextEntryManager(PageManager pageManager, TranslatorThread translatorThread)
 		{
 			PageManager = pageManager;
-			TranslationManager = new TranslationManager(this);
+			TranslationManager = new TranslationManager(this, translatorThread);
 		}
 
 		
@@ -60,6 +57,8 @@ namespace Miharu.Control
 			CurrentText = entry;
 			CurrentTextIndex = index;
 		}
+
+		
 
 		internal void Unload()
 		{
@@ -104,6 +103,11 @@ namespace Miharu.Control
 		{
 			CurrentText.SetTranslation(type, translation);
 			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+
+		internal void TranslationChanged(Text dest)
+		{
+			
 		}
 	}
 }

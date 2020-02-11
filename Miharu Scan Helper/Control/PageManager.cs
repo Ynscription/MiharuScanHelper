@@ -1,5 +1,6 @@
 ﻿using Miharu.BackEnd;
 using Miharu.BackEnd.Data;
+using Miharu.BackEnd.Translation.Threading;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -68,9 +69,9 @@ namespace Miharu.Control
 
 
 
-		public PageManager (ChapterManager chapterManager) {
+		public PageManager (ChapterManager chapterManager, TranslatorThread translatorThread) {
 			ChapterManager = chapterManager;
-			TextEntryManager = new TextEntryManager(this);
+			TextEntryManager = new TextEntryManager(this, translatorThread);
 		}
 
 		public void LoadPage(Page page, int index)

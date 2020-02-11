@@ -12,6 +12,12 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			get;
 		}
 
+		protected WebDriverManager _webDriverManager;
+
+		public WebCrawlerTranslator(WebDriverManager webDriverManager) {
+			_webDriverManager = webDriverManager;
+		}
+
 		public virtual string ProcessResult (IWebElement result) {
 			return result.Text;
 		}
@@ -20,7 +26,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 		{
 			string res = "";
 
-			res = WebDriverManager.NavigateAndFetch(GetUri(text), FetchBy, ProcessResult);
+			res = _webDriverManager.NavigateAndFetch(GetUri(text), FetchBy, ProcessResult);
 
 
 			return res;
