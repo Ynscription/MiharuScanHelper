@@ -24,13 +24,13 @@ namespace Miharu.Control
 			_translatorThread = translatorThread;
 		}
 
-		
+
 		public void RequestTranslation (TranslationType t) {
 			_translatorThread.Translate(new TranslationRequest(TextEntryManager.CurrentText, t, TextEntryManager.CurrentText.ParsedText, this));
 		}
 
 
-		internal void TranslateAll()
+		public void TranslateAll()
 		{
 			_translatorThread.TranslateAll(new TranslationRequest(TextEntryManager.CurrentText, null, TextEntryManager.CurrentText.ParsedText, this));
 		}
@@ -44,7 +44,7 @@ namespace Miharu.Control
 			dest.SetTranslation(type, translation);
 			TextEntryManager.PageManager.ChapterManager.IsChapterSaved = false;
 			TextEntryManager.TranslationChanged(dest);
-			
+
 		}
 
 		public void TranslationFailed(Exception e, TranslationType type)

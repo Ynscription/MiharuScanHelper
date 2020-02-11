@@ -15,7 +15,7 @@ namespace Miharu.Control
 			get;
 			private set;
 		} = null;
-		
+
 		public TranslationManager TranslationManager {
 			get;
 			private set;
@@ -50,29 +50,29 @@ namespace Miharu.Control
 			TranslationManager = new TranslationManager(this, translatorThread);
 		}
 
-		
 
-		internal void SelectTextEntry(Text entry, int index)
+
+		public void SelectTextEntry(Text entry, int index)
 		{
 			CurrentText = entry;
 			CurrentTextIndex = index;
 		}
 
-		
 
-		internal void Unload()
+
+		public void Unload()
 		{
 			CurrentText = null;
 			CurrentTextIndex = -1;
 		}
 
-		internal void RemovedTextEntry(Text textEntry)
+		public void RemovedTextEntry(Text textEntry)
 		{
 			if (textEntry == CurrentText)
 				Unload();
 		}
 
-		internal void MovedTextEntry(int oldIndex, Text textEntry, int newIndex)
+		public void MovedTextEntry(int oldIndex, Text textEntry, int newIndex)
 		{
 			if (textEntry == CurrentText)
 				CurrentTextIndex = newIndex;
@@ -80,34 +80,34 @@ namespace Miharu.Control
 				CurrentTextIndex = oldIndex;
 		}
 
-		internal void ReParse()
+		public void ReParse()
 		{
 			CurrentText.Invalidate();
 			string tmp = CurrentText.ParsedText;
 			PageManager.ChapterManager.IsChapterSaved = false;
 		}
 
-		internal void ChangeParsedText(string text)
+		public void ChangeParsedText(string text)
 		{
 			CurrentText.ParsedText = text;
 			PageManager.ChapterManager.IsChapterSaved = false;
 		}
 
-		internal void SetVertical(bool v)
+		public void SetVertical(bool v)
 		{
 			CurrentText.Vertical = v;
 			PageManager.ChapterManager.IsChapterSaved = false;
 		}
 
-		internal void SetTranslation(TranslationType type, string translation)
+		public void SetTranslation(TranslationType type, string translation)
 		{
 			CurrentText.SetTranslation(type, translation);
 			PageManager.ChapterManager.IsChapterSaved = false;
 		}
 
-		internal void TranslationChanged(Text dest)
+		public void TranslationChanged(Text dest)
 		{
-			
+
 		}
 	}
 }
