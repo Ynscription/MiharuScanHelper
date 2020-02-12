@@ -59,6 +59,7 @@ namespace Miharu.BackEnd.Translation
 			}
 		}
 
+
 		public IEnumerator<TranslationType> GetEnumerator()
 		{
 			return _translators.Keys.GetEnumerator();

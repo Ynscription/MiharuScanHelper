@@ -1,4 +1,5 @@
 ﻿using Miharu.BackEnd.Translation.WebCrawlers;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
@@ -92,9 +93,16 @@ namespace Miharu.BackEnd.Translation.Threading
 		{
 			if (!_initialized)
 				_initializeHandle.WaitOne();
+			
+
+			string disabledTypes = ((string)Properties.Settings.Default["DisabledTranslationSources"]);			
 			foreach (TranslationType t in _translationProvider) {
-				if (t.HasFlag(TranslationType.Text))
-					_workQueue.Enqueue(new TranslationRequest(request.Destination, t, request.Text, request.Consumer));
+				if (t.HasFlag(TranslationType.Text)){
+					if (!disabledTypes.Contains(t.ToString()))
+						_workQueue.Enqueue(new TranslationRequest(request.Destination, t, request.Text, request.Consumer));
+					else
+						request.Consumer.TranslationFailed(new Exception("Translation source is disabled."), t);
+				}
 			}
 			_workHandle.Set();
 		}
