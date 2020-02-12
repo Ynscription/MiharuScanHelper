@@ -2,6 +2,7 @@
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation.Threading;
 using System;
+using System.Threading;
 
 namespace Miharu.Control
 {
@@ -154,9 +155,16 @@ namespace Miharu.Control
 		}
 			   		 
 		public void SaveChapter (string newSaveFile = null) {
+			
 			try {
 				string file = newSaveFile ?? CurrentSaveFile;
-				LoadedChapter.Save(file, PageManager.CurrentPageIndex);
+				Monitor.Enter(LoadedChapter);
+				try {
+					LoadedChapter.Save(file, PageManager.CurrentPageIndex);
+				}
+				finally {
+					Monitor.Exit(LoadedChapter);
+				}
 				CurrentSaveFile = file;
 				IsChapterSaved = true;
 			}
@@ -164,6 +172,7 @@ namespace Miharu.Control
 				Logger.Log(e);
 				throw e;
 			}
+			
 		}
 
 		

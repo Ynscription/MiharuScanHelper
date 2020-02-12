@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Miharu.BackEnd;
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
@@ -45,7 +46,13 @@ namespace Miharu.Control
 		public void TranslationCallback(Text dest, string translation, TranslationType type)
 		{
 			translation = translation.Replace("\\\"", "\"");
-			dest.SetTranslation(type, translation);
+			Monitor.Enter(TextEntryManager.PageManager.ChapterManager.LoadedChapter);
+			try {
+				dest.SetTranslation(type, translation);
+			}
+			finally {
+				Monitor.Exit(TextEntryManager.PageManager.ChapterManager.LoadedChapter);
+			}
 			TextEntryManager.PageManager.ChapterManager.IsChapterSaved = false;
 			TextEntryManager.TranslationChanged(dest);
 
