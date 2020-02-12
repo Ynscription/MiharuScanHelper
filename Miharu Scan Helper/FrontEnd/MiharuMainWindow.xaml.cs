@@ -419,7 +419,7 @@ namespace Miharu.FrontEnd
 		}
 			   
 		private void PreferencesMenuItem_Click (object sender, RoutedEventArgs e) {
-			PreferencesDialog pd = new PreferencesDialog();
+			PreferencesDialog pd = new PreferencesDialog(_chapterManager.PageManager.TextEntryManager.TranslationManager);
 			pd.Owner = this;
 			pd.ShowDialog();
 		}

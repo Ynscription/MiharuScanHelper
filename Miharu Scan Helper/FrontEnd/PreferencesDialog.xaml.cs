@@ -1,7 +1,10 @@
 ﻿using MahApps.Metro;
 using MahApps.Metro.Controls;
+using Miharu.BackEnd.Translation;
+using Miharu.Control;
 using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
+using System;
 using System.IO;
 using System.Windows;
 
@@ -35,7 +38,7 @@ namespace Miharu.FrontEnd
 			private set;
 		} = null;
 
-		public PreferencesDialog()
+		public PreferencesDialog(TranslationManager translationManager)
 		{
 			InitializeComponent();
 			TesseractPathTextBox.Text = (string)Settings.Default["TesseractPath"];
@@ -44,8 +47,23 @@ namespace Miharu.FrontEnd
 			ThemeBaseColorListBox.SelectedItem = (string)Settings.Default["Theme"];
 			ThemeAccentColorListBox.ItemsSource = AccentColors;
 			ThemeAccentColorListBox.SelectedItem = (string)Settings.Default["Accent"];
-			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
 			
+
+			string disabledTypes = (string)Settings.Default["DisabledTranslationSources"];
+			foreach(TranslationType t in translationManager.AvailableTranslations) {
+				ToggleSwitch ts = new ToggleSwitch ();
+				ts.Content = t;
+				ts.IsChecked = !disabledTypes.Contains(t.ToString());
+				TranslationSourcesStackPanel.Children.Add(ts);
+			}
+			AutoTranslateToggleSwitch.IsCheckedChanged += OnAutoTranslateChackChange;
+			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
+		}
+
+		private void OnAutoTranslateChackChange(object sender, EventArgs e)
+		{
+			foreach (ToggleSwitch ts in TranslationSourcesStackPanel.Children)
+				ts.IsEnabled = AutoTranslateToggleSwitch.IsChecked ?? true;
 		}
 
 		private void TesseractPathButton_Click(object sender, RoutedEventArgs e)
@@ -99,6 +117,14 @@ namespace Miharu.FrontEnd
 			Settings.Default["Theme"] = (string)ThemeBaseColorListBox.SelectedValue;
 			Settings.Default["Accent"] = (string)ThemeAccentColorListBox.SelectedValue;
 			Settings.Default["AutoTranslateEnabled"] = AutoTranslateToggleSwitch.IsChecked;
+			string disabledSources = "";
+			foreach (ToggleSwitch ts in TranslationSourcesStackPanel.Children) {
+				if (!ts.IsChecked ?? true)
+					disabledSources += ts.Content.ToString() + ";";
+			}
+			if (disabledSources.Length > 0)
+				disabledSources = disabledSources.Substring(0, disabledSources.Length-1);
+			Settings.Default["DisabledTranslationSources"] = disabledSources;
 			Settings.Default.Save();
 		}
 

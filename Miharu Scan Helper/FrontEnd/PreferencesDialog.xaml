@@ -9,65 +9,76 @@
     mc:Ignorable="d"
     Title="Miharu - Preferences" 
 	Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico"
-	ResizeMode="CanResize" Width="770" Height="368">
+	ResizeMode="CanResize" Width="770" Height="455">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0">
-			<Grid Margin="10">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Label Content="Tesseract Path" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" />
-				<TextBox x:Name="TesseractPathTextBox" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0" FontSize="16" TextChanged="TesseractPathTextBox_TextChanged" AcceptsReturn="False"/>
-				<Button x:Name="TesseractPathButton" Content="..." Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,0" Width="35" FontSize="16" ToolTip="Browse..." Click="TesseractPathButton_Click" Height="{Binding ActualHeight, ElementName=TesseractPathTextBox, Mode=OneWay}"/>
-			</Grid>
-			<Separator Margin="10"/>
-			<Grid Margin="10">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Label Content="Theme" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" />
-				<UniformGrid Grid.Row="1" Columns="2">
-					<Grid Grid.Column="0">
+		<Border BorderThickness="1" BorderBrush="Gray" Grid.Row="0" >
+			<ScrollViewer VerticalScrollBarVisibility="Visible" >
+				<StackPanel >
+					<Grid Margin="10">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="2*" />
+							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						<Label Content="Base Color" FontSize="12" HorizontalAlignment="Right" Margin="0,0,10,0"/>
-						<Controls:SplitButton x:Name="ThemeBaseColorListBox" Grid.Column="1" SelectionChanged="ThemeSelectionChanged" />
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Content="Tesseract Path" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" />
+						<TextBox x:Name="TesseractPathTextBox" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10,0" FontSize="16" TextChanged="TesseractPathTextBox_TextChanged" AcceptsReturn="False"/>
+						<Button x:Name="TesseractPathButton" Content="..." Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,0" Width="35" FontSize="16" ToolTip="Browse..." Click="TesseractPathButton_Click" Height="{Binding ActualHeight, ElementName=TesseractPathTextBox, Mode=OneWay}"/>
 					</Grid>
-					<Grid Grid.Column="1">
+					<Separator Margin="10"/>
+					<Grid Margin="10">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Content="Theme" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" />
+						<UniformGrid Grid.Row="1" Columns="2">
+							<Grid Grid.Column="0">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="1*" />
+									<ColumnDefinition Width="2*" />
+								</Grid.ColumnDefinitions>
+								<Label Content="Base Color" FontSize="12" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+								<Controls:SplitButton x:Name="ThemeBaseColorListBox" Grid.Column="1" SelectionChanged="ThemeSelectionChanged" />
+							</Grid>
+							<Grid Grid.Column="1">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="1*" />
+									<ColumnDefinition Width="2*" />
+								</Grid.ColumnDefinitions>
+								<Label Content="Accent Color" FontSize="12" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+								<Controls:SplitButton x:Name="ThemeAccentColorListBox" Grid.Column="1" SelectionChanged="ThemeSelectionChanged" />
+							</Grid>
+						</UniformGrid>
+					</Grid>
+					<Separator Margin="10"/>
+					<Grid Margin="10">
 						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="2*" />
 						</Grid.ColumnDefinitions>
-						<Label Content="Accent Color" FontSize="12" HorizontalAlignment="Right" Margin="0,0,10,0"/>
-						<Controls:SplitButton x:Name="ThemeAccentColorListBox" Grid.Column="1" SelectionChanged="ThemeSelectionChanged" />
-					</Grid>
-				</UniformGrid>
-			</Grid>
-			<Separator Margin="10"/>
-			<Grid Margin="10">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="1*" />
-				</Grid.ColumnDefinitions>
-				<Label Content="Auto Translate New Text Entries" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
-				<Controls:ToggleSwitch x:Name="AutoTranslateToggleSwitch" Grid.Column="1"
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="1*" />
+						</Grid.RowDefinitions>
+						<Label Content="Auto Translate New Text Entries" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+						<Controls:ToggleSwitch x:Name="AutoTranslateToggleSwitch" Grid.Column="1" Grid.Row="0"
 							OnLabel="Enabled" OffLabel="Disabled"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
 							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
-			</Grid>
-		</StackPanel>
+						<StackPanel x:Name="TranslationSourcesStackPanel" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" >
+
+						</StackPanel>
+					</Grid>
+				</StackPanel>
+			</ScrollViewer>
+		</Border>
 		
 		<UniformGrid Grid.Row="1" HorizontalAlignment="Right" Rows="1" Columns="3" VerticalAlignment="Bottom">
 			
