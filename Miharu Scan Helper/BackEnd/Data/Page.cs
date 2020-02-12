@@ -38,6 +38,16 @@ namespace Miharu.BackEnd.Data {
 		public string Path {
 			get; private set;
 		}
+		public void MakePathRelative (Uri relativeTo) {
+			Uri pageUri = new Uri(Path);
+			Path = Uri.UnescapeDataString(relativeTo.MakeRelativeUri(pageUri).ToString().Replace("/", "\\"));
+		}
+		public void MakePathAbsolute (string absoluteFrom) {
+			string res = System.IO.Path.Combine(absoluteFrom, Path);
+			if (File.Exists(res))
+				Path = res;
+		}
+		
 
 		[JsonIgnoreAttribute]
 		public Bitmap Source {
@@ -96,6 +106,8 @@ namespace Miharu.BackEnd.Data {
 						GraphicsUnit.Pixel);
 			return cropped;
 		}
+
+		
 
 		public void Load () {
 			Source = new Bitmap(Path);

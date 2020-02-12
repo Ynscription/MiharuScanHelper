@@ -27,6 +27,8 @@ namespace Miharu.BackEnd.Data
 			private set;
 		}
 
+		private string _previousSavePath = null;
+
 
 		public List<Page> Pages {
 			get; private set;
@@ -131,9 +133,16 @@ namespace Miharu.BackEnd.Data
 
 		}
 
+		private void MakePagesRelative (string relativeTo) {
+			Uri saveFileUri = new Uri(relativeTo);
+			foreach(Page p in Pages) {
+				p.MakePathRelative(saveFileUri);
+			}
+		}
+
 
 		public void Save (string destPath, int currentPage = 0) {
-			
+			MakePagesRelative(destPath);
 			using (StreamWriter writer = new StreamWriter(destPath, false, Encoding.UTF8)) {
 				writer.WriteLine((string)Settings.Default["SaveVersion"]);
 				writer.WriteLine(currentPage);
@@ -146,7 +155,12 @@ namespace Miharu.BackEnd.Data
 			}			
 		}
 
-
+		private void MakePagesAbsolute (string absoluteFrom) {
+			FileInfo fi = new FileInfo(absoluteFrom);
+			foreach(Page p in Pages) {
+				p.MakePathAbsolute(fi.DirectoryName);
+			}
+		}
 		public static Chapter Load (string src, out int page, out string finalSrc) {
 			Chapter res = null;
 			
@@ -158,6 +172,7 @@ namespace Miharu.BackEnd.Data
 				reader.ReadLine();
 				page = int.Parse(reader.ReadLine());
 				res = JsonConvert.DeserializeObject<Chapter>(reader.ReadToEnd());
+				res.MakePagesAbsolute(finalSrc);
 				res.Pages[page].Load();
 
 				int loadPage = page;
