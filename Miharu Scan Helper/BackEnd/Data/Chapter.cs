@@ -16,6 +16,7 @@ namespace Miharu.BackEnd.Data
 		[JsonIgnore]
 		private volatile bool _allPagesLoaded = false;
 
+		[JsonIgnore]
 		public bool AllPagesReady {
 			get => _allPagesLoaded;
 		}

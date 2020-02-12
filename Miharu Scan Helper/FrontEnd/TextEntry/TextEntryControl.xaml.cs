@@ -49,18 +49,16 @@ namespace Miharu.FrontEnd
 
 			_textEntryManager = textEntryManager;
 			if (_textEntryManager.IsTextSelected)
-				LoadTextEntry(_textEntryManager.CurrentText);
+				LoadTextEntry();
 			_textEntryManager.PageManager.TextEntryRequiresTranslation += OnTextEntryRequiresTranslation;
 		}
 
 		
 
-		private void LoadTextEntry(Text currentText)
+		private void LoadTextEntry()
 		{			
 			_textEntryManager.CurrentText.TextChanged += OnTextContentChanged;
 			
-			ShowImageFromBitmap(_textEntryManager.CurrentText.Source);
-
 			InitializeParsedTextBox();
 
 			TranslationSourcesStackPanel.Children.Clear();
@@ -116,13 +114,20 @@ namespace Miharu.FrontEnd
 				_textEntryManager.CurrentText.TranslatedText = TranslatedTextBox.Text;
 		}
 
-		
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		{
+			ShowImageFromBitmap(_textEntryManager.CurrentText.Source);
+		}
+				
 		private void ShowImageFromBitmap (Bitmap src) {
 			var handle = src.GetHbitmap();
 			try {
 				ImageSource dest = Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 				PreviewIMG.Source = dest;
-				PreviewIMG.Width = PreviewIMG.Height* (dest.Width / dest.Height);
+				double desiredSize = PreviewIMGBorder.ActualHeight * (dest.Width / dest.Height);
+				if (desiredSize > ParsedTextAndIMGPreviewGrid.ActualWidth / 3)
+					desiredSize = ParsedTextAndIMGPreviewGrid.ActualWidth / 3;
+				PreviewIMG.Width = desiredSize;
 			}
 			finally { DeleteObject(handle); }
 		}
@@ -134,7 +139,8 @@ namespace Miharu.FrontEnd
 
 		private void OnTextEntryRequiresTranslation(object sender, EventArgs e)
 		{
-			TranslateAll();
+			if ((bool)Properties.Settings.Default["AutoTranslateEnabled"])
+				TranslateAll();
 		}
 
 		public void TranslateAll () {
@@ -279,6 +285,8 @@ namespace Miharu.FrontEnd
 				else if (_desiredState == AnimState.Hidden)
 					StopAnimateS();
 			}
-		}	
+		}
+
+		
 	}
 }

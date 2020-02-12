@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading;
 using System.Windows;
 
 namespace Miharu.BackEnd.Data
@@ -60,7 +61,7 @@ namespace Miharu.BackEnd.Data
 		}
 
 		[JsonProperty]
-		private Dictionary<TranslationType, string> _translations;
+		private volatile Dictionary<TranslationType, string> _translations;
 		public string GetTranslation (TranslationType type) {
 			string res = null;
 			if (!_translations.TryGetValue(type, out res))
@@ -68,7 +69,13 @@ namespace Miharu.BackEnd.Data
 			return res;
 		}
 		public void SetTranslation (TranslationType type, string value) {
-			_translations[type] = value;
+			Monitor.Enter(_translations);
+			try {
+				_translations[type] = value;
+			}
+			finally {
+				Monitor.Exit(_translations);
+			}
 			TextChanged?.Invoke(this, new TxtChangedEventArgs(TextChangeType.TranslationSource, type, value));
 		}
 

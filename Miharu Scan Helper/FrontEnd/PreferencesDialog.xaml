@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Title="Miharu - Preferences" 
 	Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico"
-	ResizeMode="CanResize" Width="770" Height="320">
+	ResizeMode="CanResize" Width="770" Height="368">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*" />
@@ -54,6 +54,18 @@
 						<Controls:SplitButton x:Name="ThemeAccentColorListBox" Grid.Column="1" SelectionChanged="ThemeSelectionChanged" />
 					</Grid>
 				</UniformGrid>
+			</Grid>
+			<Separator Margin="10"/>
+			<Grid Margin="10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="1*" />
+				</Grid.ColumnDefinitions>
+				<Label Content="Auto Translate New Text Entries" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+				<Controls:ToggleSwitch x:Name="AutoTranslateToggleSwitch" Grid.Column="1"
+							OnLabel="Enabled" OffLabel="Disabled"
+							VerticalAlignment="Center" HorizontalAlignment="Left"  
+							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
 			</Grid>
 		</StackPanel>
 		

@@ -14,5 +14,11 @@
     <Setting Name="Accent" Type="System.String" Scope="User">
       <Value Profile="(Default)">Emerald</Value>
     </Setting>
+    <Setting Name="AutoTranslateEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DisabledTranslationSources" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

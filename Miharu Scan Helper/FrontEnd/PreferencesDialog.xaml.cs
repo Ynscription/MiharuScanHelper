@@ -44,7 +44,7 @@ namespace Miharu.FrontEnd
 			ThemeBaseColorListBox.SelectedItem = (string)Settings.Default["Theme"];
 			ThemeAccentColorListBox.ItemsSource = AccentColors;
 			ThemeAccentColorListBox.SelectedItem = (string)Settings.Default["Accent"];
-
+			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
 			
 		}
 
@@ -98,6 +98,7 @@ namespace Miharu.FrontEnd
 			Settings.Default ["TesseractPath"] = TesseractPath;
 			Settings.Default["Theme"] = (string)ThemeBaseColorListBox.SelectedValue;
 			Settings.Default["Accent"] = (string)ThemeAccentColorListBox.SelectedValue;
+			Settings.Default["AutoTranslateEnabled"] = AutoTranslateToggleSwitch.IsChecked;
 			Settings.Default.Save();
 		}
 

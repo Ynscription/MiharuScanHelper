@@ -9,7 +9,8 @@
 			 xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
 			 xmlns:helper="clr-namespace:Miharu.FrontEnd.Helper"
 			 mc:Ignorable="d" 
-             d:DesignHeight="802" d:DesignWidth="606">
+             d:DesignHeight="802" d:DesignWidth="606" 
+			 Loaded="UserControl_Loaded">
 
 
 	<Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -18,24 +19,24 @@
 			<RowDefinition Height="3*"/>
 			<RowDefinition Height="150"/>
 		</Grid.RowDefinitions>
-		
-		<Grid Grid.Row="0" Margin="3">
+
+		<Grid x:Name="ParsedTextAndIMGPreviewGrid" Grid.Row="0" Margin="3">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" MinWidth="10"/>
-				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="Auto" MinWidth="10" />
+				<ColumnDefinition Width="1*" />
 			</Grid.ColumnDefinitions>
-			<Border BorderThickness="1" BorderBrush="Black" Margin="0,0,3,0" Grid.Column="0">
+			<Border x:Name="PreviewIMGBorder" BorderThickness="1" BorderBrush="Black" Margin="0,0,3,0" Grid.Column="0">
 				<Image x:Name="PreviewIMG" Height="Auto"/>
 			</Border>
 
-			<Border BorderThickness="1" BorderBrush="Gray" Margin="3,0,0,0" Grid.Column="1">
+			<Border x:Name="border" BorderThickness="1" BorderBrush="Gray" Margin="3,0,0,0" Grid.Column="1">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="2*"/>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
-					
+
 					<Grid Grid.Column="0" Grid.ColumnSpan="2">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto"/>
@@ -46,11 +47,11 @@
 							<ColumnDefinition Width="1*"/>
 						</Grid.ColumnDefinitions>
 						<Label Content="Parsed Text" Grid.Column="0" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" />
-						
-						
+
+
 						<Separator Grid.Column="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" Margin="5,5"/>
-						
-						
+
+
 						<Controls:ToggleSwitch x:Name="VerticalCheckBox" Grid.Column="2"
 							OnLabel="Vertical" OffLabel="Horizontal"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
@@ -82,8 +83,8 @@
 					<Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" Margin="3,0,3,3">
 						<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="26" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" />
 					</Border>
-					
-					
+
+
 					<Grid Grid.Row="2">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
@@ -92,8 +93,8 @@
 						<Label Content="Jisho:" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0" Padding="0"/>
 						<helper:LinkLabel x:Name="JishoLinkLabel" Content="https://whatever.com" FontSize="16" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" WebBrowser="True"/>
 					</Grid>
-					
-					
+
+
 
 
 				</Grid>

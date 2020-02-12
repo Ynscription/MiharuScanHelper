@@ -70,5 +70,29 @@ namespace Miharu.Properties {
                 this["Accent"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoTranslateEnabled {
+            get {
+                return ((bool)(this["AutoTranslateEnabled"]));
+            }
+            set {
+                this["AutoTranslateEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DisabledTranslationSources {
+            get {
+                return ((string)(this["DisabledTranslationSources"]));
+            }
+            set {
+                this["DisabledTranslationSources"] = value;
+            }
+        }
     }
 }
