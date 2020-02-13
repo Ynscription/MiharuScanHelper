@@ -47,6 +47,7 @@ namespace Miharu.FrontEnd
 			ThemeBaseColorListBox.SelectedItem = (string)Settings.Default["Theme"];
 			ThemeAccentColorListBox.ItemsSource = AccentColors;
 			ThemeAccentColorListBox.SelectedItem = (string)Settings.Default["Accent"];
+			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
 			
 
 			string disabledTypes = (string)Settings.Default["DisabledTranslationSources"];
@@ -55,11 +56,12 @@ namespace Miharu.FrontEnd
 					ToggleSwitch ts = new ToggleSwitch ();
 					ts.Content = t;
 					ts.IsChecked = !disabledTypes.Contains(t.ToString());
+					ts.IsEnabled = AutoTranslateToggleSwitch.IsChecked ?? true;
 					TranslationSourcesStackPanel.Children.Add(ts);
 				}
 			}
 			AutoTranslateToggleSwitch.IsCheckedChanged += OnAutoTranslateChackChange;
-			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
+			
 		}
 
 		private void OnAutoTranslateChackChange(object sender, EventArgs e)
