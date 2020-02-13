@@ -1,4 +1,5 @@
-﻿using Miharu.BackEnd.Data;
+﻿using Miharu.BackEnd;
+using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
 using Miharu.BackEnd.Translation.Threading;
 using System;
@@ -80,11 +81,18 @@ namespace Miharu.Control
 				CurrentTextIndex = oldIndex;
 		}
 
-		public void ReParse()
+		public string ReParse()
 		{
-			CurrentText.Invalidate();
-			string tmp = CurrentText.ParsedText;
-			PageManager.ChapterManager.IsChapterSaved = false;
+			try {
+				CurrentText.Invalidate();
+				string res = CurrentText.ParsedText;
+				PageManager.ChapterManager.IsChapterSaved = false;
+				return res;
+			}
+			catch (Exception e) {
+				Logger.Log(e);
+				throw e;
+			}
 		}
 
 		public void ChangeParsedText(string text)

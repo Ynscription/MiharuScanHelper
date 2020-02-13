@@ -8,8 +8,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace Miharu.BackEnd.Data
 {
@@ -22,7 +24,7 @@ namespace Miharu.BackEnd.Data
 		[JsonIgnore]
 		private readonly static string TEMP_IMG = @"./tmp.png";
 		[JsonIgnore]
-		private readonly static string TEMP_TXT = @"./tmp.txt";
+		private readonly static string TEMP_TXT = @"./tmp.hocr";
 
 		[JsonIgnore]
 		private bool _parseInvalidated = true;
@@ -122,7 +124,34 @@ namespace Miharu.BackEnd.Data
 			}
 			TranslatedText = translatedText;			
 		}
+		
+		[JsonIgnore]
+		private static readonly string _START_BODY = "<body>";
+		[JsonIgnore]
+		private static readonly string _END_BODY = "</body>";
+		private string ReadHOCR (string hocrPath) {
+			string res = "";
 
+			using (StreamReader reader = new StreamReader (hocrPath)) {
+				string body = reader.ReadToEnd();
+				reader.Close();
+				int bodyStartIndex = body.IndexOf(_START_BODY);
+				int bodyEndIndex = body.IndexOf(_END_BODY);
+				body = body.Substring(bodyStartIndex, bodyEndIndex - bodyStartIndex + _END_BODY.Length);
+				XElement XMLBody = XElement.Parse(body);
+				IEnumerable<XElement> paragraphs = XMLBody.Descendants("p");
+				foreach (XElement p in paragraphs) {
+					foreach (XElement line in p.Elements("span")) {
+						foreach (XElement word in line.Elements("span"))
+							res += word.Value;
+					}
+					if (p != paragraphs.Last())
+						res += Environment.NewLine;
+				}
+			}
+
+			return res;
+		}
 		
 
 		private string ParseText () {
@@ -130,27 +159,21 @@ namespace Miharu.BackEnd.Data
 				return "";
 
 			Source.Save(TEMP_IMG, ImageFormat.Png);
+
+			using (Process pProcess = new Process()) {
+				pProcess.StartInfo.FileName = (string)Settings.Default["TesseractPath"];
+				string lang = Vertical ? "jpn_vert" : "jpn";
+				int psm = Vertical ? 5 : 6;
+				pProcess.StartInfo.Arguments = TEMP_IMG + " tmp -l " + lang + " --psm " + psm + " hocr"; //argument
+				pProcess.StartInfo.UseShellExecute = false;
+				//pProcess.StartInfo.RedirectStandardOutput = true;
+				pProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				pProcess.StartInfo.CreateNoWindow = true; //not diplay a windows
+				pProcess.Start();
+				pProcess.WaitForExit();
+			}
 			
-			Process pProcess = new System.Diagnostics.Process();
-			pProcess.StartInfo.FileName = (string)Settings.Default["TesseractPath"];
-			string vert = Vertical ? "jpn_vert" : "jpn";
-			pProcess.StartInfo.Arguments = TEMP_IMG + " tmp -l " + vert; //argument
-			pProcess.StartInfo.UseShellExecute = false;
-			//pProcess.StartInfo.RedirectStandardOutput = true;
-			pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-			pProcess.StartInfo.CreateNoWindow = true; //not diplay a windows
-			pProcess.Start();
-			pProcess.WaitForExit();
-
-			string output = "";
-			try {
-				StreamReader reader = new StreamReader (TEMP_TXT);
-				output = reader.ReadToEnd();
-				output = output.TrimEnd();
-				reader.Close();
-			}catch (IOException) {}
-
-			return output;
+			return ReadHOCR (TEMP_TXT);
 		}
 
 		

@@ -3,6 +3,7 @@ using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
 using Miharu.Control;
 using Miharu.FrontEnd.TextEntry;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -93,11 +94,27 @@ namespace Miharu.FrontEnd
 		}
 
 		private void RefreshParseButton_Click (object sender, RoutedEventArgs e) {
-			Mouse.SetCursor(Cursors.Wait);
-			RefreshParseButton.IsEnabled = false;
-			VerticalCheckBox.IsEnabled = false;
-			_textEntryManager.ReParse();			
-			Mouse.SetCursor(Cursors.Arrow);
+			try {
+				Mouse.SetCursor(Cursors.Wait);
+				RefreshParseButton.IsEnabled = false;
+				VerticalCheckBox.IsEnabled = false;
+				_textEntryManager.ReParse();			
+				Mouse.SetCursor(Cursors.Arrow);
+			}
+			catch (Exception ex) {
+				Mouse.SetCursor(Cursors.Arrow);
+				RefreshParseButton.IsEnabled = true;
+				VerticalCheckBox.IsEnabled = true;
+				using (TaskDialog dialog = new TaskDialog()) {
+					dialog.WindowTitle = "Error";
+					dialog.MainIcon = TaskDialogIcon.Error;
+					dialog.MainInstruction = "There was an error parsing the image.";
+					dialog.Content = ex.Message;
+					TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+					dialog.Buttons.Add(okButton);
+					TaskDialogButton button = dialog.ShowDialog();
+				}
+			}
 		}
 
 		
