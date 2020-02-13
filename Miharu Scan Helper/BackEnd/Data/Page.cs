@@ -46,6 +46,8 @@ namespace Miharu.BackEnd.Data {
 			string res = System.IO.Path.Combine(absoluteFrom, Path);
 			if (File.Exists(res))
 				Path = res;
+			if (!File.Exists(Path))
+				throw new IOException("Couldn't find file: " + Path);
 		}
 		
 
