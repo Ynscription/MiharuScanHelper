@@ -51,10 +51,12 @@ namespace Miharu.FrontEnd
 
 			string disabledTypes = (string)Settings.Default["DisabledTranslationSources"];
 			foreach(TranslationType t in translationManager.AvailableTranslations) {
-				ToggleSwitch ts = new ToggleSwitch ();
-				ts.Content = t;
-				ts.IsChecked = !disabledTypes.Contains(t.ToString());
-				TranslationSourcesStackPanel.Children.Add(ts);
+				if (t.HasFlag(TranslationType.Text)) {
+					ToggleSwitch ts = new ToggleSwitch ();
+					ts.Content = t;
+					ts.IsChecked = !disabledTypes.Contains(t.ToString());
+					TranslationSourcesStackPanel.Children.Add(ts);
+				}
 			}
 			AutoTranslateToggleSwitch.IsCheckedChanged += OnAutoTranslateChackChange;
 			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
