@@ -128,7 +128,7 @@ namespace Miharu.FrontEnd
 
 		private void TranslatedTextBox_TextChanged (object sender, TextChangedEventArgs e) {
 			if (_textEntryManager.CurrentText.TranslatedText != TranslatedTextBox.Text)
-				_textEntryManager.CurrentText.TranslatedText = TranslatedTextBox.Text;
+				_textEntryManager.ChangeTranslatedText(TranslatedTextBox.Text);
 		}
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)

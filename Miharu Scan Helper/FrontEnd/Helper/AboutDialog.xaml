@@ -6,10 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:Miharu.FrontEnd.Helper"
+	xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
 	mc:Ignorable="d"
     Title="About Miharu Scan Helper"
 	Width="680" ResizeMode="NoResize" Height="700" 
-	Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico" >
+	Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico" 
+	MinHeight="700">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*" />
@@ -145,7 +147,7 @@
 				<Separator Height="5" VerticalAlignment="Top" />
 
 
-				<Grid Grid.Row="2" Margin="0,0,0,20">
+				<Grid Margin="0,0,0,20">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
@@ -200,18 +202,36 @@
 
 
 
-				<Grid Grid.Row="4" Margin="10,0,0,10">
+				<Grid Margin="10,0,0,10">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 					<Label Grid.Row="0" Content="Why the name Miharu?" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
 					<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Margin="14,0,10,0" FontSize="16">
-				<Run Text="I started work on this project with the intention of being able to read the manga Candy &amp; Cigarettes. "/>
-				<LineBreak/>
-				<Run Text="The name of one of the main characters in that manga is 美晴 (Miharu) and that was the first set of characters ever transcripted using this program during development."/>
-				<LineBreak/>
-				<Run Text="The icon was chosen from her name as well."/>
+						<Run Text="I started work on this project with the intention of being able to read the manga Candy &amp; Cigarettes. "/>
+						<LineBreak/>
+						<Run Text="The name of one of the main characters in that manga is 美晴 (Miharu) and that was the first set of characters ever transcripted using this program during development."/>
+						<LineBreak/>
+						<Run Text="The icon was chosen from her name as well."/>
+					</TextBlock>
+					<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="20" Margin="414,44,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="99.7" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp" Grid.Row="1"/>
+				</Grid>
+
+
+				<Separator Height="5" VerticalAlignment="Top" />
+
+
+				<Grid Margin="10,0,0,10">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Label Grid.Row="0" Content="Special Thanks" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
+					<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Margin="14,0,10,0" FontSize="16">
+						<iconPacks:PackIconModern Kind="BugRemove" />
+						<Run Text="To vic485 for breaking the shit out of every release."/>
+						<LineBreak/>
 					</TextBlock>
 					<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="20" Margin="414,44,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="99.7" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp" Grid.Row="1"/>
 				</Grid>

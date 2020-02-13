@@ -117,5 +117,11 @@ namespace Miharu.Control
 		{
 
 		}
+
+		public void ChangeTranslatedText(string text)
+		{
+			CurrentText.TranslatedText = text;
+			PageManager.ChapterManager.IsChapterSaved = false;
+		}
 	}
 }

@@ -152,7 +152,8 @@ namespace Miharu.BackEnd.Data
 				foreach (Page p in Pages)
 					p.Save(writer);*/
 				writer.Close();
-			}			
+			}
+			MakePagesAbsolute(destPath);
 		}
 
 		private void MakePagesAbsolute (string absoluteFrom) {
