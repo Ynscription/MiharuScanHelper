@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Title="Miharu - Preferences" 
 	Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico"
-	ResizeMode="CanResize" Width="770" Height="455">
+	ResizeMode="CanResize" Width="550" Height="700" MinWidth="550" MinHeight="500">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*" />
@@ -38,18 +38,18 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 						<Label Content="Theme" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" />
-						<UniformGrid Grid.Row="1" Columns="2">
-							<Grid Grid.Column="0">
+						<UniformGrid Grid.Row="1" Columns="2" Margin="50,0,0,0">
+							<Grid Grid.Column="0" >
 								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="1*" />
+									<ColumnDefinition Width="Auto" />
 									<ColumnDefinition Width="2*" />
 								</Grid.ColumnDefinitions>
 								<Label Content="Base Color" FontSize="12" HorizontalAlignment="Right" Margin="0,0,10,0"/>
 								<Controls:SplitButton x:Name="ThemeBaseColorListBox" Grid.Column="1" SelectionChanged="ThemeSelectionChanged" />
 							</Grid>
-							<Grid Grid.Column="1">
+							<Grid Grid.Column="1" Margin="30,0,0,0">
 								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="1*" />
+									<ColumnDefinition Width="Auto" />
 									<ColumnDefinition Width="2*" />
 								</Grid.ColumnDefinitions>
 								<Label Content="Accent Color" FontSize="12" HorizontalAlignment="Right" Margin="0,0,10,0"/>
