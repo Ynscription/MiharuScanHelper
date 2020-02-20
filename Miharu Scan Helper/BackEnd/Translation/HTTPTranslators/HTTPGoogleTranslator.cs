@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Miharu.BackEnd.Translation.HTTPTranslators
 {
@@ -37,7 +31,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 					res = DecodeEncodedUnicodeCharacters(res);
 				res = CleanNewLines(res);
 			}
-
+			
 			return res;
 		}
 
