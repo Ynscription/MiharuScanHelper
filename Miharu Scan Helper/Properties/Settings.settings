@@ -6,7 +6,7 @@
       <Value Profile="(Default)">./Resources/Redist/Tesseract-OCR/tesseract.exe</Value>
     </Setting>
     <Setting Name="SaveVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">v3</Value>
+      <Value Profile="(Default)">v4</Value>
     </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
       <Value Profile="(Default)">Dark</Value>

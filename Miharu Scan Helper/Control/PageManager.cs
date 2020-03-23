@@ -109,7 +109,7 @@ namespace Miharu.Control
 			}
 		}
 
-		public void AddTextEntry(Rect rect)
+		public void AddTextEntry(DPIAwareRectangle rect)
 		{
 			Text text = null;
 			try {

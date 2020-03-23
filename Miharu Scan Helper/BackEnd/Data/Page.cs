@@ -77,9 +77,9 @@ namespace Miharu.BackEnd.Data {
 
 		
 
-		public Text AddTextEntry (Rect rect) {
+		public Text AddTextEntry (DPIAwareRectangle rect) {
 			
-			Text txt = new Text(CropImage(rect), rect);
+			Text txt = new Text(CropImage(rect.Rectangle), rect);
 			TextEntries.Add(txt);
 			PageChanged?.Invoke(this, new EventArgs());
 			return txt;
@@ -114,7 +114,7 @@ namespace Miharu.BackEnd.Data {
 		public void Load () {
 			Source = new Bitmap(Path);
 			foreach (Text t in TextEntries)
-				t.Load(CropImage(t.Rectangle));
+				t.Load(CropImage(t.DpiAwareRectangle.Rectangle));
 			Ready = true;
 			PageWaitHandle.Set();
 		}

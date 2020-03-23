@@ -32,7 +32,7 @@ namespace Miharu.FrontEnd.Page
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 			_dpiX = g.DpiX;
 			_dpiY = g.DpiY;
-			_rectangleOverlay = new RectangleOverlay(PreviewIMG, _pageManager);
+			_rectangleOverlay = new RectangleOverlay(PreviewIMG, _pageManager, _dpiX, _dpiY);
 			AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
 			adornerLayer.Add(_rectangleOverlay);
 		}
@@ -228,10 +228,11 @@ namespace Miharu.FrontEnd.Page
 				else if (_previousMouseState) {
 					Mouse.SetCursor(Cursors.Wait);
 					_previousMouseState = false;
-					Rect rect = new Rect (_rectangleOverlay.DragRect.Value.X,
+					DPIAwareRectangle rect = new DPIAwareRectangle (_rectangleOverlay.DragRect.Value.X,
 											_rectangleOverlay.DragRect.Value.Y,
 											_rectangleOverlay.DragRect.Value.Width,
-											_rectangleOverlay.DragRect.Value.Height);
+											_rectangleOverlay.DragRect.Value.Height,
+											_dpiX, _dpiY);
 					_rectangleOverlay.DragRect = null;
 
 					if (rect .Width == 0 || rect.Height == 0) {

@@ -1,4 +1,6 @@
-﻿using Miharu.Properties;
+﻿using Miharu.FrontEnd.Helper;
+using Miharu.Properties;
+using Newtonsoft.Json;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.IO;
@@ -29,14 +31,18 @@ namespace Miharu.BackEnd.Data
 			return button.Text;
 		}
 
-		private static void Overwrite (string source, string data, int page, int versionNumber) {
-			using (StreamWriter writer = new StreamWriter(source)){
-				writer.WriteLine((string)Settings.Default["SaveVersion"]);
-				writer.WriteLine(page);
-				if (versionNumber == 1 || versionNumber == 2)
-					writer.Write(ConvertFrom2to3(data));
+		
+		private static void Update (string destination, string data, int page, int versionNumber) {
+			if (versionNumber == 1 || versionNumber == 2) {
+				data = ConvertFrom2to3(data);
+				ConvertFrom3to4(data, destination, page);
+			}
+			else if (versionNumber == 3) {
+				ConvertFrom3to4(data, destination, page);
 			}
 		}
+
+		
 
 		private static string NewFile () {
 			VistaSaveFileDialog fileDialog = new VistaSaveFileDialog();
@@ -76,20 +82,14 @@ namespace Miharu.BackEnd.Data
 					if (warnRes == _OVERWRITE) {
 						string data = reader.ReadToEnd();
 						reader.Close();
-						Overwrite(source, data, page, versionNumber);
+						Update(source, data, page, versionNumber);
 					}
 					else if (warnRes == _CANCEL)
 						throw new Exception ("Couldn't open file due to file version missmatch. Consider updating the file or using an older version of Miharu.");
 					else {
 						if ((finalSource = NewFile()) == null)
 							throw new Exception ("Couldn't open file due to file version missmatch. Consider updating the file or using an older version of Miharu.");
-						using (StreamWriter writer = new StreamWriter(finalSource)){
-							writer.WriteLine((string)Settings.Default["SaveVersion"]);
-							writer.WriteLine(page);
-							while(!reader.EndOfStream) {
-								writer.WriteLine(ConvertFrom2to3(reader.ReadLine()));
-							}
-						}
+						Update(finalSource, reader.ReadToEnd(), page, versionNumber);
 					}
 				}
 			}
@@ -103,6 +103,31 @@ namespace Miharu.BackEnd.Data
 			data = data.Replace("\"Yandex\":", "\"Yandex_API\":");
 			data = data.Replace("\"JadedNetwork\":", "\"Jaded_Network\":");
 			return data;
+		}
+
+		private static void ConvertFrom3to4 (string data, string destination, int page) {
+
+			Chapter c = JsonConvert.DeserializeObject<Chapter>(data);
+			c.MakePagesAbsolute(destination);
+			
+			DpiDialog dialog = new DpiDialog();			
+			dialog.ShowDialog();
+			if (dialog.Choice == DpiDialog.OK) {
+				if (!dialog.CurrentDPI) {
+					foreach (var p in c.Pages) {
+						foreach(var t in p.TextEntries) {
+							t.DpiAwareRectangle.DpiX = dialog.DpiX;
+							t.DpiAwareRectangle.DpiY = dialog.DpiY;
+						}
+					}
+				}
+				c.Save(destination, page);
+			}
+			else {
+				throw new Exception ("Couldn't open file due to file version missmatch. Consider updating the file or using an older version of Miharu.");
+			}
+
+			
 		}
 
 		

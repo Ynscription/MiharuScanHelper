@@ -133,13 +133,14 @@ namespace Miharu.BackEnd.Data
 
 		}
 
-		private void MakePagesRelative (string relativeTo) {
+		public void MakePagesRelative (string relativeTo) {
 			Uri saveFileUri = new Uri(relativeTo);
 			foreach(Page p in Pages) {
 				p.MakePathRelative(saveFileUri);
 			}
 		}
 
+		
 
 		public void Save (string destPath, int currentPage = 0) {
 			MakePagesRelative(destPath);
@@ -156,7 +157,7 @@ namespace Miharu.BackEnd.Data
 			MakePagesAbsolute(destPath);
 		}
 
-		private void MakePagesAbsolute (string absoluteFrom) {
+		public void MakePagesAbsolute (string absoluteFrom) {
 			FileInfo fi = new FileInfo(absoluteFrom);
 			foreach(Page p in Pages) {
 				p.MakePathAbsolute(fi.DirectoryName);

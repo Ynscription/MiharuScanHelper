@@ -44,7 +44,7 @@ namespace Miharu.BackEnd.Data
 		}
 		[JsonIgnoreAttribute]
 		public Bitmap Source { get; private set; }
-		public Rect Rectangle { get; private set; }
+		public DPIAwareRectangle DpiAwareRectangle { get; private set; }
 
 		private string _parsedText = null;
 		public string ParsedText {
@@ -93,11 +93,11 @@ namespace Miharu.BackEnd.Data
 			}
 		}
 
-		public Text (Bitmap src, Rect rect) {
-			if (rect .Width == 0 || rect.Height == 0)
+		public Text (Bitmap src, DPIAwareRectangle rect) {
+			if (rect.Width == 0 || rect.Height == 0)
 				throw new ArgumentOutOfRangeException("rect", rect, "Can't create text entry with 0 width or 0 height rectangle.");
 			Source = src;
-			Rectangle = rect;
+			DpiAwareRectangle = rect;
 			TranslatedText = "";
 			Vertical = src.Height >= src.Width;
 			_translations = new Dictionary<TranslationType, string>();
@@ -107,11 +107,19 @@ namespace Miharu.BackEnd.Data
 		
 		//There are legacy parameters, so loading old saves still works
 		[JsonConstructor]
-		public Text (Rect rectangle, bool vertical, bool parseInvalidated,
-					string parsedText, Dictionary<TranslationType, string> translations, 
+		public Text (DPIAwareRectangle dpiAwareRectangle, bool vertical, bool parseInvalidated,
+					string parsedText, Dictionary<TranslationType, string> translations,
+					Rect rectangle,
 					string googleTranslatedText, string bingTranslatedText,
 					string translatedText) {
-			Rectangle = rectangle;
+			if (dpiAwareRectangle != null)
+				DpiAwareRectangle = dpiAwareRectangle;
+			else {
+				Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+				double dpiX = g.DpiX;
+				double dpiY = g.DpiY;
+				DpiAwareRectangle = new DPIAwareRectangle(rectangle, dpiX, dpiY);
+			}
 			Vertical = vertical;
 			_parseInvalidated = parseInvalidated;
 			ParsedText = parsedText;

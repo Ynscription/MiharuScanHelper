@@ -129,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\Helper\DpiDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\Helper\ImageDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -194,6 +198,9 @@
     <Compile Include="FrontEnd\EditChapterWindow.xaml.cs">
       <DependentUpon>EditChapterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FrontEnd\Helper\DpiDialog.xaml.cs">
+      <DependentUpon>DpiDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FrontEnd\Helper\ImageDisplay.xaml.cs">
       <DependentUpon>ImageDisplay.xaml</DependentUpon>
     </Compile>
@@ -201,6 +208,7 @@
     <Compile Include="FrontEnd\MiharuMainWindow.xaml.cs">
       <DependentUpon>MiharuMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BackEnd\Data\DPIAwareRectangle.cs" />
     <Compile Include="FrontEnd\Page\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
