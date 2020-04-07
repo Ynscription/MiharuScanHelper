@@ -26,6 +26,16 @@ namespace Miharu.FrontEnd.TextEntry
 		private PageManager _pageManager;
 
 
+		private void ConfigureButtons () {
+			if (!_pageManager.IsPageLoaded) {
+				PrevEntryButton.IsEnabled = false;
+				NextEntryButton.IsEnabled = false;
+			}
+			else {
+				PrevEntryButton.IsEnabled = _textEntryManager.CurrentTextIndex > 0;
+				NextEntryButton.IsEnabled = _textEntryManager.CurrentTextIndex + 1 < _pageManager.CurrentPageTextEntries.Count;
+			}
+		}
 
 		public TextEntryView(TextEntryManager textEntryManager)
 		{
@@ -38,16 +48,19 @@ namespace Miharu.FrontEnd.TextEntry
 			_pageManager.TextEntryMoved += OnTextEntryMoved;
 			_pageManager.TextEntryRemoved += OnTextEntryRemoved;
 			_pageManager.TextEntryAdded += OnTextEntryAdded;
+			ConfigureButtons();
 		}
 
 		private void OnTextEntryAdded(object sender, ListModificationEventArgs e)
 		{
 			TextEntriesStackPanel.Children.Insert(e.EventNewIndex, new TextEntryListView((Text)e.EventObject, _pageManager));
+			ConfigureButtons();
 		}
 
 		private void OnTextEntryRemoved(object sender, ListModificationEventArgs e)
 		{
 			TextEntriesStackPanel.Children.RemoveAt(e.EventOldIndex);
+			ConfigureButtons();
 		}
 
 		private void OnTextEntryMoved(object sender, ListModificationEventArgs e)
@@ -55,6 +68,7 @@ namespace Miharu.FrontEnd.TextEntry
 			var tmp2 = TextEntriesStackPanel.Children[e.EventOldIndex];
 			TextEntriesStackPanel.Children.RemoveAt(e.EventOldIndex);
 			TextEntriesStackPanel.Children.Insert(e.EventNewIndex, tmp2);
+			ConfigureButtons();
 		}
 
 		private void OnPageChanged(object sender, EventArgs e)
@@ -78,6 +92,7 @@ namespace Miharu.FrontEnd.TextEntry
 				TextEntriesStackPanel.Children.Clear();
 
 			TextEntriesStackPanel.InvalidateVisual();
+			ConfigureButtons();
 		}
 
 		private void OnTextEntryChanged(object sender, EventArgs e)
@@ -86,6 +101,7 @@ namespace Miharu.FrontEnd.TextEntry
 				TextEntryArea.Content = new TextEntryControl(_textEntryManager);
 			else
 				TextEntryArea.Content = null;
+			ConfigureButtons();
 		}
 
 
@@ -98,6 +114,15 @@ namespace Miharu.FrontEnd.TextEntry
 			if (_textEntryManager.CurrentTextIndex >= 0 && _textEntryManager.CurrentTextIndex < TextEntriesStackPanel.Children.Count)
 				((TextEntryListView)TextEntriesStackPanel.Children[_textEntryManager.CurrentTextIndex]).Selected = true;
 			_previousIndex = _textEntryManager.CurrentTextIndex;
+			ConfigureButtons();
+		}
+
+		private void PrevEntryButton_Click (object sender, EventArgs e) {
+			_pageManager.SelectTextEntry(_textEntryManager.CurrentTextIndex - 1);
+		}
+
+		private void NextEntryButton_Click (object sender, EventArgs e) {
+			_pageManager.SelectTextEntry(_textEntryManager.CurrentTextIndex + 1);
 		}
 	}
 }

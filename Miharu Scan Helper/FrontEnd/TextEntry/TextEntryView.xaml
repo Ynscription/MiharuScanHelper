@@ -5,18 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:Controls ="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:Miharu.FrontEnd.TextEntry"
-             mc:Ignorable="d" 
+			 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+			 mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-	<TabControl>
-		<TabItem Header="Entries List">
-			<ScrollViewer>
-				<StackPanel x:Name="TextEntriesStackPanel" />
-			</ScrollViewer>
-		</TabItem>
-		<TabItem Header="Edit Entry" x:Name="TextEntryArea">
+	<Grid>
+		<TabControl>
+			<TabItem Header="Entries List">
+				<ScrollViewer>
+					<StackPanel x:Name="TextEntriesStackPanel" />
+				</ScrollViewer>
+			</TabItem>
+			<TabItem Header="Edit Entry" x:Name="TextEntryArea">
 
-		</TabItem>
-	</TabControl>
+			</TabItem>
+		</TabControl>
+		<UniformGrid Columns="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3">
+			<Button x:Name="PrevEntryButton" Click="PrevEntryButton_Click" Margin="5,0,0,0" Padding="0,2,3,2" IsEnabled="False">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Label Content="Previous" FontSize="14" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+					<iconPacks:PackIconModern Kind="ArrowLeft" Grid.Column="0" Margin="3,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+								Width="Auto" 
+								MinHeight="{Binding ActualHeight, ElementName=refreshLabel, Mode=OneWay}" />
+				</Grid>
+			</Button>
+			<Button x:Name="NextEntryButton" Click="NextEntryButton_Click" Margin="5,0,0,0" Padding="0,2,3,2" IsEnabled="False">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Label Content="Next" FontSize="14" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+					<iconPacks:PackIconModern Kind="ArrowRight" Grid.Column="1" Margin="3,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+								Width="Auto" 
+								MinHeight="{Binding ActualHeight, ElementName=refreshLabel, Mode=OneWay}" />
+				</Grid>
+			</Button>
+		</UniformGrid>		
+	</Grid>
+	
 	<!--<Controls:MetroAnimatedSingleRowTabControl FontSize="8">
 		<Controls:MetroTabItem Header="Entries List" >
 			<ScrollViewer>

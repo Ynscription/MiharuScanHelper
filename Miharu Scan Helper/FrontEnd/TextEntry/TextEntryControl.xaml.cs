@@ -332,7 +332,7 @@ namespace Miharu.FrontEnd
 		}
 
 		private void CheckAnimation (string parse) {
-			if (parse.Contains("おかえりなのじゃ")) {
+			if (parse.Contains("なのじゃ")) {
 				 _desiredState = AnimState.Shown;
 			}
 			else {
