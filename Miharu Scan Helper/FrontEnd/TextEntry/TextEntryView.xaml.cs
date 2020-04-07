@@ -26,8 +26,8 @@ namespace Miharu.FrontEnd.TextEntry
 		private PageManager _pageManager;
 
 
-		private void ConfigureButtons () {
-			if (!_pageManager.IsPageLoaded) {
+		private void ConfigureButtons (bool pageChanged = false) {
+			if (pageChanged || !_pageManager.IsPageLoaded) {
 				PrevEntryButton.IsEnabled = false;
 				NextEntryButton.IsEnabled = false;
 			}
@@ -48,7 +48,7 @@ namespace Miharu.FrontEnd.TextEntry
 			_pageManager.TextEntryMoved += OnTextEntryMoved;
 			_pageManager.TextEntryRemoved += OnTextEntryRemoved;
 			_pageManager.TextEntryAdded += OnTextEntryAdded;
-			ConfigureButtons();
+			ConfigureButtons(true);
 		}
 
 		private void OnTextEntryAdded(object sender, ListModificationEventArgs e)
@@ -92,7 +92,7 @@ namespace Miharu.FrontEnd.TextEntry
 				TextEntriesStackPanel.Children.Clear();
 
 			TextEntriesStackPanel.InvalidateVisual();
-			ConfigureButtons();
+			ConfigureButtons(true);
 		}
 
 		private void OnTextEntryChanged(object sender, EventArgs e)
