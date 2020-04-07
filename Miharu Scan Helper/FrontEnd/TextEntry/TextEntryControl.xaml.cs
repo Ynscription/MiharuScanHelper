@@ -50,6 +50,7 @@ namespace Miharu.FrontEnd
 			if (_textEntryManager.IsTextSelected)
 				LoadTextEntry();
 			_textEntryManager.PageManager.TextEntryRequiresTranslation += OnTextEntryRequiresTranslation;
+			TextTabControl.SelectedIndex = _textEntryManager.TabIndex;
 		}
 
 
@@ -346,6 +347,9 @@ namespace Miharu.FrontEnd
 			}
 		}
 
-		
+		private void TextTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			_textEntryManager.TabIndex = TextTabControl.SelectedIndex;
+		}
 	}
 }

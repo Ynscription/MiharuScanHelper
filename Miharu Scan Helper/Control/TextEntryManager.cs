@@ -13,6 +13,10 @@ namespace Miharu.Control
 		public event EventHandler TextChanged;
 		public event EventHandler TextIndexChanged;
 
+		public int TabIndex {
+			get; set;
+		} = 0;
+
 		public PageManager PageManager {
 			get;
 			private set;

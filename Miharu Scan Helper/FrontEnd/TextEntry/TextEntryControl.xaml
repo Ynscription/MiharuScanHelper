@@ -102,7 +102,7 @@
 		</Grid>
 
 
-		<TabControl Margin="3" Grid.Row="1" >
+		<TabControl x:Name="TextTabControl" Margin="3" Grid.Row="1" SelectionChanged="TextTabControl_SelectionChanged">
 			<TabItem Header="Text">
 				<Grid>
 					<Grid.RowDefinitions>
