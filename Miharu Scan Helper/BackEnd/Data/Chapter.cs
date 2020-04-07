@@ -17,6 +17,7 @@ namespace Miharu.BackEnd.Data
 		Japanese = 0x2,
 		Notes = 0x4,
 		Translation = 0x8,
+		Filename = 0x10
 	}
 
 
@@ -237,7 +238,10 @@ namespace Miharu.BackEnd.Data
 				writer = new StreamWriter(destPath, false, Encoding.UTF8);
 				for (int i = 1; i <= Pages.Count; i++) {
 					if (Pages [i - 1].TextEntries.Count > 0) {
-						writer.WriteLine(i.ToString("D2") + Environment.NewLine);
+						if (ed.HasFlag(ExportData.Filename))
+							writer.WriteLine(Pages[i-1].Name + Environment.NewLine);
+						else
+							writer.WriteLine(i.ToString("D2") + Environment.NewLine);
 						Pages [i - 1].ExportCustomScript(writer, ed);
 						writer.WriteLine();
 					}
