@@ -7,7 +7,6 @@ using Ookii.Dialogs.Wpf;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,7 +14,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using WpfAnimatedGif;
 
 namespace Miharu.FrontEnd
 {
@@ -54,7 +52,46 @@ namespace Miharu.FrontEnd
 			_textEntryManager.PageManager.TextEntryRequiresTranslation += OnTextEntryRequiresTranslation;
 		}
 
-		
+
+		private TextBox NewNoteTextBox (string s = "") {
+			//" AcceptsTab="True" IsReadOnly="False" Margin="5"/>
+			TextBox tb = new TextBox ();
+			tb.TextWrapping = TextWrapping.Wrap;
+			tb.FontSize = 16;
+			tb.AcceptsReturn = true;
+			tb.AcceptsTab = true;
+			tb.IsReadOnly = false;
+			tb.Margin = new Thickness(5);
+			tb.Text = s;
+			tb.TextChanged += OnNoteTextChanged;
+			tb.LostFocus += OnNoteLostFocus;
+			return tb;
+		}
+
+		private void OnNoteLostFocus(object sender, RoutedEventArgs e)
+		{
+			TextBox senderTB = (TextBox)sender;
+			int index = NotesStackPanel.Children.IndexOf(senderTB);
+			if (_textEntryManager.IsTextSelected && index < _textEntryManager.CurrentTextNotesCount) {
+				if (senderTB.Text == "") {
+					_textEntryManager.CurrentTextRemoveNoteAt(index);
+					NotesStackPanel.Children.RemoveAt(index);
+				}
+			}
+		}
+
+		private void OnNoteTextChanged(object sender, TextChangedEventArgs e)
+		{
+			TextBox senderTB = (TextBox)sender;
+			int index = NotesStackPanel.Children.IndexOf(senderTB);
+			if (_textEntryManager.IsTextSelected && index < _textEntryManager.CurrentTextNotesCount)
+				_textEntryManager.CurrentTextSetNote(index, senderTB.Text);
+			else {
+				_textEntryManager.CurrentTextAddNote (senderTB.Text);
+				NotesStackPanel.Children.Add(NewNoteTextBox());
+			}
+
+		}
 
 		private void LoadTextEntry()
 		{			
@@ -71,6 +108,11 @@ namespace Miharu.FrontEnd
 
 			SFXTranslationGrid.Children.Clear();
 			SFXTranslationGrid.Children.Add(new TranslationSourceJadedNetworkView(_textEntryManager.TranslationManager, _textEntryManager.CurrentText));
+
+			NotesStackPanel.Children.Clear();
+			for (int i = 0; i < _textEntryManager.CurrentTextNotesCount; i++)
+				NotesStackPanel.Children.Add(NewNoteTextBox(_textEntryManager.CurrentTextGetNote(i)));
+			NotesStackPanel.Children.Add(NewNoteTextBox());
 
 			TranslatedTextBox.Text = _textEntryManager.CurrentText.TranslatedText;
 			VerticalCheckBox.IsChecked = _textEntryManager.CurrentText.Vertical;

@@ -3,6 +3,7 @@ using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
 using Miharu.BackEnd.Translation.Threading;
 using System;
+using System.Collections.Generic;
 
 namespace Miharu.Control
 {
@@ -42,6 +43,25 @@ namespace Miharu.Control
 				_currentTextIndex = value;
 				TextIndexChanged?.Invoke(this, new EventArgs());
 			}
+		}
+
+		public int CurrentTextNotesCount {
+			get => _currentText.NotesCount;
+		}
+		public void CurrentTextAddNote (string text) {
+			_currentText.AddNote(text);
+			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+		public void CurrentTextRemoveNoteAt (int index) {
+			_currentText.RemoveNoteAt(index);
+			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+		public void CurrentTextSetNote (int index, string text) {
+			_currentText.SetNote(index, text);
+			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+		public string CurrentTextGetNote (int index) {
+			return _currentText.GetNote(index);
 		}
 
 

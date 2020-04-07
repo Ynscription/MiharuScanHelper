@@ -81,6 +81,25 @@ namespace Miharu.BackEnd.Data
 			TextChanged?.Invoke(this, new TxtChangedEventArgs(TextChangeType.TranslationSource, type, value));
 		}
 
+
+		[JsonProperty]
+		private List <string> _notes;
+		public int NotesCount {
+			get => _notes.Count;
+		}
+		public void AddNote (string text) {
+			_notes.Add(text);
+		}
+		public void RemoveNoteAt (int index) {
+			_notes.RemoveAt(index);
+		}
+		public void SetNote (int index, string text) {
+			_notes[index] = text;
+		}
+		public string GetNote (int index) {
+			return _notes[index];
+		}
+		
 	
 		
 
@@ -101,6 +120,7 @@ namespace Miharu.BackEnd.Data
 			TranslatedText = "";
 			Vertical = src.Height >= src.Width;
 			_translations = new Dictionary<TranslationType, string>();
+			_notes = new List<string>();
 		}
 
 		
@@ -108,7 +128,8 @@ namespace Miharu.BackEnd.Data
 		//There are legacy parameters, so loading old saves still works
 		[JsonConstructor]
 		public Text (DPIAwareRectangle dpiAwareRectangle, bool vertical, bool parseInvalidated,
-					string parsedText, Dictionary<TranslationType, string> translations,
+					string parsedText, List<string> notes,
+					Dictionary<TranslationType, string> translations,
 					Rect rectangle,
 					string googleTranslatedText, string bingTranslatedText,
 					string translatedText) {
@@ -123,6 +144,12 @@ namespace Miharu.BackEnd.Data
 			Vertical = vertical;
 			_parseInvalidated = parseInvalidated;
 			ParsedText = parsedText;
+
+			if (notes != null)
+				_notes = notes;
+			else
+				_notes = new List<string>();
+
 			if (translations != null)
 				_translations = translations;
 			else {
