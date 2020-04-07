@@ -1,6 +1,8 @@
 ﻿
 using Miharu.BackEnd.Data;
 using Miharu.Control;
+using Miharu.Properties;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -80,6 +82,23 @@ namespace Miharu.FrontEnd.TextEntry {
 		}
 
 		private void DeleteButton_Click (object sender, RoutedEventArgs e) {
+			if ((bool)Settings.Default["WarnTextDeletion"]) {
+				TaskDialog dialog = new TaskDialog();
+				dialog.WindowTitle = "Warning";
+				dialog.MainIcon = TaskDialogIcon.Warning;
+				dialog.MainInstruction = "Are you sure you want to delete this text entry?";
+				
+				TaskDialogButton deleteButton = new TaskDialogButton("Delete");
+				dialog.Buttons.Add(deleteButton);
+				
+				TaskDialogButton cancelButton = new TaskDialogButton(ButtonType.Cancel);
+				cancelButton.Text = "Cancel";
+				dialog.Buttons.Add(cancelButton);
+
+				TaskDialogButton button = dialog.ShowDialog();
+				if (button.ButtonType == ButtonType.Cancel)
+					return;
+			}
 			_pageManager.RemoveTextEntry(_textEntry);
 		}
 

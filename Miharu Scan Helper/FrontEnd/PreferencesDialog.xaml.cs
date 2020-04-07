@@ -43,10 +43,14 @@ namespace Miharu.FrontEnd
 			InitializeComponent();
 			TesseractPathTextBox.Text = (string)Settings.Default["TesseractPath"];
 			ApplyButton.IsEnabled = false;
+
 			ThemeBaseColorListBox.ItemsSource = BaseColors;
 			ThemeBaseColorListBox.SelectedItem = (string)Settings.Default["Theme"];
 			ThemeAccentColorListBox.ItemsSource = AccentColors;
 			ThemeAccentColorListBox.SelectedItem = (string)Settings.Default["Accent"];
+
+			WarnTextDeletionToggleSwitch.IsChecked = (bool)Settings.Default["WarnTextDeletion"];
+
 			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
 			
 
@@ -118,9 +122,15 @@ namespace Miharu.FrontEnd
 
 		private void SavePreferences () {
 			Settings.Default ["TesseractPath"] = TesseractPath;
+
 			Settings.Default["Theme"] = (string)ThemeBaseColorListBox.SelectedValue;
 			Settings.Default["Accent"] = (string)ThemeAccentColorListBox.SelectedValue;
+
+			Settings.Default["WarnTextDeletion"] = WarnTextDeletionToggleSwitch.IsChecked;
+
 			Settings.Default["AutoTranslateEnabled"] = AutoTranslateToggleSwitch.IsChecked;
+
+
 			string disabledSources = "";
 			foreach (ToggleSwitch ts in TranslationSourcesStackPanel.Children) {
 				if (!ts.IsChecked ?? true)

@@ -94,5 +94,17 @@ namespace Miharu.Properties {
                 this["DisabledTranslationSources"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WarnTextDeletion {
+            get {
+                return ((bool)(this["WarnTextDeletion"]));
+            }
+            set {
+                this["WarnTextDeletion"] = value;
+            }
+        }
     }
 }

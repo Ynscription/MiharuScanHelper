@@ -63,6 +63,18 @@
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="1*" />
 						</Grid.ColumnDefinitions>
+						<Label Content="Warn on text entry deletion" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+						<Controls:ToggleSwitch x:Name="WarnTextDeletionToggleSwitch" Grid.Column="1" Grid.Row="0"
+							OnLabel="Enabled" OffLabel="Disabled"
+							VerticalAlignment="Center" HorizontalAlignment="Left"  
+							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+					</Grid>
+					<Separator Margin="10"/>
+					<Grid Margin="10">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="1*" />
+						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="1*" />
