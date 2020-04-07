@@ -188,23 +188,11 @@ namespace Miharu.Control
 			}
 		}
 
-		
 
-		public void ExportJPScript(string fileName)
+		public void ExportCustomScript(string fileName, ExportData ed)
 		{
 			try {
-				LoadedChapter.ExportJPScript(fileName);
-			}
-			catch (Exception e) {
-				Logger.Log(e);
-				throw e;
-			}
-		}
-
-		public void ExportCompleteScript(string fileName)
-		{
-			try {
-				LoadedChapter.ExportCompleteScript(fileName);
+				LoadedChapter.ExportCustomScript(fileName, ed);
 			}
 			catch (Exception e) {
 				Logger.Log(e);

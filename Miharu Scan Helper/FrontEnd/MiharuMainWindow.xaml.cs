@@ -84,9 +84,7 @@ namespace Miharu.FrontEnd
 
 			ExportAsTSScriptMenuItem.IsEnabled = set;
 
-			ExportAsJPScriptMenuItem.IsEnabled = set;
-
-			ExportAsRScriptMenuItem.IsEnabled = set;
+			ExportMoreMenuItem.IsEnabled = set;
 
 			EditChapterPagesMenuItem.IsEnabled = set;
 
@@ -327,63 +325,12 @@ namespace Miharu.FrontEnd
 			}
 		}
 
-		private void ExportAsJPScriptMenuItem_Click (object sender, RoutedEventArgs e) {
-			VistaSaveFileDialog fileDialog = new VistaSaveFileDialog();
-			fileDialog.AddExtension = true;
-			fileDialog.DefaultExt = ".txt";
-			fileDialog.Filter = "Transcription files (*.txt)|*.txt";
-			fileDialog.OverwritePrompt = true;
-			fileDialog.Title = "Export Transcription";
-			bool? res = fileDialog.ShowDialog(this);
-			if (res ?? false) {
-				try {
-					Mouse.SetCursor(Cursors.Wait);
-					_chapterManager.ExportJPScript(fileDialog.FileName);
-					Mouse.SetCursor(Cursors.Arrow);
-				}
-				catch (Exception ex) {
-					Mouse.SetCursor(Cursors.Arrow);
-					using (TaskDialog dialog = new TaskDialog()) {
-						dialog.WindowTitle = "Error";
-						dialog.MainIcon = TaskDialogIcon.Error;
-						dialog.MainInstruction = "There was an error exporting the transcription.";
-						dialog.Content = ex.Message;
-						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-						dialog.Buttons.Add(okButton);
-						TaskDialogButton button = dialog.ShowDialog(this);
-					}
-				}
-			}
-		}
+		private void ExportMoreMenuItem_Click (object sender, RoutedEventArgs e) {
 
-		private void ExportAsCompleteMenuItem_Click (object sender, RoutedEventArgs e) {
-			VistaSaveFileDialog fileDialog = new VistaSaveFileDialog();
-			fileDialog.AddExtension = true;
-			fileDialog.DefaultExt = ".txt";
-			fileDialog.Filter = "Script files (*.txt)|*.txt";
-			fileDialog.OverwritePrompt = true;
-			fileDialog.Title = "Export Complete Script";
-			bool? res = fileDialog.ShowDialog(this);
-			if (res ?? false) {
-				try {
-					Mouse.SetCursor(Cursors.Wait);					
-					_chapterManager.ExportCompleteScript(fileDialog.FileName);
-					Mouse.SetCursor(Cursors.Arrow);
-				}
-				catch (Exception ex) {
-					Mouse.SetCursor(Cursors.Arrow);
+			ExportDialogue ed = new ExportDialogue(_chapterManager);
+			ed.ShowDialog();
 
-					using (TaskDialog dialog = new TaskDialog()) {
-						dialog.WindowTitle = "Error";
-						dialog.MainIcon = TaskDialogIcon.Error;
-						dialog.MainInstruction = "There was an error exporting the complete script.";
-						dialog.Content = ex.Message;
-						TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
-						dialog.Buttons.Add(okButton);
-						TaskDialogButton button = dialog.ShowDialog(this);
-					}
-				}
-			}
+			
 		}
 
 

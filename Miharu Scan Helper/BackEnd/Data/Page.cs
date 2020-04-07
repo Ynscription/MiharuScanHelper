@@ -124,15 +124,17 @@ namespace Miharu.BackEnd.Data {
 				writer.WriteLine(t.TranslatedText + Environment.NewLine);
 		}
 
-		public void ExportJPScript (StreamWriter writer) {
-			foreach (Text t in TextEntries)
-				writer.WriteLine(t.ParsedText + Environment.NewLine);
-		}
-
-		public void ExportCompleteScript (StreamWriter writer) {
+		public void ExportCustomScript (StreamWriter writer, ExportData ed) {
 			foreach (Text t in TextEntries) {
-				writer.WriteLine (t.ParsedText + Environment.NewLine);
-				writer.WriteLine(t.TranslatedText + Environment.NewLine);
+				if (ed.HasFlag(ExportData.Japanese))
+					writer.WriteLine (t.ParsedText + Environment.NewLine);
+				if (ed.HasFlag(ExportData.Notes)) {
+					for (int i = 0; i < t.NotesCount; i++)
+						writer.WriteLine("Note: " + t.GetNote(i));
+					writer.WriteLine();
+				}
+				if (ed.HasFlag(ExportData.Translation))
+					writer.WriteLine(t.TranslatedText + Environment.NewLine);
 			}
 		}
 

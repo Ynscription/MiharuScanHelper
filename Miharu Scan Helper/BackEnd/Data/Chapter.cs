@@ -10,6 +10,16 @@ using System.Threading.Tasks;
 
 namespace Miharu.BackEnd.Data
 {
+
+	[Flags]
+	public enum ExportData {
+		None = 0x0,
+		Japanese = 0x2,
+		Notes = 0x4,
+		Translation = 0x8,
+	}
+
+
 	[JsonObject(MemberSerialization.OptOut)]
     public class Chapter
     {
@@ -27,7 +37,7 @@ namespace Miharu.BackEnd.Data
 			private set;
 		}
 
-		private string _previousSavePath = null;
+
 
 
 		public List<Page> Pages {
@@ -220,33 +230,15 @@ namespace Miharu.BackEnd.Data
 			}
 		}
 
-		public void ExportJPScript (string destPath) {
+		
+		public void ExportCustomScript (string destPath, ExportData ed) {
 			StreamWriter writer = null;
 			try {
 				writer = new StreamWriter(destPath, false, Encoding.UTF8);
 				for (int i = 1; i <= Pages.Count; i++) {
 					if (Pages [i - 1].TextEntries.Count > 0) {
 						writer.WriteLine(i.ToString("D2") + Environment.NewLine);
-						Pages [i - 1].ExportJPScript(writer);
-						writer.WriteLine();
-					}
-				}
-				writer.Close();
-			}
-			catch (Exception e) {
-				writer?.Close();
-				throw e;
-			}
-		}
-
-		public void ExportCompleteScript (string destPath) {
-			StreamWriter writer = null;
-			try {
-				writer = new StreamWriter(destPath, false, Encoding.UTF8);
-				for (int i = 1; i <= Pages.Count; i++) {
-					if (Pages [i - 1].TextEntries.Count > 0) {
-						writer.WriteLine(i.ToString("D2") + Environment.NewLine);
-						Pages [i - 1].ExportCompleteScript(writer);
+						Pages [i - 1].ExportCustomScript(writer, ed);
 						writer.WriteLine();
 					}
 				}

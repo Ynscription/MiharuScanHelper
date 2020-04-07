@@ -60,8 +60,7 @@
 						<iconPacks:PackIconModern Kind="PageText" />
 					</MenuItem.Icon>
 					<MenuItem x:Name="ExportAsTSScriptMenuItem" Header="Typesetter Script..." IsEnabled="False" Click="ExportAsScriptMenuItem_Click"/>
-					<MenuItem x:Name="ExportAsJPScriptMenuItem" Header="Japanese Transcription..." IsEnabled="False" Click="ExportAsJPScriptMenuItem_Click"/>
-					<MenuItem x:Name="ExportAsRScriptMenuItem" Header="Complete Script..." IsEnabled="False" Click="ExportAsCompleteMenuItem_Click"/>
+					<MenuItem x:Name="ExportMoreMenuItem" Header="More..." IsEnabled="False" Click="ExportMoreMenuItem_Click"/>
 				</MenuItem>
 				<Separator />
 				<MenuItem x:Name="ExitMenuItem" Header="Exit" Click="ExitMenuItem_Click">

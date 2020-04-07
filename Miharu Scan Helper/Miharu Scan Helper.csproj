@@ -146,6 +146,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\Helper\ExportDialogue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\Helper\ImageDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,6 +217,9 @@
     </Compile>
     <Compile Include="FrontEnd\Helper\DpiDialog.xaml.cs">
       <DependentUpon>DpiDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\Helper\ExportDialogue.xaml.cs">
+      <DependentUpon>ExportDialogue.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\Helper\ImageDisplay.xaml.cs">
       <DependentUpon>ImageDisplay.xaml</DependentUpon>
@@ -283,7 +290,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Miharu Scan Helper_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
