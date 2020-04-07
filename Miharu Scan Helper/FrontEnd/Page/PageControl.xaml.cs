@@ -18,8 +18,30 @@ namespace Miharu.FrontEnd.Page
 	/// </summary>
 	public partial class PageControl : UserControl
 	{
-		private double _dpiX;
-		private double _dpiY;
+		private double _originalDpiX;
+		private double _originalDpiY;
+		private int _zoomLevel;
+		private int ZoomLevel{
+			get => _zoomLevel;
+			set {
+				if (value > 19)
+					_zoomLevel = 19;
+				else if (value < -9)
+					_zoomLevel = -9;
+				else
+					_zoomLevel = value;
+			}
+		}
+		private double DpiX {
+			get {
+				return _originalDpiX * (1 + 0.1*ZoomLevel);
+			}
+		}
+		private double DpiY {
+			get {
+				return _originalDpiY * (1 + 0.1*ZoomLevel);
+			}
+		}
 		private PageManager _pageManager;
 		private RectangleOverlay _rectangleOverlay;
 
@@ -30,9 +52,9 @@ namespace Miharu.FrontEnd.Page
 			_pageManager.PageChanged += OnPageChanged;
 			_pageManager.PageIndexChanged += OnPageIndexChanged;
 			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
-			_dpiX = g.DpiX;
-			_dpiY = g.DpiY;
-			_rectangleOverlay = new RectangleOverlay(PreviewIMG, _pageManager, _dpiX, _dpiY);
+			_originalDpiX = g.DpiX;
+			_originalDpiY = g.DpiY;
+			_rectangleOverlay = new RectangleOverlay(PreviewIMG, _pageManager, DpiX, DpiY);
 			AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
 			adornerLayer.Add(_rectangleOverlay);
 		}
@@ -50,9 +72,41 @@ namespace Miharu.FrontEnd.Page
 			byte [] pixelData = new byte [stride * height];
 			src.CopyPixels(pixelData, stride, 0);
 
-			BitmapSource result = BitmapSource.Create(width, height, _dpiX, _dpiY, pxFormat, null, pixelData, stride);
+			CachedBitmap result = (CachedBitmap)BitmapSource.Create(width, height, DpiX, DpiY, pxFormat, null, pixelData, stride);
 
 			return result;
+		}
+
+		private BitmapSource ChangeImageDPI (CachedBitmap src) {
+			int width = src.PixelWidth;
+			int height = src.PixelHeight;
+			PixelFormat pxFormat = src.Format;
+
+			int stride = width * 4; // 4 bytes per pixel
+			byte [] pixelData = new byte [stride * height];
+			src.CopyPixels(pixelData, stride, 0);
+
+			CachedBitmap result = (CachedBitmap)BitmapSource.Create(width, height, DpiX, DpiY, pxFormat, null, pixelData, stride);
+
+			return result;
+		}
+
+		//Zoom out -120
+		private void Zoom (double delta) {
+			try {
+				BitmapImage imgSrc = (BitmapImage)PreviewIMG.Source;
+				ZoomLevel -= ((int)delta) / 120;
+				_rectangleOverlay.DpiX = DpiX;
+				_rectangleOverlay.DpiY = DpiY;
+				PreviewIMG.Source = ChangeImageDPI(imgSrc);
+			}
+			catch (InvalidCastException) {
+				CachedBitmap imgSrc = (CachedBitmap)PreviewIMG.Source;
+				ZoomLevel -= ((int)delta) / 120;
+				_rectangleOverlay.DpiX = DpiX;
+				_rectangleOverlay.DpiY = DpiY;
+				PreviewIMG.Source = ChangeImageDPI(imgSrc);
+			}
 		}
 		
 		private void OnPageChanged (object sender, EventArgs e) {
@@ -65,7 +119,7 @@ namespace Miharu.FrontEnd.Page
 				imgSrc.CacheOption = BitmapCacheOption.OnLoad;
 				imgSrc.EndInit();
 
-				if (imgSrc.DpiX != _dpiX || imgSrc.DpiY != _dpiY)
+				if (imgSrc.DpiX != DpiX || imgSrc.DpiY != DpiY)
 					PreviewIMG.Source = ChangeImageDPI(imgSrc);
 				else
 					PreviewIMG.Source = imgSrc;
@@ -178,6 +232,12 @@ namespace Miharu.FrontEnd.Page
 				PreviewIMGScroll.ScrollToHorizontalOffset(PreviewIMGScroll.HorizontalOffset - e.Delta);
 				e.Handled = true;
 			}
+			if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
+				
+				Zoom(e.Delta);
+
+				e.Handled = true;
+			}
 		}
 
 		private System.Windows.Point _startingPoint;
@@ -232,7 +292,7 @@ namespace Miharu.FrontEnd.Page
 											_rectangleOverlay.DragRect.Value.Y,
 											_rectangleOverlay.DragRect.Value.Width,
 											_rectangleOverlay.DragRect.Value.Height,
-											_dpiX, _dpiY);
+											DpiX, DpiY);
 					_rectangleOverlay.DragRect = null;
 
 					if (rect .Width == 0 || rect.Height == 0) {
