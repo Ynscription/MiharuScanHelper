@@ -129,8 +129,8 @@ namespace Miharu.BackEnd.Data {
 				if (ed.HasFlag(ExportData.Japanese))
 					writer.WriteLine (t.ParsedText + Environment.NewLine);
 				if (ed.HasFlag(ExportData.Notes)) {
-					for (int i = 0; i < t.NotesCount; i++)
-						writer.WriteLine("Note: " + t.GetNote(i));
+					foreach (Note n in t.NotesEnumerator)
+						writer.WriteLine("Note: " + n.Content);
 					writer.WriteLine();
 				}
 				if (ed.HasFlag(ExportData.Translation))

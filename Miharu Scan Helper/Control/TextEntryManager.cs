@@ -49,33 +49,38 @@ namespace Miharu.Control
 			}
 		}
 
+
 		public int CurrentTextNotesCount {
 			get => _currentText.NotesCount;
 		}
-		public void CurrentTextAddNote (string text) {
-			_currentText.AddNote(text);
+		public IEnumerable<Note> CurrentTextNotesEnumerator {
+			get => _currentText.NotesEnumerator;
+		}
+		public Guid CurrentTextAddNote (string text) {
+			PageManager.ChapterManager.IsChapterSaved = false;
+			return _currentText.AddNote(text);
+		}
+		public void CurrentTextRemoveNote (Guid guid) {
+			_currentText.RemoveNote(guid);
 			PageManager.ChapterManager.IsChapterSaved = false;
 		}
-		public void CurrentTextRemoveNoteAt (int index) {
-			_currentText.RemoveNoteAt(index);
+		public void CurrentTextSetNote (Guid guid, string text) {
+			_currentText.SetNote(guid, text);
 			PageManager.ChapterManager.IsChapterSaved = false;
 		}
-		public void CurrentTextSetNote (int index, string text) {
-			_currentText.SetNote(index, text);
-			PageManager.ChapterManager.IsChapterSaved = false;
-		}
-		public string CurrentTextGetNote (int index) {
-			return _currentText.GetNote(index);
+		public Note CurrentTextGetNote (Guid guid) {
+			return _currentText.GetNote(guid);
 		}
 
 
 		public TextEntryManager(PageManager pageManager, TranslatorThread translatorThread)
 		{
 			PageManager = pageManager;
+			PageManager.PageChanged += OnPageChanged;
 			TranslationManager = new TranslationManager(this, translatorThread);
 		}
 
-
+		
 
 		public void SelectTextEntry(Text entry, int index)
 		{
@@ -146,6 +151,17 @@ namespace Miharu.Control
 		{
 			CurrentText.TranslatedText = text;
 			PageManager.ChapterManager.IsChapterSaved = false;
+		}
+
+
+		private void OnPageChanged(object sender, EventArgs e)
+		{
+			if (PageManager.IsPageLoaded) {
+				if (PageManager.CurrentPageTextEntries.Count > 0)
+					SelectTextEntry(PageManager.CurrentPageTextEntries[0], 0);
+				else
+					SelectTextEntry(null, 0);
+			}
 		}
 	}
 }

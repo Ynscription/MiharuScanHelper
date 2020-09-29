@@ -156,9 +156,7 @@ namespace Miharu.BackEnd.Data
 		public void Save (string destPath, int currentPage = 0) {
 			MakePagesRelative(destPath);
 			using (StreamWriter writer = new StreamWriter(destPath, false, Encoding.UTF8)) {
-				writer.WriteLine((string)Settings.Default["SaveVersion"]);
-				writer.WriteLine(currentPage);
-				writer.Write(JsonConvert.SerializeObject(this, Formatting.Indented));
+				writer.Write(this.ToString(destPath, currentPage));
 				/*writer.WriteLine(Path);
 				writer.WriteLine(TotalPages);
 				foreach (Page p in Pages)
@@ -166,6 +164,16 @@ namespace Miharu.BackEnd.Data
 				writer.Close();
 			}
 			MakePagesAbsolute(destPath);
+		}
+
+		public string ToString (string destPath, int currentPage = 0) {
+			MakePagesRelative(destPath);
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine((string)Settings.Default["SaveVersion"]);
+			sb.AppendLine("" + currentPage);
+			sb.Append(JsonConvert.SerializeObject(this, Formatting.Indented));
+			MakePagesAbsolute(destPath);
+			return sb.ToString();
 		}
 
 		public void MakePagesAbsolute (string absoluteFrom) {

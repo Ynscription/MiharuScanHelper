@@ -30,6 +30,8 @@ namespace Miharu.BackEnd.Data
 		private bool _parseInvalidated = true;
 
 
+		public readonly Guid Uuid;
+
 		public void Invalidate () {
 			_parseInvalidated = true;
 		}
@@ -83,21 +85,34 @@ namespace Miharu.BackEnd.Data
 
 
 		[JsonProperty]
-		private List <string> _notes;
+		public List<Note> UniqueNotes {
+			get => _uniqueNotes.Values.ToList();
+		}
+		[JsonIgnore]
+		private Dictionary <Guid, Note> _uniqueNotes;
+
+		[JsonIgnore]
 		public int NotesCount {
-			get => _notes.Count;
+			get => _uniqueNotes.Count;
 		}
-		public void AddNote (string text) {
-			_notes.Add(text);
+
+		[JsonIgnore]
+		public IEnumerable<Note> NotesEnumerator {
+			get { return _uniqueNotes.Values; }
 		}
-		public void RemoveNoteAt (int index) {
-			_notes.RemoveAt(index);
+		public Guid AddNote (string text) {
+			Note n = new Note(text);
+			_uniqueNotes.Add (n.Uuid, n);
+			return n.Uuid;
 		}
-		public void SetNote (int index, string text) {
-			_notes[index] = text;
+		public void RemoveNote (Guid guid) {
+			_uniqueNotes.Remove(guid);
 		}
-		public string GetNote (int index) {
-			return _notes[index];
+		public void SetNote (Guid guid, string text) {
+			_uniqueNotes[guid].Content = text;
+		}
+		public Note GetNote (Guid guid) {
+			return _uniqueNotes[guid];
 		}
 		
 	
@@ -113,6 +128,7 @@ namespace Miharu.BackEnd.Data
 		}
 
 		public Text (Bitmap src, DPIAwareRectangle rect) {
+			Uuid = Guid.NewGuid();
 			if (rect.Width == 0 || rect.Height == 0)
 				throw new ArgumentOutOfRangeException("rect", rect, "Can't create text entry with 0 width or 0 height rectangle.");
 			Source = src;
@@ -120,19 +136,28 @@ namespace Miharu.BackEnd.Data
 			TranslatedText = "";
 			Vertical = src.Height >= src.Width;
 			_translations = new Dictionary<TranslationType, string>();
-			_notes = new List<string>();
+			_uniqueNotes = new Dictionary <Guid, Note>();
 		}
 
 		
 		
 		//There are legacy parameters, so loading old saves still works
 		[JsonConstructor]
-		public Text (DPIAwareRectangle dpiAwareRectangle, bool vertical, bool parseInvalidated,
-					string parsedText, List<string> notes,
+		public Text (Guid? uuid,
+					DPIAwareRectangle dpiAwareRectangle, bool vertical, bool parseInvalidated,
+					string parsedText, 
+					List <Note> uniqueNotes,
+					List<string> _notes,
 					Dictionary<TranslationType, string> translations,
 					Rect rectangle,
 					string googleTranslatedText, string bingTranslatedText,
 					string translatedText) {
+			if (uuid.HasValue)
+				Uuid = uuid.Value;
+			else
+				Uuid = Guid.NewGuid();
+
+
 			if (dpiAwareRectangle != null)
 				DpiAwareRectangle = dpiAwareRectangle;
 			else {
@@ -145,10 +170,17 @@ namespace Miharu.BackEnd.Data
 			_parseInvalidated = parseInvalidated;
 			ParsedText = parsedText;
 
-			if (notes != null)
-				_notes = notes;
-			else
-				_notes = new List<string>();
+			_uniqueNotes = new Dictionary <Guid, Note>();
+			if (uniqueNotes != null) {
+				foreach (Note n in uniqueNotes)
+					_uniqueNotes.Add(n.Uuid, n);
+			}
+			else if (_notes != null) {
+				foreach (string text in _notes) {
+					Note n = new Note(text);
+					_uniqueNotes.Add (n.Uuid, n);
+				}
+			}
 
 			if (translations != null)
 				_translations = translations;

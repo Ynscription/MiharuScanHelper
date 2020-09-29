@@ -3,6 +3,7 @@ using Miharu.Properties;
 using Newtonsoft.Json;
 using Ookii.Dialogs.Wpf;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Miharu.BackEnd.Data
@@ -33,13 +34,15 @@ namespace Miharu.BackEnd.Data
 
 		
 		private static void Update (string destination, string data, int page, int versionNumber) {
-			if (versionNumber == 1 || versionNumber == 2) {
-				data = ConvertFrom2to3(data);
-				ConvertFrom3to4(data, destination, page);
+			Chapter c = null;
+			if (versionNumber < 3) {
+				ConvertFrom2to3(ref data);				
 			}
-			else if (versionNumber == 3) {
-				ConvertFrom3to4(data, destination, page);
+			if (versionNumber < 4) {
+				c = ConvertFrom3to4(ref data, destination, page);
 			}
+			if (c != null)
+				c.Save(destination, page);
 		}
 
 		
@@ -56,6 +59,8 @@ namespace Miharu.BackEnd.Data
 				return fileDialog.FileName;
 			return null;
 		}
+
+		
 
 		public static string CheckSaveVersion (string source) {
 			string finalSource = source;
@@ -97,15 +102,14 @@ namespace Miharu.BackEnd.Data
 			return finalSource;
 		}
 
-		private static string ConvertFrom2to3 (string data) {
+		private static void ConvertFrom2to3 (ref string data) {
 			data = data.Replace("\"Google2\":", "\"Google_API\":");
 			data = data.Replace("\"Bing\":", "\"Bing_API\":");
 			data = data.Replace("\"Yandex\":", "\"Yandex_API\":");
 			data = data.Replace("\"JadedNetwork\":", "\"Jaded_Network\":");
-			return data;
 		}
 
-		private static void ConvertFrom3to4 (string data, string destination, int page) {
+		private static Chapter ConvertFrom3to4 (ref string data, string destination, int page) {
 
 			Chapter c = JsonConvert.DeserializeObject<Chapter>(data);
 			c.MakePagesAbsolute(destination);
@@ -121,13 +125,12 @@ namespace Miharu.BackEnd.Data
 						}
 					}
 				}
-				c.Save(destination, page);
 			}
 			else {
 				throw new Exception ("Couldn't open file due to file version missmatch. Consider updating the file or using an older version of Miharu.");
 			}
-
-			
+			data = c.ToString(destination, page);
+			return c;
 		}
 
 		

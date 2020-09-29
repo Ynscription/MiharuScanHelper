@@ -55,7 +55,6 @@ namespace Miharu.FrontEnd
 
 
 		private TextBox NewNoteTextBox (string s = "") {
-			//" AcceptsTab="True" IsReadOnly="False" Margin="5"/>
 			TextBox tb = new TextBox ();
 			tb.TextWrapping = TextWrapping.Wrap;
 			tb.FontSize = 16;
@@ -66,6 +65,7 @@ namespace Miharu.FrontEnd
 			tb.Text = s;
 			tb.TextChanged += OnNoteTextChanged;
 			tb.LostFocus += OnNoteLostFocus;
+			tb.Tag = null;
 			return tb;
 		}
 
@@ -73,9 +73,10 @@ namespace Miharu.FrontEnd
 		{
 			TextBox senderTB = (TextBox)sender;
 			int index = NotesStackPanel.Children.IndexOf(senderTB);
-			if (_textEntryManager.IsTextSelected && index < _textEntryManager.CurrentTextNotesCount) {
-				if (senderTB.Text == "") {
-					_textEntryManager.CurrentTextRemoveNoteAt(index);
+			if (_textEntryManager.IsTextSelected && index < _textEntryManager.CurrentTextNotesCount && senderTB.Text == "") {
+				if (senderTB.Tag != null) {
+					Guid guid = (Guid)senderTB.Tag;
+					_textEntryManager.CurrentTextRemoveNote(guid);
 					NotesStackPanel.Children.RemoveAt(index);
 				}
 			}
@@ -85,10 +86,15 @@ namespace Miharu.FrontEnd
 		{
 			TextBox senderTB = (TextBox)sender;
 			int index = NotesStackPanel.Children.IndexOf(senderTB);
-			if (_textEntryManager.IsTextSelected && index < _textEntryManager.CurrentTextNotesCount)
-				_textEntryManager.CurrentTextSetNote(index, senderTB.Text);
+			if (_textEntryManager.IsTextSelected && index < _textEntryManager.CurrentTextNotesCount) {
+				if (senderTB.Tag != null) {
+					Guid guid = (Guid)senderTB.Tag;
+					_textEntryManager.CurrentTextSetNote(guid, senderTB.Text);
+				}
+			}
 			else {
-				_textEntryManager.CurrentTextAddNote (senderTB.Text);
+				Guid guid = _textEntryManager.CurrentTextAddNote (senderTB.Text);
+				senderTB.Tag = guid;
 				NotesStackPanel.Children.Add(NewNoteTextBox());
 			}
 
@@ -111,8 +117,11 @@ namespace Miharu.FrontEnd
 			SFXTranslationGrid.Children.Add(new TranslationSourceJadedNetworkView(_textEntryManager.TranslationManager, _textEntryManager.CurrentText));
 
 			NotesStackPanel.Children.Clear();
-			for (int i = 0; i < _textEntryManager.CurrentTextNotesCount; i++)
-				NotesStackPanel.Children.Add(NewNoteTextBox(_textEntryManager.CurrentTextGetNote(i)));
+			foreach (Note n in _textEntryManager.CurrentTextNotesEnumerator) {
+				TextBox tb = NewNoteTextBox(n.Content);
+				tb.Tag = n.Uuid;
+				NotesStackPanel.Children.Add(tb);
+			}
 			NotesStackPanel.Children.Add(NewNoteTextBox());
 
 			TranslatedTextBox.Text = _textEntryManager.CurrentText.TranslatedText;
