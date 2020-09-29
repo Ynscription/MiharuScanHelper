@@ -87,6 +87,11 @@ namespace Miharu.FrontEnd.TextEntry
 							_pageManager.CurrentPageTextEntries[i],
 							_pageManager));
 				}
+				if (_previousIndex >= 0 && _previousIndex < TextEntriesStackPanel.Children.Count)
+					((TextEntryListView)TextEntriesStackPanel.Children[_previousIndex]).Selected = false;
+				if (_textEntryManager.CurrentTextIndex >= 0 && _textEntryManager.CurrentTextIndex < TextEntriesStackPanel.Children.Count)
+					((TextEntryListView)TextEntriesStackPanel.Children[_textEntryManager.CurrentTextIndex]).Selected = true;
+				_previousIndex = _textEntryManager.CurrentTextIndex;
 			}
 			else
 				TextEntriesStackPanel.Children.Clear();

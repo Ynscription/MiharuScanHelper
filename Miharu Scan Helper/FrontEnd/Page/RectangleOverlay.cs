@@ -33,7 +33,6 @@ namespace Miharu.FrontEnd.Page
 		private Pen selectedHighlightPen = new Pen(new SolidColorBrush(Colors.Blue), 2.0f);
 
 
-		private int _page = -1;
 		public RectangleOverlay (UIElement adornedElement, PageManager pageManager, double dpiX, double dpiY)
 		  : base(adornedElement) {
 			MouseOverRect = -1;
@@ -41,7 +40,6 @@ namespace Miharu.FrontEnd.Page
 			_pageManager.PageChanged += OnPageChanged;
 			_pageManager.TextEntryManager.TextIndexChanged += OnTextIndexChanged;
 			_pageManager.TextEntryMoved += OnTextEntryMoved;
-			_page = _pageManager.CurrentPageIndex;
 			DpiX = dpiX;
 			DpiY = dpiY;
 		}
@@ -54,7 +52,6 @@ namespace Miharu.FrontEnd.Page
 
 		private void OnTextIndexChanged(object sender, EventArgs e)
 		{
-			_page = _pageManager.CurrentPageIndex;
 			MouseOverRect = NextRectangle(Mouse.GetPosition(this));
 			InvalidateVisual();
 		}
@@ -102,22 +99,14 @@ namespace Miharu.FrontEnd.Page
 		protected override void OnRender (DrawingContext drawingContext) {
 			if (_textEntries != null) {
 				for (int i = 0; i < _textEntries.Count; i++) {
-					if (_page == _pageManager.CurrentPageIndex) {
-						if (i == _pageManager.TextEntryManager.CurrentTextIndex && i == MouseOverRect)
-							drawingContext.DrawRectangle(null, selectedHighlightPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
-						else if (i == _pageManager.TextEntryManager.CurrentTextIndex)
-							drawingContext.DrawRectangle(null, selectedPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
-						else if (i == MouseOverRect)
-							drawingContext.DrawRectangle(null, highlightPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
-						else
-							drawingContext.DrawRectangle(null, normalPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
-					}
-					else {
-						if (i == MouseOverRect)
-							drawingContext.DrawRectangle(null, highlightPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
-						else
-							drawingContext.DrawRectangle(null, normalPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
-					}
+					if (i == _pageManager.TextEntryManager.CurrentTextIndex && i == MouseOverRect)
+						drawingContext.DrawRectangle(null, selectedHighlightPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
+					else if (i == _pageManager.TextEntryManager.CurrentTextIndex)
+						drawingContext.DrawRectangle(null, selectedPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
+					else if (i == MouseOverRect)
+						drawingContext.DrawRectangle(null, highlightPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
+					else
+						drawingContext.DrawRectangle(null, normalPen, _textEntries[i].DpiAwareRectangle.ConvertToDpi(DpiX, DpiY));
 				}
 
 				if (DragRect.HasValue)
