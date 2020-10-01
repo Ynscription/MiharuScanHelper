@@ -23,15 +23,7 @@ namespace Miharu.FrontEnd.Page
 		private double _originalDpiY;
 		private int _zoomLevel;
 
-		public void UpdateDebug () {
-			StringBuilder sb = new StringBuilder();
-			sb.AppendLine("Zoom: " + _zoomLevel);
-			sb.AppendLine("OrDPI: " + _originalDpiX + ", " + _originalDpiY);
-			sb.AppendLine("CuDPI: " + DpiX + ", " + DpiY);
-			ZoomDebug.Content = sb.ToString();
-			ZoomDebug.InvalidateVisual();
-		}
-
+		
 		private int ZoomLevel{
 			get => _zoomLevel;
 			set {
@@ -41,7 +33,6 @@ namespace Miharu.FrontEnd.Page
 					_zoomLevel = -9;
 				else
 					_zoomLevel = value;
-				UpdateDebug();
 			}
 		}
 		private double DpiX {
@@ -69,7 +60,6 @@ namespace Miharu.FrontEnd.Page
 			_rectangleOverlay = new RectangleOverlay(PreviewIMG, _pageManager, DpiX, DpiY);
 			AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
 			adornerLayer.Add(_rectangleOverlay);
-			UpdateDebug();
 		}
 
 		
@@ -86,7 +76,6 @@ namespace Miharu.FrontEnd.Page
 			src.CopyPixels(pixelData, stride, 0);
 
 			CachedBitmap result = (CachedBitmap)BitmapSource.Create(width, height, DpiX, DpiY, pxFormat, null, pixelData, stride);
-			UpdateDebug();
 			return result;
 		}
 
@@ -100,27 +89,33 @@ namespace Miharu.FrontEnd.Page
 			src.CopyPixels(pixelData, stride, 0);
 
 			CachedBitmap result = (CachedBitmap)BitmapSource.Create(width, height, DpiX, DpiY, pxFormat, null, pixelData, stride);
-			UpdateDebug();
 			return result;
 		}
 
 		//Zoom out -120
 		private void Zoom (double delta) {
+			int prevZoom = ZoomLevel;
+			ZoomLevel -= ((int)delta) / 120;
+
+			double xdpiRatio = _rectangleOverlay.DpiX / DpiX;
+			double ydpiRatio = _rectangleOverlay.DpiY / DpiY;
+			if (PreviewIMG.Source.Width*xdpiRatio < PreviewIMGScroll.RenderSize.Width && 
+				PreviewIMG.Source.Height*ydpiRatio < PreviewIMGScroll.RenderSize.Height && 
+				delta < 0) {
+				ZoomLevel = prevZoom;
+				return;
+			}
+
+			_rectangleOverlay.DpiX = DpiX;
+			_rectangleOverlay.DpiY = DpiY;
 			try {
 				BitmapImage imgSrc = (BitmapImage)PreviewIMG.Source;
-				ZoomLevel -= ((int)delta) / 120;
-				_rectangleOverlay.DpiX = DpiX;
-				_rectangleOverlay.DpiY = DpiY;
 				PreviewIMG.Source = ChangeImageDPI(imgSrc);
 			}
 			catch (InvalidCastException) {
 				CachedBitmap imgSrc = (CachedBitmap)PreviewIMG.Source;
-				ZoomLevel -= ((int)delta) / 120;
-				_rectangleOverlay.DpiX = DpiX;
-				_rectangleOverlay.DpiY = DpiY;
 				PreviewIMG.Source = ChangeImageDPI(imgSrc);
 			}
-			UpdateDebug();
 		}
 		
 		private void OnPageChanged (object sender, EventArgs e) {
@@ -154,7 +149,6 @@ namespace Miharu.FrontEnd.Page
 				PreviewIMG.InvalidateVisual();
 			}
 			_rectangleOverlay.InvalidateVisual();
-			UpdateDebug();
 		}
 
 		private void OnPageIndexChanged(object sender, EventArgs e)
@@ -176,33 +170,28 @@ namespace Miharu.FrontEnd.Page
 				PrevPageButton.IsEnabled = false;
 				NextPageButton.IsEnabled = false;
 			}
-			UpdateDebug();
 		}
 
 
 		private void NextPageButton_Click (object sender, RoutedEventArgs e) {
 			if (_pageManager.CurrentPageIndex < _pageManager.ChapterManager.ChapterTotalPages - 1)
 				_pageManager.NextPage();
-			UpdateDebug();
 		}
 
 		private void PrevPageButton_Click (object sender, RoutedEventArgs e) {
 			if (_pageManager.CurrentPageIndex > 0)
 				_pageManager.PrevPage();
-			UpdateDebug();
 		}
 
 		private void CurrPageTextBox_LostFocus (object sender, RoutedEventArgs e) {
 			CurrPageTextBox.Text = _previousCurrPageTBText;
 			Keyboard.ClearFocus();
-			UpdateDebug();
 		}
 
 		private void CurrPageTextBox_PreviewKeyDown (object sender, KeyEventArgs e) {
 			if (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return) {
 				e.Handled = true;
 			}
-			UpdateDebug();
 		}
 
 		private void CurrPageTextBox_PreviewKeyUp (object sender, KeyEventArgs e) {
@@ -216,7 +205,6 @@ namespace Miharu.FrontEnd.Page
 				CurrPageTextBox.Text = _previousCurrPageTBText;
 				e.Handled = true;
 			}
-			UpdateDebug();
 		}
 
 
@@ -233,13 +221,11 @@ namespace Miharu.FrontEnd.Page
 				CurrPageTextBox.Text = _previousCurrPageTBText;
 				System.Media.SystemSounds.Exclamation.Play();
 			}
-			UpdateDebug();
 
 		}
 
 		private void CurrPageTextBox_GotMouseCapture (object sender, MouseEventArgs e) {
 			CurrPageTextBox.SelectAll();
-			UpdateDebug();
 		}
 
 
@@ -258,7 +244,6 @@ namespace Miharu.FrontEnd.Page
 
 				e.Handled = true;
 			}
-			UpdateDebug();
 		}
 
 		private System.Windows.Point _startingPoint;
@@ -274,7 +259,6 @@ namespace Miharu.FrontEnd.Page
 			int index = _rectangleOverlay.NextRectangle(mousePos);
 			if (index >= 0)
 				_pageManager.SelectTextEntry (index);
-			UpdateDebug();
 		}
 
 
@@ -289,7 +273,6 @@ namespace Miharu.FrontEnd.Page
 
 				_previousMouseState = true;
 			}
-			UpdateDebug();
 		}
 
 		private void PreviewIMG_MouseMove (object sender, MouseEventArgs e) {
@@ -328,11 +311,34 @@ namespace Miharu.FrontEnd.Page
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 			}
-			UpdateDebug();
 		}
 
 
 
+
 		#endregion
+
+		private void PreviewIMGScroll_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			if (PreviewIMG.Source != null) {
+				while (PreviewIMG.Source.Width < e.NewSize.Width && 
+					PreviewIMG.Source.Height < e.NewSize.Height) {
+				
+					ZoomLevel -= 1;
+					_rectangleOverlay.DpiX = DpiX;
+					_rectangleOverlay.DpiY = DpiY;
+					try {
+						BitmapImage imgSrc = (BitmapImage)PreviewIMG.Source;
+						PreviewIMG.Source = ChangeImageDPI(imgSrc);
+					}
+					catch (InvalidCastException) {
+						CachedBitmap imgSrc = (CachedBitmap)PreviewIMG.Source;
+						PreviewIMG.Source = ChangeImageDPI(imgSrc);
+					}
+				}
+			}
+
+			
+		}
 	}
 }

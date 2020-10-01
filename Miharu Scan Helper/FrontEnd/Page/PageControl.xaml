@@ -13,7 +13,6 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="1*" />
 		</Grid.RowDefinitions>
-		<Label Grid.Row="0" x:Name="ZoomDebug" Content="asd"/>
 		<Grid Grid.Row="0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="1*" />
@@ -33,7 +32,7 @@
 			</UniformGrid>
 		</Grid>
 		
-		<ScrollViewer Grid.Row="1" x:Name="PreviewIMGScroll" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Right">
+		<ScrollViewer Grid.Row="1" x:Name="PreviewIMGScroll" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Right" SizeChanged="PreviewIMGScroll_SizeChanged">
 			<AdornerDecorator>
 				<Image x:Name="PreviewIMG" Focusable="True" PreviewMouseMove="PreviewIMG_MouseMove" PreviewMouseWheel="PreviewIMGScroll_PreviewMouseWheel" PreviewMouseRightButtonDown="PreviewIMG_PreviewMouseRightButtonDown" MouseLeftButtonUp="PreviewIMG_MouseLeftButtonUp" />
 			</AdornerDecorator>
