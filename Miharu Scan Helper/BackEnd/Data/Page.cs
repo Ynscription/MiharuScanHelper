@@ -79,7 +79,7 @@ namespace Miharu.BackEnd.Data {
 
 		public Text AddTextEntry (DPIAwareRectangle rect) {
 			
-			Text txt = new Text(CropImage(rect.Rectangle), rect);
+			Text txt = new Text(CropImage(rect), rect);
 			TextEntries.Add(txt);
 			PageChanged?.Invoke(this, new EventArgs());
 			return txt;
@@ -97,14 +97,18 @@ namespace Miharu.BackEnd.Data {
 			PageChanged?.Invoke(this, new EventArgs());
 		}
 
-		private Bitmap CropImage (Rect rect) {
-			if (rect.Width == 0 || rect.Height == 0)
+		private Bitmap CropImage (DPIAwareRectangle DPIrect) {
+			if (DPIrect.Width == 0 || DPIrect.Height == 0)
 				return null;
 
-			Bitmap cropped = new Bitmap((int) rect.Width, (int) rect.Height);
+			double xdpiRatio = DPIrect.DpiX / Source.HorizontalResolution;
+			double ydpiRatio = DPIrect.DpiY / Source.VerticalResolution;
+			Rectangle rect = new Rectangle((int)(DPIrect.X*xdpiRatio), (int)(DPIrect.Y*ydpiRatio), (int)(DPIrect.Width*xdpiRatio), (int)(DPIrect.Height*ydpiRatio));
+
+						Bitmap cropped = new Bitmap((int) rect.Width, (int) rect.Height);
 			Graphics g = Graphics.FromImage(cropped);
 			g.DrawImage(Source, new Rectangle(0, 0, (int) rect.Width, (int) rect.Height),
-						new Rectangle((int) rect.X, (int) rect.Y, (int) rect.Width, (int) rect.Height),
+						rect,
 						GraphicsUnit.Pixel);
 			return cropped;
 		}
@@ -114,7 +118,7 @@ namespace Miharu.BackEnd.Data {
 		public void Load () {
 			Source = new Bitmap(Path);
 			foreach (Text t in TextEntries)
-				t.Load(CropImage(t.DpiAwareRectangle.Rectangle));
+				t.Load(CropImage(t.DpiAwareRectangle));
 			Ready = true;
 			PageWaitHandle.Set();
 		}

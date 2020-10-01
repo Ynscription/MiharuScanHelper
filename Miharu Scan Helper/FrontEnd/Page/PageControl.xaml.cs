@@ -4,6 +4,7 @@ using Ookii.Dialogs.Wpf;
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -21,6 +22,16 @@ namespace Miharu.FrontEnd.Page
 		private double _originalDpiX;
 		private double _originalDpiY;
 		private int _zoomLevel;
+
+		public void UpdateDebug () {
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("Zoom: " + _zoomLevel);
+			sb.AppendLine("OrDPI: " + _originalDpiX + ", " + _originalDpiY);
+			sb.AppendLine("CuDPI: " + DpiX + ", " + DpiY);
+			ZoomDebug.Content = sb.ToString();
+			ZoomDebug.InvalidateVisual();
+		}
+
 		private int ZoomLevel{
 			get => _zoomLevel;
 			set {
@@ -30,6 +41,7 @@ namespace Miharu.FrontEnd.Page
 					_zoomLevel = -9;
 				else
 					_zoomLevel = value;
+				UpdateDebug();
 			}
 		}
 		private double DpiX {
@@ -57,6 +69,7 @@ namespace Miharu.FrontEnd.Page
 			_rectangleOverlay = new RectangleOverlay(PreviewIMG, _pageManager, DpiX, DpiY);
 			AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(PreviewIMG);
 			adornerLayer.Add(_rectangleOverlay);
+			UpdateDebug();
 		}
 
 		
@@ -73,7 +86,7 @@ namespace Miharu.FrontEnd.Page
 			src.CopyPixels(pixelData, stride, 0);
 
 			CachedBitmap result = (CachedBitmap)BitmapSource.Create(width, height, DpiX, DpiY, pxFormat, null, pixelData, stride);
-
+			UpdateDebug();
 			return result;
 		}
 
@@ -87,7 +100,7 @@ namespace Miharu.FrontEnd.Page
 			src.CopyPixels(pixelData, stride, 0);
 
 			CachedBitmap result = (CachedBitmap)BitmapSource.Create(width, height, DpiX, DpiY, pxFormat, null, pixelData, stride);
-
+			UpdateDebug();
 			return result;
 		}
 
@@ -107,6 +120,7 @@ namespace Miharu.FrontEnd.Page
 				_rectangleOverlay.DpiY = DpiY;
 				PreviewIMG.Source = ChangeImageDPI(imgSrc);
 			}
+			UpdateDebug();
 		}
 		
 		private void OnPageChanged (object sender, EventArgs e) {
@@ -140,7 +154,7 @@ namespace Miharu.FrontEnd.Page
 				PreviewIMG.InvalidateVisual();
 			}
 			_rectangleOverlay.InvalidateVisual();
-			
+			UpdateDebug();
 		}
 
 		private void OnPageIndexChanged(object sender, EventArgs e)
@@ -162,28 +176,33 @@ namespace Miharu.FrontEnd.Page
 				PrevPageButton.IsEnabled = false;
 				NextPageButton.IsEnabled = false;
 			}
+			UpdateDebug();
 		}
 
 
 		private void NextPageButton_Click (object sender, RoutedEventArgs e) {
 			if (_pageManager.CurrentPageIndex < _pageManager.ChapterManager.ChapterTotalPages - 1)
 				_pageManager.NextPage();
+			UpdateDebug();
 		}
 
 		private void PrevPageButton_Click (object sender, RoutedEventArgs e) {
 			if (_pageManager.CurrentPageIndex > 0)
 				_pageManager.PrevPage();
+			UpdateDebug();
 		}
 
 		private void CurrPageTextBox_LostFocus (object sender, RoutedEventArgs e) {
 			CurrPageTextBox.Text = _previousCurrPageTBText;
 			Keyboard.ClearFocus();
+			UpdateDebug();
 		}
 
 		private void CurrPageTextBox_PreviewKeyDown (object sender, KeyEventArgs e) {
 			if (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return) {
 				e.Handled = true;
 			}
+			UpdateDebug();
 		}
 
 		private void CurrPageTextBox_PreviewKeyUp (object sender, KeyEventArgs e) {
@@ -197,7 +216,7 @@ namespace Miharu.FrontEnd.Page
 				CurrPageTextBox.Text = _previousCurrPageTBText;
 				e.Handled = true;
 			}
-
+			UpdateDebug();
 		}
 
 
@@ -214,12 +233,13 @@ namespace Miharu.FrontEnd.Page
 				CurrPageTextBox.Text = _previousCurrPageTBText;
 				System.Media.SystemSounds.Exclamation.Play();
 			}
-
+			UpdateDebug();
 
 		}
 
 		private void CurrPageTextBox_GotMouseCapture (object sender, MouseEventArgs e) {
 			CurrPageTextBox.SelectAll();
+			UpdateDebug();
 		}
 
 
@@ -238,6 +258,7 @@ namespace Miharu.FrontEnd.Page
 
 				e.Handled = true;
 			}
+			UpdateDebug();
 		}
 
 		private System.Windows.Point _startingPoint;
@@ -253,6 +274,7 @@ namespace Miharu.FrontEnd.Page
 			int index = _rectangleOverlay.NextRectangle(mousePos);
 			if (index >= 0)
 				_pageManager.SelectTextEntry (index);
+			UpdateDebug();
 		}
 
 
@@ -267,7 +289,7 @@ namespace Miharu.FrontEnd.Page
 
 				_previousMouseState = true;
 			}
-
+			UpdateDebug();
 		}
 
 		private void PreviewIMG_MouseMove (object sender, MouseEventArgs e) {
@@ -306,6 +328,7 @@ namespace Miharu.FrontEnd.Page
 					Mouse.SetCursor(Cursors.Arrow);
 				}
 			}
+			UpdateDebug();
 		}
 
 
