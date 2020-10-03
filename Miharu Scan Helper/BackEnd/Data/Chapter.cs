@@ -154,7 +154,6 @@ namespace Miharu.BackEnd.Data
 		
 
 		public void Save (string destPath, int currentPage = 0) {
-			MakePagesRelative(destPath);
 			using (StreamWriter writer = new StreamWriter(destPath, false, Encoding.UTF8)) {
 				writer.Write(this.ToString(destPath, currentPage));
 				/*writer.WriteLine(Path);
@@ -163,7 +162,6 @@ namespace Miharu.BackEnd.Data
 					p.Save(writer);*/
 				writer.Close();
 			}
-			MakePagesAbsolute(destPath);
 		}
 
 		public string ToString (string destPath, int currentPage = 0) {

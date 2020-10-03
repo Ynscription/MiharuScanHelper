@@ -19,7 +19,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 		}
 
 		public override TranslationType Type {
-			get { return TranslationType.Google_Web; }
+			get { return TranslationType.Yandex_Web; }
 		}
 
 		protected override By FetchBy {
@@ -31,12 +31,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			return _URL + Uri.EscapeDataString(text);
 		}
 
-		public IWebElement ResultIsNotEmpty (IWebDriver driver) {
-			string res = "";
-			while ((res = driver.FindElement(FetchBy).Text) == "");
-			return driver.FindElement(FetchBy);
-		}
-
+		
 
 		public IWebElement OverrideNavigation (IWebDriver driver, string url) {
 			IWebElement result = null;
@@ -68,15 +63,6 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 					
 
 			return result;
-		}
-
-		
-		public override string ProcessResult (IWebElement result) {
-			string res = "";
-
-			res = result.Text;
-
-			return res;
 		}
 
 		public override async Task<string> Translate(string text)

@@ -22,9 +22,17 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 			return result.Text;
 		}
 
+		public IWebElement ResultIsNotEmpty (IWebDriver driver) {
+			string res = "";
+			while ((res = driver.FindElement(FetchBy).Text) == "");
+			return driver.FindElement(FetchBy);
+		}
+
 		public override async Task<string> Translate(string text)
 		{
 			string res = "";
+			if (text == "")
+				return res;
 
 			res = _webDriverManager.NavigateAndFetch(GetUri(text), FetchBy, ProcessResult);
 

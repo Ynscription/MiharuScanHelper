@@ -50,6 +50,8 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators {
 		public override async Task<string> Translate(string text)
 		{
 			string res = "";
+			if (text == "")
+				return res;
 						
 			HttpWebRequest request = (HttpWebRequest) WebRequest.Create(GetUri(text));
 			using (HttpWebResponse response = (HttpWebResponse) await request.GetResponseAsync()) {

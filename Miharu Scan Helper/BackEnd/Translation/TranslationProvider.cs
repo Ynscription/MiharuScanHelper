@@ -21,6 +21,7 @@ namespace Miharu.BackEnd.Translation
 		Bing_API = 0x14,
 		Yandex_API = 0x15,
 		Yandex_Web = 0x16,
+		DeepL_Web = 0x17,
 		Jaded_Network = 0x21,
 	}
 
@@ -36,10 +37,16 @@ namespace Miharu.BackEnd.Translation
 			_translators.Add(TranslationType.Google_API, new HTTPGoogleTranslator());
 			if (wdManager.IsAlive)
 				_translators.Add(TranslationType.Google_Web, new WCGoogleTranslator(wdManager));
+
+			if (wdManager.IsAlive)
+				_translators.Add(TranslationType.DeepL_Web, new WCDeepLTranslator(wdManager));
+
 			_translators.Add(TranslationType.Bing_API, new HTTPBingTranslator());
+
 			_translators.Add(TranslationType.Yandex_API, new HTTPYandexTranslator());
 			if (wdManager.IsAlive)
 				_translators.Add(TranslationType.Yandex_Web, new WCYandexTranslator(wdManager));
+
 			_translators.Add(TranslationType.Jaded_Network, new HTTPTJNTranslator());
 
 		}
