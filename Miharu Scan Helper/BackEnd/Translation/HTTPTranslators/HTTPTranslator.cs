@@ -15,8 +15,6 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators {
 		
 		//Your Azure Cognitive Services key here
 		protected const string _A = "";
-		//Your Yandex Translate API key here
-		protected const string _Y = "";
 
 
 		private static Regex _unicodeReplacer = new Regex(@"\\u(?<Value>[a-zA-Z0-9]{4})");

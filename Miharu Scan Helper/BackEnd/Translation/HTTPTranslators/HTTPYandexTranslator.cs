@@ -17,7 +17,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 		{
 			return _URL 
 					+ "?lang=" + "ja-en"
-					+ "&key=" + _Y
+					+ "&key=" + ""
 					+ "&text=" + Uri.EscapeDataString(text);
 		}
 

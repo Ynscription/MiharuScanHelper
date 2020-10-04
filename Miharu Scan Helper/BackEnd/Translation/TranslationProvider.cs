@@ -43,7 +43,6 @@ namespace Miharu.BackEnd.Translation
 
 			_translators.Add(TranslationType.Bing_API, new HTTPBingTranslator());
 
-			_translators.Add(TranslationType.Yandex_API, new HTTPYandexTranslator());
 			if (wdManager.IsAlive)
 				_translators.Add(TranslationType.Yandex_Web, new WCYandexTranslator(wdManager));
 
