@@ -234,15 +234,17 @@ namespace Miharu.FrontEnd.Page
 		//private ImageProcessing _imageProcessing;
 
 		private void PreviewIMGScroll_PreviewMouseWheel (object sender, MouseWheelEventArgs e) {
-			if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)) {
-				PreviewIMGScroll.ScrollToHorizontalOffset(PreviewIMGScroll.HorizontalOffset - e.Delta);
-				e.Handled = true;
-			}
-			if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
+			if (PreviewIMG.Source != null) {
+				if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)) {
+					PreviewIMGScroll.ScrollToHorizontalOffset(PreviewIMGScroll.HorizontalOffset - e.Delta);
+					e.Handled = true;
+				}
+				if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
 				
-				Zoom(e.Delta);
+					Zoom(e.Delta);
 
-				e.Handled = true;
+					e.Handled = true;
+				}
 			}
 		}
 

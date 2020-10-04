@@ -31,10 +31,10 @@
 				</Button>
 			</UniformGrid>
 		</Grid>
-		
-		<ScrollViewer Grid.Row="1" x:Name="PreviewIMGScroll" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Right" SizeChanged="PreviewIMGScroll_SizeChanged">
+
+		<ScrollViewer Grid.Row="1" x:Name="PreviewIMGScroll" PreviewMouseWheel="PreviewIMGScroll_PreviewMouseWheel" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Right" SizeChanged="PreviewIMGScroll_SizeChanged">
 			<AdornerDecorator>
-				<Image x:Name="PreviewIMG" Focusable="True" PreviewMouseMove="PreviewIMG_MouseMove" PreviewMouseWheel="PreviewIMGScroll_PreviewMouseWheel" PreviewMouseRightButtonDown="PreviewIMG_PreviewMouseRightButtonDown" MouseLeftButtonUp="PreviewIMG_MouseLeftButtonUp" />
+				<Image x:Name="PreviewIMG" Focusable="True" PreviewMouseMove="PreviewIMG_MouseMove" PreviewMouseRightButtonDown="PreviewIMG_PreviewMouseRightButtonDown" MouseLeftButtonUp="PreviewIMG_MouseLeftButtonUp" />
 			</AdornerDecorator>
 		</ScrollViewer>
 	</Grid>

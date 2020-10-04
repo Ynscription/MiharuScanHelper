@@ -16,8 +16,8 @@
 	<Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="250"/>
-			<RowDefinition Height="3*"/>
 			<RowDefinition Height="150"/>
+			<RowDefinition Height="3*"/>
 		</Grid.RowDefinitions>
 
 		<Grid x:Name="ParsedTextAndIMGPreviewGrid" Grid.Row="0" Margin="3">
@@ -101,46 +101,47 @@
 			</Border>
 		</Grid>
 
-
-		<TabControl x:Name="TextTabControl" Margin="3" Grid.Row="1" SelectionChanged="TextTabControl_SelectionChanged">
-			<TabItem Header="Text">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="1*"/>
-					</Grid.RowDefinitions>
-					<Button x:Name="RefreshAllButton" Margin="5" Grid.Row="0" HorizontalAlignment="Left" Click="RefreshAllButton_Click" Padding="0,2,3,2" VerticalAlignment="Top">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-							</Grid.ColumnDefinitions>
-							<Label x:Name="refreshAllLabel" Content="Refresh All Translations" FontSize="14" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-							<iconPacks:PackIconModern Kind="Refresh" Grid.Column="1" Margin="3,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-								Width="Auto" 
-								MinHeight="{Binding ActualHeight, ElementName=refreshAllLabel, Mode=OneWay}" />
-						</Grid>
-					</Button>
-					<ScrollViewer Margin="6,5,5,5" Grid.Row="1">
-						<StackPanel x:Name="TranslationSourcesStackPanel"/>
-					</ScrollViewer>
-				</Grid>
-			</TabItem>
-			<TabItem Header="SFX">
-
-				<Grid x:Name="SFXTranslationGrid" >
-
-				</Grid>
-			</TabItem>
-			<TabItem Header="Notes">
-				<ScrollViewer Margin="6,5,5,5" Grid.Row="1">
-					<StackPanel x:Name="NotesStackPanel" />
-				</ScrollViewer>
-			</TabItem>
-		</TabControl>
-
-
 		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="2">
+			<TabControl x:Name="TextTabControl" SelectionChanged="TextTabControl_SelectionChanged">
+				<TabItem Header="Text" Controls:HeaderedControlHelper.HeaderFontSize="20">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="1*"/>
+						</Grid.RowDefinitions>
+						<Button x:Name="RefreshAllButton" Margin="5" Grid.Row="0" HorizontalAlignment="Left" Click="RefreshAllButton_Click" Padding="0,2,3,2" VerticalAlignment="Top">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="Auto"/>
+								</Grid.ColumnDefinitions>
+								<Label x:Name="refreshAllLabel" Content="Refresh All Translations" FontSize="14" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+								<iconPacks:PackIconModern Kind="Refresh" Grid.Column="1" Margin="3,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+									Width="Auto" 
+									MinHeight="{Binding ActualHeight, ElementName=refreshAllLabel, Mode=OneWay}" />
+							</Grid>
+						</Button>
+						<ScrollViewer Margin="6,5,5,5" Grid.Row="1">
+							<StackPanel x:Name="TranslationSourcesStackPanel"/>
+						</ScrollViewer>
+					</Grid>
+				</TabItem>
+				<TabItem Header="SFX" Controls:HeaderedControlHelper.HeaderFontSize="20">
+
+					<Grid x:Name="SFXTranslationGrid" >
+
+					</Grid>
+				</TabItem>
+				<TabItem Header="Notes" Controls:HeaderedControlHelper.HeaderFontSize="20">
+					<ScrollViewer Margin="6,5,5,5" Grid.Row="1">
+						<StackPanel x:Name="NotesStackPanel" />
+					</ScrollViewer>
+				</TabItem>
+			</TabControl>
+		</Border>
+
+
+		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="1">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="40" MinHeight="40"/>

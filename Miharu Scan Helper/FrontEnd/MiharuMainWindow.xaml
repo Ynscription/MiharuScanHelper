@@ -82,8 +82,8 @@
 					</MenuItem.Icon>
 				</MenuItem>
 			</MenuItem>
-			<MenuItem Header="_Tools" TabIndex="2">
-				<!--<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" >
+			<!--<MenuItem Header="_Tools" TabIndex="2">
+				<MenuItem x:Name="RipMenuItem" Header="Rip..." Click="RipMenuItem_Click" >
 					<MenuItem.Icon >
 						<iconPacks:PackIconModern Kind="Download" />
 					</MenuItem.Icon>
@@ -92,8 +92,8 @@
 					<MenuItem.Icon >
 						<iconPacks:PackIconModern Kind="Bug" />
 					</MenuItem.Icon>
-				</MenuItem>-->
-			</MenuItem>
+				</MenuItem>
+			</MenuItem>-->
 			<MenuItem Header="_Help" TabIndex="3">
 				<MenuItem x:Name="AboutMenuItem" Header="About..." IsEnabled="True" Click="AboutMenuItem_Click" >
 					<MenuItem.Icon >
@@ -102,16 +102,19 @@
 				</MenuItem>
 			</MenuItem>
 		</Menu>
-		<Grid >
+		<Grid x:Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*" MinWidth="350"/>
-				<ColumnDefinition Width="2*" MinWidth="500"/>
+				<ColumnDefinition  Width="1*" MinWidth="450"/>
+				<ColumnDefinition Width="5"/>
+				<ColumnDefinition  Width="2*" MinWidth="500"/>
 			</Grid.ColumnDefinitions>
 			<Border x:Name="PageControlArea" Grid.Column="0" BorderThickness="1">
-
-			</Border>
 			
-			<Border x:Name="TextEntryArea" Grid.Column="1" BorderThickness="1" >
+			</Border>
+
+			<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="5" />
+
+			<Border x:Name="TextEntryArea" Grid.Column="2" BorderThickness="1" >
 
 			</Border>
 

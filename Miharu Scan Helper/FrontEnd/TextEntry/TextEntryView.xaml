@@ -10,12 +10,12 @@
              d:DesignHeight="800" d:DesignWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 	<Grid>
 		<TabControl>
-			<TabItem Header="Entries List">
+			<TabItem Header="Entries List" Controls:HeaderedControlHelper.HeaderFontSize="24">
 				<ScrollViewer>
 					<StackPanel x:Name="TextEntriesStackPanel" />
 				</ScrollViewer>
 			</TabItem>
-			<TabItem Header="Edit Entry" x:Name="TextEntryArea">
+			<TabItem Header="Edit Entry" x:Name="TextEntryArea" Controls:HeaderedControlHelper.HeaderFontSize="24">
 
 			</TabItem>
 		</TabControl>

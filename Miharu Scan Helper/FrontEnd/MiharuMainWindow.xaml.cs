@@ -134,12 +134,9 @@ namespace Miharu.FrontEnd
 			}
 		}
 
-		
-		
-		
-		
-		
-		
+
+
+#region TopMenu     
 		private async void NewChapterFolderMenuItem_Click (object sender, RoutedEventArgs e) {
 			if (_chapterManager.IsChapterLoaded && !_chapterManager.IsChapterSaved) {
 				string saveRes = WarnNotSaved();
@@ -436,7 +433,7 @@ namespace Miharu.FrontEnd
 			aboutDialog.ShowDialog();
 		}
 
-
+#endregion
 
 
 #region Window Management
@@ -501,6 +498,7 @@ namespace Miharu.FrontEnd
 				}
 			}
 		}
+
 
 
 
