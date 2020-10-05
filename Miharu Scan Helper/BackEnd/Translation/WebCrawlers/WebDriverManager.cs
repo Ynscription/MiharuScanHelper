@@ -58,7 +58,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 
 			}
 			finally {
-				_driver.Navigate().GoToUrl("about:blank");
+				_driver?.Navigate().GoToUrl("about:blank");
 				Monitor.Exit(_lock);
 			}
 

@@ -56,6 +56,17 @@ namespace Miharu.BackEnd.Data {
 			get; private set;
 		}
 
+
+		[JsonIgnoreAttribute]
+		private double ScreenDPIX {
+			get; set;
+		}
+		[JsonIgnoreAttribute]
+		private double ScreenDPIY {
+			get; set;
+		}
+
+
 		public List<Text> TextEntries {
 			get; private set;
 		}
@@ -66,6 +77,9 @@ namespace Miharu.BackEnd.Data {
 			Path = src;
 			TextEntries = new List<Text>();
 			PageWaitHandle = new ManualResetEvent(false);
+			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+			ScreenDPIX = g.DpiX;
+			ScreenDPIY = g.DpiY;
 		}
 
 		[JsonConstructor]
@@ -73,6 +87,9 @@ namespace Miharu.BackEnd.Data {
 			Path = path;
 			TextEntries = textEntries;
 			PageWaitHandle = new ManualResetEvent(false);
+			Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+			ScreenDPIX = g.DpiX;
+			ScreenDPIY = g.DpiY;
 		}
 
 		
@@ -101,10 +118,13 @@ namespace Miharu.BackEnd.Data {
 			if (DPIrect.Width == 0 || DPIrect.Height == 0)
 				return null;
 
-			double xdpiRatio = DPIrect.DpiX / Source.HorizontalResolution;
-			double ydpiRatio = DPIrect.DpiY / Source.VerticalResolution;
-			Rectangle rect = new Rectangle((int)(DPIrect.X*xdpiRatio), (int)(DPIrect.Y*ydpiRatio), (int)(DPIrect.Width*xdpiRatio), (int)(DPIrect.Height*ydpiRatio));
 
+			double xdpiRatio = DPIrect.DpiX / ScreenDPIX;
+			double ydpiRatio = DPIrect.DpiY / ScreenDPIY;
+			Rectangle rect = new Rectangle((int)(DPIrect.X*xdpiRatio), (int)(DPIrect.Y*ydpiRatio), (int)(DPIrect.Width*xdpiRatio), (int)(DPIrect.Height*ydpiRatio));
+			
+			//Rectangle rect = new Rectangle((int)(DPIrect.X), (int)(DPIrect.Y), (int)(DPIrect.Width), (int)(DPIrect.Height));
+			
 						Bitmap cropped = new Bitmap((int) rect.Width, (int) rect.Height);
 			Graphics g = Graphics.FromImage(cropped);
 			g.DrawImage(Source, new Rectangle(0, 0, (int) rect.Width, (int) rect.Height),
