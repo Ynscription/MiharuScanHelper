@@ -9,7 +9,7 @@
         Title="Miharu Scan Helper"
 		Height="720" Width="1280"
 		IsTabStop="False"
-		MinWidth="1000" MinHeight="640" 
+		MinWidth="1080" MinHeight="640" 
 		Closing="Window_Closing" 
 		KeyDown="Window_KeyDown" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico" Loaded="MetroWindow_Loaded">
 	<DockPanel>
@@ -106,7 +106,7 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition  Width="1*" MinWidth="450"/>
 				<ColumnDefinition Width="5"/>
-				<ColumnDefinition  Width="2*" MinWidth="500"/>
+				<ColumnDefinition  Width="2*" MinWidth="630"/>
 			</Grid.ColumnDefinitions>
 			<Border x:Name="PageControlArea" Grid.Column="0" BorderThickness="1">
 			

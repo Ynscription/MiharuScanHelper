@@ -360,5 +360,11 @@ namespace Miharu.FrontEnd
 		{
 			_textEntryManager.TabIndex = TextTabControl.SelectedIndex;
 		}
+
+		private void ParsedTextAndIMGPreviewGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			if (_textEntryManager.IsTextSelected)
+				ShowImageFromBitmap(_textEntryManager.CurrentText.Source);
+		}
 	}
 }

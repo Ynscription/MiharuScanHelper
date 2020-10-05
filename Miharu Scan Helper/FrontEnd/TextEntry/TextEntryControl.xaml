@@ -20,10 +20,10 @@
 			<RowDefinition Height="3*"/>
 		</Grid.RowDefinitions>
 
-		<Grid x:Name="ParsedTextAndIMGPreviewGrid" Grid.Row="0" Margin="3">
+		<Grid x:Name="ParsedTextAndIMGPreviewGrid" Grid.Row="0" Margin="3" SizeChanged="ParsedTextAndIMGPreviewGrid_SizeChanged">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" MinWidth="10" />
-				<ColumnDefinition Width="1*" />
+				<ColumnDefinition Width="1*" MinWidth="100"/>
 			</Grid.ColumnDefinitions>
 			<Border x:Name="PreviewIMGBorder" BorderThickness="1" BorderBrush="Black" Margin="0,0,3,0" Grid.Column="0">
 				<Image x:Name="PreviewIMG" Height="Auto"/>
