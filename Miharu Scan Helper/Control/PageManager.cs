@@ -1,9 +1,9 @@
 ﻿using Miharu.BackEnd;
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation.Threading;
+using Miharu.Properties;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace Miharu.Control
 {
@@ -71,6 +71,7 @@ namespace Miharu.Control
 
 		public PageManager (ChapterManager chapterManager, TranslatorThread translatorThread) {
 			ChapterManager = chapterManager;
+			Page.UseScreenDPI = (bool)Settings.Default["UseScreenDPI"];
 			TextEntryManager = new TextEntryManager(this, translatorThread);
 		}
 

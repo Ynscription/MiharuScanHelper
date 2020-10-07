@@ -106,5 +106,17 @@ namespace Miharu.Properties {
                 this["WarnTextDeletion"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseScreenDPI {
+            get {
+                return ((bool)(this["UseScreenDPI"]));
+            }
+            set {
+                this["UseScreenDPI"] = value;
+            }
+        }
     }
 }

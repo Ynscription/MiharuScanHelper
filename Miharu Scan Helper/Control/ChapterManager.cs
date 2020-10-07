@@ -153,6 +153,12 @@ namespace Miharu.Control
 			CurrentSaveFile = source;
 			IsChapterSaved = false;
 		}
+
+		public void ReloadPages () {
+			foreach (Page p in LoadedChapter.Pages) {
+				p.Reload();
+			}
+		}
 			   		 
 		public void SaveChapter (string newSaveFile = null) {
 			

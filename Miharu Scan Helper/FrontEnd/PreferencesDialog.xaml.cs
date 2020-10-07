@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro;
 using MahApps.Metro.Controls;
 using Miharu.BackEnd.Translation;
+using Miharu.BackEnd.Data;
 using Miharu.Control;
 using Miharu.Properties;
 using Ookii.Dialogs.Wpf;
@@ -18,6 +19,10 @@ namespace Miharu.FrontEnd
 
 		private readonly string [] BaseColors = { "Dark", "Light" };
 		private readonly string [] AccentColors = { "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt", "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna" };
+
+		private ChapterManager _chapterManager;
+
+		private bool _originalUseScreenDPI = false;
 
 		private string _tesseractPath;
 		public string TesseractPath {
@@ -38,9 +43,12 @@ namespace Miharu.FrontEnd
 			private set;
 		} = null;
 
-		public PreferencesDialog(TranslationManager translationManager)
+		public PreferencesDialog(TranslationManager translationManager, ChapterManager chapterManager)
 		{
 			InitializeComponent();
+
+			_chapterManager = chapterManager;
+
 			TesseractPathTextBox.Text = (string)Settings.Default["TesseractPath"];
 			ApplyButton.IsEnabled = false;
 
@@ -48,6 +56,9 @@ namespace Miharu.FrontEnd
 			ThemeBaseColorListBox.SelectedItem = (string)Settings.Default["Theme"];
 			ThemeAccentColorListBox.ItemsSource = AccentColors;
 			ThemeAccentColorListBox.SelectedItem = (string)Settings.Default["Accent"];
+
+			_originalUseScreenDPI = (bool)Settings.Default["UseScreenDPI"];
+			UseScreenDPIToggleSwitch.IsChecked = _originalUseScreenDPI;			
 
 			WarnTextDeletionToggleSwitch.IsChecked = (bool)Settings.Default["WarnTextDeletion"];
 
@@ -61,9 +72,11 @@ namespace Miharu.FrontEnd
 					ts.Content = t;
 					ts.IsChecked = !disabledTypes.Contains(t.ToString());
 					ts.IsEnabled = AutoTranslateToggleSwitch.IsChecked ?? true;
+					ts.IsCheckedChanged += CheckChanged;
 					TranslationSourcesStackPanel.Children.Add(ts);
 				}
 			}
+			ApplyButton.IsEnabled = false;
 			AutoTranslateToggleSwitch.IsCheckedChanged += OnAutoTranslateChackChange;
 			
 		}
@@ -126,6 +139,8 @@ namespace Miharu.FrontEnd
 			Settings.Default["Theme"] = (string)ThemeBaseColorListBox.SelectedValue;
 			Settings.Default["Accent"] = (string)ThemeAccentColorListBox.SelectedValue;
 
+			Settings.Default["UseScreenDPI"] = UseScreenDPIToggleSwitch.IsChecked;
+
 			Settings.Default["WarnTextDeletion"] = WarnTextDeletionToggleSwitch.IsChecked;
 
 			Settings.Default["AutoTranslateEnabled"] = AutoTranslateToggleSwitch.IsChecked;
@@ -140,6 +155,13 @@ namespace Miharu.FrontEnd
 				disabledSources = disabledSources.Substring(0, disabledSources.Length-1);
 			Settings.Default["DisabledTranslationSources"] = disabledSources;
 			Settings.Default.Save();
+
+			if (_chapterManager.IsChapterLoaded && _originalUseScreenDPI != (UseScreenDPIToggleSwitch.IsChecked ?? false)) {
+				_originalUseScreenDPI = UseScreenDPIToggleSwitch.IsChecked ?? false;
+				Miharu.BackEnd.Data.Page.UseScreenDPI = _originalUseScreenDPI;
+				_chapterManager.ReloadPages();
+				_chapterManager.PageManager.ChangePage(_chapterManager.PageManager.CurrentPageIndex);
+			}
 		}
 
 		private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -175,5 +197,9 @@ namespace Miharu.FrontEnd
 			ApplyButton.IsEnabled = true;
 		}
 
+		private void CheckChanged(object sender, EventArgs e)
+		{
+			ApplyButton.IsEnabled = true;
+		}
 	}
 }

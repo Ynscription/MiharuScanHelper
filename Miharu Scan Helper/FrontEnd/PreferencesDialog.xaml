@@ -63,11 +63,23 @@
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="1*" />
 						</Grid.ColumnDefinitions>
+						<Label Content="Use screen DPI" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+						<Controls:ToggleSwitch x:Name="UseScreenDPIToggleSwitch" Grid.Column="1" Grid.Row="0"
+							OnLabel="Enabled" OffLabel="Disabled"
+							VerticalAlignment="Center" HorizontalAlignment="Left"  
+							IsChecked="False" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsCheckedChanged="CheckChanged"/>
+					</Grid>
+					<Separator Margin="10"/>
+					<Grid Margin="10">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="1*" />
+						</Grid.ColumnDefinitions>
 						<Label Content="Warn on text entry deletion" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
 						<Controls:ToggleSwitch x:Name="WarnTextDeletionToggleSwitch" Grid.Column="1" Grid.Row="0"
 							OnLabel="Enabled" OffLabel="Disabled"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
-							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsCheckedChanged="CheckChanged"/>
 					</Grid>
 					<Separator Margin="10"/>
 					<Grid Margin="10">
@@ -83,7 +95,7 @@
 						<Controls:ToggleSwitch x:Name="AutoTranslateToggleSwitch" Grid.Column="1" Grid.Row="0"
 							OnLabel="Enabled" OffLabel="Disabled"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
-							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsCheckedChanged="CheckChanged"/>
 						<StackPanel x:Name="TranslationSourcesStackPanel" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" >
 
 						</StackPanel>

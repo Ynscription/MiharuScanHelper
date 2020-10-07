@@ -363,7 +363,7 @@ namespace Miharu.FrontEnd
 		}
 			   
 		private void PreferencesMenuItem_Click (object sender, RoutedEventArgs e) {
-			PreferencesDialog pd = new PreferencesDialog(_chapterManager.PageManager.TextEntryManager.TranslationManager);
+			PreferencesDialog pd = new PreferencesDialog(_chapterManager.PageManager.TextEntryManager.TranslationManager, _chapterManager);
 			pd.Owner = this;
 			pd.ShowDialog();
 		}

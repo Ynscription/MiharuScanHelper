@@ -56,6 +56,11 @@ namespace Miharu.BackEnd.Data {
 			get; private set;
 		}
 
+		[JsonIgnore]
+		public static bool UseScreenDPI {
+			get; set;
+		}
+
 
 		[JsonIgnoreAttribute]
 		private double ScreenDPIX {
@@ -117,11 +122,12 @@ namespace Miharu.BackEnd.Data {
 		private Bitmap CropImage (DPIAwareRectangle DPIrect) {
 			if (DPIrect.Width == 0 || DPIrect.Height == 0)
 				return null;
-
-
-			double xdpiRatio = DPIrect.DpiX / ScreenDPIX;
-			double ydpiRatio = DPIrect.DpiY / ScreenDPIY;
-			Rectangle rect = new Rectangle((int)(DPIrect.X*xdpiRatio), (int)(DPIrect.Y*ydpiRatio), (int)(DPIrect.Width*xdpiRatio), (int)(DPIrect.Height*ydpiRatio));
+			
+			// From Microsoft's Win2D docs:
+			// [...]bitmap DPI defaults to 96 regardless of the current display configuration
+			double xdpiRatio = DPIrect.DpiX / (UseScreenDPI ? ScreenDPIX : 96);
+			double ydpiRatio = DPIrect.DpiY / (UseScreenDPI ? ScreenDPIY : 96);
+			Rectangle rect = new Rectangle((int)(DPIrect.X*xdpiRatio + 0.5), (int)(DPIrect.Y*ydpiRatio + 0.5), (int)(DPIrect.Width*xdpiRatio + 0.5), (int)(DPIrect.Height*ydpiRatio + 0.5));
 			
 			//Rectangle rect = new Rectangle((int)(DPIrect.X), (int)(DPIrect.Y), (int)(DPIrect.Width), (int)(DPIrect.Height));
 			
@@ -141,6 +147,11 @@ namespace Miharu.BackEnd.Data {
 				t.Load(CropImage(t.DpiAwareRectangle));
 			Ready = true;
 			PageWaitHandle.Set();
+		}
+
+		public void Reload () {
+			foreach (Text t in TextEntries)
+				t.Load(CropImage(t.DpiAwareRectangle));
 		}
 
 		public void ExportScript (StreamWriter writer) {
