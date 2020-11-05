@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Miharu.FrontEnd.Helper {
 	/// <summary>
@@ -19,6 +20,7 @@ namespace Miharu.FrontEnd.Helper {
 			MahAppsMetroIconPacksLicense.Link = MahAppsMetroIconPacksLicenseFile;
 			TesseractLicense.Link = TesseractLicenseFile;
 			GeckoLicense.Link = GeckoLicenseFile;
+			KozakuraLicense.Link = KozakuraLicenseFile;
 
 			
 		}
@@ -34,6 +36,8 @@ namespace Miharu.FrontEnd.Helper {
 		
 		private readonly static string TesseractLicenseFile = @".\Resources\Licenses\Tesseract OCR LICENSE";
 		private readonly static string GeckoLicenseFile = @".\Resources\Licenses\GeckoDriver LICENSE";
+
+		private readonly static string KozakuraLicenseFile = @".\Resources\Licenses\Kozakura LICENSE";
 
 
 
@@ -63,6 +67,5 @@ namespace Miharu.FrontEnd.Helper {
 				counter++;
 		}
 
-		
 	}
 }

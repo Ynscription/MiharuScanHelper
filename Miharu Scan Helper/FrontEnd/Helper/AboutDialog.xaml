@@ -30,7 +30,7 @@
 			</ScrollViewer.Resources>
 			<StackPanel>
 				<StackPanel Margin="0,10,0,0">
-					<Label Content="Licenses" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+					<Label Content="Licenses" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
 
 					<StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" >
 						<Grid >
@@ -190,8 +190,79 @@
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="DeepL Translator" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+							<local:LinkLabel x:Name="DeepLLinkLabel" Grid.Column="2" Content="https://www.deepl.com/translator" Link="https://www.deepl.com/translator" HorizontalAlignment="Left" VerticalAlignment="Top" />
+						</Grid>
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0" Content="The Jaded Network SFX" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
 							<local:LinkLabel x:Name="TJNLinkLabel" Grid.Column="2" Content="http://thejadednetwork.com/sfx" Link="http://thejadednetwork.com/sfx" HorizontalAlignment="Left" VerticalAlignment="Top" />
+						</Grid>
+					</StackPanel>
+
+				</Grid>
+
+
+				<Separator Height="5" VerticalAlignment="Top" />
+
+
+				<Grid Margin="0,0,0,20">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Label Content="Kanji/Radical Dictionary" Grid.Row="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+					<StackPanel Grid.Row="1">
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="Miharu Scan Helper uses the " />
+							<local:LinkLabel Grid.Column="1" Content="KozakuraDB" Link="https://github.com/Ynscription/KozakuraDB" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-10,0,0,0" />
+							<Label Grid.Column="2" Content=" under this " Margin="-10,0,0,0"/>
+							<local:LinkLabel x:Name="KozakuraLicense" Grid.Column="3" Content="license" HorizontalAlignment="Left" VerticalAlignment="Top" WebBrowser="False" Margin="-10,0,0,0"/>
+						</Grid>
+						<Grid Margin="30,0,0,-10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="This file uses material from the " />
+							<local:LinkLabel Grid.Column="1" Content="radkfile" Link="http://nihongo.monash.edu//kradinf.html" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-10,0,0,0"/>
+							<Label Grid.Column="2" Content=" and " Margin="-10,0,0,0"/>
+							<local:LinkLabel Grid.Column="3" Content="kanjidic2" Link="http://www.edrdg.org/wiki/index.php/KANJIDIC_Project" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-10,0,0,0"/>
+							<Label Grid.Column="4" Content=" dictionary files." Margin="-10,0,0,0"/>
+
+						</Grid>
+						<Grid Margin="30,0,0,-10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="These files are property of the " />
+							<local:LinkLabel Grid.Column="1" Content="Electronic Dictionary Research and Development Group" Link="http://www.edrdg.org/" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-10,0,0,0"/>
+							<Label Grid.Column="2" Content=" and are used in accordance with the licence provisions of the Electronic Dictionaries Research Group." Margin="-10,0,0,0"/>
+							
+						</Grid>
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="See " />
+							<local:LinkLabel Grid.Column="1" Content="http://www.edrdg.org/edrdg/licence.html" Link="http://www.edrdg.org/edrdg/licence.html" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-10,0,0,0"/>
+
 						</Grid>
 					</StackPanel>
 

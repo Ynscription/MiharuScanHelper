@@ -2,6 +2,7 @@
 using MahApps.Metro;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,6 +11,8 @@ namespace Miharu.FrontEnd.Helper
 {
 	public class LinkLabel : Label
 	{
+
+		private TextBlock _text;
 
 		public string Link {
 			get; set;
@@ -45,8 +48,38 @@ namespace Miharu.FrontEnd.Helper
 				Foreground = LightThemeColor;
 			}
 			ThemeManager.IsThemeChanged += OnThemeChange;
+			MouseEnter += LinkLabel_MouseEnter;
+			MouseLeave += LinkLabel_MouseLeave;
+			_text = new TextBlock();
+			Initialized += LinkLabel_Initialized;
+			
 
 		}
+
+		private void LinkLabel_Initialized(object sender, EventArgs e)
+		{
+			if (Content != null && Content != _text && Content is string) {
+				string ctnt = (string)Content;
+				_selfChangeContent = true;
+				Content = _text;
+				_text.Text = ctnt;
+			}
+		}
+
+		private bool _selfChangeContent = false;
+		protected override void OnContentChanged(object oldContent, object newContent)
+		{
+			if (!_selfChangeContent) {
+				if (newContent is string)
+					_text.Text = (string)newContent;
+				_selfChangeContent = true;
+				Content = _text;
+			}
+			else
+				_selfChangeContent = false;
+		}
+		
+			
 
 		private void OnThemeChange(object sender, OnThemeChangedEventArgs e)
 		{
@@ -80,6 +113,19 @@ namespace Miharu.FrontEnd.Helper
 			System.Diagnostics.Process.Start("explorer.exe", argument);
 		}
 
+		private void LinkLabel_MouseEnter(object sender, MouseEventArgs e)
+		{
+			Mouse.OverrideCursor = Cursors.Hand;
+			_text.TextDecorations = TextDecorations.Underline;
+			_text.InvalidateVisual();
+		}
+
+		private void LinkLabel_MouseLeave(object sender, MouseEventArgs e)
+		{
+			Mouse.OverrideCursor = Cursors.Arrow;
+			_text.TextDecorations = null;
+			_text.InvalidateVisual();
+		}		
 
 	}
 }
