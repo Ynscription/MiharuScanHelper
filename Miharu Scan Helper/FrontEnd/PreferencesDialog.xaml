@@ -65,9 +65,9 @@
 						</Grid.ColumnDefinitions>
 						<Label Content="Use screen DPI" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
 						<Controls:ToggleSwitch x:Name="UseScreenDPIToggleSwitch" Grid.Column="1" Grid.Row="0"
-							OnLabel="Enabled" OffLabel="Disabled"
+							OnContent="Enabled" OffContent="Disabled"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
-							IsChecked="False" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsCheckedChanged="CheckChanged"/>
+							IsOn="False" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" Toggled="CheckChanged"/>
 					</Grid>
 					<Separator Margin="10"/>
 					<Grid Margin="10">
@@ -77,9 +77,9 @@
 						</Grid.ColumnDefinitions>
 						<Label Content="Warn on text entry deletion" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
 						<Controls:ToggleSwitch x:Name="WarnTextDeletionToggleSwitch" Grid.Column="1" Grid.Row="0"
-							OnLabel="Enabled" OffLabel="Disabled"
+							OnContent="Enabled" OffContent="Disabled"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
-							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsCheckedChanged="CheckChanged"/>
+							IsOn="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" Toggled="CheckChanged"/>
 					</Grid>
 					<Separator Margin="10"/>
 					<Grid Margin="10">
@@ -93,9 +93,9 @@
 						</Grid.RowDefinitions>
 						<Label Content="Auto Translate New Text Entries" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
 						<Controls:ToggleSwitch x:Name="AutoTranslateToggleSwitch" Grid.Column="1" Grid.Row="0"
-							OnLabel="Enabled" OffLabel="Disabled"
+							OnContent="Enabled" OffContent="Disabled"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
-							IsChecked="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsCheckedChanged="CheckChanged"/>
+							IsOn="True" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" Toggled="CheckChanged"/>
 						<StackPanel x:Name="TranslationSourcesStackPanel" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" >
 
 						</StackPanel>

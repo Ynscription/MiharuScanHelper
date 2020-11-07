@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Miharu.FrontEnd.Input.InputBoxInverted"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 mc:Ignorable="d" 
+             ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="30" Height="30">
+	<Grid>
+		<Rectangle Fill="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" RadiusX="3" RadiusY="3" />
+		<Label x:Name="ContentLabelInverted" Content="日" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,-2,0,0" FontSize="24" Foreground="White"/>
+	</Grid>
+</UserControl>

@@ -1,5 +1,5 @@
 ﻿
-using MahApps.Metro;
+using ControlzEx.Theming;
 using System;
 using System.IO;
 using System.Windows;
@@ -38,7 +38,7 @@ namespace Miharu.FrontEnd.Helper
 			MouseLeftButtonUp += OpenLink;
 			try
 			{
-				if (ThemeManager.DetectTheme().DisplayName.Contains("Dark"))
+				if (ThemeManager.Current.DetectTheme().DisplayName.Contains("Dark"))
 					Foreground = DarkThemeColor;
 				else
 					Foreground = LightThemeColor;
@@ -47,7 +47,7 @@ namespace Miharu.FrontEnd.Helper
 			{
 				Foreground = LightThemeColor;
 			}
-			ThemeManager.IsThemeChanged += OnThemeChange;
+			ThemeManager.Current.ThemeChanged += Current_ThemeChanged;
 			MouseEnter += LinkLabel_MouseEnter;
 			MouseLeave += LinkLabel_MouseLeave;
 			_text = new TextBlock();
@@ -55,6 +55,8 @@ namespace Miharu.FrontEnd.Helper
 			
 
 		}
+
+		
 
 		private void LinkLabel_Initialized(object sender, EventArgs e)
 		{
@@ -79,16 +81,15 @@ namespace Miharu.FrontEnd.Helper
 				_selfChangeContent = false;
 		}
 		
-			
-
-		private void OnThemeChange(object sender, OnThemeChangedEventArgs e)
+		
+		private void Current_ThemeChanged(object sender, ThemeChangedEventArgs e)
 		{
-			if (e.Theme.DisplayName.Contains("Dark"))
+			if (e.NewTheme.DisplayName.Contains("Dark"))
 				Foreground = DarkThemeColor;
 			else
 				Foreground = LightThemeColor;
-
 		}
+
 
 		private void OpenLink(object sender, MouseButtonEventArgs e)
 		{
@@ -122,7 +123,7 @@ namespace Miharu.FrontEnd.Helper
 
 		private void LinkLabel_MouseLeave(object sender, MouseEventArgs e)
 		{
-			Mouse.OverrideCursor = Cursors.Arrow;
+			Mouse.OverrideCursor = null;
 			_text.TextDecorations = null;
 			_text.InvalidateVisual();
 		}		

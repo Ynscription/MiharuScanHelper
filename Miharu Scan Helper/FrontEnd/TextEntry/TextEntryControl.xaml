@@ -1,4 +1,5 @@
-﻿<UserControl x:Class="Miharu.FrontEnd.TextEntryControl"
+﻿<UserControl x:Name="userControl" 
+			 x:Class="Miharu.FrontEnd.TextEntryControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,12 +8,202 @@
 			 xmlns:gif="http://wpfanimatedgif.codeplex.com"
 			 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
 			 xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-			 xmlns:helper="clr-namespace:Miharu.FrontEnd.Helper"
+			 xmlns:helper="clr-namespace:Miharu.FrontEnd.Helper" 
+			 xmlns:input="clr-namespace:Miharu.FrontEnd.Input" 
+			 xmlns:local1="clr-namespace:Miharu.FrontEnd.TextEntry" xmlns:Converters="http://metro.mahapps.com/winfx/xaml/shared"
 			 mc:Ignorable="d" 
              d:DesignHeight="802" d:DesignWidth="606" 
 			 Loaded="UserControl_Loaded">
+	<UserControl.Resources>
+		<local1:TextEntryKanjiExpanderMarginConverter x:Key="marginConverter"/>
+		<local1:ParsedTextBoxHeightConverter x:Key="heightConverter"/>
 
 
+		<Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
+		<Converters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
+
+
+		<ControlTemplate x:Key="CustomToggleButton" TargetType="{x:Type ToggleButton}">
+			<Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+				<Grid Margin="{TemplateBinding Padding}"
+                              Background="Transparent"
+                              SnapsToDevicePixels="False">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Grid Margin="1">
+						<Ellipse x:Name="Circle"
+                                         Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                         Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Stroke="{TemplateBinding Foreground}" />
+						<Label x:Name="Arrow"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Content="部"
+                                      SnapsToDevicePixels="false"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      FontSize="16" />
+					</Grid>
+					<Controls:ContentControlEx Grid.Column="1"
+                                                       Margin="4 0 0 0"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       Content="{TemplateBinding Content}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+				</Grid>
+			</Border>
+			<ControlTemplate.Triggers>
+				<Trigger Property="IsChecked" Value="true">
+				</Trigger>
+				<Trigger Property="IsMouseOver" Value="true">
+					<Setter TargetName="Arrow" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+					<Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+				</Trigger>
+				<Trigger Property="IsPressed" Value="true">
+					<Setter TargetName="Arrow" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+					<Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+					<Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
+				</Trigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+
+		<ControlTemplate x:Key="CustomExpander" TargetType="{x:Type Expander}">
+			<Grid>
+				<Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                   IsHitTestVisible="false"
+                                   Opacity="0" />
+				<DockPanel x:Name="ExpanderRoot">
+					<Border x:Name="HeaderSite"
+                                    Background="{TemplateBinding Controls:HeaderedControlHelper.HeaderBackground}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    DockPanel.Dock="Top"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True">
+						<ToggleButton x:Name="ToggleSite"
+                                              Controls:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                              Content="{TemplateBinding Header}"
+                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                              FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                              FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
+                                              FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              Template="{StaticResource CustomToggleButton}"
+                                              UseLayoutRounding="False">
+							<ToggleButton.Foreground>
+								<MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+									<Binding Mode="OneWay"
+                                                     Path="(Controls:HeaderedControlHelper.HeaderBackground)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+									<Binding Mode="OneWay"
+                                                     Path="(Controls:HeaderedControlHelper.HeaderForeground)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+								</MultiBinding>
+							</ToggleButton.Foreground>
+						</ToggleButton>
+					</Border>
+					<Border x:Name="ExpandSite"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Top}}"
+                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Top}}"
+                                    DockPanel.Dock="Bottom"
+                                    Focusable="false"
+                                    Opacity="0"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True"
+                                    Visibility="Collapsed">
+						<ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  Cursor="{TemplateBinding Cursor}"
+                                                  UseLayoutRounding="False" />
+					</Border>
+				</DockPanel>
+				<VisualStateManager.VisualStateGroups>
+					<VisualStateGroup x:Name="CommonStates">
+						<VisualState x:Name="Normal" />
+						<VisualState x:Name="MouseOver" />
+						<VisualState x:Name="Disabled">
+							<Storyboard>
+								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
+									<SplineDoubleKeyFrame KeyTime="0" Value="0.7" />
+								</DoubleAnimationUsingKeyFrames>
+								<DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpanderRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+									<EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+								</DoubleAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>
+					</VisualStateGroup>
+				</VisualStateManager.VisualStateGroups>
+			</Grid>
+			<ControlTemplate.Triggers>
+				<MultiDataTrigger>
+					<MultiDataTrigger.Conditions>
+						<Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="True" />
+					</MultiDataTrigger.Conditions>
+					<Setter TargetName="ExpandSite" Property="Opacity" Value="1" />
+					<Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+				</MultiDataTrigger>
+				<MultiDataTrigger>
+					<MultiDataTrigger.Conditions>
+						<Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="False" />
+					</MultiDataTrigger.Conditions>
+					<Setter TargetName="ExpandSite" Property="Opacity" Value="0" />
+					<Setter TargetName="ExpandSite" Property="Visibility" Value="Collapsed" />
+				</MultiDataTrigger>
+
+				<Trigger Property="ExpandDirection" Value="Right">
+					<Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
+					<Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Left}}" />
+					<Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
+					<Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Right}}" />
+					<Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Left" />
+					<Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderRightStyle)}" />
+				</Trigger>
+				<Trigger Property="ExpandDirection" Value="Up">
+					<Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Bottom}}" />
+					<Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Bottom}}" />
+					<Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Top" />
+					<Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Top}}" />
+					<Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Bottom" />
+					<Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderUpStyle)}" />
+				</Trigger>
+				<Trigger Property="ExpandDirection" Value="Left">
+					<Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}" />
+					<Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Right}}" />
+					<Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Left" />
+					<Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Left}}" />
+					<Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Right" />
+					<Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderLeftStyle)}" />
+				</Trigger>
+				<Trigger Property="IsExpanded" Value="false">
+					<Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius)}" />
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="false">
+					<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+				</Trigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+
+
+	</UserControl.Resources>
+	
 	<Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="250"/>
@@ -20,7 +211,7 @@
 			<RowDefinition Height="3*"/>
 		</Grid.RowDefinitions>
 
-		<Grid x:Name="ParsedTextAndIMGPreviewGrid" Grid.Row="0" Margin="3" SizeChanged="ParsedTextAndIMGPreviewGrid_SizeChanged">
+		<Grid x:Name="ParsedTextAndIMGPreviewGrid" Grid.Row="0" Margin="3" SizeChanged="ParsedTextAndIMGPreviewGrid_SizeChanged" Panel.ZIndex="10000">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" MinWidth="10" />
 				<ColumnDefinition Width="1*" MinWidth="100"/>
@@ -52,12 +243,11 @@
 						<Separator Grid.Column="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" Margin="5,5"/>
 
 
-						<Controls:ToggleSwitch x:Name="VerticalCheckBox" Grid.Column="2"
-							OnLabel="Vertical" OffLabel="Horizontal"
+						<Controls:ToggleSwitch x:Name="VerticalToggleSwitch" Grid.Column="2"
+							OnContent ="Vertical" OffContent="Horizontal"
 							VerticalAlignment="Center" HorizontalAlignment="Left"  
-							IsChecked="True" 
-							Checked="VerticalCheckBox_Checked" 
-							Unchecked="VerticalCheckBox_Unchecked" 
+							IsOn="True" 
+							Toggled="VerticalToggleSwitched_Toggled" 
 							FontSize="14" HorizontalContentAlignment="Right"/>
 
 
@@ -78,10 +268,22 @@
 						</Button>
 
 					</Grid>
+					<Border x:Name="border1" BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" Margin="3,0,3,3" Panel.ZIndex="1000" >
+						<Expander x:Name="KanjiInputExpander" ExpandDirection="Down" BorderThickness="0" BorderBrush="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Collapsed="KanjiInputExpander_Collapsed" Expanded="KanjiInputExpander_Expanded" Padding="0" GotFocus="KanjiInputExpander_GotFocus" 
+								  Template="{StaticResource CustomExpander}">
+							<Expander.Margin>
+								<MultiBinding Converter="{StaticResource marginConverter}">
+									<Binding ElementName="userControl" Path="ActualHeight" />
+									<Binding ElementName="ParsedTextAndIMGPreviewGrid" Path="ActualHeight" />
+								</MultiBinding>
+							</Expander.Margin>
 
-
-					<Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="2" Margin="3,0,3,3">
-						<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="26" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" />
+							<Expander.Header >
+								<TextBox x:Name="ParsedTextBox" TextWrapping="Wrap" FontSize="26" AcceptsReturn="True" AcceptsTab="True" FontFamily="Meiryo" TextChanged="ParsedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" 
+										 Height="{Binding ActualHeight, Converter={StaticResource heightConverter}, ElementName=border1, Mode=OneWay}"  
+										 Margin="0" Padding="4" />
+							</Expander.Header>
+						</Expander>
 					</Border>
 
 
@@ -141,7 +343,7 @@
 		</Border>
 
 
-		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="1">
+		<Border x:Name="border2" BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="1">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="40" MinHeight="40"/>

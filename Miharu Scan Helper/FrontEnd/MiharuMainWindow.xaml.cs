@@ -497,6 +497,10 @@ namespace Miharu.FrontEnd
 					return;
 				}
 			}
+			foreach (Window w in Application.Current.Windows) {
+				if (w != this)
+					w.Close();
+			}
 		}
 
 

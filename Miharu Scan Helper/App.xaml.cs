@@ -1,4 +1,5 @@
 ﻿
+using ControlzEx.Theming;
 using MahApps.Metro;
 using Miharu.BackEnd;
 using Miharu.BackEnd.Translation.Threading;
@@ -110,6 +111,7 @@ Would you like to locate the Tesseract exectutable manually?";
 		{
 			
 			ChapterManager chapterManager = null;
+			KanjiInputManager kanjiInputManager = null;
 			TranslatorThread translatorThread = null;
 			MiharuMainWindow mainWindow = null;
 			try {
@@ -135,6 +137,8 @@ Would you like to locate the Tesseract exectutable manually?";
 					Logger.Log("Args Length: " + args.Length);
 					for (int i = 0; i < args.Length; i++)
 						Logger.Log("\t" + args[i]);*/
+
+					kanjiInputManager = new KanjiInputManager();
 					
 					chapterManager = new ChapterManager(translatorThread);
 
@@ -143,7 +147,7 @@ Would you like to locate the Tesseract exectutable manually?";
 					PageControl pageControl = new PageControl(chapterManager.PageManager);
 					mainWindow.PageControlArea.Child = pageControl;
 
-					TextEntryView textEntryView = new TextEntryView(chapterManager.PageManager.TextEntryManager);
+					TextEntryView textEntryView = new TextEntryView(chapterManager.PageManager.TextEntryManager, kanjiInputManager);
 					mainWindow.TextEntryArea.Child = textEntryView;
 
 					application.Run(mainWindow);
@@ -181,7 +185,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			ThemeManager.ChangeTheme(Current, 
+			ThemeManager.Current.ChangeTheme(Current, 
 				(string)Settings.Default["Theme"] + "." + 
 				(string)Settings.Default["Accent"]);
 

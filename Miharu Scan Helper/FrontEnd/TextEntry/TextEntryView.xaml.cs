@@ -25,6 +25,8 @@ namespace Miharu.FrontEnd.TextEntry
 		private TextEntryManager _textEntryManager;
 		private PageManager _pageManager;
 
+		private KanjiInputManager _kanjiInputManager;
+
 
 		private void ConfigureButtons () {
 			if (!_pageManager.IsPageLoaded) {
@@ -37,7 +39,7 @@ namespace Miharu.FrontEnd.TextEntry
 			}
 		}
 
-		public TextEntryView(TextEntryManager textEntryManager)
+		public TextEntryView(TextEntryManager textEntryManager, KanjiInputManager kanjiInputManager)
 		{
 			InitializeComponent();
 			_textEntryManager = textEntryManager;
@@ -48,6 +50,7 @@ namespace Miharu.FrontEnd.TextEntry
 			_pageManager.TextEntryMoved += OnTextEntryMoved;
 			_pageManager.TextEntryRemoved += OnTextEntryRemoved;
 			_pageManager.TextEntryAdded += OnTextEntryAdded;
+			_kanjiInputManager = kanjiInputManager;
 			ConfigureButtons();
 		}
 
@@ -103,7 +106,7 @@ namespace Miharu.FrontEnd.TextEntry
 		private void OnTextEntryChanged(object sender, EventArgs e)
 		{
 			if (_textEntryManager.IsTextSelected)
-				TextEntryArea.Content = new TextEntryControl(_textEntryManager);
+				TextEntryArea.Content = new TextEntryControl(_textEntryManager, _kanjiInputManager);
 			else
 				TextEntryArea.Content = null;
 			ConfigureButtons();

@@ -25,7 +25,7 @@ namespace Miharu.FrontEnd.Helper
 				ExportPathTextBox.Text = null;
 			else
 				ExportPathTextBox.Text = _chapterManager.CurrentSaveFile.Substring(0, lastSlashIndex) + "\\script.txt";
-			IndexPagesLabel.Content = IndexPagesSwitch.OffLabel;
+			IndexPagesLabel.Content = IndexPagesSwitch.OffContent;
 		}
 
 		
@@ -61,13 +61,13 @@ namespace Miharu.FrontEnd.Helper
 				try {
 					Mouse.SetCursor(Cursors.Wait);
 					ExportData ed = ExportData.None;
-					if (JapaneseTextSwitch.IsChecked ?? false)
+					if (JapaneseTextSwitch.IsOn)
 						ed = ed | ExportData.Japanese;
-					if (NotesSwitch.IsChecked ?? false)
+					if (NotesSwitch.IsOn)
 						ed = ed | ExportData.Notes;
-					if (TranslationSwitch.IsChecked ?? false)
+					if (TranslationSwitch.IsOn)
 						ed = ed | ExportData.Translation;
-					if (IndexPagesSwitch.IsChecked ?? false)
+					if (IndexPagesSwitch.IsOn)
 						ed = ed | ExportData.Filename;
 
 					_chapterManager.ExportCustomScript(ExportPathTextBox.Text, ed);
@@ -99,12 +99,11 @@ namespace Miharu.FrontEnd.Helper
 
 		private void FileNameSwitch_Checked(object sender, RoutedEventArgs e)
 		{
-			IndexPagesLabel.Content = IndexPagesSwitch.OnLabel;
+			if (IndexPagesSwitch.IsOn)
+				IndexPagesLabel.Content = IndexPagesSwitch.OnContent;
+			else
+				IndexPagesLabel.Content = IndexPagesSwitch.OffContent;
 		}
 
-		private void FileNameSwitch_Unchecked(object sender, RoutedEventArgs e)
-		{
-			IndexPagesLabel.Content = IndexPagesSwitch.OffLabel;
-		}
 	}
 }

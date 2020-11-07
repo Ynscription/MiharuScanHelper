@@ -8,6 +8,7 @@ using Ookii.Dialogs.Wpf;
 using System;
 using System.IO;
 using System.Windows;
+using ControlzEx.Theming;
 
 namespace Miharu.FrontEnd
 {
@@ -58,11 +59,11 @@ namespace Miharu.FrontEnd
 			ThemeAccentColorListBox.SelectedItem = (string)Settings.Default["Accent"];
 
 			_originalUseScreenDPI = (bool)Settings.Default["UseScreenDPI"];
-			UseScreenDPIToggleSwitch.IsChecked = _originalUseScreenDPI;			
+			UseScreenDPIToggleSwitch.IsOn = _originalUseScreenDPI;			
 
-			WarnTextDeletionToggleSwitch.IsChecked = (bool)Settings.Default["WarnTextDeletion"];
+			WarnTextDeletionToggleSwitch.IsOn = (bool)Settings.Default["WarnTextDeletion"];
 
-			AutoTranslateToggleSwitch.IsChecked = (bool)Settings.Default["AutoTranslateEnabled"];
+			AutoTranslateToggleSwitch.IsOn = (bool)Settings.Default["AutoTranslateEnabled"];
 			
 
 			string disabledTypes = (string)Settings.Default["DisabledTranslationSources"];
@@ -70,21 +71,23 @@ namespace Miharu.FrontEnd
 				if (t.HasFlag(TranslationType.Text)) {
 					ToggleSwitch ts = new ToggleSwitch ();
 					ts.Content = t;
-					ts.IsChecked = !disabledTypes.Contains(t.ToString());
-					ts.IsEnabled = AutoTranslateToggleSwitch.IsChecked ?? true;
-					ts.IsCheckedChanged += CheckChanged;
+					ts.IsOn = !disabledTypes.Contains(t.ToString());
+					ts.IsEnabled = AutoTranslateToggleSwitch.IsOn;
+					ts.Toggled += CheckChanged;
 					TranslationSourcesStackPanel.Children.Add(ts);
 				}
 			}
 			ApplyButton.IsEnabled = false;
-			AutoTranslateToggleSwitch.IsCheckedChanged += OnAutoTranslateChackChange;
+			AutoTranslateToggleSwitch.Toggled += OnAutoTranslateChackChange;
 			
 		}
 
 		private void OnAutoTranslateChackChange(object sender, EventArgs e)
 		{
-			foreach (ToggleSwitch ts in TranslationSourcesStackPanel.Children)
-				ts.IsEnabled = AutoTranslateToggleSwitch.IsChecked ?? true;
+			if (IsLoaded) {
+				foreach (ToggleSwitch ts in TranslationSourcesStackPanel.Children)
+					ts.IsEnabled = AutoTranslateToggleSwitch.IsOn;
+			}
 		}
 
 		private void TesseractPathButton_Click(object sender, RoutedEventArgs e)
@@ -139,16 +142,16 @@ namespace Miharu.FrontEnd
 			Settings.Default["Theme"] = (string)ThemeBaseColorListBox.SelectedValue;
 			Settings.Default["Accent"] = (string)ThemeAccentColorListBox.SelectedValue;
 
-			Settings.Default["UseScreenDPI"] = UseScreenDPIToggleSwitch.IsChecked;
+			Settings.Default["UseScreenDPI"] = UseScreenDPIToggleSwitch.IsOn;
 
-			Settings.Default["WarnTextDeletion"] = WarnTextDeletionToggleSwitch.IsChecked;
+			Settings.Default["WarnTextDeletion"] = WarnTextDeletionToggleSwitch.IsOn;
 
-			Settings.Default["AutoTranslateEnabled"] = AutoTranslateToggleSwitch.IsChecked;
+			Settings.Default["AutoTranslateEnabled"] = AutoTranslateToggleSwitch.IsOn;
 
 
 			string disabledSources = "";
 			foreach (ToggleSwitch ts in TranslationSourcesStackPanel.Children) {
-				if (!ts.IsChecked ?? true)
+				if (!ts.IsOn)
 					disabledSources += ts.Content.ToString() + ";";
 			}
 			if (disabledSources.Length > 0)
@@ -156,8 +159,8 @@ namespace Miharu.FrontEnd
 			Settings.Default["DisabledTranslationSources"] = disabledSources;
 			Settings.Default.Save();
 
-			if (_chapterManager.IsChapterLoaded && _originalUseScreenDPI != (UseScreenDPIToggleSwitch.IsChecked ?? false)) {
-				_originalUseScreenDPI = UseScreenDPIToggleSwitch.IsChecked ?? false;
+			if (_chapterManager.IsChapterLoaded && _originalUseScreenDPI != (UseScreenDPIToggleSwitch.IsOn)) {
+				_originalUseScreenDPI = UseScreenDPIToggleSwitch.IsOn;
 				Miharu.BackEnd.Data.Page.UseScreenDPI = _originalUseScreenDPI;
 				_chapterManager.ReloadPages();
 				_chapterManager.PageManager.ChangePage(_chapterManager.PageManager.CurrentPageIndex);
@@ -168,7 +171,7 @@ namespace Miharu.FrontEnd
 		{
 			if (CheckTesseractPath()) {
 				SavePreferences();
-				ThemeManager.ChangeTheme(Application.Current, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
+				ThemeManager.Current.ChangeTheme(Application.Current, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
 				Close();
 			}
 			else
@@ -184,7 +187,7 @@ namespace Miharu.FrontEnd
 		{
 			if (CheckTesseractPath()) {
 				SavePreferences();
-				ThemeManager.ChangeTheme(Application.Current, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
+				ThemeManager.Current.ChangeTheme(Application.Current, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
 				ApplyButton.IsEnabled = false;
 			}
 			else
@@ -193,13 +196,16 @@ namespace Miharu.FrontEnd
 
 		private void ThemeSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
-			ThemeManager.ChangeTheme(this, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
-			ApplyButton.IsEnabled = true;
+			if (IsLoaded) {
+				ThemeManager.Current.ChangeTheme(this, (string)ThemeBaseColorListBox.SelectedValue + "." + (string)ThemeAccentColorListBox.SelectedValue);
+				ApplyButton.IsEnabled = true;
+			}
 		}
 
 		private void CheckChanged(object sender, EventArgs e)
 		{
-			ApplyButton.IsEnabled = true;
+			if (IsLoaded)
+				ApplyButton.IsEnabled = true;
 		}
 	}
 }

@@ -158,13 +158,9 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
-							<Label Grid.Column="0" Content="Miharu Scan Helper" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
-							<Label Grid.Column="1" Content="is" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7,0,0,0"/>
-							<Label Grid.Column="2" Content="Powered by Yandex.Translate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-8,0,0,0"/>
-							<local:LinkLabel x:Name="YandexLinkLabel" Grid.Column="3" Content="https://translate.yandex.com/" Link="https://translate.yandex.com/" HorizontalAlignment="Left" VerticalAlignment="Top" />
+							<Label Grid.Column="0" Content="Yandex.Translate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-8,0,0,0"/>
+							<local:LinkLabel x:Name="YandexLinkLabel" Grid.Column="1" Content="https://translate.yandex.com/" Link="https://translate.yandex.com/" HorizontalAlignment="Left" VerticalAlignment="Top" />
 						</Grid>
 						<Grid Margin="30,0,0,-5">
 							<Grid.ColumnDefinitions>

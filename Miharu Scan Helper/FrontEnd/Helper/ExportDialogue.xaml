@@ -41,10 +41,10 @@
 						</Grid.RowDefinitions>
 						<Label Content="Data:" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
 						<StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="20,0,0,0" >
-							<Controls:ToggleSwitch x:Name="IndexPagesSwitch" Content="Index Pages by" IsChecked="false" IsEnabled="True" OffLabel="Order Number" OnLabel="File Name" Unchecked="FileNameSwitch_Unchecked" Checked="FileNameSwitch_Checked"/>
-							<Controls:ToggleSwitch x:Name="JapaneseTextSwitch" Content="Japanese" IsChecked="True" IsEnabled="True"/>
-							<Controls:ToggleSwitch x:Name="NotesSwitch" Content="Notes" IsChecked="True" IsEnabled="True"/>
-							<Controls:ToggleSwitch x:Name="TranslationSwitch" Content="Translation" IsChecked="True" IsEnabled="True"/>
+							<Controls:ToggleSwitch x:Name="IndexPagesSwitch" Content="Index Pages by" IsOn="false" IsEnabled="True" OffContent="Order Number" OnContent="File Name" Toggled="FileNameSwitch_Checked"/>
+							<Controls:ToggleSwitch x:Name="JapaneseTextSwitch" Content="Japanese" IsOn="True" IsEnabled="True"/>
+							<Controls:ToggleSwitch x:Name="NotesSwitch" Content="Notes" IsOn="True" IsEnabled="True"/>
+							<Controls:ToggleSwitch x:Name="TranslationSwitch" Content="Translation" IsOn="True" IsEnabled="True"/>
 						</StackPanel>
 						<Label x:Name="IndexPagesLabel" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,0,0,0" FontSize="14"/>
 					</Grid>

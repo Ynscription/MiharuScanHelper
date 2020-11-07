@@ -1,11 +1,14 @@
 ﻿
+using MahApps.Metro.Controls;
 using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Translation;
 using Miharu.Control;
+using Miharu.FrontEnd.Input;
 using Miharu.FrontEnd.TextEntry;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +31,10 @@ namespace Miharu.FrontEnd
 
 
 		private TextEntryManager _textEntryManager;
+		private KanjiInputManager _kanjiInputManager;
+
+
+        
 
 
 		private void InitializeParsedTextBox () {
@@ -39,20 +46,29 @@ namespace Miharu.FrontEnd
 
 		
 
-		public TextEntryControl (TextEntryManager textEntryManager) :base () {
+		public TextEntryControl (TextEntryManager textEntryManager, KanjiInputManager kanjiInputManager) :base () {
+			_textEntryManager = textEntryManager;
+			_kanjiInputManager = kanjiInputManager;
 			InitializeComponent();
 			
 
 			InitializeSAnimation();
 
 
-			_textEntryManager = textEntryManager;
+			
 			if (_textEntryManager.IsTextSelected)
 				LoadTextEntry();
 			_textEntryManager.PageManager.TextEntryRequiresTranslation += OnTextEntryRequiresTranslation;
 			TextTabControl.SelectedIndex = _textEntryManager.TabIndex;
+			
+			KanjiInputExpander.Content = new KanjiByRadInputControl(_kanjiInputManager);
+			KanjiInputExpander.IsExpanded = _kanjiInputManager.KanjiInputWindowVisibility;
+			_kanjiInputManager.VisibilityChanged += KanjiInputManager_VisibilityChanged;
+			_kanjiInputManager.KanjiInputEvent += _kanjiInputManager_KanjiInputEvent;
+
 		}
 
+		
 
 		private TextBox NewNoteTextBox (string s = "") {
 			TextBox tb = new TextBox ();
@@ -125,7 +141,7 @@ namespace Miharu.FrontEnd
 			NotesStackPanel.Children.Add(NewNoteTextBox());
 
 			TranslatedTextBox.Text = _textEntryManager.CurrentText.TranslatedText;
-			VerticalCheckBox.IsChecked = _textEntryManager.CurrentText.Vertical;
+			VerticalToggleSwitch.IsOn = _textEntryManager.CurrentText.Vertical;
 
 		}
 
@@ -138,7 +154,7 @@ namespace Miharu.FrontEnd
 					ParsedTextBox.Text = e.Text;
 				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(e.Text);
 				RefreshParseButton.IsEnabled = true;
-				VerticalCheckBox.IsEnabled = true;
+				VerticalToggleSwitch.IsEnabled = true;
 			}
 			else if (e.ChangeType == TextChangeType.Translation)
 				TranslatedTextBox.Text = e.Text;
@@ -149,14 +165,14 @@ namespace Miharu.FrontEnd
 			try {
 				Mouse.SetCursor(Cursors.Wait);
 				RefreshParseButton.IsEnabled = false;
-				VerticalCheckBox.IsEnabled = false;
+				VerticalToggleSwitch.IsEnabled = false;
 				_textEntryManager.ReParse();			
 				Mouse.SetCursor(Cursors.Arrow);
 			}
 			catch (Exception ex) {
 				Mouse.SetCursor(Cursors.Arrow);
 				RefreshParseButton.IsEnabled = true;
-				VerticalCheckBox.IsEnabled = true;
+				VerticalToggleSwitch.IsEnabled = true;
 				using (TaskDialog dialog = new TaskDialog()) {
 					dialog.WindowTitle = "Error";
 					dialog.MainIcon = TaskDialogIcon.Error;
@@ -227,22 +243,22 @@ namespace Miharu.FrontEnd
 		
 
 		
-		private void VerticalCheckBox_Checked (object sender, RoutedEventArgs e) {
-			if (_textEntryManager.IsTextSelected && !_textEntryManager.CurrentText.Vertical)
-				_textEntryManager.SetVertical(true);
+		private void VerticalToggleSwitched_Toggled (object sender, RoutedEventArgs e) {
+			
+			if (_textEntryManager.IsTextSelected && _textEntryManager.CurrentText.Vertical != VerticalToggleSwitch.IsOn)
+				_textEntryManager.SetVertical(VerticalToggleSwitch.IsOn);
 		}
 
-		private void VerticalCheckBox_Unchecked (object sender, RoutedEventArgs e) {
-			if (_textEntryManager.IsTextSelected && _textEntryManager.CurrentText.Vertical)
-				_textEntryManager.SetVertical(false);
-		}
 
 		private void DeleteButton_Click (object sender, RoutedEventArgs e) {
 			//TODO
 			//_parent.RemoveTextEntry(this);
 		}
 
-		
+
+		#region Animation
+
+
 		private Storyboard _showS;
 		private Storyboard _hideS;
 		private enum AnimState {
@@ -356,6 +372,12 @@ namespace Miharu.FrontEnd
 			}
 		}
 
+
+
+		#endregion 
+
+		
+		
 		private void TextTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			_textEntryManager.TabIndex = TextTabControl.SelectedIndex;
@@ -366,5 +388,65 @@ namespace Miharu.FrontEnd
 			if (_textEntryManager.IsTextSelected)
 				ShowImageFromBitmap(_textEntryManager.CurrentText.Source);
 		}
+
+
+
+
+		#region KanjiInput
+
+
+		private void KanjiInputExpander_Collapsed(object sender, RoutedEventArgs e)
+		{
+			_kanjiInputManager.KanjiInputWindowVisibility = false;
+			KanjiInputExpander.ReleaseMouseCapture();
+		}
+
+		private void KanjiInputExpander_Expanded(object sender, RoutedEventArgs e)
+		{
+			_kanjiInputManager.KanjiInputWindowVisibility = true;
+			Mouse.Capture(KanjiInputExpander, CaptureMode.SubTree);
+			KanjiInputExpander.AddHandler(Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(HandleClickOutsideOfControl), true);
+			ParsedTextBox.GotMouseCapture += ParsedTextBox_GotMouseCapture;
+		}
+
+		private void ParsedTextBox_GotMouseCapture(object sender, MouseEventArgs e)
+		{
+			if (KanjiInputExpander.IsExpanded) {
+				Mouse.Capture(KanjiInputExpander, CaptureMode.SubTree);
+				KanjiInputExpander.AddHandler(Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(HandleClickOutsideOfControl), true);
+			}
+		}
+
+		private void HandleClickOutsideOfControl(object sender, MouseButtonEventArgs e)
+		{
+			_kanjiInputManager.KanjiInputWindowVisibility = false;
+
+			ReleaseMouseCapture();
+		}
+
+		private void KanjiInputManager_VisibilityChanged(object sender, EventArgs e)
+		{
+			if (KanjiInputExpander.IsExpanded != _kanjiInputManager.KanjiInputWindowVisibility)
+				KanjiInputExpander.IsExpanded = _kanjiInputManager.KanjiInputWindowVisibility;
+		}
+
+		private void _kanjiInputManager_KanjiInputEvent(object sender, KanjiInputEventArgs e)
+		{
+			int caretIndex = ParsedTextBox.CaretIndex;
+			ParsedTextBox.Text = ParsedTextBox.Text.Insert(caretIndex, e.Character.Lit);
+			ParsedTextBox.CaretIndex = caretIndex + e.Character.Lit.Length;
+		}
+
+		private void KanjiInputExpander_GotFocus(object sender, RoutedEventArgs e)
+		{
+			ParsedTextBox.Focus();
+		}
+
+
+		
+
+
+		#endregion
+
 	}
 }
