@@ -33,7 +33,6 @@ namespace Miharu.FrontEnd
 		private TextEntryManager _textEntryManager;
 		private KanjiInputManager _kanjiInputManager;
 
-
         
 
 
@@ -46,7 +45,7 @@ namespace Miharu.FrontEnd
 
 		
 
-		public TextEntryControl (TextEntryManager textEntryManager, KanjiInputManager kanjiInputManager) :base () {
+		public TextEntryControl (TextEntryManager textEntryManager, KanjiInputManager kanjiInputManager, KanjiByRadInputControl kanjiByRadInput) :base () {
 			_textEntryManager = textEntryManager;
 			_kanjiInputManager = kanjiInputManager;
 			InitializeComponent();
@@ -61,7 +60,7 @@ namespace Miharu.FrontEnd
 			_textEntryManager.PageManager.TextEntryRequiresTranslation += OnTextEntryRequiresTranslation;
 			TextTabControl.SelectedIndex = _textEntryManager.TabIndex;
 			
-			KanjiInputExpander.Content = new KanjiByRadInputControl(_kanjiInputManager);
+			KanjiInputExpander.Content = kanjiByRadInput;
 			KanjiInputExpander.IsExpanded = _kanjiInputManager.KanjiInputWindowVisibility;
 			_kanjiInputManager.VisibilityChanged += KanjiInputManager_VisibilityChanged;
 			_kanjiInputManager.KanjiInputEvent += _kanjiInputManager_KanjiInputEvent;

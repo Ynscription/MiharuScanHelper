@@ -1,5 +1,6 @@
 ﻿using Miharu.BackEnd.Data;
 using Miharu.Control;
+using Miharu.FrontEnd.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace Miharu.FrontEnd.TextEntry
 		private KanjiInputManager _kanjiInputManager;
 
 
+		private KanjiByRadInputControl _kanjiByRadInputControl;
+
+
 		private void ConfigureButtons () {
 			if (!_pageManager.IsPageLoaded) {
 				PrevEntryButton.IsEnabled = false;
@@ -51,6 +55,7 @@ namespace Miharu.FrontEnd.TextEntry
 			_pageManager.TextEntryRemoved += OnTextEntryRemoved;
 			_pageManager.TextEntryAdded += OnTextEntryAdded;
 			_kanjiInputManager = kanjiInputManager;
+			_kanjiByRadInputControl = new KanjiByRadInputControl(_kanjiInputManager);
 			ConfigureButtons();
 		}
 
@@ -106,7 +111,7 @@ namespace Miharu.FrontEnd.TextEntry
 		private void OnTextEntryChanged(object sender, EventArgs e)
 		{
 			if (_textEntryManager.IsTextSelected)
-				TextEntryArea.Content = new TextEntryControl(_textEntryManager, _kanjiInputManager);
+				TextEntryArea.Content = new TextEntryControl(_textEntryManager, _kanjiInputManager, _kanjiByRadInputControl);
 			else
 				TextEntryArea.Content = null;
 			ConfigureButtons();

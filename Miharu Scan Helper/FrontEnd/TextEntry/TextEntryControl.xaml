@@ -24,7 +24,7 @@
 
 
 		<Thickness x:Key="ExpanderHeaderThemePadding">2</Thickness>
-		<sys:Double x:Key="ExpanderToggleButtonEllipseThemeSize">26</sys:Double>
+		<sys:Double x:Key="ExpanderToggleButtonEllipseThemeSize">30</sys:Double>
 
 		<Style x:Key="Custom.ToggleButton.ExpanderHeader.Base" TargetType="{x:Type ToggleButton}">
 			<Setter Property="Background" Value="Transparent" />
