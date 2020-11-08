@@ -27,9 +27,7 @@ namespace Miharu.FrontEnd.Page
 		private int ZoomLevel{
 			get => _zoomLevel;
 			set {
-				if (value > 19)
-					_zoomLevel = 19;
-				else if (value < -9)
+				if (value < -9)
 					_zoomLevel = -9;
 				else
 					_zoomLevel = value;
@@ -117,6 +115,25 @@ namespace Miharu.FrontEnd.Page
 				PreviewIMG.Source = ChangeImageDPI(imgSrc);
 			}
 		}
+
+
+		private void CheckZoomOnPageChange (BitmapImage imgSrc) {
+			
+
+			double xdpiRatio = imgSrc.DpiX / DpiX;
+			double ydpiRatio = imgSrc.DpiY / DpiY;
+			while (imgSrc.Width*xdpiRatio < PreviewIMGScroll.RenderSize.Width && 
+				imgSrc.Height*ydpiRatio < PreviewIMGScroll.RenderSize.Height) {
+				
+				ZoomLevel--;
+				xdpiRatio = imgSrc.DpiX / DpiX;
+				ydpiRatio = imgSrc.DpiY / DpiY;
+			}
+
+			_rectangleOverlay.DpiX = DpiX;
+			_rectangleOverlay.DpiY = DpiY;
+			
+		}
 		
 		private void OnPageChanged (object sender, EventArgs e) {
 			if (CurrPageTextBox.IsEnabled = _pageManager.IsPageLoaded) {
@@ -128,6 +145,8 @@ namespace Miharu.FrontEnd.Page
 				imgSrc.CacheOption = BitmapCacheOption.OnLoad;
 				imgSrc.EndInit();
 
+
+				CheckZoomOnPageChange(imgSrc);
 				if (imgSrc.DpiX != DpiX || imgSrc.DpiY != DpiY)
 					PreviewIMG.Source = ChangeImageDPI(imgSrc);
 				else
@@ -150,6 +169,8 @@ namespace Miharu.FrontEnd.Page
 			}
 			_rectangleOverlay.InvalidateVisual();
 		}
+
+		
 
 		private void OnPageIndexChanged(object sender, EventArgs e)
 		{

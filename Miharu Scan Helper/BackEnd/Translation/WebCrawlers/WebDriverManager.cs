@@ -51,6 +51,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 					result = overrideNavigation(_driver, url);
 				else {
 					_driver.Navigate().GoToUrl(url);
+					Thread.Sleep(500);
 					result = _driver.FindElement(by);
 				}
 
