@@ -12,8 +12,9 @@ namespace Miharu.BackEnd.Translation
 
 	[Flags]
 	public enum TranslationType {
-		Text = 0x10,
+		Web = 0x10,
 		SFX = 0x20,
+		Dict = 0x40,
 		//subtypes
 		Google_Web = 0x11,
 		Google_API = 0x12,
@@ -23,6 +24,7 @@ namespace Miharu.BackEnd.Translation
 		Yandex_Web = 0x16,
 		DeepL_Web = 0x17,
 		Jaded_Network = 0x21,
+		Jisho = 0x41
 	}
 
 	public class TranslationProvider : IEnumerable<TranslationType>
@@ -47,6 +49,8 @@ namespace Miharu.BackEnd.Translation
 				_translators.Add(TranslationType.Yandex_Web, new WCYandexTranslator(wdManager));
 
 			_translators.Add(TranslationType.Jaded_Network, new HTTPTJNTranslator());
+
+			_translators.Add(TranslationType.Jisho, new HTTPJishoTranslator());
 
 		}
 

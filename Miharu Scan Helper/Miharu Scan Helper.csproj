@@ -197,10 +197,12 @@
     </Compile>
     <Compile Include="BackEnd\Data\Chapter.cs" />
     <Compile Include="BackEnd\CrashHandler.cs" />
+    <Compile Include="BackEnd\Data\JPDictionaryEntry.cs" />
     <Compile Include="BackEnd\Data\Note.cs" />
     <Compile Include="BackEnd\Data\SaveUpdater.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPBingTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPGoogleTranslator.cs" />
+    <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPJishoTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPTJNTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPTranslator.cs" />
     <Compile Include="BackEnd\Logger.cs" />
@@ -289,6 +291,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\TextEntry\TranslationSourceJishoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\TextEntry\TranslationSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -304,6 +310,9 @@
     </Compile>
     <Compile Include="FrontEnd\TextEntry\TranslationSourceJadedNetworkView.xaml.cs">
       <DependentUpon>TranslationSourceJadedNetworkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\TextEntry\TranslationSourceJishoView.xaml.cs">
+      <DependentUpon>TranslationSourceJishoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\TextEntry\TranslationSourceView.xaml.cs">
       <DependentUpon>TranslationSourceView.xaml</DependentUpon>

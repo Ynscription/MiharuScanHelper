@@ -68,7 +68,7 @@ namespace Miharu.FrontEnd
 
 			string disabledTypes = (string)Settings.Default["DisabledTranslationSources"];
 			foreach(TranslationType t in translationManager.AvailableTranslations) {
-				if (t.HasFlag(TranslationType.Text)) {
+				if (t.HasFlag(TranslationType.Web)) {
 					ToggleSwitch ts = new ToggleSwitch ();
 					ts.Content = t;
 					ts.IsOn = !disabledTypes.Contains(t.ToString());

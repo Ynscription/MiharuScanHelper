@@ -97,7 +97,7 @@ namespace Miharu.BackEnd.Translation.Threading
 
 			string disabledTypes = ((string)Properties.Settings.Default["DisabledTranslationSources"]);			
 			foreach (TranslationType t in _translationProvider) {
-				if (t.HasFlag(TranslationType.Text)){
+				if (t.HasFlag(TranslationType.Web)){
 					if (!disabledTypes.Contains(t.ToString()))
 						_workQueue.Enqueue(new TranslationRequest(request.Destination, t, request.Text, request.Consumer));
 					else

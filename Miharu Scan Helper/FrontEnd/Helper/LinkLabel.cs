@@ -1,5 +1,6 @@
 ﻿
 using ControlzEx.Theming;
+using Miharu.BackEnd;
 using System;
 using System.IO;
 using System.Windows;
@@ -22,6 +23,8 @@ namespace Miharu.FrontEnd.Helper
 			get; set;
 		} = true;
 
+
+		public EventHandler OnLinkLabelClick;
 
 		public SolidColorBrush LightThemeColor {
 			get; set;
@@ -93,16 +96,29 @@ namespace Miharu.FrontEnd.Helper
 
 		private void OpenLink(object sender, MouseButtonEventArgs e)
 		{
-			if (Link == null)
-			{
-				System.Diagnostics.Process.Start((string)Content);
+			if (OnLinkLabelClick == null) {
+				try {
+					if (Link == null)
+					{
+						if (Content is string)
+							System.Diagnostics.Process.Start((string)Content);
+						else
+							System.Diagnostics.Process.Start(_text.Text);
+					}
+					else
+					{
+						if (WebBrowser)
+							System.Diagnostics.Process.Start(Link);
+						else
+							ShowFileInExplorer(Link);
+					}
+				}
+				catch (Exception ex) {
+					Logger.Log(ex);
+				}
 			}
-			else
-			{
-				if (WebBrowser)
-					System.Diagnostics.Process.Start(Link);
-				else
-					ShowFileInExplorer(Link);
+			else {
+				OnLinkLabelClick.Invoke(this, new EventArgs());
 			}
 		}
 

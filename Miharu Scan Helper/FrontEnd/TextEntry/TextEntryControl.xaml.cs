@@ -39,7 +39,6 @@ namespace Miharu.FrontEnd
 		private void InitializeParsedTextBox () {
 			if (_textEntryManager.IsTextSelected) {
 				ParsedTextBox.Text = _textEntryManager.CurrentText.ParsedText;
-				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(_textEntryManager.CurrentText.ParsedText);
 			}
 		}
 
@@ -123,13 +122,16 @@ namespace Miharu.FrontEnd
 
 			TranslationSourcesStackPanel.Children.Clear();
 			foreach (TranslationType t in _textEntryManager.TranslationManager.AvailableTranslations) {
-				if (t.HasFlag(TranslationType.Text))
+				if (t.HasFlag(TranslationType.Web))
 					TranslationSourcesStackPanel.Children.Add(new TranslationSourceView (
 						_textEntryManager.TranslationManager, t, _textEntryManager.CurrentText));
 			}
 
 			SFXTranslationGrid.Children.Clear();
 			SFXTranslationGrid.Children.Add(new TranslationSourceJadedNetworkView(_textEntryManager.TranslationManager, _textEntryManager.CurrentText));
+
+			DictTranslationGrid.Children.Clear();
+			DictTranslationGrid.Children.Add(new TranslationSourceJishoView(_textEntryManager.TranslationManager, _textEntryManager.CurrentText));
 
 			NotesStackPanel.Children.Clear();
 			foreach (Note n in _textEntryManager.CurrentTextNotesEnumerator) {
@@ -151,7 +153,6 @@ namespace Miharu.FrontEnd
 			if (e.ChangeType == TextChangeType.Parse) {
 				if (ParsedTextBox.Text != e.Text)
 					ParsedTextBox.Text = e.Text;
-				JishoLinkLabel.Content = "https://jisho.org/search/" + Uri.EscapeDataString(e.Text);
 				RefreshParseButton.IsEnabled = true;
 				VerticalToggleSwitch.IsEnabled = true;
 			}

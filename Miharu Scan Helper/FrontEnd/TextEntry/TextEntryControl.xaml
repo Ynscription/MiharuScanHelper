@@ -364,7 +364,6 @@
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="2*"/>
-						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 
 					<Grid Grid.Column="0" Grid.ColumnSpan="2">
@@ -426,17 +425,6 @@
 					</Border>
 
 
-					<Grid Grid.Row="2">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="1*" />
-						</Grid.ColumnDefinitions>
-						<Label Content="Jisho:" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,5,0" Padding="0"/>
-						<helper:LinkLabel x:Name="JishoLinkLabel" Content="https://whatever.com" FontSize="16" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" WebBrowser="True"/>
-					</Grid>
-
-
-
 
 				</Grid>
 			</Border>
@@ -444,7 +432,7 @@
 
 		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="2">
 			<TabControl x:Name="TextTabControl" SelectionChanged="TextTabControl_SelectionChanged">
-				<TabItem Header="Text" Controls:HeaderedControlHelper.HeaderFontSize="20">
+				<TabItem Header="WebTL" Controls:HeaderedControlHelper.HeaderFontSize="20">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
@@ -465,6 +453,12 @@
 						<ScrollViewer Margin="6,5,5,5" Grid.Row="1">
 							<StackPanel x:Name="TranslationSourcesStackPanel"/>
 						</ScrollViewer>
+					</Grid>
+				</TabItem>
+
+				<TabItem Header="Dictionary" Controls:HeaderedControlHelper.HeaderFontSize="20">
+					<Grid x:Name="DictTranslationGrid">
+						
 					</Grid>
 				</TabItem>
 				<TabItem Header="SFX" Controls:HeaderedControlHelper.HeaderFontSize="20">
