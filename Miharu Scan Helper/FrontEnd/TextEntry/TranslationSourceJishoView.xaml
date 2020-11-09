@@ -53,8 +53,8 @@
 		<ScrollViewer x:Name="MainScrollViewer" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,-3" >
 			<Grid>
 				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="2*"/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -73,7 +73,7 @@
 
 				
 
-				<ListBox x:Name="WordListBox" Grid.Row="1" Grid.ColumnSpan="4" BorderBrush="#00000000" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="WordListBox_PreviewMouseWheel">
+				<ListBox x:Name="WordListBox" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="#00000000" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="WordListBox_PreviewMouseWheel">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<Grid Margin="0,0,0,10" VerticalAlignment="Top">

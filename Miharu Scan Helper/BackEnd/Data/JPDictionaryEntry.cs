@@ -6,22 +6,40 @@ using System.Threading.Tasks;
 
 namespace Miharu.BackEnd.Data
 {
-	class JPDictionaryEntry
+	public class JPDictionaryEntry
 	{
 
-		public string Word {
+		public JPWord Word {
 			get; set;
 		}
 
-		public string Form {
+		public string Forms {
 			get; set;
 		}
 
-		public List<Tuple<string, string>> Meanings {
+		public JPDictionaryEntry FormGuess {
+			get; set;
+		}
+
+		public List<Tuple<JPWord, string>> Meanings {
 			get; set;
 		}
 
 
+		public JPDictionaryEntry () {
+			Word = new JPWord();
+			Meanings = new List<Tuple<JPWord, string>>();
+		}
 
+		public JPDictionaryEntry (JPWord word) {
+			Word = word;
+			Meanings = new List<Tuple<JPWord, string>>();
+		}
+
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+			return Word + " " + Meanings.Count + " meanings." ;
+		}
 	}
 }

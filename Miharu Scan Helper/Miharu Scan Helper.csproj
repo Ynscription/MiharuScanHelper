@@ -198,8 +198,10 @@
     <Compile Include="BackEnd\Data\Chapter.cs" />
     <Compile Include="BackEnd\CrashHandler.cs" />
     <Compile Include="BackEnd\Data\JPDictionaryEntry.cs" />
+    <Compile Include="BackEnd\Data\JPWord.cs" />
     <Compile Include="BackEnd\Data\Note.cs" />
     <Compile Include="BackEnd\Data\SaveUpdater.cs" />
+    <Compile Include="BackEnd\Helper\JPUTF8CharCounter.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPBingTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPGoogleTranslator.cs" />
     <Compile Include="BackEnd\Translation\HTTPTranslators\HTTPJishoTranslator.cs" />
