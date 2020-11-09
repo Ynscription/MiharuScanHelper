@@ -187,6 +187,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrontEnd\TextEntry\JishoDictEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrontEnd\TextEntry\JPWriting\JPHyperText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrontEnd\TextEntry\JPWriting\JPCharView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrontEnd\TextEntry\TextEntryListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -275,6 +287,15 @@
     </Compile>
     <Compile Include="FrontEnd\RipDialog.xaml.cs">
       <DependentUpon>RipDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\TextEntry\JishoDictEntryView.xaml.cs">
+      <DependentUpon>JishoDictEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\TextEntry\JPWriting\JPHyperText.xaml.cs">
+      <DependentUpon>JPHyperText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEnd\TextEntry\JPWriting\JPCharView.xaml.cs">
+      <DependentUpon>JPCharView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrontEnd\TextEntry\ParsedTextBoxHeightConverter.cs" />
     <Compile Include="FrontEnd\TextEntry\TextEntryKanjiInputMarginConvertercs.cs" />

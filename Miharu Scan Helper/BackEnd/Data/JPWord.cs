@@ -8,7 +8,9 @@ namespace Miharu.BackEnd.Data
 {
 	public class JPWord
 	{
-
+		public double FontSize {
+			get; set;
+		} = 24;
 		public List<Tuple<int, string>> Furigana {
 			get; set;
 		}
@@ -26,5 +28,7 @@ namespace Miharu.BackEnd.Data
 		{
 			return Word;
 		}
+
+		
 	}
 }

@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Miharu.FrontEnd.TextEntry.JPWriting.JPHyperText"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Miharu.FrontEnd.TextEntry.JPWriting" 
+			 mc:Ignorable="d" >
+
+	<Grid Margin="6,0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<StackPanel x:Name="WordStackPanel" Orientation="Horizontal"  Grid.Row="0">
+		</StackPanel>
+		<Line x:Name="Underline" Grid.Row="1" X2="{Binding ActualWidth, ElementName=WordStackPanel, Mode=OneWay}" Margin="0,-2,0,5" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" 
+			   Visibility="Hidden"/>
+	</Grid>
+    
+</UserControl>

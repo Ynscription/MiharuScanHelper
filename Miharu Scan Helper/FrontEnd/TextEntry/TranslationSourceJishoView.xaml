@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Miharu.FrontEnd.TextEntry" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:helper="clr-namespace:Miharu.FrontEnd.Helper"
+			 xmlns:jpWriting="clr-namespace:Miharu.FrontEnd.TextEntry.JPWriting"
 			 mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
@@ -16,6 +18,8 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
@@ -43,58 +47,44 @@
 			</Grid>
 		</Button>
 
-		<Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
+		<Separator x:Name="SentenceSeparator" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
 
-		<WrapPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="16, 4, 16, 4">
-			<!-- <helper:LinkLabel Content="asd" Link="asd" WebBrowser="True" FontSize="18"/> -->
-		</WrapPanel>
+		<Grid x:Name="SentenceGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="16, 4, 16, 4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
+			<WrapPanel x:Name="SentenceWrapPanel" >
+				
+				
+
+			</WrapPanel>
+		</Grid>
 		
-		<Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"/>
-		<ScrollViewer x:Name="MainScrollViewer" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,-3" >
+		
+		<Separator x:Name="FormSeparator" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed"/>
+
+		<Border x:Name="FormBorder" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Visibility="Collapsed">
+			<TextBlock x:Name="FormTextBlock" FontSize="16" Margin="8">
+				出た could be an inflection of 出る, with these forms:
+				<LineBreak />
+				<Run xml:space="preserve">  · Ta-form. It indicates the past tense of the verb.</Run>
+
+			</TextBlock>
+		</Border>
+
+		<Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
+
+		<ScrollViewer x:Name="MainScrollViewer" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,-3" >
 			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="1*"/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
 					<RowDefinition Height="1*" />
 				</Grid.RowDefinitions>
 
-				<Grid Grid.Column="0" VerticalAlignment="Top" Margin="10">
-					<Rectangle Fill="#FF2E2E36" />
-					<Label Content="Word" Foreground="White" HorizontalAlignment="Center" FontSize="16"/>
-				</Grid>
-
-				<Grid Grid.Column="1" VerticalAlignment="Top" Margin="10">
-					<Rectangle Fill="#FF2E2E36" />
-					<Label Content="Meanings" Foreground="White" HorizontalAlignment="Center" FontSize="16"/>
-				</Grid>
-
 				
-
-				<ListBox x:Name="WordListBox" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="#00000000" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="WordListBox_PreviewMouseWheel">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<Grid Margin="0,0,0,10" VerticalAlignment="Top">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="1*"/>
-									<ColumnDefinition Width="2*"/>
-								</Grid.ColumnDefinitions>
-								<Grid Margin="10,0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-									<Border BorderThickness="1" BorderBrush="Gray">
-										<TextBox Text="{Binding Path=Word}" Margin="2,2,5,10" IsReadOnly="True" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
-									</Border>
-								</Grid>
-								<Grid Margin="10,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-									<Border BorderThickness="1" BorderBrush="Gray">
-										<TextBox Text="{Binding Path=Meanings}" Margin="2,2,5,10" IsReadOnly="True" TextWrapping="Wrap" FontSize="16" AcceptsReturn="True" AcceptsTab="True" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
-									</Border>
-								</Grid>
-							</Grid>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
+				<StackPanel x:Name="MeaningsStackPanel" Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Visible">
+						
+				</StackPanel>
+				
 
 			</Grid>
 		</ScrollViewer>

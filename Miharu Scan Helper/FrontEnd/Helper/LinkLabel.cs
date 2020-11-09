@@ -24,7 +24,7 @@ namespace Miharu.FrontEnd.Helper
 		} = true;
 
 
-		public EventHandler OnLinkLabelClick;
+		public event EventHandler OnLinkLabelClick;
 
 		public SolidColorBrush LightThemeColor {
 			get; set;

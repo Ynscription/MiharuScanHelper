@@ -45,7 +45,8 @@ namespace Miharu.Control
 
 		public void TranslationCallback(Text dest, string translation, TranslationType type)
 		{
-			translation = translation.Replace("\\\"", "\"");
+			if (type != TranslationType.Jisho)
+				translation = translation.Replace("\\\"", "\"");
 			Monitor.Enter(TextEntryManager.PageManager.ChapterManager.LoadedChapter);
 			try {
 				dest.SetTranslation(type, translation);

@@ -1,5 +1,6 @@
 ﻿using Miharu.BackEnd.Data;
 using Miharu.BackEnd.Helper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -55,8 +56,8 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 		}
 
 
-		private List<Tuple<JPWord, string>> ProcessMeanings (string res) {
-			List<Tuple<JPWord, string>> result = new List<Tuple<JPWord, string>>();
+		private JPDictionaryEntry ProcessMeanings (string res, JPDictionaryEntry jpde) {
+			
 
 			XmlReaderSettings settings = new XmlReaderSettings();
 			settings.DtdProcessing = DtdProcessing.Parse;
@@ -65,23 +66,36 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 			using (Stream s = new MemoryStream(Encoding.UTF8.GetBytes(res))) {
 				using(XmlReader reader = XmlReader.Create(s, settings)) {
 					bool exit = false;
+					int count = 0;
+					bool exact = true;
 					while (reader.ReadToFollowing("div") && !exit) {
 						string nodeClass = reader.GetAttribute("class");
 						if (nodeClass == "exact_block" || nodeClass == "concepts") {
+							if (nodeClass == "concepts")
+								exact = false;
 							do {
 								if (!reader.ReadToFollowing("div"))
-									return result;
+									return jpde;
 								nodeClass = reader.GetAttribute("class");
 							} while (nodeClass != "concept_light clearfix");
 
+
 							do {
+								
+								bool wordDone = false;
+
 								using (XmlReader meaningReader = reader.ReadSubtree()) {
 									JPWord word = new JPWord();
+									word.FontSize = 32;
 									do {
-										if (!meaningReader.ReadToFollowing("div"))
-											return result;
+										if (wordDone = !meaningReader.ReadToFollowing("div"))
+											break;
 										nodeClass = meaningReader.GetAttribute("class");
 									} while (nodeClass != "concept_light clearfix");
+
+									if (wordDone)
+										continue;
+
 									meaningReader.ReadToFollowing("span"); //furigana
 									do {
 										int index = 0;
@@ -95,8 +109,10 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 										}
 									}while(nodeClass != "text"); //reach Japanese word entry
 
+									
 									do {
-										meaningReader.Read();
+										if (wordDone = !meaningReader.Read())
+											break;
 										nodeClass = meaningReader.GetAttribute("class");
 										if (nodeClass != "concept_light-status" && (meaningReader.NodeType == XmlNodeType.Text || (meaningReader.NodeType == XmlNodeType.Element && meaningReader.Name == "span"))) { //check if we are done with text
 											if (meaningReader.NodeType == XmlNodeType.Text && meaningReader.HasValue)
@@ -111,11 +127,32 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 										}
 									}while(nodeClass != "concept_light-status" && meaningReader.Name != "div");
 
-									result.Add(new Tuple<JPWord, string>(word, ""));
-									exit = result.Count > 9;
+									if (wordDone)
+										continue;
+									
+									do {
+										if (wordDone = !meaningReader.ReadToFollowing("div"))
+											break;
+										nodeClass = meaningReader.GetAttribute("class");
+									} while (nodeClass != "meanings-wrapper");
 
+									
+									if (wordDone)
+										continue;
+
+									string meanings = meaningReader.ReadInnerXml();
+									
+									
+									if (exact)
+										jpde.ExactMeanings.Add(new Tuple<JPWord, string>(word, meanings));
+									else
+										jpde.Concepts.Add(new Tuple<JPWord, string>(word, meanings));
+									exit = ++count > 9;
 
 								}
+							
+									
+								
 							}while (reader.ReadToNextSibling("div") && !exit);
 
 						}
@@ -125,7 +162,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 
 			}
 
-			return result;
+			return jpde;
 		}
 
 
@@ -142,14 +179,15 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 			
 
 
-			StringBuilder sb = new StringBuilder();
-			while (res.Contains("<li>")) {
-				res = res.Substring(res.IndexOf("<li>") + "<li>".Length);
-				sb.AppendLine(res.Substring(0,res.IndexOf("</li>")));
+			if (res.Contains("<li>")) {
+				form.Forms = new List<string>();
+				while (res.Contains("<li>")) {
+					res = res.Substring(res.IndexOf("<li>") + "<li>".Length);
+					form.Forms.Add(res.Substring(0,res.IndexOf("</li>")).Trim());
+				}
 			}
 
 
-			form.Forms = sb.ToString();
 
 			form.FormGuess = ProcessFormOrWord(WebGet(_SEARCH_URL + rootRef));
 			form.FormGuess.Word.Word = root;
@@ -173,7 +211,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 				res = res.Substring(res.IndexOf("<div id=\"primary\" class=\"large-8 columns\">"));
 				res = res.Substring(0, res.IndexOf("<div id=\"secondary\" class=\"large-4 columns search-secondary_column\">"));
 
-				result.Meanings = ProcessMeanings(res);
+				result = ProcessMeanings(res, result);
 			}
 			
 
@@ -200,7 +238,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 							
 
 							JPWord currentWord = new JPWord();
-
+							currentWord.FontSize = 24;
 
 							string nodeClass = subReader.GetAttribute("class") ?? "";
 								
@@ -209,20 +247,32 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 								nodeClass = subReader.GetAttribute("class") ?? "";
 							};
 
-							using (XmlReader furiReader = subReader.ReadSubtree()) {
-								while (furiReader.ReadToFollowing("span")) {
-									if ((furiReader.GetAttribute("class") ?? "") == "japanese_word__furigana") {
-										furiReader.ReadStartElement();
-										if(furiReader.NodeType == XmlNodeType.Text && furiReader.HasValue) {
-											currentWord.Furigana.Add(new Tuple<int, string>(-1, furiReader.Value));
-										}
-										break;
-									}
-								}
-							}
 
+							
+							
+							
+							subReader.ReadToFollowing("span");
+							nodeClass = subReader.GetAttribute("class") ?? "";
+							if (nodeClass != "japanese_word__text_wrapper") {
+								int index = 0;
+								do {
+									using (XmlReader furiReader = subReader.ReadSubtree()) {
+										furiReader.Read();
+										if ((furiReader.GetAttribute("class") ?? "") == "japanese_word__furigana") {
+											
+											furiReader.ReadStartElement();
+											if(furiReader.NodeType == XmlNodeType.Text && furiReader.HasValue) {
+												currentWord.Furigana.Add(new Tuple<int, string>(index, furiReader.Value.Trim()));
+											}
+										}
+										index++;
+									}
+								}while(subReader.ReadToNextSibling("span"));
+							}
+							
+							nodeClass = subReader.GetAttribute("class") ?? "";
 							while(nodeClass != "japanese_word__text_wrapper") {
-								subReader.ReadToNextSibling("span");
+								subReader.ReadToFollowing("span");
 								nodeClass = subReader.GetAttribute("class") ?? "";
 							};
 								
@@ -278,10 +328,12 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 				res = res.Substring(res.IndexOf("<section id=\"zen_bar\" class=\"japanese_gothic\" lang=\"ja\">"));
 				res = res.Substring(0, res.IndexOf("</section>") + "</section>".Length);
 
-				result = ProcessSentence(res).ToString();
+				result = JsonConvert.SerializeObject(ProcessSentence(res), Newtonsoft.Json.Formatting.Indented);
 			}
 			else {
-				result = ProcessFormOrWord(res).ToString();
+				List<JPDictionaryEntry> r = new List<JPDictionaryEntry>();
+				r.Add(ProcessFormOrWord(res));
+				result = JsonConvert.SerializeObject(r, Newtonsoft.Json.Formatting.Indented);
 			}
 			
 
