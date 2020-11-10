@@ -5,12 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Miharu.FrontEnd.TextEntry.JPWriting"
              mc:Ignorable="d" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26">
-	<Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+	<Grid HorizontalAlignment="Left" VerticalAlignment="Center" >
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<Label x:Name="FuriganaLabel" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" Margin="0,0,0,-4"/>
-		<Label x:Name="CharacterLabel" Grid.Row="1" Padding="0" HorizontalContentAlignment="Center"/>
+		<Label x:Name="FuriganaLabel" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+			   Padding="0" Margin="0,0,0,-4" 
+			   FontFamily="Meiryo" />
+		<Label x:Name="CharacterLabel" Grid.Row="1" 
+			   Padding="0" HorizontalContentAlignment="Center"
+			   FontFamily="Meiryo"/>
 	</Grid>
 </UserControl>

@@ -6,15 +6,30 @@
              xmlns:local="clr-namespace:Miharu.FrontEnd.TextEntry.JPWriting" 
 			 mc:Ignorable="d" >
 
-	<Grid Margin="6,0">
+	<UserControl.Resources>
+		<Style TargetType="Separator">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Separator}">
+						<Rectangle Height="{TemplateBinding Height}"  
+                           Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
+
+	<Grid Margin="6,0" >
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<StackPanel x:Name="WordStackPanel" Orientation="Horizontal"  Grid.Row="0">
+		<StackPanel x:Name="WordStackPanel" Orientation="Horizontal"  Grid.Row="0" >
 		</StackPanel>
-		<Line x:Name="Underline" Grid.Row="1" X2="{Binding ActualWidth, ElementName=WordStackPanel, Mode=OneWay}" Margin="0,-2,0,5" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" 
-			   Visibility="Hidden"/>
+		<!-- <Line x:Name="Underline" Grid.Row="1" X2="{Binding ActualWidth, ElementName=WordStackPanel, Mode=OneWay}" 
+			  Margin="0,-2,0,5" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+			  Visibility="Hidden"/>-->
+		<Separator x:Name="UnderLineSeparator" Grid.Row="1" Margin="0,-2,0,5" Height="1" Visibility="Hidden"/>
 	</Grid>
     
 </UserControl>

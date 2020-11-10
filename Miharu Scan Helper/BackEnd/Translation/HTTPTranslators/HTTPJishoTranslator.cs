@@ -86,7 +86,6 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 
 								using (XmlReader meaningReader = reader.ReadSubtree()) {
 									JPWord word = new JPWord();
-									word.FontSize = 32;
 									do {
 										if (wordDone = !meaningReader.ReadToFollowing("div"))
 											break;
@@ -97,18 +96,33 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 										continue;
 
 									meaningReader.ReadToFollowing("span"); //furigana
-									do {
-										int index = 0;
-										meaningReader.ReadToFollowing("span"); //furigana entry
+									nodeClass = meaningReader.GetAttribute("class");
+									if (nodeClass == "furigana") {
+										meaningReader.ReadToFollowing("span");
 										nodeClass = meaningReader.GetAttribute("class");
-										if (nodeClass != "text") { //check if we are done with furigana
-											meaningReader.ReadStartElement(); //get inside furigana entry node
-											if(meaningReader.HasValue)
-												word.Furigana.Add(new Tuple<int, string>(index, meaningReader.Value));
-											index++;
+										if (nodeClass != "text") {
+											int index = 0;
+											
+											do {
+												using (XmlReader furiReader = meaningReader.ReadSubtree()) {
+													furiReader.Read();
+													furiReader.ReadStartElement(); //get inside furigana entry node
+													if(furiReader.NodeType == XmlNodeType.Text && furiReader.HasValue)
+														word.Furigana.Add(new Tuple<int, string>(index, furiReader.Value));
+													index++;
+												}
+											}while(meaningReader.ReadToNextSibling ("span")); //reach Japanese word entry
 										}
-									}while(nodeClass != "text"); //reach Japanese word entry
+									}
 
+									
+									while (nodeClass != "text") {
+										if (wordDone = !meaningReader.ReadToFollowing("span"))
+											break;
+										nodeClass = meaningReader.GetAttribute("class");
+									}
+									if (wordDone)
+										continue;
 									
 									do {
 										if (wordDone = !meaningReader.Read())
@@ -238,7 +252,6 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 							
 
 							JPWord currentWord = new JPWord();
-							currentWord.FontSize = 24;
 
 							string nodeClass = subReader.GetAttribute("class") ?? "";
 								
@@ -251,7 +264,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 							
 							
 							
-							subReader.ReadToFollowing("span");
+							/*subReader.ReadToFollowing("span");
 							nodeClass = subReader.GetAttribute("class") ?? "";
 							if (nodeClass != "japanese_word__text_wrapper") {
 								int index = 0;
@@ -268,9 +281,8 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 										index++;
 									}
 								}while(subReader.ReadToNextSibling("span"));
-							}
+							}*/
 							
-							nodeClass = subReader.GetAttribute("class") ?? "";
 							while(nodeClass != "japanese_word__text_wrapper") {
 								subReader.ReadToFollowing("span");
 								nodeClass = subReader.GetAttribute("class") ?? "";

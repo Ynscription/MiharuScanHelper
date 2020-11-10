@@ -37,7 +37,7 @@ namespace Miharu.FrontEnd.TextEntry.JPWriting
 
 				if (_word.Furigana.Count == 1 && _word.Furigana[0].Item1 == -1) {
 					JPCharView c = new JPCharView(_word.Word, _word.Furigana[0].Item2);
-					c.FontSize = _word.FontSize;
+					c.FontSize = HPFontSize;
 					WordStackPanel.Children.Add(c);
 				}
 				else if (_word.Furigana.Count > 0){
@@ -49,7 +49,7 @@ namespace Miharu.FrontEnd.TextEntry.JPWriting
 							if (Char.IsSurrogate(_word.Word[index]))
 								character += _word.Word[++index];
 							JPCharView characterView = new JPCharView(character);
-							characterView.FontSize = _word.FontSize;
+							characterView.FontSize = HPFontSize;
 							WordStackPanel.Children.Add(characterView);
 						}
 						
@@ -57,17 +57,17 @@ namespace Miharu.FrontEnd.TextEntry.JPWriting
 						if (Char.IsSurrogate(_word.Word[index]))
 							character += _word.Word[++index];
 						JPCharView c = new JPCharView(character, furigana.Item2);
-						c.FontSize = _word.FontSize;
+						c.FontSize = HPFontSize;
 						WordStackPanel.Children.Add(c);
 						index++;
 					}
 					JPCharView endingChar = new JPCharView(_word.Word.Substring(index));
-					endingChar.FontSize = _word.FontSize;
+					endingChar.FontSize = HPFontSize;
 					WordStackPanel.Children.Add(endingChar);
 				}
 				else {
 					JPCharView c = new JPCharView(_word.Word);
-					c.FontSize = _word.FontSize;
+					c.FontSize = HPFontSize;
 					WordStackPanel.Children.Add(c);
 				}
 
@@ -80,10 +80,22 @@ namespace Miharu.FrontEnd.TextEntry.JPWriting
 			get => _isClickable;
 			set {
 				_isClickable = value;
-				Underline.Visibility = _isClickable ? Visibility.Visible : Visibility.Hidden;
+				UnderLineSeparator.Visibility = _isClickable ? Visibility.Visible : Visibility.Hidden;
 			}
 		}
 		
+
+		private double _fontSize;
+		public double HPFontSize {
+			get => _fontSize;
+			set {
+				_fontSize = value;
+				if (_fontSize > 0) {
+					foreach(JPCharView c in WordStackPanel.Children)
+						c.FontSize = _fontSize;
+				}
+			}
+		}
 
 
 
@@ -115,7 +127,7 @@ namespace Miharu.FrontEnd.TextEntry.JPWriting
 		{
 			if (IsClickable) {
 				Mouse.OverrideCursor = Cursors.Hand;
-				Underline.StrokeThickness = 2;
+				UnderLineSeparator.Height = 2;
 			}
 		}
 
@@ -123,7 +135,7 @@ namespace Miharu.FrontEnd.TextEntry.JPWriting
 		{
 			if (IsClickable) {
 				Mouse.OverrideCursor = null;
-				Underline.StrokeThickness = 1;
+				UnderLineSeparator.Height = 1;
 			}
 		}	
 	}

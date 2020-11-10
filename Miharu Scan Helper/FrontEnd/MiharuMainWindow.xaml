@@ -9,7 +9,7 @@
         Title="Miharu Scan Helper"
 		Height="720" Width="1280"
 		IsTabStop="False"
-		MinWidth="1080" MinHeight="640" 
+		MinWidth="1080" MinHeight="700" 
 		Closing="Window_Closing" 
 		KeyDown="Window_KeyDown" Icon="/Miharu Scan Helper;component/Resources/Icons/ScanHelperIcon.ico" Loaded="MetroWindow_Loaded">
 	<DockPanel>

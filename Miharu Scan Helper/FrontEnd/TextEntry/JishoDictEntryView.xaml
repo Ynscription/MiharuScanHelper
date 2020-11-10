@@ -17,7 +17,7 @@
 		</Grid.RowDefinitions>
 
 		<jpwriting:JPHyperText x:Name="WordHyperText" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" 
-							   Margin="0"/>
+							   HPFontSize="32" Margin="0"/>
 		<TextBlock x:Name="DefinitionsTextBlock" FontSize="16" Grid.Row="1" Grid.Column="1" xml:space="preserve" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap"
 				   Margin="8,-4,8,0"></TextBlock>
 

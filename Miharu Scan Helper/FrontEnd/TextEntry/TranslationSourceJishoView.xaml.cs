@@ -127,6 +127,7 @@ namespace Miharu.FrontEnd.TextEntry
 
 					foreach (JPDictionaryEntry entry in _dictEntries) {
 						JPHyperText jpht = new JPHyperText(entry.Word);
+						jpht.HPFontSize = 24;
 						jpht.Tag = entry;
 						jpht.IsClickable = entry.ExactMeanings.Count + entry.Concepts.Count > 0 ||
 							(entry.FormGuess != null && (entry.FormGuess.ExactMeanings.Count + entry.FormGuess.Concepts.Count > 0));
@@ -156,6 +157,7 @@ namespace Miharu.FrontEnd.TextEntry
 		{
 			try {
 				CurrentEntry = (JPDictionaryEntry)sender;
+				MainScrollViewer.ScrollToVerticalOffset(0);
 			}
 			catch (Exception) { }
 		}

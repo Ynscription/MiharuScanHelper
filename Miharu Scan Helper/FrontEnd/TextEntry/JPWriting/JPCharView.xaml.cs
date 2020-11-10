@@ -49,7 +49,7 @@ namespace Miharu.FrontEnd.TextEntry.JPWriting
 				if (v == 0)
 					v = 12;
 				CharacterLabel.FontSize = v;
-				FuriganaLabel.FontSize = v/2.5;
+				FuriganaLabel.FontSize = v/3.0;
 			}
 		}
 
