@@ -7,12 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
 namespace Miharu.BackEnd.Translation.HTTPTranslators
 {
-	class HTTPJishoTranslator: HTTPTranslator
+	class HTTPJishoTranslator : HTTPTranslator
 	{
 		private const string _URL = "https://jisho.org/search/";
 		private const string _SEARCH_URL = "https://jisho.org";
@@ -53,6 +54,76 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 			}
 
 			return res;
+		}
+
+		private const string DEF_TAG_STR = "<div class=\"meaning-tags\">";
+		private const string DEF_START_STR = "<div class=\"meaning-definition zero-padding\">";
+		private const string DEF_SECTION_STR = "<span class=\"meaning-definition-section_divider\">";
+
+		private string ProcessDefinitions (XmlReader reader) {
+			StringBuilder sb = new StringBuilder();
+
+			reader.Read();
+			string nodeClass = reader.GetAttribute("class");
+			if (nodeClass == "meanings-wrapper") {
+				reader.ReadToFollowing("div");
+				bool skipMeanings = false;
+				do {
+					using (XmlReader meaningReader = reader.ReadSubtree()) {
+						meaningReader.Read();
+						nodeClass = meaningReader.GetAttribute("class");
+						if (nodeClass == "meaning-tags") {
+							meaningReader.ReadStartElement();
+							string tag = meaningReader.Value.Trim();
+							if (tag != "Wikipedia definition" &&
+								tag != "Other forms" &&
+								tag != "Notes") {
+								skipMeanings = false;
+								sb.Append("$");
+								sb.AppendLine(tag);
+							}
+							else {
+								skipMeanings = true;
+							}
+						}
+						else if (nodeClass == "meaning-wrapper" && !skipMeanings) {
+							meaningReader.ReadToFollowing("span");
+							do {
+								using (XmlReader defReader = reader.ReadSubtree()) {
+									defReader.Read();
+									nodeClass = defReader.GetAttribute("class");
+									switch (nodeClass) {
+										case "meaning-definition-section_divider":
+											defReader.ReadStartElement();
+											sb.Append("#");
+											sb.AppendLine(reader.Value.Trim());
+											break;
+										case "meaning-meaning":
+											defReader.ReadStartElement();
+											sb.Append("@");
+											sb.AppendLine(reader.Value.Trim());
+											break;
+										case "supplemental_info":
+											defReader.ReadStartElement();
+											nodeClass = reader.GetAttribute("class");
+											if (nodeClass == "sense-tag tag-tag") {
+												reader.ReadStartElement();
+												sb.Append("&");
+												sb.AppendLine(reader.Value.Trim());
+											}
+											break;
+									}
+
+								}
+							}while(meaningReader.ReadToNextSibling("span"));
+						}
+					}
+				}while (reader.ReadToNextSibling("div"));
+			}
+
+
+
+			return sb.ToString();
 		}
 
 
@@ -154,7 +225,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 									if (wordDone)
 										continue;
 
-									string meanings = meaningReader.ReadInnerXml();
+									string meanings = ProcessDefinitions(meaningReader.ReadSubtree());
 									
 									
 									if (exact)
@@ -234,12 +305,14 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 		}
 
 
+		
+
+
 		private List<JPDictionaryEntry> ProcessSentence (string res) {
 			List<JPDictionaryEntry> sentence = new List<JPDictionaryEntry>();
 
 			XmlReaderSettings settings = new XmlReaderSettings();
 			settings.DtdProcessing = DtdProcessing.Parse;
-
 
 			using (Stream s = new MemoryStream(Encoding.UTF8.GetBytes(res))) {
 				using(XmlReader reader = XmlReader.Create(s, settings)) {
@@ -261,8 +334,6 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 							};
 
 
-							
-							
 							
 							/*subReader.ReadToFollowing("span");
 							nodeClass = subReader.GetAttribute("class") ?? "";
@@ -301,11 +372,14 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 								do {
 									if (subReader.Name == "a") {
 										currentWord.Word = subReader.GetAttribute("data-word");
+
+										
 										string word = WebGet(_SEARCH_URL + subReader.GetAttribute("href"));
 										JPDictionaryEntry tmp = ProcessFormOrWord(word);
 										tmp.Word = currentWord;
 									
 										sentence.Add(tmp);
+										
 										break;
 									}
 									else if (subReader.Name == "span" && subReader.GetAttribute("class") == "japanese_word__text_with_furigana") {
@@ -343,8 +417,12 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 				result = JsonConvert.SerializeObject(ProcessSentence(res), Newtonsoft.Json.Formatting.Indented);
 			}
 			else {
+				res = res.Substring(res.IndexOf("<input type=\"text\" class=\"keyword japanese_gothic\" name=\"keyword\" id=\"keyword\" value=\""));
+				string word = res.Substring(res.IndexOf("\" tabindex=\""));
 				List<JPDictionaryEntry> r = new List<JPDictionaryEntry>();
-				r.Add(ProcessFormOrWord(res));
+				JPDictionaryEntry entry = ProcessFormOrWord(res);
+				entry.Word.Word = word;
+				r.Add(entry);
 				result = JsonConvert.SerializeObject(r, Newtonsoft.Json.Formatting.Indented);
 			}
 			

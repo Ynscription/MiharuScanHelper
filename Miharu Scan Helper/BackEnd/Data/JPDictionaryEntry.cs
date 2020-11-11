@@ -9,6 +9,7 @@ namespace Miharu.BackEnd.Data
 	public class JPDictionaryEntry
 	{
 
+
 		public JPWord Word {
 			get; set;
 		}
