@@ -73,8 +73,8 @@ namespace Miharu.Control
 		#endregion
 
 
-		public ChapterManager (TranslatorThread translatorThread) {
-			PageManager = new PageManager(this, translatorThread);
+		public ChapterManager (KanjiInputManager kanjiInputManager, TranslatorThread translatorThread) {
+			PageManager = new PageManager(this, kanjiInputManager, translatorThread);
 		}
 
 		

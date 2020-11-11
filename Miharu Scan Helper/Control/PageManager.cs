@@ -28,13 +28,18 @@ namespace Miharu.Control
 			get; private set;
 		} = null;
 
+		public KanjiInputManager KanjiInputManager {
+			get; private set;
+		} = null;
+
 		
 		private Page _currentPage = null;
 		private Page CurrentPage {
 			get => _currentPage;
 			set {
 				_currentPage = value;
-				PageChanged?.Invoke(this, new EventArgs());
+				KanjiInputManager.ClearRads();
+				PageChanged?.Invoke(this, new EventArgs());				
 			}
 		}
 		public bool IsPageLoaded {
@@ -69,8 +74,9 @@ namespace Miharu.Control
 
 
 
-		public PageManager (ChapterManager chapterManager, TranslatorThread translatorThread) {
+		public PageManager (ChapterManager chapterManager, KanjiInputManager kanjiInputManager, TranslatorThread translatorThread) {
 			ChapterManager = chapterManager;
+			KanjiInputManager = kanjiInputManager;
 			Page.UseScreenDPI = (bool)Settings.Default["UseScreenDPI"];
 			TextEntryManager = new TextEntryManager(this, translatorThread);
 		}

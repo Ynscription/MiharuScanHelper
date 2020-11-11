@@ -140,7 +140,7 @@ Would you like to locate the Tesseract exectutable manually?";
 
 					kanjiInputManager = new KanjiInputManager();
 					
-					chapterManager = new ChapterManager(translatorThread);
+					chapterManager = new ChapterManager(kanjiInputManager, translatorThread);
 
 					mainWindow = new MiharuMainWindow(chapterManager, startChapter);
 
