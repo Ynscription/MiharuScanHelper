@@ -69,5 +69,10 @@ namespace Miharu.Control
 		{
 			KanjiInputEvent?.Invoke(this, new KanjiInputEventArgs(txtContent));
 		}
+
+		internal void ClearRads()
+		{
+			_kanjiByRad.ClearRads();
+		}
 	}
 }

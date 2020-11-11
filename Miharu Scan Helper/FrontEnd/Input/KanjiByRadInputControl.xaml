@@ -3,8 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Miharu.FrontEnd.Input"
-             mc:Ignorable="d" >
+             xmlns:local="clr-namespace:Miharu.FrontEnd.Input" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+			 mc:Ignorable="d" >
+	<UserControl.Resources>
+		<Button x:Key="ClearRadsButton" Padding="2" Width="30" Height="30"
+				ToolTip="Clear selection" Background="Transparent" BorderBrush="{x:Null}">
+			
+			<iconPacks:PackIconModern Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center"
+					Width="Auto" Height="Auto"/>
+			
+		</Button>
+	</UserControl.Resources>
 	<Border x:Name="KanjiBorder" BorderThickness="2" BorderBrush="Black" VerticalAlignment="Top">
 		<Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Margin="0">
 			<Grid.RowDefinitions>

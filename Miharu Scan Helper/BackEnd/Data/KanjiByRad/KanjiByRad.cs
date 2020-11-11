@@ -66,12 +66,27 @@ namespace Miharu.BackEnd.Data.KanjiByRad
 
 		}
 
+		internal void ClearRads()
+		{
+			foreach (JPChar rad in _selectedRads)
+				rad.IsSelected = false;
+			_selectedRads.Clear();
+			_currentKanjiSelection.Clear();
+			KanjiListChanged?.Invoke(this, new EventArgs());
+
+			foreach (JPChar r in _radList)
+				r.IsEnabled = true;
+
+		}
+
 		public void DeselectRad(JPChar rad)
 		{
 			_selectedRads.Remove(rad);
 			rad.IsSelected = false;
 
 			_currentKanjiSelection.Clear();
+
+
 
 			bool first = true;
 			foreach (JPChar r in _selectedRads)

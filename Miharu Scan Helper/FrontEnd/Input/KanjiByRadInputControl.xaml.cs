@@ -2,6 +2,7 @@
 using Miharu.BackEnd.Data.KanjiByRad;
 using Miharu.Control;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -16,9 +17,14 @@ namespace Miharu.FrontEnd.Input
 
 		private KanjiInputManager _kanjiInputManager = null;
 
+		private Button _clearRadsButton = null;
+
 		public KanjiByRadInputControl(KanjiInputManager kanjiInputManager)
 		{
 			InitializeComponent();
+
+			_clearRadsButton = (Button)Resources["ClearRadsButton"];
+			_clearRadsButton.Click += _clearRadsButton_Click;
 
 			_kanjiInputManager = kanjiInputManager;
 
@@ -34,7 +40,7 @@ namespace Miharu.FrontEnd.Input
 					KanjiWrapPanel.Children.Add(new InputBox(r, _kanjiInputManager));
 				}
 
-
+				RadWrapPanel.Children.Add(_clearRadsButton);
 			
 				currStrokes = 0;
 				foreach (JPChar r in _kanjiInputManager.RadList) {
@@ -50,6 +56,11 @@ namespace Miharu.FrontEnd.Input
 			}
 
 			_kanjiInputManager.KanjiListChanged += _kanjiInputManager_KanjiListChanged;
+		}
+
+		private void _clearRadsButton_Click(object sender, RoutedEventArgs e)
+		{
+			_kanjiInputManager.ClearRads();
 		}
 
 		private void _kanjiInputManager_KanjiListChanged(object sender, EventArgs e)
