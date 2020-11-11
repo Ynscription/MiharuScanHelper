@@ -5,6 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Miharu.FrontEnd.TextEntry" xmlns:jpwriting="clr-namespace:Miharu.FrontEnd.TextEntry.JPWriting"
 			 mc:Ignorable="d" Margin="0,0,0,16" >
+
+	<UserControl.Resources>
+		<Style x:Key="SmallAndGray" TargetType="Run">
+			<Setter Property="FontSize">
+				<Setter.Value>12</Setter.Value>				
+			</Setter>
+			<Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}"/>
+		</Style>
+		<Style x:Key="Gray" TargetType="Run">
+			<Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}"/>
+		</Style>
+	</UserControl.Resources>
     <Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="50"/>
@@ -18,8 +30,15 @@
 
 		<jpwriting:JPHyperText x:Name="WordHyperText" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" 
 							   HPFontSize="32" Margin="0"/>
-		<TextBlock x:Name="DefinitionsTextBlock" FontSize="16" Grid.Row="1" Grid.Column="1" xml:space="preserve" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap"
-				   Margin="8,-4,8,0"></TextBlock>
+		<TextBlock x:Name="DefinitionsTextBlock" FontSize="16" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap"
+				   Margin="8,-4,8,0">
+			<Run Style="{StaticResource SmallAndGray}">Particle</Run>
+			<LineBreak />
+			<Run Style="{StaticResource Gray}">1.</Run>
+			<Run >at (place, time); in; on; during​</Run>
+			<Run Style="{StaticResource SmallAndGray}">Archaism</Run>
+
+		</TextBlock>
 
 		
 
