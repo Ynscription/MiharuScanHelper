@@ -127,7 +127,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 		}
 
 
-		private JPDictionaryEntry ProcessMeanings (string res, JPDictionaryEntry jpde) {
+		private void ProcessMeanings (string res, ref JPDictionaryEntry jpde) {
 			
 
 			XmlReaderSettings settings = new XmlReaderSettings();
@@ -146,7 +146,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 								exact = false;
 							do {
 								if (!reader.ReadToFollowing("div"))
-									return jpde;
+									return;
 								nodeClass = reader.GetAttribute("class");
 							} while (nodeClass != "concept_light clearfix");
 
@@ -247,11 +247,10 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 
 			}
 
-			return jpde;
 		}
 
 
-		private JPDictionaryEntry ProcessForm (string res, JPDictionaryEntry form) {
+		private void ProcessForm (string res, ref JPDictionaryEntry form) {
 			string rootRef = res.Substring(res.IndexOf("<a href=\"") + "<a href=\"".Length);
 
 			int refEndIndex = rootRef.IndexOf("\">");
@@ -277,7 +276,6 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 			form.FormGuess = ProcessFormOrWord(WebGet(_SEARCH_URL + rootRef));
 			form.FormGuess.Word.Word = root;
 
-			return form;
 		}
 
 
@@ -288,7 +286,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 			if (res.Contains("<div class=\"fact grammar-breakdown\">")) {
 				form = res.Substring(res.IndexOf("<div class=\"fact grammar-breakdown\">"));
 				form = form.Substring(0, form.IndexOf("</div>") + "</div>".Length);
-				result = ProcessForm(form, result);
+				ProcessForm(form, ref result);
 				
 			}
 			
@@ -296,7 +294,7 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 				res = res.Substring(res.IndexOf("<div id=\"primary\" class=\"large-8 columns\">"));
 				res = res.Substring(0, res.IndexOf("<div id=\"secondary\" class=\"large-4 columns search-secondary_column\">"));
 
-				result = ProcessMeanings(res, result);
+				ProcessMeanings(res, ref result);
 			}
 			
 
@@ -304,7 +302,34 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 			return result;
 		}
 
+		private void ProcessFormOrWord (ref JPDictionaryEntry entry, string res) {
+			string form = "";
+			if (res.Contains("<div class=\"fact grammar-breakdown\">")) {
+				form = res.Substring(res.IndexOf("<div class=\"fact grammar-breakdown\">"));
+				form = form.Substring(0, form.IndexOf("</div>") + "</div>".Length);
+				ProcessForm(form, ref entry);
+				
+			}
+			
+			if (res.Contains("<div id=\"primary\" class=\"large-8 columns\">")) {
+				res = res.Substring(res.IndexOf("<div id=\"primary\" class=\"large-8 columns\">"));
+				res = res.Substring(0, res.IndexOf("<div id=\"secondary\" class=\"large-4 columns search-secondary_column\">"));
 
+				ProcessMeanings(res, ref entry);
+			}
+		}
+
+
+		private void ProcessFormOrWordAsync(ref JPDictionaryEntry entry, string link, ref ManualResetEvent signal)
+		{
+			try {
+				string word = WebGet(link);
+				ProcessFormOrWord(ref entry, word);
+			}
+			finally{
+				while(!signal.Set());
+			}
+		}
 		
 
 
@@ -314,6 +339,8 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 			XmlReaderSettings settings = new XmlReaderSettings();
 			settings.DtdProcessing = DtdProcessing.Parse;
 
+			List<ManualResetEvent> taskSignals = new List<ManualResetEvent>();
+			
 			using (Stream s = new MemoryStream(Encoding.UTF8.GetBytes(res))) {
 				using(XmlReader reader = XmlReader.Create(s, settings)) {
 					while (reader.ReadToFollowing("li")) {
@@ -373,12 +400,16 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 									if (subReader.Name == "a") {
 										currentWord.Word = subReader.GetAttribute("data-word");
 
+										JPDictionaryEntry entry = new JPDictionaryEntry();
+										entry.Word = currentWord;
+
+										ManualResetEvent taskSignal = new ManualResetEvent(false);
+										taskSignals.Add(taskSignal);
+										string link = _SEARCH_URL + subReader.GetAttribute("href");
+										Task.Run (() => ProcessFormOrWordAsync(ref entry, link, ref taskSignal));
 										
-										string word = WebGet(_SEARCH_URL + subReader.GetAttribute("href"));
-										JPDictionaryEntry tmp = ProcessFormOrWord(word);
-										tmp.Word = currentWord;
-									
-										sentence.Add(tmp);
+										
+										sentence.Add(entry);
 										
 										break;
 									}
@@ -403,8 +434,17 @@ namespace Miharu.BackEnd.Translation.HTTPTranslators
 				}
 			}
 
+
+
+			foreach (ManualResetEvent signal in taskSignals) {
+				signal.WaitOne();
+			}
+
+
 			return sentence;
 		}
+
+		
 
 		protected override string ProcessResponse(string res)
 		{
