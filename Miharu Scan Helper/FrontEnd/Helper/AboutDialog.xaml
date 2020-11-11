@@ -244,12 +244,21 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0" Content="These files are property of the " />
 							<local:LinkLabel Grid.Column="1" Content="Electronic Dictionary Research and Development Group" Link="http://www.edrdg.org/" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-10,0,0,0"/>
-							<Label Grid.Column="2" Content=" and are used in accordance with the licence provisions of the Electronic Dictionaries Research Group." Margin="-10,0,0,0"/>
-							
+						</Grid>
+						<Grid Margin="30,0,0,-10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="2" Content="and are used in accordance with the licence provisions of the Electronic Dictionaries" Margin="0"/>
+						</Grid>
+						<Grid Margin="30,0,0,-10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="2" Content="Research Group." Margin="0"/>
 						</Grid>
 						<Grid Margin="30,0,0,-5">
 							<Grid.ColumnDefinitions>
