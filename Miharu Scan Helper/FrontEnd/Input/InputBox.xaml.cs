@@ -19,7 +19,6 @@ namespace Miharu.FrontEnd.Input
 		private KanjiInputManager _kanjiInputManager;
 
 		
-
 		public InputBox(JPChar txtContent, KanjiInputManager kanjiInputManager)
 		{
 			InitializeComponent();

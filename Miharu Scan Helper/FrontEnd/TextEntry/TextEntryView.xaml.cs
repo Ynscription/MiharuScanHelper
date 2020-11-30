@@ -110,6 +110,9 @@ namespace Miharu.FrontEnd.TextEntry
 
 		private void OnTextEntryChanged(object sender, EventArgs e)
 		{
+			if (TextEntryArea.Content != null && TextEntryArea.Content is TextEntryControl tec)
+				tec.RemoveHandlers();
+
 			if (_textEntryManager.IsTextSelected)
 				TextEntryArea.Content = new TextEntryControl(_textEntryManager, _kanjiInputManager, _kanjiByRadInputControl);
 			else

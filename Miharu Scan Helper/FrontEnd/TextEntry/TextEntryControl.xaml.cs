@@ -66,6 +66,12 @@ namespace Miharu.FrontEnd
 
 		}
 
+		public void RemoveHandlers()
+		{
+			_kanjiInputManager.VisibilityChanged -= KanjiInputManager_VisibilityChanged;
+			_kanjiInputManager.KanjiInputEvent -= _kanjiInputManager_KanjiInputEvent;
+		}
+
 		
 
 		private TextBox NewNoteTextBox (string s = "") {
