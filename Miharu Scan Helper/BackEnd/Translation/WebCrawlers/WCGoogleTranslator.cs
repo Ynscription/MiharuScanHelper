@@ -17,7 +17,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 		}
 
 		protected override By FetchBy {
-			get { return By.XPath("//div[@class='NqnNQd']"); }
+			get { return By.XPath("//div[@class='zkZ4Kc dHeVVb']"); }
 		}
 
 		protected override string GetUri(string text)
@@ -30,7 +30,7 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 		{
 			string res = "";
 
-			res += result.GetAttribute("textContent");
+			res += result.GetAttribute("data-text");
 				
 			return res;
 		}
