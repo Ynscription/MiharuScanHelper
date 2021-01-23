@@ -24,7 +24,7 @@ namespace Miharu.BackEnd.Data.KanjiByRad
 			FROM
 				Rad
 			ORDER BY
-				strokes ASC, id ASC;";
+				strokes ASC, entry ASC;";
 
 		private SQLiteConnection _dbConnection;
 		private bool _disposedValue;
@@ -70,7 +70,9 @@ namespace Miharu.BackEnd.Data.KanjiByRad
 				int id = result.GetInt32(0);
 				string lit = result.GetString(1);
 				int strokes = result.GetInt32(2);
-				JPChar r = new JPChar(id, lit, strokes, true);
+				int entry = result.GetInt32(3);
+				string symbol = result.GetString(4);
+				JPChar r = new JPChar(id, symbol, strokes, true);
 				res.Add(r);
 			}
 			result.Close();
