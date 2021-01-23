@@ -17,12 +17,22 @@ namespace Miharu.BackEnd.Translation.WebCrawlers
 		}
 
 		protected override By FetchBy {
-			get { return By.XPath("//span[@class='tlid-translation translation']"); }
+			get { return By.XPath("//div[@class='NqnNQd']"); }
 		}
 
 		protected override string GetUri(string text)
 		{
 			return _URL + Uri.EscapeDataString(text);
+		}
+
+
+		public override string ProcessResult(IWebElement result)
+		{
+			string res = "";
+
+			res += result.GetAttribute("textContent");
+				
+			return res;
 		}
 	}
 }
