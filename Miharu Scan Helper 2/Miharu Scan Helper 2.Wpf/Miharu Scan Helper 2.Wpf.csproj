@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>Miharu2.Wpf</RootNamespace>
+    <ApplicationIcon>ScanHelperIcon.ico</ApplicationIcon>
+    <StartupObject>Miharu2.Wpf.MainClass</StartupObject>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Miharu Scan Helper 2\Miharu Scan Helper 2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Eto.Platform.Wpf" Version="2.5.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Redist\GeckoDriver\geckodriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

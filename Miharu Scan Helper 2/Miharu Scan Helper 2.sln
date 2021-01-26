@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miharu Scan Helper 2", "Miharu Scan Helper 2\Miharu Scan Helper 2.csproj", "{FD6014CC-9BF4-4E7C-A138-0528AB5C82C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miharu Scan Helper 2.Gtk", "Miharu Scan Helper 2.Gtk\Miharu Scan Helper 2.Gtk.csproj", "{2CC73F16-BAED-42CF-AF2C-77657527D6D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miharu Scan Helper 2.Mac", "Miharu Scan Helper 2.Mac\Miharu Scan Helper 2.Mac.csproj", "{24E36422-08BD-42AA-8B2F-E8F8A1A0DC0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miharu Scan Helper 2.Wpf", "Miharu Scan Helper 2.Wpf\Miharu Scan Helper 2.Wpf.csproj", "{CC05522A-FD22-4623-8D41-C0E705C6949F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD6014CC-9BF4-4E7C-A138-0528AB5C82C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD6014CC-9BF4-4E7C-A138-0528AB5C82C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD6014CC-9BF4-4E7C-A138-0528AB5C82C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD6014CC-9BF4-4E7C-A138-0528AB5C82C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CC73F16-BAED-42CF-AF2C-77657527D6D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CC73F16-BAED-42CF-AF2C-77657527D6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CC73F16-BAED-42CF-AF2C-77657527D6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CC73F16-BAED-42CF-AF2C-77657527D6D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E36422-08BD-42AA-8B2F-E8F8A1A0DC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24E36422-08BD-42AA-8B2F-E8F8A1A0DC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24E36422-08BD-42AA-8B2F-E8F8A1A0DC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24E36422-08BD-42AA-8B2F-E8F8A1A0DC0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC05522A-FD22-4623-8D41-C0E705C6949F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC05522A-FD22-4623-8D41-C0E705C6949F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC05522A-FD22-4623-8D41-C0E705C6949F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC05522A-FD22-4623-8D41-C0E705C6949F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED4CA658-3949-4248-BF2C-0FD1F7C9ADEA}
+	EndGlobalSection
+EndGlobal

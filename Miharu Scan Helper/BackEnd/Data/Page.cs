@@ -131,7 +131,7 @@ namespace Miharu.BackEnd.Data {
 			
 			//Rectangle rect = new Rectangle((int)(DPIrect.X), (int)(DPIrect.Y), (int)(DPIrect.Width), (int)(DPIrect.Height));
 			
-						Bitmap cropped = new Bitmap((int) rect.Width, (int) rect.Height);
+			Bitmap cropped = new Bitmap((int) rect.Width, (int) rect.Height);
 			Graphics g = Graphics.FromImage(cropped);
 			g.DrawImage(Source, new Rectangle(0, 0, (int) rect.Width, (int) rect.Height),
 						rect,
