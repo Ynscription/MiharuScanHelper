@@ -264,3 +264,4 @@ __pycache__/
 
 # Ignore binaries to redist
 **/Miharu*Scan*Helper/Resources/Redist/
+**/Miharu*Scan*Helper*2/Resources/Redist/
