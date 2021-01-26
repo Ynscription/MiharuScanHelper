@@ -264,4 +264,7 @@ __pycache__/
 
 # Ignore binaries to redist
 **/Miharu*Scan*Helper/Resources/Redist/
-**/Miharu*Scan*Helper*2/Resources/Redist/
+**/Miharu*Scan*Helper*2/Miharu*Scan*Helper*2/Resources/Redist/
+**/Miharu*Scan*Helper*2/Miharu*Scan*Helper*2.Gtk/Resources/Redist/
+**/Miharu*Scan*Helper*2/Miharu*Scan*Helper*2.Mac/Resources/Redist/
+**/Miharu*Scan*Helper*2/Miharu*Scan*Helper*2.Wpf/Resources/Redist/
