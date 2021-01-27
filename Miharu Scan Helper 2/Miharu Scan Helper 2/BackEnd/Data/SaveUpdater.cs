@@ -17,8 +17,9 @@ namespace Miharu2.BackEnd.Data
 
 		private static DialogResult WarnUpdateRequired () {
 			
-			return MessageBox.Show("The file was saved in an old format.", 
-				"What would you like to do?", 
+			return MessageBox.Show(@"The file was saved in an old format.
+What would you like to do?", 
+				"Warning: Outdated File", 
 				MessageBoxButtons.YesNoCancel, 
 				MessageBoxType.Warning, 
 				MessageBoxDefaultButton.No);
@@ -42,7 +43,7 @@ namespace Miharu2.BackEnd.Data
 
 		private static string NewFile () {
 			SaveFileDialog fileDialog = new SaveFileDialog();
-			fileDialog.CurrentFilter = new FileFilter("Scans files", ".scan");
+			fileDialog.Filters.Add(new FileFilter("Scans files", ".scan"));
 			fileDialog.Title = "Save Updated Chapter";
 			fileDialog.CheckFileExists = true;
 			//fileDialog.OverwritePrompt = true;

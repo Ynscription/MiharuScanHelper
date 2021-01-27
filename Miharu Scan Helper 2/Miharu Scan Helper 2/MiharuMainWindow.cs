@@ -5,9 +5,9 @@ using System;
 
 namespace Miharu2
 {
-	public partial class MainForm : Form
+	public partial class MiharuMainWindow : Form
 {
-	public MainForm(ChapterManager chapterManager, string startChapter = null)
+	public MiharuMainWindow(ChapterManager chapterManager, string startChapter = null)
 	{
 		Title = "My Eto Form";
 		MinimumSize = new Size(200, 200);

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Miharu2.BackEnd
 {
-    static class CrashHandler
+    public static class CrashHandler
     {
 		private const string EMERGENCY_FILE = @"\.crash";
 		private static bool _emergencyHandled = false;
