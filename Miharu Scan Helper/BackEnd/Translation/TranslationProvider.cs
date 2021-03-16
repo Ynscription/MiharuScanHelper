@@ -23,6 +23,7 @@ namespace Miharu.BackEnd.Translation
 		Yandex_API = 0x15,
 		Yandex_Web = 0x16,
 		DeepL_Web = 0x17,
+		Papago_Web = 0x18,
 		Jaded_Network = 0x21,
 		Jisho = 0x41
 	}
@@ -43,7 +44,11 @@ namespace Miharu.BackEnd.Translation
 			if (wdManager.IsAlive)
 				_translators.Add(TranslationType.DeepL_Web, new WCDeepLTranslator(wdManager));
 
+			if (wdManager.IsAlive)
+				_translators.Add(TranslationType.Papago_Web, new WCPapagoTranslator(wdManager));
+
 			_translators.Add(TranslationType.Bing_API, new HTTPBingTranslator());
+			
 
 			if (wdManager.IsAlive)
 				_translators.Add(TranslationType.Yandex_Web, new WCYandexTranslator(wdManager));

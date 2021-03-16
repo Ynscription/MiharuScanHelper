@@ -24,7 +24,8 @@ namespace Miharu2.Wpf
 				Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory.ToString());
 
 				if (Init.CheckForTesseract()) {
-					translatorThread = TranslatorThread.StartThread();
+					if (Init.CheckForGecko())
+						translatorThread = TranslatorThread.StartThread();
 								
 					startChapter = Init.CheckCrash();
 					if (startChapter == null && args.Length > 0 && File.Exists(args [0]))

@@ -342,7 +342,7 @@
 
 
 	</UserControl.Resources>
-	
+
 	<Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="250"/>
@@ -356,7 +356,15 @@
 				<ColumnDefinition Width="1*" MinWidth="100"/>
 			</Grid.ColumnDefinitions>
 			<Border x:Name="PreviewIMGBorder" BorderThickness="1" BorderBrush="Black" Margin="0,0,3,0" Grid.Column="0">
-				<Image x:Name="PreviewIMG" Height="Auto"/>
+				<Grid>
+					<Image x:Name="PreviewIMG" Height="Auto"/>
+					<Button x:Name="RotatePreviewImgButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2,2,2,2" Click="RotateImage_Click" Padding="2,2,2,2" ToolTip="Rotate">
+						<iconPacks:PackIconModern Kind="TransformRotateCounterclockwise" Grid.Column="1" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+								Width="Auto" 
+								MinHeight="{Binding ActualHeight, ElementName=refreshLabel, Mode=OneWay}" />
+					</Button>
+
+				</Grid>
 			</Border>
 
 			<Border x:Name="border" BorderThickness="1" BorderBrush="Gray" Margin="3,0,0,0" Grid.Column="1">
@@ -430,6 +438,40 @@
 			</Border>
 		</Grid>
 
+
+
+
+		<Border x:Name="border2" BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40" MinHeight="40"/>
+					<RowDefinition Height="1*" />
+				</Grid.RowDefinitions>
+
+				<Label Content="Translation" Grid.Row="0" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+				<Border BorderThickness="1" BorderBrush="Black" Grid.Row="1">
+					<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="18" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" />
+				</Border>
+			</Grid>
+		</Border>
+
+		<Border x:Name="RotatePreviewImgSliderBorder" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Margin="3,-2,0,0" Grid.Row="1" Background="#FFDDDDDD" BorderBrush="#FF707070" BorderThickness="1">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Slider x:Name="RotatePreviewImgSlider" Margin="3,2" Maximum="180" SmallChange="1" LargeChange="10" TickFrequency="5" Minimum="-180" ValueChanged="RotatePreviewImgSlider_ValueChanged" />
+				<TextBox x:Name="CurrRotationTextBox" Width="50" MaxWidth="50" MinWidth="50" FontSize="12" MaxLines="4" TextAlignment="Right" Grid.Column="1" HorizontalAlignment="Right" AllowDrop="False" AcceptsReturn="True" GotMouseCapture="CurrRotationTextBox_GotMouseCapture" PreviewKeyUp="CurrRotationTextBox_PreviewKeyUp" PreviewKeyDown="CurrRotationTextBox_PreviewKeyDown" Margin="2,2" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Padding="0,0,1,0" Text="180.22º" />
+			</Grid>
+		</Border>
+
+
+
+
+
+
 		<Border BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="2">
 			<TabControl x:Name="TextTabControl" SelectionChanged="TextTabControl_SelectionChanged">
 				<TabItem Header="WebTL" Controls:HeaderedControlHelper.HeaderFontSize="20">
@@ -458,7 +500,7 @@
 
 				<TabItem Header="Dictionary" Controls:HeaderedControlHelper.HeaderFontSize="20">
 					<Grid x:Name="DictTranslationGrid">
-						
+
 					</Grid>
 				</TabItem>
 				<TabItem Header="SFX" Controls:HeaderedControlHelper.HeaderFontSize="20">
@@ -474,23 +516,6 @@
 				</TabItem>
 			</TabControl>
 		</Border>
-
-
-		<Border x:Name="border2" BorderThickness="1" BorderBrush="Gray" Margin="3" Grid.Row="1">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="40" MinHeight="40"/>
-					<RowDefinition Height="1*" />
-				</Grid.RowDefinitions>
-
-				<Label Content="Translation" Grid.Row="0" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" />
-
-				<Border BorderThickness="1" BorderBrush="Black" Grid.Row="1">
-					<TextBox x:Name="TranslatedTextBox" TextWrapping="Wrap" FontSize="18" AcceptsReturn="True" AcceptsTab="True" TextChanged="TranslatedTextBox_TextChanged" BorderBrush="{x:Null}" BorderThickness="0" VerticalScrollBarVisibility="Auto" />
-				</Border>
-			</Grid>
-		</Border>
-
 
 	</Grid>
 </UserControl>

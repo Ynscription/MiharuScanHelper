@@ -11,14 +11,14 @@ namespace Miharu2.BackEnd.Translation.WebCrawlers
 {
 	public class WebDriverManager : IDisposable
 	{
-		private const string _DRIVER_PATH = @".\Resources\Redist\GeckoDriver\geckodriver.exe";
+		public const string GECKO_DRIVER_PATH = @".\Resources\Redist\GeckoDriver\geckodriver.exe";
 
 		private volatile IWebDriver _driver = null;
 		private volatile object _lock = new object();
 
 
 		public WebDriverManager () {
-			FileInfo geckoDriverFile = new FileInfo(_DRIVER_PATH);
+			FileInfo geckoDriverFile = new FileInfo(GECKO_DRIVER_PATH);
 			FirefoxDriverService ffds = FirefoxDriverService.CreateDefaultService(geckoDriverFile.DirectoryName);
 			ffds.HideCommandPromptWindow = true;
 			FirefoxOptions ffo = new FirefoxOptions();

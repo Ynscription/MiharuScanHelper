@@ -56,6 +56,15 @@ namespace Miharu.Control
 		public IEnumerable<Note> CurrentTextNotesEnumerator {
 			get => _currentText.NotesEnumerator;
 		}
+		public float Rotation { 
+			get => _currentText.Rotation;
+			set {
+				_currentText.Rotation = value;
+				PageManager.ChapterManager.IsChapterSaved = false;
+
+			}
+		}
+
 		public Guid CurrentTextAddNote (string text) {
 			PageManager.ChapterManager.IsChapterSaved = false;
 			return _currentText.AddNote(text);
@@ -163,5 +172,6 @@ namespace Miharu.Control
 					SelectTextEntry(null, 0);
 			}
 		}
+
 	}
 }

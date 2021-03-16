@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Miharu.BackEnd.Data
     {
 		
 		public event TxtEventHandler TextChanged;
+		public event EventHandler RotationChanged;
 
 		[JsonIgnore]
 		private readonly static string TEMP_IMG = @"./tmp.png";
@@ -46,7 +48,49 @@ namespace Miharu.BackEnd.Data
 		}
 		[JsonIgnoreAttribute]
 		public Bitmap Source { get; private set; }
+		[JsonIgnoreAttribute]
+		public Bitmap OriginalSource { get; private set; }
 		public DPIAwareRectangle DpiAwareRectangle { get; private set; }
+		private float _rotation = 0;
+		public  float Rotation { 
+			get => _rotation;
+			set {
+				_rotation = value % 360;
+				if (_rotation > 180)
+					_rotation -= 360;
+				if (_rotation < -180)
+					_rotation += 360;
+
+				int width = OriginalSource.Width;
+				int height = OriginalSource.Height;
+				PixelFormat pixelFormat = OriginalSource.PixelFormat;
+				
+				Bitmap tempImg = new Bitmap(width, height, pixelFormat);
+				Graphics g = Graphics.FromImage(tempImg);
+				g.Clear(Color.White);
+				g.DrawImageUnscaled(OriginalSource, 1, 1);
+				g.Dispose();
+
+				GraphicsPath path = new GraphicsPath();
+				path.AddRectangle(new RectangleF(0f, 0f, width, height));
+				Matrix rotMatrix = new Matrix();
+				rotMatrix.Rotate(_rotation);
+
+				RectangleF rct = path.GetBounds(rotMatrix);
+				Bitmap newImg = new Bitmap(Convert.ToInt32(rct.Width), Convert.ToInt32(rct.Height), pixelFormat);
+				g = Graphics.FromImage(newImg);
+				g.Clear(Color.White);
+				g.TranslateTransform(-rct.X, -rct.Y);
+				g.RotateTransform(_rotation);
+				g.InterpolationMode = InterpolationMode.HighQualityBilinear;
+				g.DrawImageUnscaled(tempImg, 0, 0);
+				g.Dispose();
+				tempImg.Dispose();
+
+				Source = newImg;
+				RotationChanged?.Invoke(this, new EventArgs());
+			}
+		}
 
 		private string _parsedText = null;
 		public string ParsedText {
@@ -131,12 +175,13 @@ namespace Miharu.BackEnd.Data
 			Uuid = Guid.NewGuid();
 			if (rect.Width == 0 || rect.Height == 0)
 				throw new ArgumentOutOfRangeException("rect", rect, "Can't create text entry with 0 width or 0 height rectangle.");
-			Source = src;
+			OriginalSource = Source = src;
 			DpiAwareRectangle = rect;
 			TranslatedText = "";
 			Vertical = src.Height >= src.Width;
 			_translations = new Dictionary<TranslationType, string>();
 			_uniqueNotes = new Dictionary <Guid, Note>();
+			
 		}
 
 		
@@ -144,7 +189,7 @@ namespace Miharu.BackEnd.Data
 		//There are legacy parameters, so loading old saves still works
 		[JsonConstructor]
 		public Text (Guid? uuid,
-					DPIAwareRectangle dpiAwareRectangle, bool vertical, bool parseInvalidated,
+					DPIAwareRectangle dpiAwareRectangle, float? rotation, bool vertical, bool parseInvalidated,
 					string parsedText, 
 					List <Note> uniqueNotes,
 					List<string> _notes,
@@ -166,6 +211,12 @@ namespace Miharu.BackEnd.Data
 				double dpiY = g.DpiY;
 				DpiAwareRectangle = new DPIAwareRectangle(rectangle, dpiX, dpiY);
 			}
+
+			if (rotation.HasValue)
+				_rotation = rotation.Value;
+			else
+				_rotation = 0;
+
 			Vertical = vertical;
 			_parseInvalidated = parseInvalidated;
 			ParsedText = parsedText;
@@ -245,7 +296,8 @@ namespace Miharu.BackEnd.Data
 
 		
 		public void Load (Bitmap src) {
-			Source = src;
+			OriginalSource = Source = src;
+			Rotation = _rotation;
 		}
 
 

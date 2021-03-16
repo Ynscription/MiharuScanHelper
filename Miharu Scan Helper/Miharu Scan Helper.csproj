@@ -232,6 +232,7 @@
     <Compile Include="BackEnd\Translation\Translator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WCDeepLTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WCGoogleTranslator.cs" />
+    <Compile Include="BackEnd\Translation\WebCrawlers\WCPapagoTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WCYandexTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebCrawlerTranslator.cs" />
     <Compile Include="BackEnd\Translation\WebCrawlers\WebDriverManager.cs" />

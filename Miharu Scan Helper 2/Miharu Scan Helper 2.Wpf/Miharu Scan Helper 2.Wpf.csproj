@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <None Update="Resources\Redist\GeckoDriver\geckodriver.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

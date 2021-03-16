@@ -33,7 +33,7 @@ namespace Miharu.FrontEnd
 		private TextEntryManager _textEntryManager;
 		private KanjiInputManager _kanjiInputManager;
 
-        
+        public bool ShowSlider = false;
 
 
 		private void InitializeParsedTextBox () {
@@ -123,7 +123,8 @@ namespace Miharu.FrontEnd
 		private void LoadTextEntry()
 		{			
 			_textEntryManager.CurrentText.TextChanged += OnTextContentChanged;
-			
+			_textEntryManager.CurrentText.RotationChanged += OnRotationChanged;
+
 			InitializeParsedTextBox();
 
 			TranslationSourcesStackPanel.Children.Clear();
@@ -149,6 +150,12 @@ namespace Miharu.FrontEnd
 
 			TranslatedTextBox.Text = _textEntryManager.CurrentText.TranslatedText;
 			VerticalToggleSwitch.IsOn = _textEntryManager.CurrentText.Vertical;
+
+			CurrRotationTextBox.Text = _textEntryManager.Rotation.ToString("F2") + "º";
+			_prevRot = _textEntryManager.Rotation;
+			RotatePreviewImgSlider.Value = _textEntryManager.Rotation;
+			RotatePreviewImgSliderBorder.Visibility = Visibility.Hidden;
+			ShowSlider = false;
 
 		}
 
@@ -242,11 +249,18 @@ namespace Miharu.FrontEnd
 			_textEntryManager.TranslationManager.TranslateAll();
 			
 			
-			//It makes sense to not ask for an SFX translation by default.
+		}
+
+
+		private void RotateImage_Click(object sender, RoutedEventArgs e)
+		{
+			if (ShowSlider = !ShowSlider)
+				RotatePreviewImgSliderBorder.Visibility = Visibility.Visible;
+			else
+				RotatePreviewImgSliderBorder.Visibility = Visibility.Hidden;
 			
 		}
 
-		
 
 		
 		private void VerticalToggleSwitched_Toggled (object sender, RoutedEventArgs e) {
@@ -449,10 +463,68 @@ namespace Miharu.FrontEnd
 		}
 
 
-		
+
+
 
 
 		#endregion
 
+		private void CurrRotationTextBox_GotMouseCapture(object sender, MouseEventArgs e)
+		{
+			CurrRotationTextBox.SelectAll();
+		}
+
+		private void CurrRotationTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return) {
+				e.Handled = true;
+			}
+		}
+
+		private string _previousCurrRotTBText = "0º";
+		private void CurrRotationTextBox_PreviewKeyUp(object sender, KeyEventArgs e)
+		{
+			if (_previousCurrRotTBText != CurrRotationTextBox.Text && (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return)) {
+				ParseCurrRotTextBox();
+				Keyboard.ClearFocus();
+				e.Handled = true;
+			}
+			else if (e.Key == System.Windows.Input.Key.Escape) {
+				Keyboard.ClearFocus();
+				CurrRotationTextBox.Text = _previousCurrRotTBText;
+				e.Handled = true;
+			}
+		}
+
+		private void ParseCurrRotTextBox () {
+			string significant = CurrRotationTextBox.Text;
+			if (significant.Contains("º"))
+				significant = significant.Substring(0, significant.IndexOf('º'));
+			float result = _textEntryManager.Rotation;
+			if (float.TryParse(significant, out result)) {
+				_textEntryManager.Rotation = result;
+			}
+			else {
+				CurrRotationTextBox.Text = _previousCurrRotTBText;
+				System.Media.SystemSounds.Exclamation.Play();
+			}
+
+		}
+
+		private void OnRotationChanged(object sender, EventArgs e)
+		{
+			CurrRotationTextBox.Text = _textEntryManager.Rotation.ToString("F2") + "º";
+			RotatePreviewImgSlider.Value = _textEntryManager.Rotation;
+			ShowImageFromBitmap(_textEntryManager.CurrentText.Source);
+		}
+
+		float _prevRot = 0;
+		private void RotatePreviewImgSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			if (_prevRot != RotatePreviewImgSlider.Value) {
+				_prevRot = _textEntryManager.Rotation;
+				_textEntryManager.Rotation = (float)RotatePreviewImgSlider.Value;
+			}
+		}
 	}
 }

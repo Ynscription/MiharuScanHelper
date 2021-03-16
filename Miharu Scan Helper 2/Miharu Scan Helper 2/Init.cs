@@ -1,5 +1,6 @@
 ﻿using Eto.Forms;
 using Miharu2.BackEnd;
+using Miharu2.BackEnd.Translation.WebCrawlers;
 using System;
 using System.IO;
 
@@ -51,6 +52,21 @@ Would you like to locate the Tesseract exectutable manually?",
 					return false;
 			}
 			return true;
+		}
+
+		public static bool CheckForGecko()
+		{
+			bool res = false;
+			if (!(res = File.Exists(WebDriverManager.GECKO_DRIVER_PATH))) {
+				DialogResult dr = MessageBox.Show(@"Could not find Gecko Driver.
+Some features will be missing.", 
+					"Warning: Gecko Driver Not Found",
+					MessageBoxButtons.OK, 
+					MessageBoxType.Warning, 
+					MessageBoxDefaultButton.OK);
+			}
+
+			return res;
 		}
 
 		public static string CheckCrash () {

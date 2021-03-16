@@ -3,7 +3,6 @@ using Miharu.Properties;
 using Newtonsoft.Json;
 using Ookii.Dialogs.Wpf;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Miharu.BackEnd.Data
