@@ -159,7 +159,7 @@
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
-							<Label Grid.Column="0" Content="Yandex.Translate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-8,0,0,0"/>
+							<Label Grid.Column="0" Content="Yandex.Translate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
 							<local:LinkLabel x:Name="YandexLinkLabel" Grid.Column="1" Content="https://translate.yandex.com/" Link="https://translate.yandex.com/" HorizontalAlignment="Left" VerticalAlignment="Top" />
 						</Grid>
 						<Grid Margin="30,0,0,-5">
@@ -188,6 +188,15 @@
 							</Grid.ColumnDefinitions>
 							<Label Grid.Column="0" Content="DeepL Translator" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
 							<local:LinkLabel x:Name="DeepLLinkLabel" Grid.Column="2" Content="https://www.deepl.com/translator" Link="https://www.deepl.com/translator" HorizontalAlignment="Left" VerticalAlignment="Top" />
+						</Grid>
+						<Grid Margin="30,0,0,-5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Label Grid.Column="0" Content="Papago Translator" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+							<local:LinkLabel x:Name="PapagoLinkLabel" Grid.Column="2" Content="https://papago.naver.com" Link="https://papago.naver.com" HorizontalAlignment="Left" VerticalAlignment="Top" />
 						</Grid>
 						<Grid Margin="30,0,0,-5">
 							<Grid.ColumnDefinitions>
