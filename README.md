@@ -51,6 +51,6 @@ Jisho https://jisho.org/
 Yandex.Translate https://translate.yandex.com/  
 Google Translate https://translate.google.com/  
 Bing Translator https://www.bing.com/translator/  
-DeepL Translator https://www.deepl.com/translator
-Papago Translator https://papago.naver.com
+DeepL Translator https://www.deepl.com/translator  
+Papago Translator https://papago.naver.com  
 The Jaded Network http://thejadednetwork.com/sfx  
